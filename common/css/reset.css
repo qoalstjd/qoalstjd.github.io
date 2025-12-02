@@ -1,0 +1,193 @@
+html,
+body,
+div,
+span,
+object,
+iframe,
+article,
+aside,
+canvas,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section,
+main,
+summary,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+form,
+fieldset,
+legend,
+input,
+label,
+button,
+textarea,
+select,
+textarea,
+input,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+b,
+i,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+abbr,
+address,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+samp,
+small,
+strong,
+sub,
+sup,
+var,
+data,
+time,
+mark,
+audio,
+video,
+a { margin: 0; padding: 0; box-sizing: border-box; outline: 0; line-height: 1.5; color: var(--text_primary); } 
+
+html { font-size: 62.5%; width: 100%; background-color: var(--bg_root); scroll-behavior: smooth; } 
+body { overflow-y: auto; overflow-x: hidden; } 
+@media (max-width: 320px) { html { font-size: 2.777777777777778vw; } 
+ }
+
+* { -webkit-tap-highlight-color: transparent; } 
+*::selection { background-color: rgba(100, 100, 100, 0.5); } 
+
+html,
+body { color: var(--text_primary); width: 100%; } 
+body { word-wrap: break-word; word-break: keep-all; overflow-wrap: break-word; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; min-height: 100%; -webkit-touch-callout: none; } 
+body,
+select,
+input,
+textarea,
+button { font-size: 1.6rem; line-height: 1.5; font-family: "Pretendard", "AppleSDGothicNeo", "Helvetica Neue", sans-serif; font-weight: 400; } 
+article,
+aside,
+canvas,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section,
+main,
+summary { display: block; } 
+blockquote,
+q { quotes: none; } 
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 { font-size: 100%; } 
+cite,
+em,
+dfn,
+address { font-style: normal; } 
+fieldset,
+iframe { border: 0 none; min-width: 0; } 
+ins { text-decoration: none; } 
+del { text-decoration: line-through; } 
+
+ol,
+ul,
+li { list-style: none; } 
+img,
+fieldset,
+iframe { border: 0 none; vertical-align: middle; } 
+img,
+video,
+audio,
+object,
+embed,
+iframe { width: 100%; max-width: 100%; } 
+
+legend,
+caption { overflow: hidden; position: absolute; width: 0.1rem; height: 0.1rem; margin: -0.1rem; font-size: 0; opacity: 0; white-space: nowrap; } 
+i,
+em,
+address { font-style: normal; } 
+
+input,
+select,
+textarea { border-radius: 0; box-shadow: none; background: transparent; -webkit-appearance: none; -moz-appearance: none; appearance: none; border: 0; } 
+label,
+button { cursor: pointer; } 
+button { cursor: pointer; padding: 0; background: none; border: 0 none; } 
+select::-ms-expand { display: none; } 
+textarea { resize: vertical; } 
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder { color: #444649; } 
+input:disabled { opacity: 1; -webkit-text-fill-color: inherit; } 
+input[type="radio"],
+input[type="checkbox"] { border: 0; } 
+input[type="radio"],
+input[type="checkbox"],
+input[type="tel"],
+input[type="number"] { vertical-align: middle; } 
+input[type="time"]::-webkit-calendar-picker-indicator { display: none; } 
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active { -webkit-text-fill-color: #292929 !important; -webkit-background-clip: text; background-clip: text; } 
+
+table { width: 100%; empty-cells: show; border-spacing: 0; table-layout: fixed; } 
+
+a,
+img { -webkit-user-drag: none; } 
+a,
+a:visited { color: inherit; } 
+a:link,
+a:hover { text-decoration: none; } 
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; } 
+
+input::placeholder { color: var(--text_primary); line-height: 1.5; font-size: 1.6rem; font-weight: 400; } 
+
+input::-ms-clear,
+input::-ms-reveal { display: none; width: 0; height: 0; } 
+input::-webkit-search-decoration,
+input::-webkit-search-cancel-button,
+input::-webkit-search-results-button,
+input::-webkit-search-results-decoration { display: none; } 
+
+/* *::-webkit-scrollbar {display: none;} */
+
+.hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0; } 

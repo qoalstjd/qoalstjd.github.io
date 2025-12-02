@@ -1,0 +1,25 @@
+/* html { font-size: 62.5%; }  */
+/* @media (max-width: 320px) { html { font-size: 2.777777777777778vw; } } */
+/* font-family: "Pretendard", "AppleSDGothicNeo", "Helvetica Neue", sans-serif; */
+@font-face {
+	font-family: "Pretendard";
+	font-weight: 400;
+	font-display: swap;
+	src: local("Pretendard Regular"), url("/common/font/Pretendard-Regular.woff2") format("woff2");
+}
+@font-face {
+	font-family: "Pretendard";
+	font-weight: 600;
+	font-display: swap;
+	src: local("Pretendard SemiBold"), url("/common/font/Pretendard-SemiBold.woff2") format("woff2");
+}
+@font-face {
+	font-family: "Pretendard";
+	font-weight: 700;
+	font-display: swap;
+	src: local("Pretendard Bold"), url("/common/font/Pretendard-Bold.woff2") format("woff2");
+}
+@font-face {
+    font-family: 'LCD14';
+    src: local("LCD14"), url("/common/font/LCD14.woff2") format("woff2");
+}
