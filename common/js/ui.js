@@ -284,47 +284,21 @@ window.ui = {
             },
         },
     },
-};
-
-// window.ui.masonryManager = {
-//     list: [],
-//     init() {
-//         this.list = [];
-//         document.querySelectorAll(".masonry-wrap").forEach((wrap) => {
-//             if (!wrap || !wrap.querySelector(".box")) return;
-//             const sizer = wrap.querySelector(".masonry-sizer");
-//             const options = {
-//                 itemSelector: ".box",
-//                 gutter: 20,
-//                 percentPosition: true,
-//                 transitionDuration: "0.3s",
-//             };
-//             if (sizer) options.columnWidth = sizer;
-//             const msnry = new Masonry(wrap, options);
-//             window.addEventListener(
-//                 "resize",
-//                 window.ui.debouncer(() => msnry.layout())
-//             );
-//             this.list.push({ wrap, instance: msnry });
-//         });
-//     },
-// };
-
-window.ui.setScrollLock = (lock = true) => {
-    document.body.style.overflow = lock ? "hidden" : "";
-};
-
-window.ui.setDimmed = (active = true, zIndex = "") => {
-    const dim = document.querySelector(".dim");
-    if (!dim) return;
-    if (active) {
-        dim.classList.add("active");
-        dim.style.zIndex = zIndex;
-        dim.style.pointerEvents = "auto";
-    } else {
-        dim.classList.remove("active");
-        dim.style.zIndex = "";
-        dim.style.pointerEvents = "none";
+    setScrollLock: (lock = true) => {
+        document.body.style.overflow = lock ? "hidden" : "";
+    },
+    setDimmed : (active = true, zIndex = "") => {
+        const dim = document.querySelector(".dim");
+        if (!dim) return;
+        if (active) {
+            dim.classList.add("active");
+            dim.style.zIndex = zIndex;
+            dim.style.pointerEvents = "auto";
+        } else {
+            dim.classList.remove("active");
+            dim.style.zIndex = "";
+            dim.style.pointerEvents = "none";
+        }
     }
 };
 
@@ -346,31 +320,9 @@ document.querySelectorAll(".inp").forEach((inp) => {
     });
 });
 
-// DOMContentLoaded ?�점?? 초기??
+// DOMContentLoaded 초기실행
 document.addEventListener("DOMContentLoaded", () => {
     window.ui.dropdown.init();
     window.ui.tab.init();
     window.ui.scrollTable.init();
-    // window.ui.masonryManager.init();
 });
-
-function loadgoogletagmanager() {
-    const script = document.createElement("script");
-    script.src = "https://www.googletagmanager.com/gtag/js?id=AW-17575941426";
-    script.async = true;
-    script.onload = function () {
-        window.dataLayer = window.dataLayer || [];
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-        gtag("js", new Date());
-        gtag("config", "AW-17575941426");
-    };
-
-    document.head.append(script);
-}
-if (location.hostname == "en.kbsec.com") {
-    setTimeout(function () {
-        loadgoogletagmanager();
-    }, 2000);
-}

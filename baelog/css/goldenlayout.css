@@ -1,0 +1,118 @@
+.lm_root { position: relative; overflow: hidden; } 
+.lm_row > .lm_item { float: left; } 
+.lm_content { overflow: auto; position: relative; z-index: 0; } 
+.lm_dragging,
+.lm_dragging * { cursor: move !important; -webkit-user-select: none; user-select: none; } 
+.lm_maximised { position: absolute; top: 0; left: 0; z-index: 40; } 
+.lm_maximise_placeholder { display: none; } 
+.lm_splitter { position: relative; z-index: 2; touch-action: none; } 
+.lm_splitter.lm_vertical .lm_drag_handle { width: 100%; position: absolute; cursor: ns-resize; touch-action: none; -webkit-user-select: none; user-select: none; } 
+.lm_splitter.lm_horizontal { float: left; height: 100%; } 
+.lm_splitter.lm_horizontal .lm_drag_handle { height: 100%; position: absolute; cursor: ew-resize; touch-action: none; -webkit-user-select: none; user-select: none; } 
+.lm_header { overflow: visible; position: relative; z-index: 1; -webkit-user-select: none; user-select: none; background-color: var(--bg_type01); display: flex; justify-content: space-between; } 
+.lm_header [class^="lm_"] { } 
+.lm_header .lm_controls { display: flex; align-items: center; } 
+.lm_header .lm_controls > * { position: relative; cursor: pointer; width: 2.4rem; height: 2.4rem; text-align: center; } 
+.lm_header .lm_tabs { display: flex; display: flex; height: 100%; align-items: stretch; } 
+.lm_header .lm_tab { cursor: pointer; position: relative; touch-action: none; padding: 0 1.2rem; display: flex; align-items: center; gap: 0.4rem; } 
+.lm_header .lm_tab i { width: 0.2rem; height: 1.9rem; position: absolute; } 
+.lm_header .lm_tab i.lm_left { top: 0; left: -0.2rem; } 
+.lm_header .lm_tab i.lm_right { top: 0; right: -0.2rem; } 
+.lm_header .lm_tab .lm_title { text-overflow: ellipsis; } 
+.lm_stack { position: relative; overflow: hidden; border-radius: 0.4rem; } 
+.lm_stack > .lm_items { overflow: hidden; } 
+.lm_stack.lm_left > .lm_items { position: absolute; left: 2rem; top: 0; } 
+.lm_stack.lm_right > .lm_items { position: absolute; right: 2rem; top: 0; } 
+.lm_stack.lm_right > .lm_header { position: absolute; right: 0; top: 0; } 
+.lm_stack.lm_bottom > .lm_items { position: absolute; bottom: 2rem; } 
+.lm_stack.lm_bottom > .lm_header { position: absolute; bottom: 0; } 
+.lm_left.lm_stack .lm_header,
+.lm_right.lm_stack .lm_header { height: 100%; } 
+.lm_left.lm_dragProxy .lm_header,
+.lm_right.lm_dragProxy .lm_header,
+.lm_left.lm_dragProxy .lm_items,
+.lm_right.lm_dragProxy .lm_items { float: left; } 
+.lm_left.lm_dragProxy .lm_header,
+.lm_right.lm_dragProxy .lm_header,
+.lm_left.lm_stack .lm_header,
+.lm_right.lm_stack .lm_header { width: 2rem; vertical-align: top; } 
+.lm_left.lm_dragProxy .lm_header .lm_tabs,
+.lm_right.lm_dragProxy .lm_header .lm_tabs,
+.lm_left.lm_stack .lm_header .lm_tabs,
+.lm_right.lm_stack .lm_header .lm_tabs { transform-origin: left top; top: 0; width: 100rem; /*hack*/}
+.lm_left.lm_dragProxy .lm_header .lm_controls,
+.lm_right.lm_dragProxy .lm_header .lm_controls,
+.lm_left.lm_stack .lm_header .lm_controls,
+.lm_right.lm_stack .lm_header .lm_controls { bottom: 0; flex-flow: column; } 
+.lm_dragProxy.lm_left .lm_header .lm_tabs,
+.lm_stack.lm_left .lm_header .lm_tabs { transform: rotate(-90deg) scaleX(-1); left: 0; } 
+.lm_dragProxy.lm_left .lm_header .lm_tabs .lm_tab,
+.lm_stack.lm_left .lm_header .lm_tabs .lm_tab { transform: scaleX(-1); margin-top: 0.1rem; } 
+.lm_dragProxy.lm_left .lm_header .lm_tabdropdown_list,
+.lm_stack.lm_left .lm_header .lm_tabdropdown_list { top: initial; right: initial; left: 2rem; } 
+.lm_dragProxy.lm_right .lm_content { float: left; } 
+.lm_dragProxy.lm_right .lm_header .lm_tabs,
+.lm_stack.lm_right .lm_header .lm_tabs { transform: rotate(90deg) scaleX(1); left: 100%; margin-left: 0; } 
+.lm_dragProxy.lm_right .lm_header .lm_controls,
+.lm_stack.lm_right .lm_header .lm_controls { left: 0.3rem; } 
+.lm_dragProxy.lm_right .lm_header .lm_tabdropdown_list,
+.lm_stack.lm_right .lm_header .lm_tabdropdown_list { top: initial; right: 2rem; } 
+.lm_dragProxy.lm_bottom .lm_header,
+.lm_stack.lm_bottom .lm_header { width: 100%; } 
+.lm_dragProxy.lm_bottom .lm_header .lm_tab,
+.lm_stack.lm_bottom .lm_header .lm_tab { margin-top: 0; border-top: none; } 
+.lm_dragProxy.lm_bottom .lm_header .lm_controls,
+.lm_stack.lm_bottom .lm_header .lm_controls { top: 0.3rem; } 
+.lm_dragProxy.lm_bottom .lm_header .lm_tabdropdown_list,
+.lm_stack.lm_bottom .lm_header .lm_tabdropdown_list { top: initial; bottom: 2rem; } 
+.lm_drop_tab_placeholder { float: left; width: 10rem; visibility: hidden; } 
+.lm_header .lm_controls .lm_tabdropdown:before { content: ""; display: block; width: 2rem; height: 2rem; background-color: #f2f219; } 
+.lm_header .lm_tabdropdown_list { position: absolute; top: 2.4rem; right: 0; z-index: 5; overflow: hidden; border: 0.1rem solid var(--brd_type01); border-radius: 0.4rem; } 
+.lm_header .lm_tabdropdown_list .lm_tab { height: 2.4rem; } 
+.lm_header .lm_tabdropdown_list .lm_tab .lm_title { width: 10rem; } 
+.lm_header .lm_tabdropdown_list .lm_close_tab { display: none !important; } 
+.lm_header .lm_tabmoredropdown_list { display: none; position: absolute; right: 0; top: 2.4rem; z-index: 5; width: 12rem; overflow: hidden; background-color: var(--bg_root); border: 0.1rem solid var(--brd_type01); border-radius: 0.4rem; z-index: 100; } 
+.lm_header .lm_tabmoredropdown_list div { padding: 0.4rem; cursor: pointer; } 
+.lm_header .lm_tabmoredropdown_list div:hover {background-color: var(--bg_hover);}
+
+/***********************************
+* Drag Proxy
+***********************************/
+.lm_dragProxy { position: absolute; top: 0; left: 0; z-index: 30; } 
+.lm_dragProxy .lm_header { background: transparent; } 
+.lm_dragProxy .lm_content { border-top: none; overflow: hidden; } 
+.lm_dropTargetIndicator { display: none; position: absolute; z-index: 35; transition: all 200ms ease; } 
+.lm_dropTargetIndicator .lm_inner { width: 100%; height: 100%; position: relative; top: 0; left: 0; } 
+.lm_transition_indicator { display: none; width: 2rem; height: 2rem; position: absolute; top: 0; left: 0; z-index: 20; } 
+.lm_popin { width: 2rem; height: 2rem; position: absolute; bottom: 0; right: 0; z-index: 9999; } 
+.lm_popin > * { width: 100%; height: 100%; position: absolute; top: 0; left: 0; } 
+.lm_popin > .lm_bg { z-index: 10; } 
+.lm_popin > .lm_icon { z-index: 20; } 
+
+.lm_goldenlayout { background: var(--bg_root); } 
+.lm_content { background: var(--bg_primary); border: 0.1rem solid transparent; padding: 1.2rem; } 
+.lm_dragProxy { border: 0.1rem solid var(--brd_type01); } 
+.lm_dropTargetIndicator { box-shadow: 0 0 3rem var(--bg_root); outline: 0.1rem dashed var(--text_primary); background: transparent !important; } 
+.lm_dropTargetIndicator .lm_inner { background: var(--bg_root); opacity: 0.2; } 
+.lm_splitter { background: var(--bg_root); opacity: 0.001; transition: opacity 200ms ease; } 
+.lm_splitter:hover,
+.lm_splitter.lm_dragging { background-color: var(--brd_type01); opacity: 1; } 
+.lm_header .lm_tab { font-size: 1.3rem; color: var(--text_primary); background: var(--bg_type01); } 
+.lm_header .lm_tab .lm_close_tab { display: none; } 
+.lm_header .lm_tab.lm_active { } 
+.lm_dragProxy.lm_right .lm_header .lm_tab.lm_active,
+.lm_stack.lm_right .lm_header .lm_tab.lm_active { box-shadow: 0.2rem -0.2rem 0.2rem var(--bg_root); } 
+.lm_dragProxy.lm_bottom .lm_header .lm_tab,
+.lm_stack.lm_bottom .lm_header .lm_tab { box-shadow: 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.3); } 
+.lm_dragProxy.lm_bottom .lm_header .lm_tab.lm_active,
+.lm_stack.lm_bottom .lm_header .lm_tab.lm_active { box-shadow: 0 0.2rem 0.2rem var(--bg_root); } 
+.lm_selected .lm_header { background-color: #f2f219; } 
+.lm_tab:hover,
+.lm_tab.lm_active { background: var(--bg_primary); color: var(--text_primary); } 
+.lm_header .lm_controls .lm_tabdropdown:before { color: var(--text_primary); } 
+.lm_controls .lm_popout { display: none; } 
+.lm_controls .lm_maximise { display: none; } 
+.lm_controls .lm_close { display: none; } 
+.lm_maximised .lm_controls .lm_maximise { display: none; } 
+.lm_transition_indicator { background-color: var(--bg_root); border: 0.1rem dashed #f2f219; } 
+.lm_popin { display: none; } 
