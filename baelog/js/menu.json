@@ -1,6 +1,6 @@
 {
-    "m000001": { "path": "/baelog/pages/home.html", "title": "Home" },
-    "m010001": { "path": "/baelog/pages/about.html", "title": "About" },
-    "m020001": { "path": "/baelog/pages/about.html", "title": "About" },
-    "m030001": { "path": "/baelog/pages/about.html", "title": "About" }
+    "HO01001": { "path": "/baelog/pages/home.html", "title": "Home" },
+    "AB01001": { "path": "/baelog/pages/about.html", "title": "About" },
+    "ST01001": { "path": "/baelog/pages/study.html", "title": "Study" },
+    "PR01001": { "path": "/baelog/pages/project.html", "title": "Project" }
 }
