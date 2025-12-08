@@ -75,18 +75,18 @@ time,
 mark,
 audio,
 video,
-a { margin: 0; padding: 0; box-sizing: border-box; outline: 0; line-height: 1.5; color: var(--text_primary); } 
+a { margin: 0; padding: 0; box-sizing: border-box; outline: 0; line-height: 1.5; color: rgb(var(--text-900)); } 
 
-html { font-size: 62.5%; width: 100%; background-color: var(--bg_root); scroll-behavior: smooth; } 
+html { font-size: 62.5%; width: 100%; background-color: rgb(var(--bg-300)); scroll-behavior: smooth; } 
 body { overflow-y: auto; overflow-x: hidden; } 
-@media (max-width: 320px) { html { font-size: 2.777777777777778vw; } 
+@media (max-width: 360px) { html { font-size: 2.777777777777778vw; } 
  }
 
 * { -webkit-tap-highlight-color: transparent; } 
 *::selection { background-color: rgba(100, 100, 100, 0.5); } 
 
 html,
-body { color: var(--text_primary); width: 100%; } 
+body { color: rgb(var(--text-900)); width: 100%; } 
 body { word-wrap: break-word; word-break: keep-all; overflow-wrap: break-word; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; min-height: 100%; -webkit-touch-callout: none; } 
 body,
 select,
@@ -179,7 +179,7 @@ a:hover { text-decoration: none; }
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; } 
 
-input::placeholder { color: var(--text_primary); line-height: 1.5; font-size: 1.6rem; font-weight: 400; } 
+input::placeholder { color: rgb(var(--text-900)); line-height: 1.5; font-size: 1.6rem; font-weight: 400; } 
 
 input::-ms-clear,
 input::-ms-reveal { display: none; width: 0; height: 0; } 
@@ -188,6 +188,9 @@ input::-webkit-search-cancel-button,
 input::-webkit-search-results-button,
 input::-webkit-search-results-decoration { display: none; } 
 
-/* *::-webkit-scrollbar {display: none;} */
-
 .hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0; } 
+
+::-webkit-scrollbar { opacity: 1; width: 4px; height: 4px; } 
+::-webkit-scrollbar-thumb { opacity: 1; background: rgba(var(--primary-500), 0.7); border-radius: 4px; } 
+::-webkit-scrollbar-track-piece { background: transparent; } 
+::-webkit-scrollbar-corner { background: transparent; } 

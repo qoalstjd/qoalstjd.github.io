@@ -8,6 +8,18 @@ window.ui = {
             timer = setTimeout(() => fn(...args), delay);
         };
     },
+    theme: {
+        init() {
+            console.log(`현재테마 : ${document.documentElement.dataset.theme}`)
+            document.addEventListener("click", e => {
+                if (!e.target.closest("[data-action='toggle-theme']")) return;
+                this.toggle();
+            });
+        },
+        toggle() {
+            document.documentElement.dataset.theme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+        }
+    },
     dropdown: {
         setupDropdown(dropdown) {
             const label = dropdown.querySelector(".dropdown-label");
@@ -322,7 +334,8 @@ document.querySelectorAll(".inp").forEach((inp) => {
 
 // DOMContentLoaded 초기실행
 document.addEventListener("DOMContentLoaded", () => {
-    window.ui.dropdown.init();
-    window.ui.tab.init();
-    window.ui.scrollTable.init();
+    window.ui.theme.init();
+    // window.ui.dropdown.init();
+    // window.ui.tab.init();
+    // window.ui.scrollTable.init();
 });
