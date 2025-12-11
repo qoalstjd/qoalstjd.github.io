@@ -1,0 +1,5 @@
+/* ==================== 버튼 ==================== */
+.btn-wrap { display: flex; align-items: center; gap: 0.6rem; margin-top: 4rem; }
+.btn-wrap .btn { min-width: 10rem; }
+.btn { display: inline-flex; justify-content: center; align-items: center; gap: 0.4rem; padding: 0 1.2rem; border-radius: 0.8rem; font-weight: 700; } 
+.btn:disabled { opacity: 0.5; } 

@@ -1,6 +1,6 @@
 html {
     /* primary / point / semantic */
-    --primary-500: 8, 136, 221;
+    --point: 8, 136, 221;
     --danger-500: 242, 68, 48;
     --info-500: 72, 129, 255;
     /* background */
@@ -8,12 +8,12 @@ html {
     --bg-200: 239, 242, 246;
     --bg-100: 246, 247, 248;
     --bg-000: 255, 255, 255;
-    --bg-hover: 246, 247, 248;
-    /* text */
-    --text-900: 21, 19, 26;
-    --text-700: 107, 107, 107;
-    --text-500: 145, 145, 145;
-    --text-300: 210, 212, 219;
+    --bg-hover: 221, 222, 223;
+    /* txt */
+    --txt-900: 21, 19, 26;
+    --txt-700: 107, 107, 107;
+    --txt-500: 145, 145, 145;
+    --txt-300: 210, 212, 219;
     /* border */
     --border-300: 225, 225, 225;
 } 
@@ -23,16 +23,28 @@ html[data-theme="dark"] {
     --danger-500: 242, 68, 48;
     --info-500: 72, 129, 255;
     /* background */
+    --bg-300: 29, 26, 34;
+    --bg-200: 41, 39, 46;
     --bg-100: 21, 19, 26;
     --bg-000: 34, 32, 40;
-    --bg-hover: 21, 19, 26;
-    --bg-200: 41, 39, 46;
-    --bg-300: 29, 26, 34;
-    /* text */
-    --text-900: 255, 255, 255;
-    --text-700: 178, 180, 191;
-    --text-500: 125, 126, 133;
-    --text-300: 80, 80, 91;
+    --bg-hover: 34, 32, 40;
+    /* txt */
+    --txt-900: 255, 255, 255;
+    --txt-700: 178, 180, 191;
+    --txt-500: 125, 126, 133;
+    --txt-300: 80, 80, 91;
     /* border */
     --border-300: 80, 80, 91;
 }
+/* ==================== 폰트 ==================== */
+.txt-point { color: rgb(var(--point)) !important; }
+.txt-900 { color: rgb(var(--txt-900)) !important; }
+.txt-700 { color: rgb(var(--txt-700)) !important; }
+.txt-500 { color: rgb(var(--txt-500)) !important; }
+.txt-300 { color: rgb(var(--txt-300)) !important; }
+/* ==================== 배경 ==================== */
+.bg-point { background-color: rgb(var(--point)) !important; }
+.bg-000 { background-color: rgb(var(--bg-000)); }
+.bg-100 { background-color: rgb(var(--bg-100)); }
+.bg-200 { background-color: rgb(var(--bg-200)); }
+.bg-300 { background-color: rgb(var(--bg-300)); }

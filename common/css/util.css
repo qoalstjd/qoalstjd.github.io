@@ -1,0 +1,39 @@
+/* ==================== 여백 ==================== */
+.mt0 { margin-top: 0 !important; } 
+.mt4 { margin-top: 0.4rem !important; } 
+.mt8 { margin-top: 0.8rem !important; } 
+.mt12 { margin-top: 1.2rem !important; }
+/* ==================== 패딩 ==================== */
+.pd-12 { padding: 1.2rem !important; } 
+/* ==================== 크기 ==================== */
+.w-full { width: 100%; } 
+.h-full { height: 100%; } 
+.w-auto { width: auto; } 
+.h-auto { height: auto; } 
+.h-40 { height: 4rem !important; } 
+.wh-12 { width: 1.2rem !important; height: 1.2rem !important; } 
+.wh-14 { width: 1.4rem !important; height: 1.4rem !important; } 
+.wh-16 { width: 1.6rem !important; height: 1.6rem !important; } 
+.wh-20 { width: 2rem !important; height: 2rem !important; } 
+.wh-24 { width: 2.4rem !important; height: 2.4rem !important; } 
+.wh-32 { width: 3.2rem !important; height: 3.2rem !important; } 
+.wh-48 { width: 4.8rem !important; height: 4.8rem !important; } 
+/* ==================== FLEX ==================== */
+.flx { display: flex; }
+.flx.inline { display: inline-flex; }
+.flx.col { flex-direction: column; }
+/* 정렬 */
+.al-s { align-items: flex-start !important; }
+.al-c { align-items: center !important; }
+.al-e { align-items: flex-end !important; }
+.js-bt { justify-content: space-between !important;}
+.js-s { justify-content: flex-start !important;}
+.js-c { justify-content: center !important;}
+.js-e { justify-content: flex-end !important;}
+/* Wrap */
+.flx-wrap { flex-wrap: wrap !important; }
+.flx-nowrap { flex-wrap: nowrap !important; }
+/* Gap */
+.gap-0 { gap: 0 !important; }
+.gap-4 { gap: 0.4rem !important; }
+.gap-8 { gap: 0.8rem !important; }

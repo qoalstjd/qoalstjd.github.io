@@ -1,6 +1,4 @@
-window.ui = window.ui || {};
-
-window.ui = {
+const ui = {
     debouncer: function (fn, delay = 200) {
         let timer;
         return (...args) => {
@@ -10,15 +8,39 @@ window.ui = {
     },
     theme: {
         init() {
-            console.log(`현재테마 : ${document.documentElement.dataset.theme}`)
-            document.addEventListener("click", e => {
+            console.log(`현재테마 : ${document.documentElement.dataset.theme}`);
+            document.addEventListener("click", (e) => {
                 if (!e.target.closest("[data-action='toggle-theme']")) return;
                 this.toggle();
             });
         },
         toggle() {
             document.documentElement.dataset.theme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
-        }
+        },
+    },
+    lottie: {
+        init() {
+            document.querySelectorAll(".lottie").forEach((el) => {
+                this.setup(el);
+                this.load(el);
+            });
+        },
+        setup(el) {
+            const size = el.dataset.size || 96;
+            el.style.width = size * 0.1 + "rem";
+            el.style.height = size * 0.1 + "rem";
+        },
+        load(el) {
+            const src = el.dataset.src;
+            lottie.loadAnimation({
+                container: el,
+                renderer: "svg",
+                loop: false,
+                autoplay: true,
+                path: src,
+                clearCanvas: true,
+            });
+        },
     },
     dropdown: {
         setupDropdown(dropdown) {
@@ -68,17 +90,10 @@ window.ui = {
                     close();
                     if (btn.tagName.toLowerCase() === "button") {
                         buttons.forEach((b, j) => {
-                            b.setAttribute(
-                                "aria-selected",
-                                i === j ? "true" : "false"
-                            );
+                            b.setAttribute("aria-selected", i === j ? "true" : "false");
                         });
                         label.textContent = buttons[i].textContent;
-                        if (
-                            label.textContent == "The last month" ||
-                            label.textContent == "The last three month" ||
-                            label.textContent == "The last six month"
-                        ) {
+                        if (label.textContent == "The last month" || label.textContent == "The last three month" || label.textContent == "The last six month") {
                             searchReportList();
                         }
                     }
@@ -104,9 +119,7 @@ window.ui = {
                 return;
             }
             if (!root) return;
-            root.querySelectorAll(".dropdown").forEach((el) =>
-                this.setupDropdown(el, options)
-            );
+            root.querySelectorAll(".dropdown").forEach((el) => this.setupDropdown(el, options));
         },
     },
     copyClipBoard: function (text) {
@@ -140,30 +153,18 @@ window.ui = {
             const container = tabWrap.parentElement;
             const tabs = tabWrap.querySelectorAll('[role="tab"]');
             tabs.forEach((tab) => {
-                const targetPanel = document.getElementById(
-                    tab.getAttribute("aria-controls")
-                );
+                const targetPanel = document.getElementById(tab.getAttribute("aria-controls"));
                 tab.addEventListener("click", () => {
-                    container
-                        .querySelectorAll('[role="tabpanel"]')
-                        .forEach((panel) => (panel.hidden = true));
+                    container.querySelectorAll('[role="tabpanel"]').forEach((panel) => (panel.hidden = true));
                     if (targetPanel) targetPanel.hidden = false;
 
                     if (!tab.getAttribute("href")?.startsWith("#")) {
-                        tabs.forEach((t) =>
-                            t.setAttribute("aria-selected", false)
-                        );
+                        tabs.forEach((t) => t.setAttribute("aria-selected", false));
                         tab.setAttribute("aria-selected", true);
                     } else {
                         e.preventDefault();
-                        const tabAreaBottom =
-                            document
-                                .querySelector("#header")
-                                .getBoundingClientRect().bottom +
-                            document.querySelector(".tab-area a").offsetHeight;
-                        const tabHeight = document.querySelector(
-                            tab.getAttribute("href")
-                        ).offsetTop;
+                        const tabAreaBottom = document.querySelector("#header").getBoundingClientRect().bottom + document.querySelector(".tab-area a").offsetHeight;
+                        const tabHeight = document.querySelector(tab.getAttribute("href")).offsetTop;
                         const y = tabHeight - tabAreaBottom;
                         requestAnimationFrame(() => {
                             window.scrollTo({ top: y, behavior: "auto" });
@@ -179,27 +180,16 @@ window.ui = {
         },
         setupScrollTab() {
             const scrollY = window.scrollY;
-            const tabAreaBottom =
-                document.querySelector("#header").getBoundingClientRect()
-                    .bottom +
-                document.querySelector(".tab-area a").offsetHeight;
+            const tabAreaBottom = document.querySelector("#header").getBoundingClientRect().bottom + document.querySelector(".tab-area a").offsetHeight;
             document.querySelectorAll("section").forEach((section) => {
                 const sectionTop = section.offsetTop;
                 const sectionHeight = section.offsetHeight;
                 const sectionBottom = sectionTop + sectionHeight;
-                if (
-                    scrollY + tabAreaBottom >= sectionTop - 4 &&
-                    scrollY + tabAreaBottom < sectionBottom
-                ) {
-                    document
-                        .querySelectorAll(".tab-area .tab-wrap a")
-                        .forEach((tab) => {
-                            const href = tab.getAttribute("href");
-                            tab.setAttribute(
-                                "aria-selected",
-                                href === `#${section.id}`
-                            );
-                        });
+                if (scrollY + tabAreaBottom >= sectionTop - 4 && scrollY + tabAreaBottom < sectionBottom) {
+                    document.querySelectorAll(".tab-area .tab-wrap a").forEach((tab) => {
+                        const href = tab.getAttribute("href");
+                        tab.setAttribute("aria-selected", href === `#${section.id}`);
+                    });
                 }
             });
         },
@@ -207,20 +197,13 @@ window.ui = {
             document.querySelectorAll('[role="tablist"]').forEach((tabWrap) => {
                 this.setupTabs(tabWrap);
             });
-            if (
-                document
-                    .querySelector(".tab-area .tab-wrap a")
-                    ?.getAttribute("href")
-                    .startsWith("#")
-            ) {
+            if (document.querySelector(".tab-area .tab-wrap a")?.getAttribute("href").startsWith("#")) {
                 window.addEventListener("scroll", () => this.setupScrollTab());
             }
             requestAnimationFrame(() => {
                 requestAnimationFrame(() => {
                     if (location.hash) {
-                        document
-                            .querySelector(location.hash)
-                            ?.scrollIntoView({ behavior: "instant" });
+                        document.querySelector(location.hash)?.scrollIntoView({ behavior: "instant" });
                     }
                 });
             });
@@ -231,23 +214,15 @@ window.ui = {
             setup(container) {
                 const table = container.querySelector("table");
                 const thead = table.querySelector("thead");
-                const firstCol = table.querySelector(
-                    "tr th:first-child, tr td:first-child"
-                );
-                const leftBtn = Object.assign(
-                    document.createElement("button"),
-                    {
-                        className: "left",
-                        textContent: "scroll to left",
-                    }
-                );
-                const rightBtn = Object.assign(
-                    document.createElement("button"),
-                    {
-                        className: "right",
-                        textContent: "scroll to right",
-                    }
-                );
+                const firstCol = table.querySelector("tr th:first-child, tr td:first-child");
+                const leftBtn = Object.assign(document.createElement("button"), {
+                    className: "left",
+                    textContent: "scroll to left",
+                });
+                const rightBtn = Object.assign(document.createElement("button"), {
+                    className: "right",
+                    textContent: "scroll to right",
+                });
 
                 const wrapper = document.createElement("div");
                 wrapper.className = "arrow-btns";
@@ -256,10 +231,8 @@ window.ui = {
                 const update = () => {
                     const { offsetWidth: cW, scrollLeft } = container;
                     const tW = table.offsetWidth;
-                    leftBtn.style.display =
-                        scrollLeft > 0 ? "inline-block" : "none";
-                    rightBtn.style.display =
-                        scrollLeft + cW < tW ? "inline-block" : "none";
+                    leftBtn.style.display = scrollLeft > 0 ? "inline-block" : "none";
+                    rightBtn.style.display = scrollLeft + cW < tW ? "inline-block" : "none";
                     const thHeight = thead?.offsetHeight || 42;
                     const firstW = firstCol?.offsetWidth || 0;
                     wrapper.style.top = `${thHeight / 2 - 8}px`;
@@ -267,19 +240,13 @@ window.ui = {
                 };
                 leftBtn.addEventListener("click", () =>
                     container.scrollBy({
-                        left: -Math.max(
-                            this.minDistance,
-                            container.scrollWidth * this.scrollRatio
-                        ),
+                        left: -Math.max(this.minDistance, container.scrollWidth * this.scrollRatio),
                         behavior: "smooth",
                     })
                 );
                 rightBtn.addEventListener("click", () =>
                     container.scrollBy({
-                        left: Math.max(
-                            this.minDistance,
-                            container.scrollWidth * this.scrollRatio
-                        ),
+                        left: Math.max(this.minDistance, container.scrollWidth * this.scrollRatio),
                         behavior: "smooth",
                     })
                 );
@@ -290,16 +257,14 @@ window.ui = {
                 update();
             },
             init() {
-                document
-                    .querySelectorAll(".table-wrap")
-                    .forEach((el) => this.setup(el));
+                document.querySelectorAll(".table-wrap").forEach((el) => this.setup(el));
             },
         },
     },
     setScrollLock: (lock = true) => {
         document.body.style.overflow = lock ? "hidden" : "";
     },
-    setDimmed : (active = true, zIndex = "") => {
+    setDimmed: (active = true, zIndex = "") => {
         const dim = document.querySelector(".dim");
         if (!dim) return;
         if (active) {
@@ -311,7 +276,7 @@ window.ui = {
             dim.style.zIndex = "";
             dim.style.pointerEvents = "none";
         }
-    }
+    },
 };
 
 document.querySelectorAll(".inp").forEach((inp) => {
@@ -335,7 +300,10 @@ document.querySelectorAll(".inp").forEach((inp) => {
 // DOMContentLoaded 초기실행
 document.addEventListener("DOMContentLoaded", () => {
     window.ui.theme.init();
+    window.ui.lottie.init();
     // window.ui.dropdown.init();
     // window.ui.tab.init();
     // window.ui.scrollTable.init();
 });
+
+window.ui = ui;

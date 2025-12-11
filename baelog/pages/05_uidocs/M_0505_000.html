@@ -1,0 +1,35 @@
+<h2>Icon</h2>
+<ul class="ico-list"></ul>
+<script>
+(function () {
+    const icoSelectors = [];
+    function scanSheet(sheet) {
+        let rules;
+        try {
+            rules = sheet.cssRules;
+        } catch (e) {
+            return; // CORS 또는 접근 불가
+        }
+        for (const rule of rules) {
+            if (rule instanceof CSSImportRule) {
+                // import된 stylesheet 재귀탐색
+                scanSheet(rule.styleSheet);
+            } else if (rule instanceof CSSStyleRule) {
+                const sel = rule.selectorText;
+                if (sel && sel.includes("data-ico")) {
+                    icoSelectors.push(sel);
+                }
+            }
+        }
+    }
+    for (const sheet of document.styleSheets) {
+        if (sheet.href?.includes("/common/css/global.css")) {
+            scanSheet(sheet);
+        }
+    }
+    icoSelectors.forEach((el) => {
+        const icoName = el.split("[")[1].slice(0, -1);
+        document.querySelector(".ico-list").innerHTML += `<li class="ico wh-48" ${icoName}></li>`;
+    });
+})();
+</script>
