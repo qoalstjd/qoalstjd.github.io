@@ -1,4 +1,43 @@
-<h1 class="fs-26">Project</h1>
+<div class="tit-wrap">
+    <h2 data-bind="h2">$Title$</h2>
+    <div class="flx" data-view>
+        <button data-ico="grid" class="ico wh-24"></button>
+        <button data-ico="gridList" class="ico wh-24"></button>
+        <button data-ico="table" class="ico wh-24"></button>
+    </div>
+</div>
+
+<ul class="grid col-4" data-bind="posts"></ul>
+
 <script>
-    
+    (async () => {
+        const h2 = document.querySelector("[data-bind=h2]");
+        const posts = document.querySelector("[data-bind=posts]");
+        const curLinkcd = SPA.getLinkcd();
+        const category = SPA.routes[curLinkcd]?.name;
+
+        h2.textContent = category || "Posts";
+
+        const frag = document.createDocumentFragment();
+        const data = await fetch("/baelog/js/project.json").then((r) => r.json());
+        const filtered = category === 'Posts' ? data : data.filter(p => p.category === category.toLowerCase());
+        filtered.forEach(p => {
+            const li =  document.createElement("li");
+            li.innerHTML = `
+                <a href="/baelog/index.html?linkcd=m0400010&fileName=${p.fileName}">
+                    <p>${p.title}</p>
+                    <p>${p.summary}</p>
+                    <p>${p.date}</p>
+                </a>
+            `;
+            frag.appendChild(li);
+        });
+        posts.replaceChildren(frag);
+
+        document.querySelector("[data-view]").addEventListener("click", (e) => {
+            if (e.target.closest("[data-ico]")) {
+                posts.classList.add = e.target.closest("[data-ico]")?.dataset.ico;
+            }
+        });
+    })();
 </script>

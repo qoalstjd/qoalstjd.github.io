@@ -1,9 +1,16 @@
 const SPA = {
+    wrap: document.querySelector(".wrap"),
     main: document.querySelector(".wrap > main"),
     routes: {},
     // linkcd 가져오기: history.state → sessionStorage → 기본값
     getLinkcd() {
         return history.state?.linkcd || sessionStorage.getItem("linkcd") || "m0100000";
+    },
+    // 현재화면의 depth1 메뉴 link 가져오기
+    getDep1Key(linkcd) {
+        const route = this.routes[linkcd];
+        if (!route) return linkcd;
+        return route.depth === 1 ? linkcd : route.parent?.[0] || linkcd;
     },
     showErrorFallback({ code = "default" } = {}) {
         const msg = {
@@ -14,108 +21,113 @@ const SPA = {
             503: ["서비스 점검 중입니다.", "잠시 후 다시 이용해주세요."],
             default: ["요청을 처리할 수 없습니다.", "다시 시도해주세요."],
         }[code] || ["요청을 처리할 수 없습니다.", "다시 시도해주세요."];
-        this.main.className = "error";
+        this.main.className = "flx col jc-c ai-c";
         this.main.innerHTML = `
             <i class="lottie" data-src="/common/json/error.json"></i>
             <strong class="fs-20">${msg[0]}</strong>
             <p>${msg[1]}</p>
             <div class="btn-wrap">
-                <button class="btn h-40 bg-300" onclick="history.back()">뒤로가기</button>
                 <a href="/baelog" class="btn h-40 bg-point">홈으로</a>
             </div>
         `;
         window.ui?.lottie?.init?.();
+        history.replaceState({ linkcd: "error" }, "", "/baelog");
     },
-    // LNB 렌더링 (depth 2 기준)
+    // LNB 렌더링 (dep1key)
     renderLNB(dep1Key) {
-        const wrap = this.main.closest(".wrap");
-        let lnb = wrap.querySelector(".lnb");
+        const lnb = this.wrap.querySelector(".lnb");
         lnb?.remove();
         const items = Object.entries(this.routes)
-            .filter(([key, r]) => r.dep1 === dep1Key && r.depth === 2)
-            .map(([key, r]) => `<li><a href="/baelog/index.html?linkcd=${key}">${r.name}</a></li>`);
+            .filter(([key, r]) => r.parent?.includes(dep1Key) && r.depth === 2)
+            .map(([key, r]) => `<li><a href="/baelog?linkcd=${key}">${r.name}</a></li>`);
         if (items.length) {
-            const dep1Name = this.routes[dep1Key].name;
-            lnb = document.createElement("div");
-            lnb.className = "lnb";
-            lnb.innerHTML = `<h1 class="fs-26">${dep1Name}</h1><ul>${items.join("")}</ul>`;
-            wrap.prepend(lnb);
+            const dep1Name = this.routes[dep1Key]?.name || "";
+            const newLnb = document.createElement("div");
+            newLnb.className = "lnb";
+            newLnb.innerHTML = `<h1 class="fs-26">${dep1Name}</h1><ul>${items.join("")}</ul>`;
+            this.wrap.prepend(newLnb);
         }
     },
     // 페이지 내부 스크립트 실행
-    runScripts() {
-        document.querySelectorAll("script[data-spa]").forEach((s) => s.remove());
-        this.main.querySelectorAll("script").forEach((old) => {
-            const s = document.createElement("script");
-            if (old.src) s.src = old.src;
-            else s.textContent = old.textContent;
-            s.dataset.spa = "1";
-            document.body.appendChild(s);
-            old.remove();
+    runScripts(linkcd) {
+        document.querySelectorAll("script[data-linkcd]").forEach((s) => s.remove());
+        const scripts = Array.from(this.main.querySelectorAll("script"));
+        requestAnimationFrame(() => {
+            scripts.forEach((oldScript) => {
+                const newScript = document.createElement("script");
+                if (oldScript.src) newScript.src = oldScript.src;
+                else newScript.textContent = oldScript.textContent;
+                newScript.dataset.linkcd = linkcd;
+                document.body.appendChild(newScript);
+                oldScript.remove();
+            });
         });
     },
     // GNB/ LNB active 처리
-    _setActive(linkcd) {
+    setActive(linkcd) {
         const gnb = document.querySelector(".gnb");
         const lnb = document.querySelector(".lnb");
-        // GNB
-        gnb?.querySelectorAll("li a i").forEach(i => i.classList.remove("bg-point"));
-        const dep1Key = this.routes[linkcd]?.dep1 || linkcd;
+        gnb?.querySelectorAll("li a i").forEach((i) => i.classList.remove("bg-point"));
+        const route = this.routes[linkcd];
+        const dep1Key = route?.depth === 1 ? linkcd : route?.parent?.[0] || linkcd;
         gnb?.querySelector(`a[href*="linkcd=${dep1Key}"] i`)?.classList.add("bg-point");
-        // LNB
-        lnb?.querySelectorAll("li a").forEach(a => a.classList.remove("txt-point"));
+        lnb?.querySelectorAll("li a").forEach((a) => a.classList.remove("txt-point"));
         const lnbCur = lnb?.querySelector(`a[href*="linkcd=${linkcd}"]`) || lnb?.querySelector("li:first-child a");
         lnbCur?.classList.add("txt-point");
-        // main 클래스
-        this.main.className = this.routes[dep1Key].name.toLowerCase();
+        this.main.className = this.routes[dep1Key]?.name.toLowerCase() || "";
     },
-    _bindEvent() {
+    bindEvent() {
         document.addEventListener("click", (e) => {
             const a = e.target.closest("a");
             if (!a) return;
-            if (!a.getAttribute("href")?.startsWith("/baelog")) return;
+            if (!a.href.startsWith(location.origin + "/baelog")) return;
             if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
             e.preventDefault();
-            const url = new URL(a.href, location.origin);
-            const linkcd = url.searchParams.get("linkcd") || "m0100000";
-            this.loadPage(linkcd);
+            const url = new URL(a.href);
+            const params = Object.fromEntries(url.searchParams.entries());
+            if (!params.linkcd) params.linkcd = "m0100000";
+            sessionStorage.setItem("pageParams", JSON.stringify(params));
+            this.loadPage(params, false);
         });
         window.addEventListener("popstate", (e) => {
-            const linkcd = e.state?.linkcd || this.getLinkcd();
-            this.loadPage(linkcd, true);
+            const state = e.state || {};
+            if (!state.linkcd) state.linkcd = "m0100000";
+            sessionStorage.setItem("pageParams", JSON.stringify(state));
+            this.loadPage(state, true);
         });
     },
-    loadPage(linkcd, replaceHistory=false) {
-        const route = this.routes[linkcd];
+    loadPage(params = { "linkcd": "m0100000" }, replaceHistory = false) {
+        let route = this.routes[params.linkcd];
         if (!route) return this.showErrorFallback({ code: 404 });
+
+        const dep1Key = this.getDep1Key(params.linkcd);
+        if (route.depth === 1) {
+            const firstChild = Object.entries(this.routes).find(([k, r]) => r.parent?.includes(params.linkcd) && r.depth === 2);
+            if (firstChild) {
+                params.linkcd = firstChild[0];
+                route = this.routes[params.linkcd];
+            }
+        }
         fetch(route.path)
-            .then(res => {
-                if (!res.ok) {
-                    const code = res.status;
-                    throw code;
-                }
-                return res.text();
-            })
-            .then(html => {
-                const dep1Key = Object.entries(this.routes)
-                    .find(([key, r]) => (String(key).slice(1, 3) === linkcd.slice(1, 3)) && r.depth === 1)?.[0] || linkcd;
-                this.renderLNB(dep1Key);
-                this._setActive(linkcd);
-                this.main.className = this.routes[dep1Key].name.toLowerCase();
+            .then((r) => (r.ok ? r.text() : Promise.reject(r.status)))
+            .then((html) => {
                 this.main.innerHTML = html;
-                this.runScripts();
-                if (route.tab) {
-                    this.main.dataset.tab = route.tab
+                this.renderLNB(dep1Key);
+                this.setActive(params.linkcd);
+                this.runScripts(params.linkcd);
+
+                if (replaceHistory) {   
+                    history.replaceState(params, "", "/baelog");
                 }
-                sessionStorage.setItem("linkcd", linkcd);
-                if (replaceHistory) {
-                    history.replaceState({ linkcd }, "", "/baelog");
-                } else {
-                    history.pushState({ linkcd }, "", "/baelog");
+                else {
+                    if (history.state?.linkcd === "error") {
+                        history.replaceState(params, "", "/baelog");
+                    } else {
+                        history.pushState(params, "", "/baelog");
+                    }
                 }
             })
-            .catch(code => {
-                sessionStorage.removeItem("linkcd");
+            .catch((code) => {
                 this.showErrorFallback({ code });
             });
     },
@@ -125,9 +137,14 @@ const SPA = {
             .then((data) => {
                 this.routes = data;
                 const url = new URL(window.location.href, window.location.origin);
-                const linkcd = url.searchParams.get("linkcd") || this.getLinkcd();
-                this.loadPage(linkcd, true);
-                this._bindEvent();
+                let params = Object.fromEntries(url.searchParams.entries());
+                if (Object.keys(params).length === 0) {
+                    const saved = sessionStorage.getItem("pageParams");
+                    if (saved) params = JSON.parse(saved);
+                }
+                if (!params.linkcd) params.linkcd = "m0100000";
+                this.loadPage(params, true);
+                this.bindEvent();
             });
     },
 };

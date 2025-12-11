@@ -1,3 +1,19 @@
-<h2>${title}</h2>
+<div class="tit-wrap">
+    <h2 data-bind="h2">$Title$</h2>
+    <div class="flx">
+        <button class="ico wh-24" data-ico="grid"><span class="hidden">그리드</span></button>
+        <button class="ico wh-24" data-ico="gridList"><span class="hidden">리스트</span></button>
+        <button class="ico wh-24" data-ico="table"><span class="hidden">테이블</span></button>
+    </div>
+</div>
+<ul class="flx col-4 gap-8">
+    <li>test1</li>
+    <li>test2</li>
+    <li>test3</li>
+    <li>test4</li>
+</ul>
 <script>
+    (function () {
+        document.querySelector("[data-bind='h2']").innerText = SPA.routes[SPA.getLinkcd()].name;
+    })();
 </script>

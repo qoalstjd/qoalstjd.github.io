@@ -79,10 +79,7 @@ body > .wrap .lnb { position: fixed; left: 8.4rem; top: 5.2rem; width: 24rem; he
 body > .wrap .lnb + main,
 body > .wrap .lnb ~ footer { margin-left: 24.4rem; }
 body > .wrap .lnb ul li a { display: block; padding: 1.2rem 1.6rem; border-radius: 0.8rem; } 
-body > .wrap .lnb ul li:nth-child(1) a { padding-top: 0; text-transform: capitalize; } 
-body > .wrap .lnb ul li:not(:nth-child(1)) a:hover { background-color: var(--bg_type02); } 
-
-body > .wrap main.error { align-items: center; justify-content: center; }
+body > .wrap .lnb ul li a:hover { background-color: rgb(var(--bg-hover)); } 
 
 body footer { height: 5.2rem; margin: 0.4rem 0 0.4rem; box-shadow: 0 -0.4rem 0 0 var(--bg_root); display: flex; align-items: center; justify-content: center; background-color: rgb(var(--bg-200)); } 
 body > aside { position: fixed; right: -40rem; top: 0; width: 40rem; height: 100vh; box-shadow: -0.4rem 0 0 0 var(--bg_root); z-index: 1; transition: right 0.3s; display: none; } 
@@ -90,3 +87,36 @@ body.aside-opened > aside { right: 0; }
 body > aside .aside-header { display: flex; align-items: center; height: 5.2rem; padding: 0 1.6rem; } 
 body > aside .aside-header .util { margin-left: auto; } 
 body > aside .aside-header .util button i { mask-image: url("https://s2.svgbox.net/octicons.svg?ic=x-bold"); } 
+
+
+.controls div { display: flex; gap: 0.4rem; align-items: center; } 
+
+.controls.grid + .posts { display: grid; width: 100%; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 2rem; } 
+.controls.grid + .posts li a { position: relative; display: block; border-radius: 0.8rem; overflow: hidden; background-color: var(--bg_type01); aspect-ratio: 1/1; } 
+.controls.grid + .posts li a::before { content: 'IMG'; display: flex; align-items: center; justify-content: center; width: 100%; height: calc(100% - 10.5rem); background-color: var(--bg_hover); } 
+.controls.grid + .posts li a::after { content: ''; display: block; width: 100%; height: 100%; position: absolute; left: 0; top: 0; background-color: var(--bg_hover); opacity: 0; transition: all 0.3s; } 
+.controls.grid + .posts li a i { position: absolute; left: 0; top: 0; width: 100%; height: calc(100% - 10.5rem); background: no-repeat top center / 100%; transition: height 0.3s; } 
+.controls.grid + .posts li:hover a i { height: 100%; } 
+.controls.grid + .posts li:hover a::after { opacity: 0.8; } 
+.controls.grid + .posts li a div { position: relative; padding: 1.2rem 1.6rem; z-index: 1; } 
+.controls.grid + .posts li a div * { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; } 
+
+.controls.gridList + .posts li + li { margin-top: 1.2rem; } 
+.controls.gridList + .posts li a { position: relative; width: 100%; overflow: hidden; display: flex; align-items: center; border-radius: 0.8rem; background-color: var(--bg_type01); padding: 1.6rem; gap: 1.2rem; } 
+.controls.gridList + .posts li:hover a { background-color: var(--bg_hover); } 
+.controls.gridList + .posts li a i { width: 6.9rem; height: 6.9rem; background-size: cover; } 
+.controls.gridList + .posts li a div { flex: 1; overflow: hidden; width: 2rem; display: flex; flex-direction: column; } 
+.controls.gridList + .posts li a div p,
+.controls.gridList + .posts li a div h3 { text-overflow: ellipsis; overflow: hidden; white-space: nowrap; } 
+.controls.gridList + .posts li a div p:nth-child(1) { padding-right: 7rem; } 
+.controls.gridList + .posts li a div p:last-child { position: absolute; right: 1.6rem; top: 1.6rem; } 
+
+.controls.table + .posts li a { border-top: 0.1rem solid var(--brd_type01); display: block; padding: 0.6rem 0; } 
+.controls.table + .posts li:hover a { background-color: var(--bg_hover); } 
+.controls.table + .posts li:last-child a { border-bottom: 0.1rem solid var(--brd_type01); } 
+.controls.table + .posts li a i { display: none; } 
+.controls.table + .posts li a div { display: grid; align-items: center; grid-template-columns: minmax(8.8rem, auto) 1fr auto; gap: 0.8rem; } 
+.controls.table + .posts li a div p:nth-child(1) { text-align: center; } 
+.controls.table + .posts li a div h3 { font-size: 1.4rem; } 
+.controls.table + .posts li a div p:nth-child(3) { display: none; } 
+.controls.table + .posts li a div p:nth-child(4) { text-align: right; } 

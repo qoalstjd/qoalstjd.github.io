@@ -2,7 +2,7 @@
 .mt0 { margin-top: 0 !important; } 
 .mt4 { margin-top: 0.4rem !important; } 
 .mt8 { margin-top: 0.8rem !important; } 
-.mt12 { margin-top: 1.2rem !important; }
+.mt12 { margin-top: 1.2rem !important; } 
 /* ==================== 패딩 ==================== */
 .pd-12 { padding: 1.2rem !important; } 
 /* ==================== 크기 ==================== */
@@ -18,22 +18,27 @@
 .wh-24 { width: 2.4rem !important; height: 2.4rem !important; } 
 .wh-32 { width: 3.2rem !important; height: 3.2rem !important; } 
 .wh-48 { width: 4.8rem !important; height: 4.8rem !important; } 
-/* ==================== FLEX ==================== */
-.flx { display: flex; }
-.flx.inline { display: inline-flex; }
-.flx.col { flex-direction: column; }
-/* 정렬 */
-.al-s { align-items: flex-start !important; }
-.al-c { align-items: center !important; }
-.al-e { align-items: flex-end !important; }
-.js-bt { justify-content: space-between !important;}
-.js-s { justify-content: flex-start !important;}
-.js-c { justify-content: center !important;}
-.js-e { justify-content: flex-end !important;}
-/* Wrap */
-.flx-wrap { flex-wrap: wrap !important; }
-.flx-nowrap { flex-wrap: nowrap !important; }
 /* Gap */
-.gap-0 { gap: 0 !important; }
-.gap-4 { gap: 0.4rem !important; }
-.gap-8 { gap: 0.8rem !important; }
+.gap-0 { gap: 0 !important; } 
+.gap-4 { gap: 0.4rem !important; } 
+.gap-8 { gap: 0.8rem !important; } 
+/* ==================== FLEX ==================== */
+.flx { display: flex; gap: 0.4rem; flex-wrap: wrap; } 
+.flx.inline { display: inline-flex; } 
+.flx.col { flex-direction: column; } 
+/* 정렬 */
+.ai-s { align-items: flex-start !important; } 
+.ai-c { align-items: center !important; } 
+.ai-e { align-items: flex-end !important; } 
+.jc-bt { justify-content: space-between !important; } 
+.jc-s { justify-content: flex-start !important; } 
+.jc-c { justify-content: center !important; } 
+.jc-e { justify-content: flex-end !important; } 
+/* Wrap */
+.flx-wrap { flex-wrap: wrap !important; } 
+.flx-nowrap { flex-wrap: nowrap !important; } 
+/* ==================== GRID ==================== */
+.grid { display: grid; gap: 0.4rem; } 
+.grid.col-2 { grid-template-columns: repeat(2, 1fr); } 
+.grid.col-3 { grid-template-columns: repeat(3, 1fr); } 
+.grid.col-4 { grid-template-columns: repeat(4, 1fr); } 
