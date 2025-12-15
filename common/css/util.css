@@ -1,10 +1,13 @@
 /* ==================== 여백 ==================== */
-.mt0 { margin-top: 0 !important; } 
-.mt4 { margin-top: 0.4rem !important; } 
-.mt8 { margin-top: 0.8rem !important; } 
-.mt12 { margin-top: 1.2rem !important; } 
+.mt-0 { margin-top: 0 !important; } 
+.mt-4 { margin-top: 0.4rem !important; } 
+.mt-8 { margin-top: 0.8rem !important; } 
+.mt-12 { margin-top: 1.2rem !important; } 
+.mt-16 { margin-top: 1.6rem !important; } 
 /* ==================== 패딩 ==================== */
 .pd-12 { padding: 1.2rem !important; } 
+.pd-16 { padding: 1.6rem !important; } 
+.pd-20 { padding: 2.0rem !important; } 
 /* ==================== 크기 ==================== */
 .w-full { width: 100%; } 
 .h-full { height: 100%; } 
@@ -22,10 +25,14 @@
 .gap-0 { gap: 0 !important; } 
 .gap-4 { gap: 0.4rem !important; } 
 .gap-8 { gap: 0.8rem !important; } 
+.gap-12 { gap: 1.2rem !important; } 
+.gap-16 { gap: 1.6rem !important; } 
+.gap-20 { gap: 2.0rem !important; } 
+.gap-24 { gap: 2.4rem !important; } 
 /* ==================== FLEX ==================== */
-.flx { display: flex; gap: 0.4rem; flex-wrap: wrap; } 
+.flx { display: flex !important; flex-wrap: wrap; } 
 .flx.inline { display: inline-flex; } 
-.flx.col { flex-direction: column; } 
+.flx.col { flex-direction: column; align-items: stretch; } 
 /* 정렬 */
 .ai-s { align-items: flex-start !important; } 
 .ai-c { align-items: center !important; } 
@@ -38,7 +45,10 @@
 .flx-wrap { flex-wrap: wrap !important; } 
 .flx-nowrap { flex-wrap: nowrap !important; } 
 /* ==================== GRID ==================== */
-.grid { display: grid; gap: 0.4rem; } 
-.grid.col-2 { grid-template-columns: repeat(2, 1fr); } 
-.grid.col-3 { grid-template-columns: repeat(3, 1fr); } 
-.grid.col-4 { grid-template-columns: repeat(4, 1fr); } 
+.grid { display: grid !important; grid-template-columns: repeat(auto-fill, minmax(24rem, 1fr)); } 
+.grid.min-240 { grid-template-columns: repeat(auto-fill, minmax(24rem, 1fr)); }
+.grid.min-280 { grid-template-columns: repeat(auto-fill, minmax(28rem, 1fr)); }
+.grid.min-320 { grid-template-columns: repeat(auto-fill, minmax(32rem, 1fr)); }
+/* ==================== 말줄임 ==================== */
+.ell-1 { display: block; width: 100%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; } 
+.ell-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; } 

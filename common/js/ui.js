@@ -20,7 +20,7 @@ const ui = {
     },
     lottie: {
         init() {
-            document.querySelectorAll(".lottie").forEach((el) => {
+            document.querySelectorAll(".lottie").forEach(el => {
                 this.setup(el);
                 this.load(el);
             });
@@ -41,6 +41,22 @@ const ui = {
                 clearCanvas: true,
             });
         },
+        msg(msg, target = document.body, src = "/common/json/error.json") {
+            const wrap = document.createElement("div");
+            wrap.className = "lottie-wrap";
+            wrap.innerHTML = `
+                <div class="lottie" data-src="${src}"></div>
+                <strong class="fs-20">${msg[0]}</strong>
+                <p>${msg[1]}</p>
+            `
+            target.innerHTML = "";
+            target.appendChild(wrap);
+
+            this.setup(wrap.querySelector('.lottie'));
+            this.load(wrap.querySelector('.lottie'));
+
+            return wrap;
+        }
     },
     dropdown: {
         setupDropdown(dropdown) {

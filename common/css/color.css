@@ -1,50 +1,52 @@
+/* ==================== 라이트 ==================== */
 html {
-    /* primary / point / semantic */
-    --point: 8, 136, 221;
-    --danger-500: 242, 68, 48;
-    --info-500: 72, 129, 255;
+    /* primary / semantic */
+    --primary-500: 8, 136, 221;
+    --danger-500: 220, 50, 50;
+    --info-500: 70, 130, 255;
     /* background */
-    --bg-300: 221, 222, 223;
-    --bg-200: 239, 242, 246;
-    --bg-100: 246, 247, 248;
+    --bg-300: 230, 232, 235;
+    --bg-200: 245, 247, 250;
+    --bg-100: 250, 251, 252;
     --bg-000: 255, 255, 255;
-    --bg-hover: 221, 222, 223;
-    /* txt */
-    --txt-900: 21, 19, 26;
-    --txt-700: 107, 107, 107;
-    --txt-500: 145, 145, 145;
-    --txt-300: 210, 212, 219;
+    --bg-hover: 225, 227, 230;
+    /* text */
+    --txt-900: 20, 20, 25;
+    --txt-700: 100, 100, 100;
+    --txt-500: 140, 140, 145;
+    --txt-300: 200, 200, 210;
     /* border */
-    --border-300: 225, 225, 225;
-} 
+    --brd-300: 220, 220, 225;
+}
+/* ==================== 다크 ==================== */
 html[data-theme="dark"] {
-    /* primary / point / semantic */
-    --primary-500: 10, 170, 255;
-    --danger-500: 242, 68, 48;
-    --info-500: 72, 129, 255;
+    /* primary / semantic */
+    --primary-500: 15, 170, 255;
+    --danger-500: 220, 50, 50;
+    --info-500: 70, 130, 255;
     /* background */
-    --bg-300: 29, 26, 34;
-    --bg-200: 41, 39, 46;
-    --bg-100: 21, 19, 26;
-    --bg-000: 34, 32, 40;
-    --bg-hover: 34, 32, 40;
-    /* txt */
+    --bg-300: 15, 13, 25;
+    --bg-200: 22, 20, 32;
+    --bg-100: 30, 28, 40;
+    --bg-000: 40, 38, 50;
+    --bg-hover: 50, 48, 60;
+    /* text */
     --txt-900: 255, 255, 255;
-    --txt-700: 178, 180, 191;
-    --txt-500: 125, 126, 133;
-    --txt-300: 80, 80, 91;
+    --txt-700: 180, 180, 190;
+    --txt-500: 130, 130, 140;
+    --txt-300: 90, 90, 100;
     /* border */
-    --border-300: 80, 80, 91;
+    --brd-300: 80, 80, 90;
 }
 /* ==================== 폰트 ==================== */
-.txt-point { color: rgb(var(--point)) !important; }
+.txt-point { color: rgb(var(--primary-500)) !important; }
 .txt-900 { color: rgb(var(--txt-900)) !important; }
 .txt-700 { color: rgb(var(--txt-700)) !important; }
 .txt-500 { color: rgb(var(--txt-500)) !important; }
 .txt-300 { color: rgb(var(--txt-300)) !important; }
 /* ==================== 배경 ==================== */
-.bg-point { background-color: rgb(var(--point)) !important; }
-.bg-000 { background-color: rgb(var(--bg-000)); }
-.bg-100 { background-color: rgb(var(--bg-100)); }
-.bg-200 { background-color: rgb(var(--bg-200)); }
-.bg-300 { background-color: rgb(var(--bg-300)); }
+.bg-point { background-color: rgb(var(--primary-500)) !important; }
+.bg-000 { background-color: rgb(var(--bg-000)) !important; }
+.bg-100 { background-color: rgb(var(--bg-100)) !important; }
+.bg-200 { background-color: rgb(var(--bg-200)) !important; }
+.bg-300 { background-color: rgb(var(--bg-300)) !important; }

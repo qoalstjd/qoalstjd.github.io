@@ -1,19 +1,59 @@
 <div class="tit-wrap">
     <h2 data-bind="h2">$Title$</h2>
-    <div class="flx">
-        <button class="ico wh-24" data-ico="grid"><span class="hidden">그리드</span></button>
-        <button class="ico wh-24" data-ico="gridList"><span class="hidden">리스트</span></button>
-        <button class="ico wh-24" data-ico="table"><span class="hidden">테이블</span></button>
+    <div class="flx" data-view>
+        <button data-ico="grid" class="ico wh-24"></button>
+        <button data-ico="block" class="ico wh-24"></button>
+        <button data-ico="table" class="ico wh-24"></button>
     </div>
 </div>
-<ul class="flx col-4 gap-8">
-    <li>test1</li>
-    <li>test2</li>
-    <li>test3</li>
-    <li>test4</li>
-</ul>
+
+<ul data-bind="posts" data-postviewtype="grid"></ul>
+
 <script>
-    (function () {
-        document.querySelector("[data-bind='h2']").innerText = SPA.routes[SPA.getLinkcd()].name;
+    (() => {
+        const h2 = document.querySelector("[data-bind='h2']");
+        const posts = document.querySelector("[data-bind='posts']");
+        const curLinkcd = SPA.getLinkcd();
+        const category = SPA.routes[curLinkcd]?.name;
+
+        h2.textContent = category || "All Posts";
+
+        const loadData = async () => {
+            const data = await window.fetchManager.get("/baelog/js/study.json");
+            const frag = document.createDocumentFragment();
+            const filtered = category === "All Posts" ? data : data.filter((p) => p.category === category);
+            if (filtered.length) {
+                filtered.forEach((p) => {
+                    const li = document.createElement("li");
+                    li.innerHTML = `
+                        <a href="/baelog/index.html?linkcd=m0400010&parentLinkcd=${curLinkcd}&fileName=${p.fileName}" class="box">
+                            <img src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='120'%3E%3Cpath fill='%23cccccc' d='M0 0h480v120H0z'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-size='14' font-weight='bold' fill='%230c0b0f'%3E${p.category}%3C/text%3E%3C/svg%3E" class="w-full">
+                            <div class="pd-16">
+                                <p class="fs-12 txt-500">${p.category}</p>
+                                <strong class="ell-1 mt-4">${p.title}</strong>
+                                <p class="fs-14 txt-700 ell-1">${p.summary}</p>
+                                <p class="fs-12 txt-500 txt-r">${p.date}</p>
+                            </div>
+                        </a>
+                    `;
+                    frag.appendChild(li);
+                });
+                posts.replaceChildren(frag);
+            } else {
+                posts.style.display = 'block';
+                posts.style.border = 'none';
+                window.ui.lottie.msg(["포스트가 없습니다", "다른 카테고리를 확인해보세요"], posts);
+            }
+        };
+        loadData();
+
+        posts.dataset.postviewtype = window.cacheManager.get("postviewtype") || "grid";
+        document.querySelector("[data-view]").addEventListener("click", (e) => {
+            const type = e.target.closest('[data-ico="grid"]') ? "grid" : e.target.closest('[data-ico="block"]') ? "block" : e.target.closest('[data-ico="table"]') ? "table" : null;
+            if (type) {
+                posts.dataset.postviewtype = type;
+                window.cacheManager.set("postviewtype", type);
+            }
+        });
     })();
 </script>

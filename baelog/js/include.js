@@ -21,16 +21,7 @@ const SPA = {
             503: ["서비스 점검 중입니다.", "잠시 후 다시 이용해주세요."],
             default: ["요청을 처리할 수 없습니다.", "다시 시도해주세요."],
         }[code] || ["요청을 처리할 수 없습니다.", "다시 시도해주세요."];
-        this.main.className = "flx col jc-c ai-c";
-        this.main.innerHTML = `
-            <i class="lottie" data-src="/common/json/error.json"></i>
-            <strong class="fs-20">${msg[0]}</strong>
-            <p>${msg[1]}</p>
-            <div class="btn-wrap">
-                <a href="/baelog" class="btn h-40 bg-point">홈으로</a>
-            </div>
-        `;
-        window.ui?.lottie?.init?.();
+        window.ui.lottie.msg(msg, this.main);
         history.replaceState({ linkcd: "error" }, "", "/baelog");
     },
     // LNB 렌더링 (dep1key)
@@ -39,7 +30,7 @@ const SPA = {
         lnb?.remove();
         const items = Object.entries(this.routes)
             .filter(([key, r]) => r.parent?.includes(dep1Key) && r.depth === 2)
-            .map(([key, r]) => `<li><a href="/baelog?linkcd=${key}">${r.name}</a></li>`);
+            .map(([key, r]) => `<li><a href="/baelog/index.html?linkcd=${key}">${r.name}</a></li>`);
         if (items.length) {
             const dep1Name = this.routes[dep1Key]?.name || "";
             const newLnb = document.createElement("div");
@@ -80,10 +71,24 @@ const SPA = {
         document.addEventListener("click", (e) => {
             const a = e.target.closest("a");
             if (!a) return;
-            if (!a.href.startsWith(location.origin + "/baelog")) return;
+            const href = a.getAttribute("href");
+            if (href.includes("#") && !href.includes("linkcd=")) {
+                e.preventDefault();
+                const id = decodeURIComponent(href.slice(1));
+                const el = document.getElementById(id);
+                let top = 0;
+                if (href === "#top") {
+                    top = 0;
+                } else {
+                    top = el.getBoundingClientRect().top + window.pageYOffset - 76;
+                }
+                window.scrollTo({ top: top });
+                return;
+            };
+            if (!href.startsWith("/baelog")) return;
             if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
             e.preventDefault();
-            const url = new URL(a.href);
+            const url = new URL(href, location.origin);
             const params = Object.fromEntries(url.searchParams.entries());
             if (!params.linkcd) params.linkcd = "m0100000";
             sessionStorage.setItem("pageParams", JSON.stringify(params));
@@ -96,7 +101,7 @@ const SPA = {
             this.loadPage(state, true);
         });
     },
-    loadPage(params = { "linkcd": "m0100000" }, replaceHistory = false) {
+    loadPage(params = { linkcd: "m0100000" }, replaceHistory = false) {
         let route = this.routes[params.linkcd];
         if (!route) return this.showErrorFallback({ code: 404 });
 
@@ -116,10 +121,9 @@ const SPA = {
                 this.setActive(params.linkcd);
                 this.runScripts(params.linkcd);
 
-                if (replaceHistory) {   
+                if (replaceHistory) {
                     history.replaceState(params, "", "/baelog");
-                }
-                else {
+                } else {
                     if (history.state?.linkcd === "error") {
                         history.replaceState(params, "", "/baelog");
                     } else {

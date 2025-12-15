@@ -4,11 +4,12 @@
     "m0200000": { "name": "About", "depth": 1, "path": "/baelog/pages/02_about/M_0200_000.html" },
 
     "m0300000": { "name": "Study", "depth": 1, "path": "/baelog/pages/03_study/M_0300_000.html" },
-    "m0301000": { "name": "Flutter", "depth": 2, "path": "/baelog/pages/03_study/M_0300_000.html", "parent": ["m0300000"], "tab": "01" },
-    "m0302000": { "name": "JavaScript", "depth": 2, "path": "/baelog/pages/03_study/M_0300_000.html", "parent": ["m0300000"], "tab": "02" },
+    "m0301000": { "name": "All Posts", "depth": 2, "path": "/baelog/pages/04_project/M_0400_000.html", "parent": ["m0300000"], "tab": "00" },
+    "m0302000": { "name": "Flutter", "depth": 2, "path": "/baelog/pages/03_study/M_0300_000.html", "parent": ["m0300000"], "tab": "01" },
+    "m0303000": { "name": "JavaScript", "depth": 2, "path": "/baelog/pages/03_study/M_0300_000.html", "parent": ["m0300000"], "tab": "02" },
 
     "m0400000": { "name": "Project", "depth": 1, "path": "/baelog/pages/04_project/M_0400_000.html" },
-    "m0401000": { "name": "Posts", "depth": 2, "path": "/baelog/pages/04_project/M_0400_000.html", "parent": ["m0400000"], "tab": "00" },
+    "m0401000": { "name": "All Posts", "depth": 2, "path": "/baelog/pages/04_project/M_0400_000.html", "parent": ["m0400000"], "tab": "00" },
     "m0402000": { "name": "Cultureland", "depth": 2, "path": "/baelog/pages/04_project/M_0400_000.html", "parent": ["m0400000"], "tab": "01" },
     "m0403000": { "name": "Hitejinro", "depth": 2, "path": "/baelog/pages/04_project/M_0400_000.html", "parent": ["m0400000"], "tab": "01" },
     "m0400010": { "name": "Post", "depth": 3, "path": "/baelog/pages/04_project/M_0400_010.html", "parent": ["m0400000"] },

@@ -2,6 +2,7 @@
 *::before,
 *::after { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; } 
 html { font-size: 62.5%; width: 100%; background: rgb(var(--bg-300)); scroll-behavior: smooth; } 
+@media (max-width: 360px) {html {font-size: 2.777777777777778vw; } }
 body { width: 100%; min-height: 100vh; color: rgb(var(--txt-900)); word-break: keep-all; overflow-wrap: break-word; -webkit-text-size-adjust: 100%; font: 400 1.6rem/1.5 "Pretendard","AppleSDGothicNeo","Helvetica Neue",sans-serif; } 
 /* ==================== DISPLAY ==================== */
 article, aside, canvas, details, figcaption, figure,

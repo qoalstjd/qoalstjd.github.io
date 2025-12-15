@@ -1,4 +1,64 @@
-<h2>Post</h2>
+<div class="tit-wrap ty-post">
+    <img data-bind="img" src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1280' height='120'%3E%3Cpath fill='%23cccccc' d='M0 0h480v120H0z'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-size='14' font-weight='bold' fill='%230c0b0f'%3E이미지%3C/text%3E%3C/svg%3E" />
+    <h2 data-bind="title">title</h2>
+    <a data-bind="category" href="/baelog/index.html?linkcd=m0000000">category</a>
+    <p data-bind="date">YYYY/MM/DD</p>
+    <p data-bind="summary">summary</p>
+</div>
+<div class="cont-wrap ty-post">
+    <article data-bind="post"></article>
+    <aside data-bind="toc">
+        <div>
+            <div class="box pd-16 bg-300">
+                <p>On This Page</p>
+                <ul>
+                    <li><a href="#1-왜-만들게-되었는가-" class="">1. 왜 만들게 되었는가? 🤔</a></li>
+                    <li class="toc_depth-2__bffH2"><a href="#1-1-기본-레이아웃-세팅" class="">1-1. 기본 레이아웃 세팅</a></li>
+                    <li class="toc_depth-2__bffH2"><a href="#1-2-디렉토리-기반-페이지" class="">1-2. 디렉토리 기반 페이지</a></li>
+                    <li class="toc_depth-2__bffH2"><a href="#1-3-마크다운-파일을-html-파싱" class="">1-3. 마크다운 파일을 HTML 파싱</a></li>
+                    <li><a href="#2-왜-만들게-되었는가-" class="">2. 왜 만들게 되었는가? 🤔</a></li>
+                    <li class="toc_depth-2__bffH2"><a href="#2-1-기본-레이아웃-세팅" class="">2-1. 기본 레이아웃 세팅</a></li>
+                    <li class="toc_depth-2__bffH2"><a href="#2-2-디렉토리-기반-페이지" class="">2-2. 디렉토리 기반 페이지</a></li>
+                    <li class="toc_depth-2__bffH2"><a href="#2-3-마크다운-파일을-html-파싱" class="">2-3. 마크다운 파일을 HTML 파싱</a></li>
+                </ul>
+            </div>
+            <div class="box pd-16">
+                <button class="icon24-btn"><i class="icon16-t01-copy">링크복사</i></button><a href="#comment" class="icon24-btn"><i class="icon16-t01-comment">댓글</i></a
+                ><a href="#top" class="icon24-btn"><i class="icon16-t01-pageup">맨위로</i></a>
+            </div>
+        </div>
+    </aside>
+</div>
 <script>
-    console.log(history.state.fileName)
+    (() => {
+        const fileName = history.state.fileName;
+        const parentLinkcd = history.state.parentLinkcd;
+        SPA.setActive(parentLinkcd);
+        const els = {
+            img: document.querySelector('[data-bind="img"]'),
+            title: document.querySelector('[data-bind="title"]'),
+            category: document.querySelector('[data-bind="category"]'),
+            date: document.querySelector('[data-bind="date"]'),
+            summary: document.querySelector('[data-bind="summary"]'),
+            post: document.querySelector('[data-bind="post"]'),
+        };
+        const loadData = async () => {
+            const list = await window.fetchManager.get("/baelog/js/project.json");
+            const meta = list.find((p) => p.fileName === fileName);
+            if (!meta) return;
+
+            // 메타 바인딩
+            // els.img.src = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1280' height='120'%3E%3Cpath fill='%23cccccc' d='M0 0h480v120H0z'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-size='14' font-weight='bold' fill='%230c0b0f'%3ECAT%3C/text%3E%3C/svg%3E";
+            els.img.src = `/baelog/images/post/bnr_${meta.category}.png`;
+            els.title.textContent = meta.title;
+            els.category.textContent = meta.category;
+            els.category.href = `/baelog/index.html?linkcd=${parentLinkcd || "m0000000"}`;
+            els.date.textContent = meta.date;
+            els.summary.textContent = meta.summary;
+
+            const data = await window.fetchManager.get(`/baelog/pages/04_project/posts/${fileName}.html`, { parse: "text" });
+            els.post.innerHTML = data;
+        };
+        loadData();
+    })();
 </script>

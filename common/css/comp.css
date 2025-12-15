@@ -1,0 +1,17 @@
+.box { display: block; border-radius: 0.8rem; background-color: rgb(var(--bg-100)); overflow: hidden; } 
+a.box:hover { background-color: rgb(var(--bg-hover)) !important; } 
+
+.tag-wrap { display: flex; width: 100%; gap: 0.4rem; overflow-x: auto; -webkit-overflow-scrolling: touch; cursor: grab; } 
+.tag-wrap::-webkit-scrollbar { display: none; } 
+.tag { display: inline-block; font-size: 1.2rem; font-weight: 500; padding: 0.4rem 1.2rem; border-radius: 9rem; color: rgb(var(--txt-900)); background-color: rgb(var(--bg-300)); } 
+
+.lottie-wrap { display: flex; flex-direction: column; justify-content: center; align-items: center; height: 32rem; } 
+
+/* ==================== 탭 ==================== */
+.tab-wrap { display: flex; width: 100%; align-items: center; border-radius: 0.6rem; background: var(--bg_type02); padding: 0.2rem; } 
+.tab-wrap button { position: relative; flex: 1; padding: 0.2rem 0.4rem; font-weight: 600; color: var(--txt_type02); z-index: 1; transition: color 0.4s linear; overflow: hidden; } 
+.tab-wrap button:first-child { border-radius: 0.4rem 0 0 0.4rem; } 
+.tab-wrap button:last-child { border-radius: 0 0.4rem 0.4rem 0; } 
+.tab-wrap button::before { content: ''; display: block; width: 0; height: 100%; position: absolute; right: 0; top: 0; background-color: var(--bg_primary); transition: width 0.4s linear; z-index: -1; } 
+.tab-wrap button.active { color: var(--txt_primary); } 
+.tab-wrap button.active::before { width: 100%; right: unset; left: 0; } 
