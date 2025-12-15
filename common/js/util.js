@@ -67,7 +67,7 @@ const cacheManager = {
 };
 const fetchManager = {
     ttl: 3600 * 1000,
-    async get(url, options = { }) {
+    async get(url, options = {}) {
         const parse = options.parse || "json";
         try {
             // 캐시 조회
@@ -80,10 +80,18 @@ const fetchManager = {
 
             let data;
             switch (parse) {
-                case "text": data = await res.text(); break;
-                case "blob": data = await res.blob(); break;
-                case "arrayBuffer": data = await res.arrayBuffer(); break;
-                default: data = await res.json(); break;
+                case "text":
+                    data = await res.text();
+                    break;
+                case "blob":
+                    data = await res.blob();
+                    break;
+                case "arrayBuffer":
+                    data = await res.arrayBuffer();
+                    break;
+                default:
+                    data = await res.json();
+                    break;
             }
 
             // cacheManager로 저장
@@ -102,20 +110,40 @@ const fetchManager = {
             else {
                 // fetch 관련 캐시만 삭제
                 Object.keys(localStorage)
-                    .filter(k => k.startsWith(cacheManager.prefix)) // 혹은 fetch 전용 prefix를 따로 쓸 수도 있음
-                    .forEach(k => localStorage.removeItem(k));
+                    .filter((k) => k.startsWith(cacheManager.prefix)) // 혹은 fetch 전용 prefix를 따로 쓸 수도 있음
+                    .forEach((k) => localStorage.removeItem(k));
             }
         } catch (err) {
             console.error("fetchManager clear 에러:", err);
         }
-    }
+    },
 };
 // (async () => {
 //     const data = await fetchManager.get("https://jsonplaceholder.typicode.com/todos/1");
 // })();
+const bindData = (root, data) => {
+    const tpl = (str, data) => str.replace(/{{(.*?)}}/g, (_, k) => data[k.trim()] ?? "");
+    // <h2 data-bind-txt="{{title}}"></h2>
+    // <img data-bind-src="/img/bnr_{{category}}.png">
+    // <a data-bind-href="/list?cat={{category}}">목록</a>
+    // <p data-bind-txt="{{date}} · {{author}}"></p>
+    root.querySelectorAll("[data-bind-txt]").forEach((el) => {
+        el.textContent = tpl(el.dataset.bindTxt, data);
+    });
+    root.querySelectorAll("[data-bind-src]").forEach((el) => {
+        el.src = tpl(el.dataset.bindSrc, data);
+    });
+    root.querySelectorAll("[data-bind-href]").forEach((el) => {
+        el.href = tpl(el.dataset.bindHref, data);
+    });
+    root.querySelectorAll("[data-bind-html]").forEach((el) => {
+        el.innerHTML = tpl(el.dataset.bindHtml, data);
+    });
+};
 
 window.paramManager = paramManager;
 window.cacheManager = cacheManager;
 window.fetchManager = fetchManager;
+window.bindData = bindData;
 
-cacheManager.clear();
+// cacheManager.clear();

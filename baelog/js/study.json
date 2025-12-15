@@ -5,7 +5,7 @@
         "summary": "리뉴얼 목표와 전체 구조 설계, 개선 포인트 정리",
         "fileName": "flutter_01",
         "tags": ["planning", "design", "project"],
-        "date": "2025-02-10"
+        "date": "2025.02.10"
     },
     {
         "category": "flutter",
@@ -13,7 +13,7 @@
         "summary": "컬러, 타이포, spacing 등 디자인 시스템을 정리하고 적용한 과정",
         "fileName": "flutter_02",
         "tags": ["design", "css", "ui", "ux"],
-        "date": "2025-02-12"
+        "date": "2025.02.12"
     },
     {
         "category": "flutter",
@@ -21,7 +21,7 @@
         "summary": "라이트/다크 테마 구현과 CSS 변수 구조 설계",
         "fileName": "flutter_03",
         "tags": ["css", "darkmode", "theme"],
-        "date": "2025-02-14"
+        "date": "2025.02.14"
     },
     {
         "category": "flutter",
@@ -29,7 +29,7 @@
         "summary": "라우팅, 상태 관리, DOM 업데이트를 Vanilla JS로 구현한 방법",
         "fileName": "flutter_04",
         "tags": ["javascript", "spa", "routing"],
-        "date": "2025-02-16"
+        "date": "2025.02.16"
     },
     {
         "category": "flutter",
@@ -37,7 +37,7 @@
         "summary": "로컬스토리지 기반 캐시 처리 및 async/await 활용 사례",
         "fileName": "flutter_05",
         "tags": ["javascript", "fetch", "cache"],
-        "date": "2025-02-18"
+        "date": "2025.02.18"
     },
     {
         "category": "flutter",
@@ -45,7 +45,7 @@
         "summary": "Mobile-first 설계와 Flex/Grid를 이용한 반응형 레이아웃 적용",
         "fileName": "flutter_06",
         "tags": ["css", "responsive", "grid", "flex"],
-        "date": "2025-02-20"
+        "date": "2025.02.20"
     },
     {
         "category": "flutter",
@@ -53,7 +53,7 @@
         "summary": "메타 태그, OG 카드, 접근성 체크리스트 적용 사례",
         "fileName": "flutter_07",
         "tags": ["seo", "accessibility", "meta"],
-        "date": "2025-02-22"
+        "date": "2025.02.22"
     },
     {
         "category": "flutter",
@@ -61,7 +61,7 @@
         "summary": "WebP, lazy loading, LCP/FCP 최적화 전략 적용",
         "fileName": "flutter_08",
         "tags": ["performance", "image", "optimization"],
-        "date": "2025-02-24"
+        "date": "2025.02.24"
     },
     {
         "category": "flutter",
@@ -69,7 +69,7 @@
         "summary": "GitHub Pages 자동 배포와 커스텀 도메인 적용 사례",
         "fileName": "flutter_09",
         "tags": ["github", "ci-cd", "deployment"],
-        "date": "2025-02-26"
+        "date": "2025.02.26"
     },
     {
         "category": "flutter",
@@ -77,6 +77,6 @@
         "summary": "리뉴얼 과정에서 배운 점과 다음 버전 계획",
         "fileName": "flutter_10",
         "tags": ["review", "reflection", "project"],
-        "date": "2025-02-28"
+        "date": "2025.02.28"
     }
 ]

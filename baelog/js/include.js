@@ -35,7 +35,7 @@ const SPA = {
             const dep1Name = this.routes[dep1Key]?.name || "";
             const newLnb = document.createElement("div");
             newLnb.className = "lnb";
-            newLnb.innerHTML = `<h1 class="fs-26">${dep1Name}</h1><ul>${items.join("")}</ul>`;
+            newLnb.innerHTML = `<h1>${dep1Name}</h1><ul>${items.join("")}</ul>`;
             this.wrap.prepend(newLnb);
         }
     },
@@ -80,7 +80,7 @@ const SPA = {
                 if (href === "#top") {
                     top = 0;
                 } else {
-                    top = el.getBoundingClientRect().top + window.pageYOffset - 76;
+                    top = el.getBoundingClientRect().top + window.pageYOffset - 80;
                 }
                 window.scrollTo({ top: top });
                 return;
