@@ -22,7 +22,7 @@ const SPA = {
             default: ["요청을 처리할 수 없습니다.", "다시 시도해주세요."],
         }[code] || ["요청을 처리할 수 없습니다.", "다시 시도해주세요."];
         window.ui.lottie.msg(msg, this.main);
-        history.replaceState({ linkcd: "error" }, "", "/baelog");
+        history.replaceState({ linkcd: "error" }, "", `/${window.rootDir}`);
     },
     // LNB 렌더링 (dep1key)
     renderLNB(dep1Key) {
@@ -30,7 +30,7 @@ const SPA = {
         lnb?.remove();
         const items = Object.entries(this.routes)
             .filter(([key, r]) => r.parent?.includes(dep1Key) && r.depth === 2)
-            .map(([key, r]) => `<li><a href="/baelog/index.html?linkcd=${key}">${r.name}</a></li>`);
+            .map(([key, r]) => `<li><a href="/${window.rootDir}/index.html?linkcd=${key}">${r.name}</a></li>`);
         if (items.length) {
             const dep1Name = this.routes[dep1Key]?.name || "";
             const newLnb = document.createElement("div");
@@ -85,7 +85,7 @@ const SPA = {
                 window.scrollTo({ top: top });
                 return;
             };
-            if (!href.startsWith("/baelog")) return;
+            if (!href.startsWith(`/${window.rootDir}`)) return;
             if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
             e.preventDefault();
             const url = new URL(href, location.origin);
@@ -122,12 +122,12 @@ const SPA = {
                 this.runScripts(params.linkcd);
 
                 if (replaceHistory) {
-                    history.replaceState(params, "", "/baelog");
+                    history.replaceState(params, "", `/${window.rootDir}`);
                 } else {
                     if (history.state?.linkcd === "error") {
-                        history.replaceState(params, "", "/baelog");
+                        history.replaceState(params, "", `/${window.rootDir}`);
                     } else {
-                        history.pushState(params, "", "/baelog");
+                        history.pushState(params, "", `/${window.rootDir}`);
                     }
                 }
             })
@@ -136,7 +136,7 @@ const SPA = {
             });
     },
     init() {
-        fetch("/baelog/js/menu.json")
+        fetch(`/${window.rootDir}/js/menu.json`)
             .then((res) => res.json())
             .then((data) => {
                 this.routes = data;

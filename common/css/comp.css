@@ -37,3 +37,46 @@ a.box:hover { background-color: rgb(var(--bg-hover)) !important; }
 .list[data-bul="dot"] > li > ul > li { padding-left: 0.8rem; }
 .list[data-bul="dash"] > li::before,
 .list[data-bul="dot"] > li > ul > li::before { content: ""; width: 0.5rem; height: 0.1rem; top: 0.9rem; }
+
+
+/* ==================== input ==================== */
+input[type="text"] { display: block; border: 0.1rem solid var(--brd_type01); border-radius: 0.4rem; padding: 0.4rem 0.8rem; font-size: 1.4rem; line-height: 2.1rem; width: 100%; } 
+input[type="text"]:focus { border-color: var(--color_point); } 
+input[type="text"]::placeholder { font-size: 1.4rem; line-height: 2.1rem; color: var(--txt_type02); } 
+
+/* ==================== 대체이미지 ==================== */
+img { position: relative; object-fit: cover; display: block; } 
+img[src='']::before, img:not([src])::before { content: '이미지를 불러오는중 오류가 발생했습니다'; display: flex; width: 100%; height: 100%; justify-content: center; align-items: center; background-color: var(--bg_type01); color: var(--txt_primary); font-size: 1.3rem; } 
+
+/* ==================== 로딩 ==================== */
+.loading { position: absolute; left: calc(50% - 2rem); top: calc(50% - 2rem); width: 4rem; height: 4rem; border-radius: 50%; border: 0.2rem solid var(--brd_type01); border-right-color: var(--color_point); animation: spin 1s linear 0s infinite; } 
+@keyframes spin { 
+ 0% { transform: rotate(0deg); } 
+ 100% { transform: rotate(360deg); } 
+ }
+
+/* ==================== 모달 ==================== */
+.modal-wrap { position: fixed; left: 0; top: 0; width: 100%; background: none; height: 100%; z-index: 100; display: flex; align-items: center; justify-content: center; } 
+.modal-wrap .modal-bg { position: absolute; width: 100%; height: 100%; left: 0; top: 0; animation: modalBgOpen 0.5s ease-in-out 0s forwards; } 
+.modal-wrap .modal { background-color: var(--bg_primary); width: 50rem; max-height: 90vh; border-radius: 0.8rem; border: 0.1rem solid var(--brd_type01); padding: 2.4rem 2.4rem 3.2rem; display: grid; grid-template-rows: auto 1fr; grid-template-columns: auto; gap: 1.6rem; animation: modalOpen 0.5s ease-in-out 0s forwards; } 
+.modal-wrap .modal .modal-title { padding: 0 3.2rem; line-height: 3.2rem; text-align: center; } 
+.modal-wrap .modal .modal-content { overflow: hidden auto; } 
+.modal-wrap .modal .modal-close { position: absolute; right: 2.4rem; top: 2.4rem; } 
+@keyframes modalBgOpen { 
+ 0% { backdrop-filter: blur(0); } 
+ 100% { backdrop-filter: blur(0.4rem); } 
+ }
+ @keyframes modalOpen { 
+ 0% { transform: scale(0); opacity: 0; } 
+ 100% { transform: scale(1); opacity: 1; } 
+ }
+/* 모달 > 뉴스 */
+.modal-wrap .modal .modal-content .news div:nth-of-type(1) { display: flex; margin-top: 0.4rem; padding-bottom: 0.6rem; border-bottom: 0.1rem solid var(--brd_type01); } 
+.modal-wrap .modal .modal-content .news div:nth-of-type(1) p + p { position: relative; padding-left: 1.5rem; } 
+.modal-wrap .modal .modal-content .news div:nth-of-type(1) p + p::before { content: ''; display: block; width: 0.1rem; height: 1.2rem; position: absolute; left: 0.6rem; top: calc(50% - 0.6rem); background-color: var(--brd_type01); } 
+.modal-wrap .modal .modal-content .news img { margin-top: 1.2rem; aspect-ratio: 16/9; object-fit: contain; background-color: var(--bg_root); } 
+.modal-wrap .modal .modal-content .news div:nth-of-type(2) { } 
+.modal-wrap .modal .modal-content .news div:nth-of-type(2) p { word-break: break-all; margin-top: 1.2rem; } 
+.modal-wrap .modal .modal-content .news div:nth-of-type(2) span { margin-left: 0.4rem; } 
+.modal-wrap .modal .modal-content .news div:nth-of-type(2) p.b3 { display: flex; align-items: center; flex-wrap: nowrap; width: 100%; white-space: nowrap; gap: 0.4rem; } 
+.modal-wrap .modal .modal-content .news div:nth-of-type(2) p.b3 a { flex: 1; txt-overflow: ellipsis; overflow: hidden; } 
