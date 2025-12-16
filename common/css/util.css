@@ -59,6 +59,3 @@
 .grid.min-240 { grid-template-columns: repeat(auto-fill, minmax(24rem, 1fr)); }
 .grid.min-280 { grid-template-columns: repeat(auto-fill, minmax(28rem, 1fr)); }
 .grid.min-320 { grid-template-columns: repeat(auto-fill, minmax(32rem, 1fr)); }
-/* ==================== 말줄임 ==================== */
-.ell-1 { display: block; width: 100%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; } 
-.ell-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; } 

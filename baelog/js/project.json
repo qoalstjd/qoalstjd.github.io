@@ -1,15 +1,60 @@
 [
     {
+        "id": 7,
+        "category": "Pension",
+        "title": "펜션 홈페이지 구축 회고",
+        "summary": "문제점과 개선 방향 정리",
+        "fileName": "pension_07",
+        "tags": ["retrospective", "improve"],
+        "date": "2025.12.22"
+    },
+    {
+        "id": 5,
+        "category": "Pension",
+        "title": "게시글 관리용 Admin 구현",
+        "summary": "관리자 페이지 구조와 기능 정리",
+        "fileName": "pension_05",
+        "tags": ["admin", "crud", "db"],
+        "date": "2025.12.20"
+    },
+    {
+        "id": 4,
+        "category": "Pension",
+        "title": "예약 시스템 구조 설계",
+        "summary": "예약 흐름과 데이터 처리 방식",
+        "fileName": "pension_04",
+        "tags": ["booking", "logic", "project"],
+        "date": "2025.12.19"
+    },
+    {
+        "id": 2,
+        "category": "Pension",
+        "title": "공통 컴포넌트 설계와 관리",
+        "summary": "반복 요소 분리와 재사용 구조",
+        "fileName": "pension_02",
+        "tags": ["component", "css", "structure"],
+        "date": "2025.12.21"
+    },
+    {
+        "id": 1,
+        "category": "Pension",
+        "title": "기획부터 반응형까지",
+        "summary": "IA 설계, UI·UX 기준, 반응형 레이아웃 구현 정리",
+        "fileName": "pension_01",
+        "tags": ["planning", "ia", "ui", "ux", "responsive", "layout"],
+        "date": "2025.12.16"
+    },
+    {
         "id": 0,
         "category": "Pension",
-        "title": "펜션 홈페이지 구축",
+        "title": "프로젝트 개요",
         "summary": "전체 구조 설계, 개선 포인트 정리",
         "fileName": "pension_00",
         "tags": ["planning", "design", "project"],
         "date": "2025.12.15"
     },
     {
-        "id": 1,
+        "id": 0,
         "category": "Cultureland",
         "title": "컬쳐랜드 리뉴얼 계획",
         "summary": "리뉴얼 목표와 전체 구조 설계, 개선 포인트 정리",
@@ -27,7 +72,7 @@
         "date": "2025.02.12"
     },
     {
-        "id": 1,
+        "id": 2,
         "category": "Cultureland",
         "title": "다크 모드 적용기",
         "summary": "라이트/다크 테마 구현과 CSS 변수 구조 설계",
@@ -36,7 +81,7 @@
         "date": "2025.02.14"
     },
     {
-        "id": 1,
+        "id": 3,
         "category": "Cultureland",
         "title": "Vanilla JS SPA 만들기",
         "summary": "라우팅, 상태 관리, DOM 업데이트를 Vanilla JS로 구현한 방법",
@@ -45,7 +90,7 @@
         "date": "2025.02.16"
     },
     {
-        "id": 1,
+        "id": 4,
         "category": "Cultureland",
         "title": "Fetch + Cache 패턴 정리",
         "summary": "로컬스토리지 기반 캐시 처리 및 async/await 활용 사례",
@@ -54,7 +99,7 @@
         "date": "2025.02.18"
     },
     {
-        "id": 1,
+        "id": 5,
         "category": "Cultureland",
         "title": "반응형 레이아웃 구현",
         "summary": "Mobile/first 설계와 Flex/Grid를 이용한 반응형 레이아웃 적용",
@@ -63,7 +108,7 @@
         "date": "2025.02.20"
     },
     {
-        "id": 1,
+        "id": 6,
         "category": "Cultureland",
         "title": "SEO와 접근성 개선",
         "summary": "메타 태그, OG 카드, 접근성 체크리스트 적용 사례",
@@ -72,7 +117,7 @@
         "date": "2025.02.22"
     },
     {
-        "id": 1,
+        "id": 7,
         "category": "Cultureland",
         "title": "이미지 최적화 및 성능 개선",
         "summary": "WebP, lazy loading, LCP/FCP 최적화 전략 적용",
@@ -81,7 +126,7 @@
         "date": "2025.02.24"
     },
     {
-        "id": 1,
+        "id": 8,
         "category": "Cultureland",
         "title": "배포와 GitHub Actions",
         "summary": "GitHub Pages 자동 배포와 커스텀 도메인 적용 사례",
@@ -90,7 +135,7 @@
         "date": "2025.02.26"
     },
     {
-        "id": 1,
+        "id": 9,
         "category": "Cultureland",
         "title": "리뉴얼 회고",
         "summary": "리뉴얼 과정에서 배운 점과 다음 버전 계획",

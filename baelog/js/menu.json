@@ -15,11 +15,12 @@
     "m0404000": { "name": "Hitejinro", "depth": 2, "path": "/baelog/pages/04_project/M_0400_000.html", "parent": ["m0400000"], "tab": "03" },
     "m0400010": { "name": "Post", "depth": 3, "path": "/baelog/pages/04_project/M_0400_010.html", "parent": ["m0400000"] },
     
-    "m0500000": { "name": "UIDocs", "depth": 1, "path": "/baelog/pages/05_uidocs/M_0500_000.html" },
-    "m0501000": { "name": "Typography", "depth": 2, "path": "/baelog/pages/05_uidocs/M_0500_000.html", "parent": ["m0500000"] },
-    "m0502000": { "name": "Dialog", "depth": 2, "path": "/baelog/pages/05_uidocs/M_0501_000.html", "parent": ["m0500000"] },
-    "m0503000": { "name": "Space", "depth": 2, "path": "/baelog/pages/05_uidocs/M_0502_000.html", "parent": ["m0500000"] },
-    "m0504000": { "name": "Box", "depth": 2, "path": "/baelog/pages/05_uidocs/M_0503_000.html", "parent": ["m0500000"] },
-    "m0505000": { "name": "List", "depth": 2, "path": "/baelog/pages/05_uidocs/M_0504_000.html", "parent": ["m0500000"] },
-    "m0506000": { "name": "Icon", "depth": 2, "path": "/baelog/pages/05_uidocs/M_0505_000.html", "parent": ["m0500000"] }
+    "m0500000": { "name": "UIDocs", "depth": 1, "path": "/baelog/pages/05_uidocs/M_0501_000.html" },
+    "m0501000": { "name": "Typography", "depth": 2, "path": "/baelog/pages/05_uidocs/M_0501_000.html", "parent": ["m0500000"] },
+    "m0502000": { "name": "Dialog", "depth": 2, "path": "/baelog/pages/05_uidocs/M_0502_000.html", "parent": ["m0500000"] },
+    "m0503000": { "name": "Space", "depth": 2, "path": "/baelog/pages/05_uidocs/M_0503_000.html", "parent": ["m0500000"] },
+    "m0504000": { "name": "Box", "depth": 2, "path": "/baelog/pages/05_uidocs/M_0504_000.html", "parent": ["m0500000"] },
+    "m0505000": { "name": "List", "depth": 2, "path": "/baelog/pages/05_uidocs/M_0505_000.html", "parent": ["m0500000"] },
+    "m0506000": { "name": "Table", "depth": 2, "path": "/baelog/pages/05_uidocs/M_0506_000.html", "parent": ["m0500000"] },
+    "m0507000": { "name": "Icon", "depth": 2, "path": "/baelog/pages/05_uidocs/M_0507_000.html", "parent": ["m0500000"] }
 }

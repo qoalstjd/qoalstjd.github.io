@@ -22,23 +22,67 @@
     </aside>
 </div>
 <section class="related-wrap box mt-32 pd-20">
-    <h1 data-bind-txt="{{category}}" class="fs-20 mb-8">$category$</h1>
+    <h2 data-bind-txt="{{category}}" class="fs-20 mb-8">$category$</h2>
     <div class="flx ai-c gap-12">
         <div class="flx ai-c gap-4">
-            <i class="ico wh-16" data-ico="list"><span class="hidden">리스트</span></i>
-            <p data-bind-txt="{{id}} / 1" class="txt-500 mt-0">1 / 1</p>
+            <i class="ico wh-16 bg-500" data-ico="list"><span class="hidden">리스트</span></i>
+            <p data-bind-txt="{{id}} / {{postLength}}" class="txt-500 mt-0">1 / 1</p>
         </div>
         <div class="flx ai-c gap-4">
-            <i class="ico wh-16" data-ico="clock"><span class="hidden">시계</span></i>
+            <i class="ico wh-16 bg-500" data-ico="clock"><span class="hidden">시계</span></i>
             <p data-bind-txt="{{date}}" class="txt-500 mt-0">$date$</p>
         </div>
     </div>
     <p data-bind-txt="{{summary}}" class="txt-700">$summary$</p>
-    <ul data-bind="relatedPost" class="mt-12"></ul>
-    <!-- <button class="toggle-btn">관련 포스트 보기</button>
-    <ul class="toggle-btn-target">
-        <li class="relatedPosts_active__9Ub4i"><a href="flutter">1. flutter</a></li>
-    </ul> -->
+    <div class="tb-wrap ty-row mt-12">
+        <table>
+            <caption>
+                관련 포스트에 대한 표
+            </caption>
+            <colgroup>
+                <col style="width: 3.6rem" />
+                <col style="width: auto" />
+                <col style="width: 10rem" />
+            </colgroup>
+            <tbody data-bind="relatedPost">
+                <tr></tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+<section class="comment-wrap mt-32" id="comment">
+    <ul class="box bg-200 pd-20">
+        <li class="flx">
+            <img alt="profile" class="c-ico lazyautosizes lazyloaded" />
+            <div class="c-bubble">
+                <div class="c-head">
+                    <p>선인장 🌵</p>
+                </div>
+                <p class="c-content commentMediaClass">좋은 내용 잘 읽었습니다 👍🏻</p>
+                <div class="c-bottom">
+                    <span class="date"><i class="far fa-clock me-1"></i>2023.03.08 11:17 <a href="" onclick="window.open(this.href, 'ThisBlogReportPopup', 'width=550, height=510, toolbar=no, menubar=no, status=no, scrollbars=no'); return false;">신고</a></span>
+                    <a href="#" data-tooltip="수정/삭제"
+                        >
+                        <i class="far fa-comment-alt-slash fs-17px"></i>
+                    </a>
+                    <a href="#" data-tooltip="답글쓰기">
+                        <i class="far fa-comment-alt-edit fs-17px"></i>
+                    </a>
+                </div>
+            </div>
+        </li>
+    </ul>
+    <form class="box pd-20" method="post" action="/comment/" onsubmit="return false" style="position: sticky; bottom: 0">
+        <div class="flx">
+            <p>
+                <input type="text" name="name" value="" placeholder="이름" />
+            </p>
+            <p>
+                <input type="password" maxlength="8" name="password" value="" placeholder="비밀번호" />
+            </p>
+        </div>
+        <textarea name="" id=""></textarea>
+    </form>
 </section>
 <script>
     (() => {
@@ -54,22 +98,20 @@
             if (!meta) return;
 
             window.bindData(document.querySelector(".tit-wrap"), { ...meta, parentLinkcd: parentLinkcd || "m0000000" });
-            window.bindData(document.querySelector(".related-wrap"), meta);
 
             const data = await window.fetchManager.get(`/baelog/pages/04_project/posts/${fileName}.html`, { parse: "text" });
             post.innerHTML = data;
-            post.querySelectorAll("h3, h4, h5, h6").forEach((h, i) => {
+            const headings = [...post.querySelectorAll("h2, h3, h4, h5, h6")];
+            headings.forEach((h, i) => {
                 h.id = `title${String(i + 1).padStart(2, "0")}`;
                 aside.querySelector("ul").innerHTML += `
-                    <li class="${h.tagName === "H4" ? "pl-12" : ""}">
+                    <li class="${h.tagName === "H3" ? "pl-12" : ""}">
                         <a href="#${h.id}">${h.innerText}</a>
                     </li>
                 `;
             });
-            const headings = [...post.querySelectorAll("h3, h4, h5, h6")];
             const tocLinks = [...aside.querySelectorAll("a")];
             let tops = [];
-
             const calcTops = () => {
                 tops = headings.map((h) => ({
                     id: h.id,
@@ -77,30 +119,46 @@
                 }));
             };
             calcTops();
+
             window.addEventListener("resize", calcTops);
             window.addEventListener("scroll", () => {
-                const y = window.pageYOffset;
-                let current = tops[0]?.id;
-                for (let i = 0; i < tops.length; i++) {
-                    if (y >= tops[i].top) current = tops[i].id;
+                const y = window.scrollY + 100;
+                let current;
+                for (const h of headings) {
+                    if (y >= h.offsetTop) current = h.id;
                 }
-                tocLinks.forEach((a) => a.classList.toggle("txt-point", a.getAttribute("href") === `#${current}`));
+                tocLinks.forEach((a) => a.classList.toggle("txt-point", a.hash === `#${current}`));
             });
 
-            const related = list.filter(p => p.category === meta.category);
-            const relatedList = document.querySelector("[data-bind='relatedPost']")
-            relatedList.innerHTML = ""; // 초기화
+            const related = list.filter((p) => p.category === meta.category);
+            const relatedList = document.querySelector("[data-bind='relatedPost']");
+            relatedList.innerHTML = "";
             if (related.length) {
-                related.forEach((p, i) => {
-                    const li = document.createElement("li");
-                    li.innerHTML = `<a href="/baelog/index.html?linkcd=m0400010&parentLinkcd=${parentLinkcd}&fileName=${p.fileName}">${String(i+1).padStart(2,"0")}. ${p.title}</a>`;
-                    relatedList.appendChild(li);
+                related.sort((a, b) => a.id - b.id).forEach((p, i) => {
+                    const tr = document.createElement("tr");
+                    tr.role = "button";
+                    tr.tabIndex = "0";
+                    tr.addEventListener("click", () => {
+                        location.href = `/baelog/index.html?linkcd=m0400010&parentLinkcd=${parentLinkcd}&fileName=${p.fileName}`;
+                    });
+                    tr.innerHTML = `
+                        <td class="txt-700 txt-c">${String(p.id).padStart(2, "0")}</td>
+                        <td class="ell-1">${p.title} <span class="txt-500">- ${p.summary}</span></td>
+                        <td class="txt-700 txt-c">${p.date}</td>
+                        <!-- <a href="">${String(i + 1).padStart(2, "0")}. ${p.title}</a> -->
+                    `;
+                    if(fileName === p.fileName) {
+                        tr.querySelectorAll('td').forEach(td => td.classList.add('txt-point'));
+                        tr.querySelectorAll('td span').forEach(span => span.classList.add('txt-point-sub'));
+                    }
+                    relatedList.appendChild(tr);
                 });
             } else {
-                const li = document.createElement("li");
-                li.textContent = "같은 카테고리의 포스트가 없습니다.";
-                relatedList.appendChild(li);
+                const tr = document.createElement("tr");
+                tr.innerHTML = "<td>같은 카테고리의 포스트가 없습니다.</td>";
+                relatedList.appendChild(tr);
             }
+            window.bindData(document.querySelector(".related-wrap"), { ...meta, postLength: related.length || '0' });
         };
         loadData();
     })();

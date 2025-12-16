@@ -146,4 +146,4 @@ window.cacheManager = cacheManager;
 window.fetchManager = fetchManager;
 window.bindData = bindData;
 
-// cacheManager.clear();
+cacheManager.clear();

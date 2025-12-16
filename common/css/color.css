@@ -2,9 +2,12 @@
 html {
     /* primary / semantic */
     --primary-500: 8, 136, 221;
+    --primary-300: 58, 186, 251;
     --danger-500: 220, 50, 50;
     --info-500: 70, 130, 255;
     /* background */
+    --bg-700: 100, 100, 100;
+    --bg-500: 140, 140, 145;
     --bg-300: 230, 232, 235;
     --bg-200: 245, 247, 250;
     --bg-100: 250, 251, 252;
@@ -17,14 +20,18 @@ html {
     --txt-300: 200, 200, 210;
     /* border */
     --brd-300: 220, 220, 225;
+    --brd-500: 140, 140, 145;
 }
 /* ==================== 다크 ==================== */
 html[data-theme="dark"] {
     /* primary / semantic */
     --primary-500: 15, 170, 255;
+    --primary-300: 0, 120, 205;
     --danger-500: 220, 50, 50;
     --info-500: 70, 130, 255;
     /* background */
+    --bg-700: 180, 180, 190;
+    --bg-500: 130, 130, 140;
     --bg-300: 15, 13, 25;
     --bg-200: 22, 20, 32;
     --bg-100: 30, 28, 40;
@@ -37,16 +44,20 @@ html[data-theme="dark"] {
     --txt-300: 90, 90, 100;
     /* border */
     --brd-300: 80, 80, 90;
+    --brd-500: 130, 130, 140;
 }
 /* ==================== 폰트 ==================== */
-.txt-point { color: rgb(var(--primary-500)) !important; }
 .txt-900 { color: rgb(var(--txt-900)) !important; }
 .txt-700 { color: rgb(var(--txt-700)) !important; }
 .txt-500 { color: rgb(var(--txt-500)) !important; }
 .txt-300 { color: rgb(var(--txt-300)) !important; }
+.txt-point { color: rgb(var(--primary-500)) !important; }
+.txt-point-sub { color: rgb(var(--primary-300)) !important; }
 /* ==================== 배경 ==================== */
-.bg-point { background-color: rgb(var(--primary-500)) !important; }
 .bg-000 { background-color: rgb(var(--bg-000)) !important; }
 .bg-100 { background-color: rgb(var(--bg-100)) !important; }
 .bg-200 { background-color: rgb(var(--bg-200)) !important; }
 .bg-300 { background-color: rgb(var(--bg-300)) !important; }
+.bg-500 { background-color: rgb(var(--bg-500)) !important; }
+.bg-700 { background-color: rgb(var(--bg-700)) !important; }
+.bg-point { background-color: rgb(var(--primary-500)) !important; }
