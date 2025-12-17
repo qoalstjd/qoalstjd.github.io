@@ -1,82 +1,125 @@
+// =========================
+// URL 파라미터 관리
+// =========================
 const paramManager = {
+    /**
+     * URL 파라미터 추가/수정
+     * @@ add({ linkcd: 'string' })
+     */
     add(obj) {
         const url = new URL(location.href);
         const p = url.searchParams;
         Object.entries(obj).forEach(([k, v]) => p.set(k, v));
         history.replaceState({}, "", url);
     },
+    /**
+     * 특정 파라미터 제거
+     * @@ remove("page")
+     */
     remove(key) {
         const url = new URL(location.href);
         url.searchParams.delete(key);
         history.replaceState({}, "", url);
     },
+    /**
+     * 모든 파라미터 객체로 반환
+     * @@ getAll() → { page: "2", sort: "new" }
+     */
     getAll() {
         const p = new URL(location.href).searchParams;
         const obj = {};
         p.forEach((v, k) => (obj[k] = v));
         return obj;
     },
+    /**
+     * 단일 파라미터 조회
+     * @@ get("page") → "2"
+     */
     get(key) {
         return new URL(location.href).searchParams.get(key);
     },
 };
+// =========================
+// localStorage 캐시 관리
+// =========================
 const cacheManager = {
     prefix: "cache_",
-    ttl: 3600 * 1000,
+    defaultTTL: 3600 * 1000, // 1시간
     _getKey(key) {
         return this.prefix + key;
     },
-    set(key, data) {
+    /**
+     * 캐시 저장
+     * @@ set("list", data)
+     * @@ set("theme", "dark", { persist: true })
+     * @@ set("api", data, { ttl: 5000 })
+     */
+    set(key, data, { persist = false, ttl } = {}) {
         try {
-            localStorage.setItem(this._getKey(key), JSON.stringify({ data, timestamp: Date.now() }));
-        } catch (err) {
-            console.error("Cache set 에러:", err);
+            localStorage.setItem(
+                this._getKey(key),
+                JSON.stringify({
+                    data,
+                    persist,
+                    ttl: persist ? null : ttl ?? this.defaultTTL,
+                    timestamp: persist ? null : Date.now(),
+                })
+            );
+        } catch (e) {
+            console.error("Cache set 에러:", e);
         }
     },
+    /**
+     * 캐시 조회
+     * @@ get("list")
+     */
     get(key) {
         try {
             const cached = localStorage.getItem(this._getKey(key));
             if (!cached) return null;
-            const { data, timestamp } = JSON.parse(cached);
-            if (this.ttl && Date.now() - timestamp > this.ttl) {
-                localStorage.removeItem(this._getKey(key));
+            const { data, persist, ttl, timestamp } = JSON.parse(cached);
+            if (!persist && ttl && timestamp && Date.now() - timestamp > ttl) {
+                this.remove(key);
                 return null;
             }
             return data;
-        } catch (err) {
-            console.error("Cache get 에러:", err);
+        } catch (e) {
+            console.error("Cache get 에러:", e);
             return null;
         }
     },
+    /**
+     * 캐시 제거
+     * @@ remove("list")
+     */
     remove(key) {
-        try {
-            localStorage.removeItem(this._getKey(key));
-        } catch (err) {
-            console.error("Cache remove 에러:", err);
-        }
+        localStorage.removeItem(this._getKey(key));
     },
+    /** prefix 기준 전체 캐시 제거 */
     clear() {
-        try {
-            Object.keys(localStorage)
-                .filter((k) => k.startsWith(this.prefix))
-                .forEach((k) => localStorage.removeItem(k));
-        } catch (err) {
-            console.error("Cache clear 에러:", err);
-        }
+        Object.keys(localStorage)
+            .filter((k) => k.startsWith(this.prefix))
+            .forEach((k) => localStorage.removeItem(k));
     },
 };
+// =========================
+// fetch + cache 래퍼
+// =========================
 const fetchManager = {
-    ttl: 3600 * 1000,
+    /**
+     * GET 요청 (자동 캐싱)
+     * @@ get(url)
+     * @@ get(url, { parse: "text" })
+     */
     async get(url, options = {}) {
         const parse = options.parse || "json";
+
         try {
-            // 캐시 조회
             const cached = cacheManager.get(url);
             if (cached) return cached;
 
-            // fetch 요청
             const res = await fetch(url, options);
-            if (!res.ok) throw new Error(`Fetch failed: ${res.status}`);
+            if (!res.ok) throw new Error(res.status);
 
             let data;
             switch (parse) {
@@ -91,12 +134,9 @@ const fetchManager = {
                     break;
                 default:
                     data = await res.json();
-                    break;
             }
 
-            // cacheManager로 저장
             cacheManager.set(url, data);
-
             return data;
         } catch (err) {
             console.error("fetchManager 에러:", err);
@@ -104,29 +144,27 @@ const fetchManager = {
         }
     },
 
+    /**
+     * fetch 캐시 제거
+     * @@ clear(url)
+     * @@ clear() // 전체
+     */
     clear(url) {
-        try {
-            if (url) cacheManager.remove(url);
-            else {
-                // fetch 관련 캐시만 삭제
-                Object.keys(localStorage)
-                    .filter((k) => k.startsWith(cacheManager.prefix)) // 혹은 fetch 전용 prefix를 따로 쓸 수도 있음
-                    .forEach((k) => localStorage.removeItem(k));
-            }
-        } catch (err) {
-            console.error("fetchManager clear 에러:", err);
-        }
+        if (url) cacheManager.remove(url);
+        else cacheManager.clear();
     },
 };
-// (async () => {
-//     const data = await fetchManager.get("https://jsonplaceholder.typicode.com/todos/1");
-// })();
+// =========================
+// 데이터 바인딩
+// =========================
 const bindData = (root, data) => {
     const tpl = (str, data) => str.replace(/{{(.*?)}}/g, (_, k) => data[k.trim()] ?? "");
-    // <h2 data-bind-txt="{{title}}"></h2>
-    // <img data-bind-src="/img/bnr_{{category}}.png">
-    // <a data-bind-href="/list?cat={{category}}">목록</a>
-    // <p data-bind-txt="{{date}} · {{author}}"></p>
+    /**
+     * 사용 예:
+     * @@ <h2 data-bind-txt="{{title}}"></h2>
+     * @@ <img data-bind-src="/img/{{category}}.png">
+     * @@ <a data-bind-href="/list?id={{id}}">보기</a>
+     */
     root.querySelectorAll("[data-bind-txt]").forEach((el) => {
         el.textContent = tpl(el.dataset.bindTxt, data);
     });

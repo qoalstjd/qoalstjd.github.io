@@ -1,0 +1,140 @@
+<h2>1. 전체 비교 요약</h2>
+<div class="tb-wrap">
+    <table>
+        <caption>
+            기존·후 주요 변화 비교
+        </caption>
+        <colgroup>
+            <col style="width: 16rem" />
+            <col />
+            <col />
+        </colgroup>
+        <thead>
+            <tr>
+                <th>구분</th>
+                <th>기존</th>
+                <th>개선</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>URL</th>
+                <td><a href="/cultureland/asis/index.html" target="_blank" class="link">/cultureland/asis/index.html</a></td>
+                <td><a href="/cultureland/index.html" target="_blank" class="link">/cultureland</a></td>
+            </tr>
+            <tr>
+                <th>구조</th>
+                <td>정보 중심의 단순 나열 구조</td>
+                <td>목적 중심 흐름 구성 (홍보 → 정보 → 행동 유도)</td>
+            </tr>
+            <tr>
+                <th>페이지 방식</th>
+                <td>정적 HTML 기반 다중 페이지</td>
+                <td>SPA 구조 (history state 기반)</td>
+            </tr>
+            <tr>
+                <th>네비게이션</th>
+                <td>페이지 단위 이동 중심</td>
+                <td>새로고침 없는 화면 전환</td>
+            </tr>
+            <tr>
+                <th>UI 일관성</th>
+                <td>섹션별 스타일 일관성 부족</td>
+                <td>공통 컴포넌트 기반 UI 통일</td>
+            </tr>
+            <tr>
+                <th>반응형</th>
+                <td>PC 중심 고정 레이아웃</td>
+                <td>모바일 퍼스트 기반 반응형 설계</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<h2>2. 정보 구조 및 사용자 흐름</h2>
+<p>기존 페이지가 정보를 보여주는 데 집중했다면, 리뉴얼 후에는 <strong>사용자의 행동 흐름을 자연스럽게 유도하는 구조</strong>에 초점을 맞췄다.</p>
+
+<ul class="list dot">
+    <li>
+        <strong>기존</strong>
+        <ul>
+            <li>정보가 한 페이지에 집중적으로 배치됨</li>
+            <li>콘텐츠 간 중요도 구분이 명확하지 않음</li>
+            <li>다음 행동으로 이어지는 흐름이 부족</li>
+        </ul>
+    </li>
+    <li>
+        <strong>개선</strong>
+        <ul>
+            <li>페이지 목적에 따라 콘텐츠를 명확히 분리</li>
+            <li>스크롤 흐름을 고려한 단계적 정보 배치</li>
+            <li>CTA(이동·상세 보기) 위치를 명확히 정의</li>
+        </ul>
+    </li>
+</ul>
+
+<h2>3. UI · UX 비교</h2>
+<div class="tb-wrap">
+    <table>
+        <caption>
+            UI·UX 관점의 변화 비교
+        </caption>
+        <colgroup>
+            <col style="width: 16rem" />
+            <col />
+            <col />
+        </colgroup>
+        <thead>
+            <tr>
+                <th>항목</th>
+                <th>기존</th>
+                <th>개선</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>레이아웃</th>
+                <td>고정 폭 기반 단일 컬럼</td>
+                <td>반응형 그리드 및 Flex 혼합 구조</td>
+            </tr>
+            <tr>
+                <th>가독성</th>
+                <td>텍스트 중심의 밀집된 구성</td>
+                <td>여백을 활용한 가독성 중심 구성</td>
+            </tr>
+            <tr>
+                <th>버튼 강조</th>
+                <td>버튼의 시각적 우선순위가 낮음</td>
+                <td>컬러와 위치로 명확한 행동 유도</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<h2>4. 구현 방식 및 기술 구조 변화</h2>
+<ul class="list dot">
+    <li>
+        <strong>기존</strong>
+        <ul>
+            <li>HTML / CSS 중심</li>
+            <li>다중 페이지 구조</li>
+            <li>location.href 기반 페이지 이동</li>
+        </ul>
+    </li>
+    <li>
+        <strong>개선</strong>
+        <ul>
+            <li>HTML / CSS / JavaScript</li>
+            <li>SPA(Single Page Application) 구조</li>
+            <li>history.pushState / replaceState 기반 화면 전환</li>
+            <li>공통 컴포넌트 구조 분리</li>
+        </ul>
+    </li>
+</ul>
+
+<hr />
+
+<p>
+    이번 리뉴얼은 단순한 디자인 변경이 아닌,
+    <strong>사용자 흐름을 기준으로 구조를 재설계하고 유지보수성과 확장성을 강화한 개선 작업</strong>이다.
+</p>

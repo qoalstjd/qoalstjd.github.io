@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>컬쳐랜드</title>
+    <link href="img/icon/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="css/main.css" rel="stylesheet" type="text/css">
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script>
+        $(function(){
+            $('#topBanner .controls>li').each(function(index){
+                $(this).click(function(){
+                    $('#topBanner .bannerList>li').eq(index).fadeIn(500).siblings().fadeOut(500)
+                    $(this).addClass('select').siblings().removeClass('select')
+                })
+            })
+
+            var noticeNum=0
+            $('#notice .downBtn').click(function(){
+                noticeNum++
+                if(noticeNum>9){
+                    noticeNum=0
+                }
+                $('.noticeList>li').eq(noticeNum).fadeIn(300).siblings().fadeOut(300)
+            })
+            $('#notice .upBtn').click(function(){
+                noticeNum--
+                if(noticeNum<0){
+                    noticeNum=9
+                }
+                $('.noticeList>li').eq(noticeNum).fadeIn(300).siblings().fadeOut(300)
+            })
+
+            function tabs(index){
+                $('.tabsTitle>li[data-index='+index+']').addClass('select')
+                $('.tabsTitle>li[data-index!='+index+']').removeClass('select')
+                $('.useList[data-index='+index+']').fadeIn('fast')
+                $('.useList[data-index!='+index+']').css('display','none')
+            }
+            $('.tabsTitle>li>a').click(function(){
+                event.preventDefault()
+            })
+            $('.tabsTitle>li').each(function(index){
+                $(this).attr('data-index',index)
+                $(this).click(function(){
+                    tabs(index)
+                })
+            })
+            $('.useList').each(function(index){
+                $(this).attr('data-index',index)
+            })
+
+            $('#midBanner .controls>li').each(function(index){
+                $(this).find('a').click(function(){
+                    event.preventDefault()
+                })
+                $(this).click(function(){
+                    $('#midBanner .bannerList>li').eq(index).fadeIn(300).siblings().fadeOut(300)
+                    $(this).addClass('select').siblings().removeClass('select')
+                })
+            })
+
+            $('#coupon .controls>li').each(function(index){
+                $(this).click(function(){
+                    $('.couponList').animate({marginLeft:-75*index+'%'},300)
+                    $(this).addClass('select').siblings().removeClass('select')
+                })
+            })
+        })
+    </script>
+</head>
+<body>
+    <header id="header">
+        <div class="headerInner">
+            <nav class="gnb">
+                <ul>
+                    <li><a href="gift.html">상품권</a>
+                        <div class="underLine"></div>
+                        <ul class="subMenu">
+                            <li><a href="#">문화상품권</a></li>
+                            <li><a href="#">모바일<br>문화상품권</a></li>
+                            <li><a href="#">스마트<br>문화상품권</a></li>
+                            <li><a href="#">Google Play<br>기프트코드</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="use.html">사용처</a>
+                        <div class="underLine"></div>
+                        <ul class="subMenu">
+                            <li><a href="#">쇼핑</a></li>
+                            <li><a href="#">도서</a></li>
+                            <li><a href="#">콘텐츠</a></li>
+                            <li><a href="#">보험</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="event.html">이벤트</a>
+                        <div class="underLine"></div>
+                        <ul class="subMenu">
+                            <li><a href="#">진행중</a></li>
+                            <li><a href="#">당첨자 발표</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="coupon.html">쿠폰</a>
+                        <div class="underLine"></div>
+                        <ul class="subMenu">
+                            <li><a href="coupon.html">쇼핑</a></li>
+                            <li><a href="coupon.html">카페</a></li>
+                            <li><a href="coupon.html">외식</a></li>
+                            <li><a href="coupon.html">콘텐츠</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+            <h1 class="logo"><a href="index.html">컬쳐랜드 cultureland</a></h1>
+            <nav class="util">
+                <ul>
+                    <li><a href="user.html">계정</a></li>
+                    <li><a href="service.html">고객센터</a></li>
+                    <li><a href="sitemap.html">사이트맵</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <section id="topBanner">
+        <img src="img/main_banner1.jpg" alt="" class="bannerBg">
+        <ul class="bannerList">
+            <li>
+                <img src="img/main_banner1.jpg" alt="호랑이">
+                <div class="bannerText">
+                    <h2 class="conTitle">신규 가입하면?<br>문상 1,000원 조공!</h2>
+                    <h3 class="conSubTitle">&#35;아이템매니아 &#35;게임재테크</h3>
+                    <a href="#" class="moreBtn">더보기</a>
+                </div>
+            </li>
+            <li>
+                <img src="img/main_banner2.jpg" alt="파일썬">
+                <div class="bannerText">
+                    <h2 class="conTitle">파일썬<br>10만 포인트 지급 이벤트</h2>
+                    <h3 class="conSubTitle">다 쓴 문화상품권 등록하면 보너스 지급!</h3>
+                    <a href="#" class="moreBtn">더보기</a>
+                </div>
+            </li>
+            <li>
+                <img src="img/main_banner3.jpg" alt="한국갤럽">
+                <div class="bannerText">
+                    <h2 class="conTitle">NEW! 문화상품권 받는<br>패널모집!</h2>
+                    <h3 class="conSubTitle">한국갤럽에서 설문하고 문상 받아가세요</h3>
+                    <a href="#" class="moreBtn">더보기</a>
+                </div>
+            </li>
+        </ul>
+        <ul class="controls">
+            <li class="select"></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </section>
+    <section id="notice">
+        <h2>공지사항<span class="megaphone">megaphone</span></h2>
+        <ul class="noticeList">
+            <li><a href="#" class="noticeText">[공지] 컬쳐랜드 시스템 점검 안내	2021.10.05</a></li>
+            <li><a href="#" class="noticeText">[공지] 컬쳐랜드 환불일정 변경안내 2021.10.01</a></li>
+            <li><a href="#" class="noticeText">[공지] 인터파크 도서 서비스 일시 중단 2021.09.29</a></li>
+            <li><a href="#" class="noticeText">[공지] 컬쳐랜드 문화상품권 사기 주의 안내 2021.09.23</a></li>
+            <li><a href="#" class="noticeText">[공지] 컬쳐랜드 환불일정 변경안내 2021.09.14</a></li>
+            <li><a href="#" class="noticeText">[공지] 투썸플레이스 모바일쿠폰 서비스 종료 안내 2021.09.01</a></li>
+            <li><a href="#" class="noticeText">[공지] 컬쳐랜드 약관 변경 사전 안내 2021.08.20</a></li>
+            <li><a href="#" class="noticeText">[공지] 컬쳐랜드 환불일정 변경안내 2021.08.13</a></li>
+            <li><a href="#" class="noticeText">[공지] 11번가 서비스 제휴 종료 안내 2021.08.11</a></li>
+            <li><a href="#" class="noticeText">[공지] 컬쳐랜드 시스템 점검 안내	2021.08.11</a></li>
+        </ul>
+        <div class="upBtn moveBtn">&#60;</div>
+        <div class="downBtn moveBtn">&#62;</div>
+        <a href="#" class="viewMore">더보기</a>
+    </section>
+    <section id="gift">
+        <div class="titleBox">
+            <div class="decoLine"></div>
+            <h2 class="conTitle">상품권</h2>
+            <div class="decoLine"></div>
+            <h3 class="conSubTitle">상품권은 한결같은 일상에 행복을 느낄 수 있는 보너스같은 선물입니다.</h3>
+        </div>
+        <ul class="giftList">
+            <li>
+                <div class="textBox">
+                    <h4>문화상품권</h4>
+                    <p>삶의 질을 높이는 필수문화 아이템! 대한민국 대표 상품권입니다.</p>
+                </div>
+                <img src="img/gift1.jpg" alt="문화상품권">
+                <div class="overBox">
+                    <a href="gift.html" class="moreBtn">자세히 보기</a>
+                </div>
+            </li>
+            <li>
+                <div class="textBox">
+                    <h4>모바일 문화상품권</h4>
+                    <p>문화상품권이 모바일로 쏙! 쉽고 빠른 대표 상품권입니다.</p>
+                </div>
+                <img src="img/gift2.jpg" alt="모바일 문화상품권">
+                <div class="overBox">
+                    <a href="gift.html" class="moreBtn">자세히 보기</a>
+                </div>
+            </li>
+            <li>
+                <div class="textBox">
+                    <h4>스마트 문화상품권</h4>
+                    <p>온라인 게임사이트에서 무기명으로 사용하는 게임 전용 상품권입니다.</p>
+            </div>
+                <img src="img/gift3.jpg" alt="스마트 문화상품권">
+                <div class="overBox">
+                    <a href="gift.html" class="moreBtn">자세히 보기</a>
+                </div>
+            </li>
+            <li>
+                <div class="textBox">
+                    <h4>Google 기프트코드</h4>
+                    <p>더욱 신나게, Android의 모든 즐거움을 Play 하세요!</p>
+            </div>
+                <img src="img/gift4.jpg" alt="google 기프트코드">
+                <div class="overBox">
+                    <a href="gift.html" class="moreBtn">자세히 보기</a>
+                </div>
+            </li>
+        </ul>
+    </section>
+    <section id="use">
+        <div class="titleBox">
+            <div class="decoLine"></div>
+            <h2 class="conTitle">사용처</h2>
+            <div class="decoLine"></div>
+            <h3 class="conSubTitle">컬쳐랜드 캐쉬를 사용할 수 있는 온라인 사용처 입니다.</h3>
+        </div>
+        <ul class="tabsTitle">
+            <li class="select"><a href="#">쇼핑</a><div class="triangle"></div></li>
+            <li><a href="#">도서</a><div class="triangle"></div></li>
+            <li><a href="#">콘텐츠</a><div class="triangle"></div></li>
+            <li><a href="#">보험</a><div class="triangle"></div></li>
+        </ul>
+        <div class="useWrap">
+            <ul class="useList">
+                <li>
+                    <img src="img/use/shopping/use_shopping1.jpg" alt="">
+                    <a href="#" class="overBox">사이트 바로가기</a>
+                </li>
+                <li>
+                    <img src="img/use/shopping/use_shopping2.jpg" alt="">
+                    <a href="#" class="overBox">사이트 바로가기</a>
+                </li>
+                <li>
+                    <img src="img/use/shopping/use_shopping3.jpg" alt="">
+                    <a href="#" class="overBox">사이트 바로가기</a>
+                </li>
+                <li>
+                    <img src="img/use/shopping/use_shopping4.jpg" alt="">
+                    <a href="#" class="overBox">사이트 바로가기</a>
+                </li>
+                <li>
+                    <img src="img/use/shopping/use_shopping5.jpg" alt="">
+                    <a href="#" class="overBox">사이트 바로가기</a>
+                </li>
+                <li>
+                    <img src="img/use/shopping/use_shopping6.jpg" alt="">
+                    <a href="#" class="overBox">사이트 바로가기</a>
+                </li>
+                <li>
+                    <img src="img/use/shopping/use_shopping7.jpg" alt="">
+                    <a href="#" class="overBox">사이트 바로가기</a>
+                </li>
+                <li>
+                    <img src="img/use/shopping/use_shopping8.jpg" alt="">
+                    <a href="#" class="overBox">사이트 바로가기</a>
+                </li>
+                <li>
+                    <img src="img/use/shopping/use_shopping9.jpg" alt="">
+                    <a href="#" class="overBox">사이트 바로가기</a>
+                </li>
+                <li>
+                    <img src="img/use/shopping/use_shopping10.jpg" alt="">
+                    <a href="#" class="overBox">사이트 바로가기</a>
+                </li>
+                <li>
+                    <img src="img/use/shopping/use_shopping11.jpg" alt="">
+                    <a href="#" class="overBox">사이트 바로가기</a>
+                </li>
+                <li>
+                    <img src="img/use/shopping/use_shopping12.jpg" alt="">
+                    <a href="#" class="overBox">사이트 바로가기</a>
+                </li>
+                <li>
+                    <img src="img/use/shopping/use_shopping13.jpg" alt="">
+                    <a href="#" class="overBox">사이트 바로가기</a>
+                </li>
+                <li>
+                    <img src="img/use/shopping/use_shopping14.jpg" alt="">
+                    <a href="#" class="overBox">사이트 바로가기</a>
+                </li>
+                <li>0
+                    <img src="img/use/shopping/use_shopping15.jpg" alt="">
+                    <a href="#" class="overBox">사이트 바로가기</a>
+                </li>
+                <li><a href="use.html" class="viewMore"></a></li>
+            </ul>
+            <ul class="useList">
+                <li>
+                    <img src="img/use/book/use_book1.jpg" alt="">
+                    <a href="#" class="overBox">사이트 바로가기</a>
+                </li>
+                <li>
+                    <img src="img/use/book/use_book2.jpg" alt="">
+                    <a href="#" class="overBox">사이트 바로가기</a>
+                </li>
+                <li>
+                    <img src="img/use/book/use_book3.jpg" alt="">
+                    <a href="#" class="overBox">사이트 바로가기</a>
+                </li>
+                <li>
+                    <img src="img/use/book/use_book4.jpg" alt="">
+                    <a href="#" class="overBox">사이트 바로가기</a>
+                </li>
+                <li>
+                    <img src="img/use/book/use_book5.jpg" alt="">
+                    <a href="#" class="overBox">사이트 바로가기</a>
+                </li>
+                <li><div class="listBg"><img src="http://placehold.it/147x147/ffffff/ffffff" alt=""></div></li>
+                <li><div class="listBg"><img src="http://placehold.it/147x147/ffffff/ffffff" alt=""></div></li>
+                <li><div class="listBg"><img src="http://placehold.it/147x147/ffffff/ffffff" alt=""></div></li>
+                <li><div class="listBg"><img src="http://placehold.it/147x147/ffffff/ffffff" alt=""></div></li>
+                <li><div class="listBg"><img src="http://placehold.it/147x147/ffffff/ffffff" alt=""></div></li>
+                <li><div class="listBg"><img src="http://placehold.it/147x147/ffffff/ffffff" alt=""></div></li>
+                <li><div class="listBg"><img src="http://placehold.it/147x147/ffffff/ffffff" alt=""></div></li>
+                <li><div class="listBg"><img src="http://placehold.it/147x147/ffffff/ffffff" alt=""></div></li>
+                <li><div class="listBg"><img src="http://placehold.it/147x147/ffffff/ffffff" alt=""></div></li>
+                <li><div class="listBg"><img src="http://placehold.it/147x147/ffffff/ffffff" alt=""></div></li>
+                <li><div class="listBg"><img src="http://placehold.it/147x147/ffffff/ffffff" alt=""></div><a href="use.html" class="viewMore"></a></li>
+            </ul>
+            <ul class="useList">
+                <li>
+                    <img src="img/use/content/use_content1.jpg" alt="">
+                    <a href="#" class="overBox">사이트 바로가기</a>
+                </li>
+                <li>
+                    <img src="img/use/content/use_content2.jpg" alt="">
+                    <a href="#" class="overBox">사이트 바로가기</a>
+                </li>
+                <li>
+                    <img src="img/use/content/use_content3.jpg" alt="">
+                    <a href="#" class="overBox">사이트 바로가기</a>
+                </li>
+                <li>
+                    <img src="img/use/content/use_content4.jpg" alt="">
+                    <a href="#" class="overBox">사이트 바로가기</a>
+                </li>
+                <li>
+                    <img src="img/use/content/use_content5.jpg" alt="">
+                    <a href="#" class="overBox">사이트 바로가기</a>
+                </li>
+                <li>
+                    <img src="img/use/content/use_content6.jpg" alt="">
+                    <a href="#" class="overBox">사이트 바로가기</a>
+                 </li>
+                <li>
+                    <img src="img/use/content/use_content7.jpg" alt="">
+                    <a href="#" class="overBox">사이트 바로가기</a>
+                </li>
+                <li>
+                    <img src="img/use/content/use_content8.jpg" alt="">
+                    <a href="#" class="overBox">사이트 바로가기</a>
+                </li>
+                <li>
+                    <img src="img/use/content/use_content9.jpg" alt="">
+                    <a href="#" class="overBox">사이트 바로가기</a>
+                </li>
+                <li><div class="listBg"><img src="http://placehold.it/147x147/ffffff/ffffff" alt=""></div></li>
+                <li><div class="listBg"><img src="http://placehold.it/147x147/ffffff/ffffff" alt=""></div></li>
+                <li><div class="listBg"><img src="http://placehold.it/147x147/ffffff/ffffff" alt=""></div></li>
+                <li><div class="listBg"><img src="http://placehold.it/147x147/ffffff/ffffff" alt=""></div></li>
+                <li><div class="listBg"><img src="http://placehold.it/147x147/ffffff/ffffff" alt=""></div></li>
+                <li><div class="listBg"><img src="http://placehold.it/147x147/ffffff/ffffff" alt=""></div></li>
+                <li><div class="listBg"><img src="http://placehold.it/147x147/ffffff/ffffff" alt=""></div><a href="use.html" class="viewMore"></a></li>
+            </ul>
+            <ul class="useList">
+                <li>
+                    <img src="img/use/insure/use_insure1.jpg" alt="">
+                    <a href="#" class="overBox">사이트 바로가기</a>
+                </li>
+                <li>
+                    <img src="img/use/insure/use_insure2.jpg" alt="">
+                    <a href="#" class="overBox">사이트 바로가기</a>
+                </li>
+                <li><div class="listBg"><img src="http://placehold.it/147x147/ffffff/ffffff" alt=""></div></li>
+                <li><div class="listBg"><img src="http://placehold.it/147x147/ffffff/ffffff" alt=""></div></li>
+                <li><div class="listBg"><img src="http://placehold.it/147x147/ffffff/ffffff" alt=""></div></li>
+                <li><div class="listBg"><img src="http://placehold.it/147x147/ffffff/ffffff" alt=""></div></li>
+                <li><div class="listBg"><img src="http://placehold.it/147x147/ffffff/ffffff" alt=""></div></li>
+                <li><div class="listBg"><img src="http://placehold.it/147x147/ffffff/ffffff" alt=""></div></li>
+                <li><div class="listBg"><img src="http://placehold.it/147x147/ffffff/ffffff" alt=""></div></li>
+                <li><div class="listBg"><img src="http://placehold.it/147x147/ffffff/ffffff" alt=""></div></li>
+                <li><div class="listBg"><img src="http://placehold.it/147x147/ffffff/ffffff" alt=""></div></li>
+                <li><div class="listBg"><img src="http://placehold.it/147x147/ffffff/ffffff" alt=""></div></li>
+                <li><div class="listBg"><img src="http://placehold.it/147x147/ffffff/ffffff" alt=""></div></li>
+                <li><div class="listBg"><img src="http://placehold.it/147x147/ffffff/ffffff" alt=""></div></li>
+                <li><div class="listBg"><img src="http://placehold.it/147x147/ffffff/ffffff" alt=""></div></li>
+                <li><div class="listBg"><img src="http://placehold.it/147x147/ffffff/ffffff" alt=""></div><a href="use.html" class="viewMore"></a></li>
+            </ul>
+        </div>
+        <a href="use.html" class="moreBtn">더보기</a>
+    </section>
+    <section id="midBanner">
+        <h2>미드배너</h2>
+        <img src="img/mid_banner1.jpg" alt="" class="midBannerBg">
+        <ul class="bannerList">
+            <li>
+                <img src="img/mid_banner1.jpg" alt="">
+                <div class="overBox">
+                    <a href="#" class="moreBtn">더보기</a>
+                </div>
+            </li>
+            <li>
+                <img src="img/mid_banner2.jpg" alt="">
+                <div class="overBox">
+                    <a href="#" class="moreBtn">더보기</a>
+                </div>
+            </li>
+            <li>
+                <img src="img/mid_banner3.jpg" alt="">
+                <div class="overBox">
+                    <a href="#" class="moreBtn">더보기</a>
+                </div>
+            </li>
+            <li>
+                <img src="img/mid_banner4.jpg" alt="">
+                <div class="overBox">
+                    <a href="#" class="moreBtn">더보기</a>
+                </div>
+            </li>
+            <li>
+                <img src="img/mid_banner5.jpg" alt="">
+                <div class="overBox">
+                    <a href="#" class="moreBtn">더보기</a>
+                </div>
+            </li>
+            <li>
+                <img src="img/mid_banner6.jpg" alt="">
+                <div class="overBox">
+                    <a href="#" class="moreBtn">더보기</a>
+                </div>
+            </li>
+            <li>
+                <img src="img/mid_banner7.jpg" alt="">
+                <div class="overBox">
+                    <a href="#" class="moreBtn">더보기</a>
+                </div>
+            </li>
+        </ul>
+        <ul class="controls">
+            <li class="select"><a href="#"></a></li>
+            <li><a href="#"></a></li>
+            <li><a href="#"></a></li>
+            <li><a href="#"></a></li>
+            <li><a href="#"></a></li>
+            <li><a href="#"></a></li>
+            <li><a href="#"></a></li>
+        </ul>
+    </section>
+    <section id="event">
+        <div class="titleBox">
+            <div class="decoLine"></div>
+            <h2 class="conTitle">이벤트</h2>
+            <div class="decoLine"></div>
+            <h3 class="conSubTitle">다양한 혜택이 가득한 컬쳐랜드 이벤트 입니다.</h3>
+        </div>
+        <ul class="eventList">
+            <li>
+                <img src="img/event/event1.png" alt="블레이드&소울">
+                <div class="textBox">
+                    <h4>블레이드&소울2 이벤트</h4>
+                    <p>기간 : 2021.09.29 ~ 2021.10.12</p>
+                </div>
+                <div class="overBox">
+                    <a href="#" class="moreBtn">자세히 보기</a>
+                </div>
+            </li>
+            <li>
+                <img src="img/event/event2.png" alt="교통페이">
+                <div class="textBox">
+                    <h4>교통페이 캐시업 이벤트</h4>
+                    <p>기간 : 2021.09.15 ~ 2021.10.31</p>
+                </div>
+                <div class="overBox">
+                    <a href="#" class="moreBtn">자세히 보기</a>
+                </div>
+            </li>
+            <li>
+                <img src="img/event/event3.png" alt="넥슨캐시">
+                <div class="textBox">
+                    <h4>넥슨캐시 이벤트</h4>
+                    <p>기간 : 2021.09.15 ~ 2021.10.05</p>
+                </div>
+                <div class="overBox">
+                    <a href="#" class="moreBtn">자세히 보기</a>
+                </div>
+            </li>
+            <li>
+                <img src="img/event/event4.png" alt="우주패스 구독">
+                <div class="textBox">
+                    <h4>우주패스 구독 이벤트</h4>
+                    <p>기간 : 2021.09.13 ~ 2021.09.30</p>
+                </div>
+                <div class="overBox">
+                    <a href="#" class="moreBtn">자세히 보기</a>
+                </div>
+            </li>
+        </ul>
+        <a href="event.html" class="moreBtn">더보기</a>
+    </section>
+    <section id="coupon">
+        <div class="couponWrap">
+            <div class="titleBox">
+                <div class="decoLine"></div>
+                <h2 class="conTitle">쿠폰</h2>
+                <div class="decoLine"></div>
+                <h3 class="conSubTitle">컬쳐캐쉬로 다양한 모바일 쿠폰 혜택을 누리세요.</h3>
+            </div>
+            <ul class="couponList">
+                <li>
+                    <h3 class="couponTitle">쇼핑</h3>
+                    <ul>
+                        <li>
+                            <img src="img/coupon/shopping/coupon_shopping1.jpg" alt="">
+                            <a href="#" class="overBox">사이트 바로가기</a>
+                        </li>
+                        <li>
+                            <img src="img/coupon/shopping/coupon_shopping2.jpg" alt="">
+                            <a href="#" class="overBox">사이트 바로가기</a>
+                        </li>
+                        <li>
+                            <img src="img/coupon/shopping/coupon_shopping3.jpg" alt="">
+                            <a href="#" class="overBox">사이트 바로가기</a>
+                        </li>
+                        <li>
+                            <img src="img/coupon/shopping/coupon_shopping4.jpg" alt="">
+                            <a href="#" class="overBox">사이트 바로가기</a>
+                        </li>
+                        <li>
+                            <img src="img/coupon/shopping/coupon_shopping5.jpg" alt="">
+                            <a href="#" class="overBox">사이트 바로가기</a>
+                        </li>
+                        <li><div class="listBg"><img src="http://placehold.it/149x149/ffffff/ffffff" alt=""></div><a href="coupon.html" class="viewMore"></a></li>
+                    </ul>
+                    <div class="leftHole"></div>
+                    <div class="rightHole"></div>
+                </li>
+                <li>
+                    <h3 class="couponTitle">카페</h3>
+                    <ul>
+                        <li>
+                            <img src="img/coupon/cafe/coupon_cafe1.jpg" alt="">
+                            <a href="#" class="overBox">사이트 바로가기</a>
+                        </li>
+                        <li>
+                            <img src="img/coupon/cafe/coupon_cafe2.jpg" alt="">
+                            <a href="#" class="overBox">사이트 바로가기</a>
+                        </li>
+                        <li>
+                            <img src="img/coupon/cafe/coupon_cafe3.jpg" alt="">
+                            <a href="#" class="overBox">사이트 바로가기</a>
+                        </li>
+                        <li>
+                            <img src="img/coupon/cafe/coupon_cafe4.jpg" alt="">
+                            <a href="#" class="overBox">사이트 바로가기</a>
+                        </li>
+                        <li>
+                            <img src="img/coupon/cafe/coupon_cafe5.jpg" alt="">
+                            <a href="#" class="overBox">사이트 바로가기</a>
+                        </li>
+                        <li><div class="listBg"><img src="http://placehold.it/149x149/ffffff/ffffff" alt=""></div><a href="coupon.html" class="viewMore"></a></li>
+                    </ul>
+                    <div class="leftHole"></div>
+                    <div class="rightHole"></div>
+                </li>
+                <li>
+                    <h3 class="couponTitle">콘텐츠</h3>
+                    <ul>
+                        <li>
+                            <img src="img/coupon/contents/coupon_content1.jpg" alt="">
+                            <a href="#" class="overBox">사이트 바로가기</a>
+                        </li>
+                        <li>
+                            <img src="img/coupon/contents/coupon_content2.jpg" alt="">
+                            <a href="#" class="overBox">사이트 바로가기</a>
+                        </li>
+                        <li>
+                            <img src="img/coupon/contents/coupon_content3.jpg" alt="">
+                            <a href="#" class="overBox">사이트 바로가기</a>
+                        </li>
+                        <li>
+                            <img src="img/coupon/contents/coupon_content4.jpg" alt="">
+                            <a href="#" class="overBox">사이트 바로가기</a>
+                        </li>
+                        <li>
+                            <img src="img/coupon/contents/coupon_content5.jpg" alt="">
+                            <a href="#" class="overBox">사이트 바로가기</a>
+                        </li>
+                        <li><div class="listBg"><img src="http://placehold.it/149x149/ffffff/ffffff" alt=""></div><a href="coupon.html" class="viewMore"></a></li>
+                    </ul>
+                    <div class="leftHole"></div>
+                    <div class="rightHole"></div>
+                </li>
+                <li>
+                    <h3 class="couponTitle">외식</h3>
+                    <ul>
+                        <li>
+                            <img src="img/coupon/food/coupon_food1.jpg" alt="">
+                            <a href="#" class="overBox">사이트 바로가기</a>
+                        </li>
+                        <li>
+                            <img src="img/coupon/food/coupon_food2.jpg" alt="">
+                            <a href="#" class="overBox">사이트 바로가기</a>
+                        </li>
+                        <li>
+                            <img src="img/coupon/food/coupon_food3.jpg" alt="">
+                            <a href="#" class="overBox">사이트 바로가기</a>
+                        </li>
+                        <li>
+                            <img src="img/coupon/food/coupon_food4.jpg" alt="">
+                            <a href="#" class="overBox">사이트 바로가기</a>
+                        </li>
+                        <li>
+                            <img src="img/coupon/food/coupon_food5.jpg" alt="">
+                            <a href="#" class="overBox">사이트 바로가기</a>
+                        </li>
+                        <li><div class="listBg"><img src="http://placehold.it/149x149/ffffff/ffffff" alt=""></div><a href="coupon.html" class="viewMore"></a></li>
+                    </ul>
+                    <div class="leftHole"></div>
+                    <div class="rightHole"></div>
+                </li>
+            </ul>
+        </div>
+        <ul class="controls">
+            <li class="select"></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </section>
+    <section id="application">
+        <div class="titleBox">
+            <div class="decoLine"></div>
+            <h2 class="conTitle">어플</h2>
+            <div class="decoLine"></div>
+            <h3 class="conSubTitle">언제 어디서나 쉽고 편리하게 모바일에서 컬쳐랜드 서비스를 만나보세요!</h3>
+        </div>
+        <img src="img/application.jpg" alt="모바일">
+        <ul class="qrList">
+            <li>
+                <img src="img/qr_google.png" alt="">
+                <a href="#" class="moreBtn"></a>
+            </li>
+            <li>
+                <img src="img/qr_appstore.png" alt="">
+                <a href="#" class="moreBtn"></a>
+            </li>
+            <li>
+                <img src="img/qr_onestore.png" alt="">
+                <a href="#" class="moreBtn"></a>
+            </li>
+        </ul>
+    </section>
+    <footer id="footer">
+        <div class="footerInner">
+            <ul class="fnb">
+                <li><a href="#">회사소개</a></li>
+                <li><a href="#">광고 및 제휴안내</a></li>
+                <li><a href="#">서비스 약관</a></li>
+                <li><a href="#">컬쳐캐쉬약관</a></li>
+                <li><a href="#">상품권 이용약관</a></li>
+                <li><a href="#">개인정보 처리방침</a></li>
+                <li><a href="#">청소년보호정책</a></li>
+                <li><a href="#">고객센터</a></li>
+                <li><a href="#">사이트맵</a></li>
+                <li><a href="#">사회공헌 캠페인</a></li>
+            </ul>
+            <address>서울시 강남구 영동대로 326(대치동 1008) 컬쳐랜드 타워</address>
+            <p>대표 : 장형근 | 사업자 등록번호 : 120-81-77097 | 통신판매업신고 : 강남-1181호 | 개인정보보호책임자 : 김영민<br>
+            &copy;배민성 All Right Reserverd.</p>
+        </div>
+    </footer>
+</body>
+</html>

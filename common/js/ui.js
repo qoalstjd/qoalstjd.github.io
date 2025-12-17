@@ -8,19 +8,22 @@ const ui = {
     },
     theme: {
         init() {
-            console.log(`현재테마 : ${document.documentElement.dataset.theme}`);
+            const saved = window.cacheManager.get("theme") || window.defaultTheme || "light";
+            document.documentElement.dataset.theme = saved;
             document.addEventListener("click", (e) => {
                 if (!e.target.closest("[data-action='toggle-theme']")) return;
                 this.toggle();
             });
         },
         toggle() {
-            document.documentElement.dataset.theme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+            const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+            document.documentElement.dataset.theme = next;
+            window.cacheManager.set("theme", next, { persist: false });
         },
     },
     lottie: {
         init() {
-            document.querySelectorAll(".lottie").forEach(el => {
+            document.querySelectorAll(".lottie").forEach((el) => {
                 this.setup(el);
                 this.load(el);
             });
@@ -48,15 +51,15 @@ const ui = {
                 <div class="lottie" data-src="${src}"></div>
                 <strong class="fs-20">${msg[0]}</strong>
                 <p>${msg[1]}</p>
-            `
+            `;
             target.innerHTML = "";
             target.appendChild(wrap);
 
-            this.setup(wrap.querySelector('.lottie'));
-            this.load(wrap.querySelector('.lottie'));
+            this.setup(wrap.querySelector(".lottie"));
+            this.load(wrap.querySelector(".lottie"));
 
             return wrap;
-        }
+        },
     },
     dropdown: {
         setupDropdown(dropdown) {

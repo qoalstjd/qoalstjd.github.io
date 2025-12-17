@@ -13,11 +13,13 @@
 .mb-0 { margin-bottom: 0 !important; } 
 .mb-8 { margin-bottom: 0.8rem !important; } 
 /* ==================== 패딩 ==================== */
+.pd-0 { padding: 0 !important; } 
 .pd-12 { padding: 1.2rem !important; } 
 .pd-16 { padding: 1.6rem !important; } 
 .pd-20 { padding: 2.0rem !important; } 
 .pd-24 { padding: 2.4rem !important; } 
 .pl-12 { padding-left: 1.2rem !important; } 
+.pl-24 { padding-left: 2.4rem !important; } 
 /* ==================== 크기 ==================== */
 .w-full { width: 100%; } 
 .h-full { height: 100%; } 

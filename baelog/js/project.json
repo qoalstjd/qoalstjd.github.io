@@ -1,12 +1,30 @@
 [
     {
+        "id": 1,
+        "category": "Renewal",
+        "title": "컬쳐랜드 - Cultureland",
+        "summary": "컬쳐랜드 기존 화면을 분석해 사용자 흐름, 정보 구조, UI 일관성을 개선",
+        "fileName": "renewal_01",
+        "tags": ["renewal", "improve"],
+        "date": "2025.12.17"
+    },
+    {
+        "id": 0,
+        "category": "Renewal",
+        "title": "기존 작업물 Renewal",
+        "summary": "포트폴리오용으로 제작한 기존 프로젝트를 구조 관점에서 재정리한 리뉴얼 작업",
+        "fileName": "renewal_00",
+        "tags": ["renewal", "improve"],
+        "date": "2025.12.16"
+    },
+    {
         "id": 7,
         "category": "Pension",
         "title": "펜션 홈페이지 구축 회고",
         "summary": "문제점과 개선 방향 정리",
         "fileName": "pension_07",
         "tags": ["retrospective", "improve"],
-        "date": "2025.12.22"
+        "date": "0000.00.00"
     },
     {
         "id": 5,
@@ -15,7 +33,7 @@
         "summary": "관리자 페이지 구조와 기능 정리",
         "fileName": "pension_05",
         "tags": ["admin", "crud", "db"],
-        "date": "2025.12.20"
+        "date": "0000.00.00"
     },
     {
         "id": 4,
@@ -24,7 +42,7 @@
         "summary": "예약 흐름과 데이터 처리 방식",
         "fileName": "pension_04",
         "tags": ["booking", "logic", "project"],
-        "date": "2025.12.19"
+        "date": "0000.00.00"
     },
     {
         "id": 2,
@@ -33,7 +51,7 @@
         "summary": "반복 요소 분리와 재사용 구조",
         "fileName": "pension_02",
         "tags": ["component", "css", "structure"],
-        "date": "2025.12.21"
+        "date": "0000.00.00"
     },
     {
         "id": 1,
@@ -52,95 +70,5 @@
         "fileName": "pension_00",
         "tags": ["planning", "design", "project"],
         "date": "2025.12.15"
-    },
-    {
-        "id": 0,
-        "category": "Cultureland",
-        "title": "컬쳐랜드 리뉴얼 계획",
-        "summary": "리뉴얼 목표와 전체 구조 설계, 개선 포인트 정리",
-        "fileName": "cultureland_01",
-        "tags": ["planning", "design", "project"],
-        "date": "2025.02.10"
-    },
-    {
-        "id": 1,
-        "category": "Cultureland",
-        "title": "UI/UX 디자인 시스템 구축",
-        "summary": "컬러, 타이포, spacing 등 디자인 시스템을 정리하고 적용한 과정",
-        "fileName": "cultureland_02",
-        "tags": ["design", "css", "ui", "ux"],
-        "date": "2025.02.12"
-    },
-    {
-        "id": 2,
-        "category": "Cultureland",
-        "title": "다크 모드 적용기",
-        "summary": "라이트/다크 테마 구현과 CSS 변수 구조 설계",
-        "fileName": "cultureland_03",
-        "tags": ["css", "darkmode", "theme"],
-        "date": "2025.02.14"
-    },
-    {
-        "id": 3,
-        "category": "Cultureland",
-        "title": "Vanilla JS SPA 만들기",
-        "summary": "라우팅, 상태 관리, DOM 업데이트를 Vanilla JS로 구현한 방법",
-        "fileName": "cultureland_04",
-        "tags": ["javascript", "spa", "routing"],
-        "date": "2025.02.16"
-    },
-    {
-        "id": 4,
-        "category": "Cultureland",
-        "title": "Fetch + Cache 패턴 정리",
-        "summary": "로컬스토리지 기반 캐시 처리 및 async/await 활용 사례",
-        "fileName": "cultureland_05",
-        "tags": ["javascript", "fetch", "cache"],
-        "date": "2025.02.18"
-    },
-    {
-        "id": 5,
-        "category": "Cultureland",
-        "title": "반응형 레이아웃 구현",
-        "summary": "Mobile/first 설계와 Flex/Grid를 이용한 반응형 레이아웃 적용",
-        "fileName": "cultureland_06",
-        "tags": ["css", "responsive", "grid", "flex"],
-        "date": "2025.02.20"
-    },
-    {
-        "id": 6,
-        "category": "Cultureland",
-        "title": "SEO와 접근성 개선",
-        "summary": "메타 태그, OG 카드, 접근성 체크리스트 적용 사례",
-        "fileName": "cultureland_07",
-        "tags": ["seo", "accessibility", "meta"],
-        "date": "2025.02.22"
-    },
-    {
-        "id": 7,
-        "category": "Cultureland",
-        "title": "이미지 최적화 및 성능 개선",
-        "summary": "WebP, lazy loading, LCP/FCP 최적화 전략 적용",
-        "fileName": "cultureland_08",
-        "tags": ["performance", "image", "optimization"],
-        "date": "2025.02.24"
-    },
-    {
-        "id": 8,
-        "category": "Cultureland",
-        "title": "배포와 GitHub Actions",
-        "summary": "GitHub Pages 자동 배포와 커스텀 도메인 적용 사례",
-        "fileName": "cultureland_09",
-        "tags": ["github", "ci/cd", "deployment"],
-        "date": "2025.02.26"
-    },
-    {
-        "id": 9,
-        "category": "Cultureland",
-        "title": "리뉴얼 회고",
-        "summary": "리뉴얼 과정에서 배운 점과 다음 버전 계획",
-        "fileName": "cultureland_10",
-        "tags": ["review", "reflection", "project"],
-        "date": "2025.02.28"
     }
 ]
