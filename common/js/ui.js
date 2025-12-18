@@ -61,6 +61,170 @@ const ui = {
             return wrap;
         },
     },
+    swiper: {
+        instances: [],
+        createInstance(el) {
+            const instance = {
+                el,
+                wrapper: el.querySelector(".swiper-wrapper"),
+                slides: el.querySelectorAll(".swiper-slide"),
+                prevBtn: el.querySelector(".ico[data-ico='prev']"),
+                nextBtn: el.querySelector(".ico[data-ico='next']"),
+                pagination: el.querySelector(".swiper-pagination"),
+                index: 0,
+                total: el.querySelectorAll(".swiper-slide").length,
+
+                loop: el.dataset.loop !== "false", // data-loop="false" 면 루프 끔
+                speed: parseInt(el.dataset.speed || 300), // data-speed
+                hasPagination: el.dataset.pagination !== "false", // data-pagination="false" 면 생성 안함
+
+                createPagination() {
+                    if (!this.pagination || !this.hasPagination) return;
+                    this.pagination.innerHTML = "";
+                    for (let i = 0; i < this.total; i++) {
+                        const dot = document.createElement("span");
+                        dot.addEventListener("click", () => {
+                            this.index = i;
+                            this.update();
+                        });
+                        this.pagination.appendChild(dot);
+                    }
+                },
+
+                updatePagination() {
+                    if (!this.pagination || !this.hasPagination) return;
+                    this.pagination.querySelectorAll("span").forEach((s, i) => s.classList.toggle("active", i === this.index));
+                },
+
+                bindEvents() {
+                    this.prevBtn?.addEventListener("click", () => {
+                        this.index--;
+                        this.update();
+                    });
+                    this.nextBtn?.addEventListener("click", () => {
+                        this.index++;
+                        this.update();
+                    });
+
+                    let startX = 0,
+                        currentX = 0,
+                        dragging = false;
+
+                    const getWrapperWidth = () => this.wrapper.offsetWidth;
+
+                    const setTransform = (x, instant = false) => {
+                        this.wrapper.style.transition = instant ? "none" : `transform ${this.speed}ms`;
+                        this.wrapper.style.transform = `translateX(${x}px)`;
+                    };
+
+                    const startDrag = (x) => {
+                        dragging = true;
+                        startX = x;
+                        currentX = -this.index * getWrapperWidth();
+                        setTransform(currentX, true);
+                    };
+
+                    const moveDrag = (x) => {
+                        if (!dragging) return;
+                        const diff = x - startX;
+                        setTransform(currentX + diff, true);
+                    };
+
+                    const endDrag = (x) => {
+                        if (!dragging) return;
+                        dragging = false;
+                        const diff = x - startX;
+                        const threshold = getWrapperWidth() * 0.2; // 20% 이상 움직이면 슬라이드 이동
+                        if (diff > threshold) this.index--;
+                        else if (diff < -threshold) this.index++;
+                        this.update();
+                    };
+
+                    // 터치 이벤트
+                    this.wrapper.addEventListener("touchstart", (e) => startDrag(e.touches[0].clientX));
+                    this.wrapper.addEventListener("touchmove", (e) => moveDrag(e.touches[0].clientX));
+                    this.wrapper.addEventListener("touchend", (e) => endDrag(e.changedTouches[0].clientX));
+
+                    // 마우스 이벤트
+                    this.wrapper.addEventListener("mousedown", (e) => {
+                        e.preventDefault();
+                        startDrag(e.clientX);
+                        const moveHandler = (ev) => moveDrag(ev.clientX);
+                        const upHandler = (ev) => {
+                            endDrag(ev.clientX);
+                            document.removeEventListener("mousemove", moveHandler);
+                            document.removeEventListener("mouseup", upHandler);
+                        };
+                        document.addEventListener("mousemove", moveHandler);
+                        document.addEventListener("mouseup", upHandler);
+                    });
+                },
+
+                update() {
+                    const wrapperWidth = this.wrapper.offsetWidth;
+                    if (this.loop) {
+                        if (this.index < 0) this.index = this.total - 1;
+                        if (this.index >= this.total) this.index = 0;
+                    } else {
+                        this.index = Math.max(0, Math.min(this.index, this.total - 1));
+                    }
+                    const x = -this.index * wrapperWidth;
+                    this.wrapper.style.transition = `transform ${this.speed}ms`;
+                    this.wrapper.style.transform = `translateX(${x}px)`;
+                    this.updatePagination();
+                },
+
+                init() {
+                    this.createPagination();
+                    this.bindEvents();
+                    this.update();
+                },
+            };
+
+            instance.init();
+            return instance;
+        },
+        init(selector = ".swiper") {
+            document.querySelectorAll(selector).forEach((el) => {
+                const inst = this.createInstance(el);
+                this.instances.push(inst);
+            });
+        },
+    },
+    tag: {
+        wraps: document.querySelectorAll(".tag-wrap"),
+        isDown: false,
+        startX: 0,
+        startScroll: 0,
+        activeWrap: null,
+        init() {
+            this.wraps.forEach((wrap) => {
+                wrap.style.cursor = "grab";
+
+                wrap.addEventListener("mousedown", (e) => {
+                    this.isDown = true;
+                    this.activeWrap = wrap;
+                    this.startX = e.pageX;
+                    this.startScroll = wrap.scrollLeft;
+                    wrap.style.cursor = "grabbing";
+                });
+
+                wrap.addEventListener("mousemove", (e) => {
+                    if (!this.isDown || this.activeWrap !== wrap) return;
+                    e.preventDefault();
+                    wrap.scrollLeft = this.startScroll - (e.pageX - this.startX);
+                });
+            });
+
+            window.addEventListener("mouseup", () => {
+                this.isDown = false;
+                if (this.activeWrap) {
+                    this.activeWrap.style.cursor = "grab";
+                    this.activeWrap = null;
+                }
+            });
+        },
+    },
     dropdown: {
         setupDropdown(dropdown) {
             const label = dropdown.querySelector(".dropdown-label");
@@ -320,6 +484,7 @@ document.querySelectorAll(".inp").forEach((inp) => {
 document.addEventListener("DOMContentLoaded", () => {
     window.ui.theme.init();
     window.ui.lottie.init();
+    window.ui.tag.init();
     // window.ui.dropdown.init();
     // window.ui.tab.init();
     // window.ui.scrollTable.init();

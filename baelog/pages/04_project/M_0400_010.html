@@ -13,7 +13,7 @@
                 <b>On This Page</b>
                 <ul class="txt-700"></ul>
             </div>
-            <div class="box bg-300 flx gap-8">
+            <div class="box bg-400 flx gap-8">
                 <button class="ico wh-24" data-ico="copy"><span class="hidden">링크복사</span></button>
                 <a href="#comment" class="ico wh-24 ml-auto" data-ico="comment"><span class="hidden">댓글</span></a>
                 <a href="#top" class="ico wh-24" data-ico="pageup"><span class="hidden">맨위로</span></a>
@@ -98,7 +98,7 @@
 
             window.bindData(document.querySelector(".tit-wrap"), { ...meta, parentLinkcd: parentLinkcd || "m0000000" });
 
-            const data = await window.fetchManager.get(`/baelog/pages/04_project/posts/${fileName}.html`, { parse: "text" });
+            const data = await window.fetchManager.get(`/baelog/uploads/posts/${fileName}.html`, { parse: "text" });
             post.innerHTML = data;
             const headings = [...post.querySelectorAll("h2, h3, h4, h5, h6")];
             headings.forEach((h, i) => {

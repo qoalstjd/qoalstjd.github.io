@@ -11,7 +11,11 @@
 .mt-36 { margin-top: 3.6rem !important; } 
 .ml-auto { margin-left: auto !important; } 
 .mb-0 { margin-bottom: 0 !important; } 
-.mb-8 { margin-bottom: 0.8rem !important; } 
+.mb-8 { margin-bottom: 0.8rem !important; }
+/* ==================== 모서리 곡률 ==================== */
+.r-0 { border-radius: 0 !important; }
+.r-8 { border-radius: 0.8rem !important; }
+.r-max { border-radius: 99rem !important; }
 /* ==================== 패딩 ==================== */
 .pd-0 { padding: 0 !important; } 
 .pd-12 { padding: 1.2rem !important; } 

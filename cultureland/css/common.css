@@ -9,12 +9,15 @@
 .moreBtn:hover { color: #fff; background-color: #e6000f; border-color: #fff; } 
 .listBg>img { opacity: 0; } 
 
+/* ==================== 레이아웃 ==================== */
 header { position: fixed; width: 100%; top: 0; left: 0; height: 8rem; background-color: rgb(var(--bg-000)); box-shadow: .5rem .0rem .5rem rgba(0,0,0,0.3); z-index: 9999; } 
 header .gnb { display: flex; justify-content: space-between; align-items: center; max-width: 120rem; width: 100%; margin: 0 auto; } 
 header .gnb [data-action="toggle-menu"] { display: none; } 
 header [data-action="toggle-theme"] { position: absolute; right: 0; bottom: 0; } 
 
-.wrap {  width: 120rem; margin: 8rem auto 0; }
+.wrap { max-width: 120rem; margin: 8rem auto 0; }
+/* ==================== 홈 ==================== */
+.top_banner .swiper-wrapper .swiper-slide > div { position: absolute; left: 5rem; top: 12.8rem; } 
 
 header .gnb>ul::after { content: ""; display: block; clear: both; } 
 header .gnb>ul>li { float: left; text-align: center; } 
@@ -40,21 +43,6 @@ header .util>ul>li:nth-child(2)>a { background: url(../img/icon/icon_service.png
 header .util>ul>li:nth-child(2):hover>a { background-image: url(../img/icon/icon_service_hover.png); color: #e6000f; } 
 header .util>ul>li:nth-child(3)>a { background: url(../img/icon/icon_sitemap.png) no-repeat center center; background-size: 3.0rem 3.0rem; } 
 header .util>ul>li:nth-child(3):hover>a { background-image: url(../img/icon/icon_sitemap_hover.png); color: #e6000f; } 
-
-#topBanner { position: relative; width: 120.0rem; margin: 8.1rem auto 0 auto; } 
-#topBanner .bannerList::after { content: ""; display: block; clear: both; } 
-#topBanner .bannerBg { position: relative; opacity: 0; } 
-#topBanner .bannerList>li { position: absolute; top: 0; left: 0; display: none; } 
-#topBanner .bannerList>li:nth-child(1) { display: block; } 
-#topBanner .bannerList>li .bannerText { position: absolute; top: 50%; left: 5.0rem; transform: translateY(-50%); } 
-#topBanner .bannerList>li .bannerText>h2 { color: #fff; text-align-last: left; } 
-#topBanner .bannerList>li .bannerText>h3 { color: #fff; margin-bottom: 2.7rem; font-weight: 300; text-align-last: left; } 
-#topBanner .bannerList>li .bannerText .moreBtn { color: #fff; border-color: #fff; margin: 0; } 
-#topBanner .bannerList>li .bannerText .moreBtn:hover { background-color: #fff; color: #181818; box-shadow: .1rem .1rem .5rem rgba(0,0,0,0.5); } 
-#topBanner .controls { position: absolute; left: 50%; transform: translateX(-50%); bottom: 2.3rem; width: 19.8rem; } 
-#topBanner .controls::after { content: ""; display: block; clear: both; } 
-#topBanner .controls>li { float: left; width: 6.0rem; height: 1.5rem; margin: 0 .3rem; background-color: #fff; cursor: pointer; box-shadow: .1rem .1rem .5rem rgba(0,0,0,0.5); transition-duration: 0.5s; } 
-#topBanner .controls>li.select { background-color: #e6000f; } 
 
 #notice { position: relative; width: 120.0rem; margin: 0 auto; height: 5.4rem; background-color: #444; } 
 #notice>h2 { display: block; float: left; width: 20%; color: #fff; font-weight: 400; font-size: 1.6rem; line-height: 5.4rem; text-align: center; } 

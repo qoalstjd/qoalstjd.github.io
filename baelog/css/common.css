@@ -1,6 +1,6 @@
 /* ==================== 레이아웃 ==================== */
 body { display: grid; grid-template-areas: "gnb header" "gnb main"; grid-template-columns: 8rem 1fr; grid-template-rows: 5.2rem 1fr; column-gap: 0.4rem; } 
-body > .gnb { grid-area: gnb; display: flex; flex-direction: column; gap: 2rem; position: sticky; height: 100vh; top: 0; left: 0; z-index: 10; background-color: rgb(var(--bg-200)); overflow: hidden; } 
+body > .gnb { grid-area: gnb; display: flex; flex-direction: column; gap: 2rem; position: sticky; height: 100vh; top: 0; left: 0; z-index: 10; background-color: rgb(var(--bg-200)); } 
 body > .gnb > h1 a { display: block; line-height: 5.2rem; box-sizing: border-box; text-align: center; mask-size: 6rem auto; } 
 body > .gnb .util,
 body > .gnb ul { display: flex; flex-direction: column; align-items: center; gap: 1.6rem; } 
@@ -11,17 +11,15 @@ body > .gnb .util { padding-bottom: 2rem; }
 body > header { grid-area: header; display: flex; align-items: center; padding: 0 1.6rem 0.4rem; position: sticky; top: 0; z-index: 1; border-bottom: 0.4rem solid var(--bg_root); background-color: rgb(var(--bg-200)); } 
 body > header .util button i { mask-image: url("https://s2.svgbox.net/octicons.svg?ic=person-bold"); } 
 body > header .scrollgauge { position: absolute; left: 0; bottom: 0; display: block; width: 100%; height: 0.4rem; background-color: rgb(var(--bg-000)); } 
-body > .wrap { grid-area: main; } 
-body > .wrap main { min-height: calc(100vh - 11.2rem); padding: 6rem 4rem; background-color: rgb(var(--bg-200)); } 
+body > .wrap { grid-area: main; display: flex; align-items: flex-start; flex-wrap: wrap; gap: 0.4rem; } 
+body > .wrap .lnb { position: sticky; left: 8.4rem; top: 5.2rem; width: 24rem; height: calc(100vh - 5.6rem); padding: 6rem 4rem; background-color: rgb(var(--bg-200)); } 
+body > .wrap main { width: 100%; flex: 1; min-height: calc(100vh - 11.2rem); padding: 6rem 4rem; background-color: rgb(var(--bg-200)); } 
 body > .wrap main > * { animation: fadeIn 0.5s ease-in-out 0s 1 forwards; } 
-
-body > .wrap .lnb { position: fixed; left: 8.4rem; top: 5.2rem; width: 24rem; height: calc(100vh - 5.6rem); padding: 6rem 4rem; background-color: rgb(var(--bg-200)); } 
-body > .wrap .lnb + main,
-body > .wrap .lnb ~ footer { margin-left: 24.4rem; } 
 body > .wrap .lnb ul li a { display: block; padding: 1.2rem 1.6rem; border-radius: 0.8rem; } 
 body > .wrap .lnb ul li a:hover { background-color: rgb(var(--bg-hover)); } 
 
-body footer { height: 5.2rem; margin: 0.4rem 0 0.4rem; box-shadow: 0 -0.4rem 0 0 var(--bg_root); display: flex; align-items: center; justify-content: center; background-color: rgb(var(--bg-200)); } 
+body footer { width: 100%; height: 5.2rem; margin-bottom: 0.4rem; box-shadow: 0 -0.4rem 0 0 var(--bg_root); display: flex; align-items: center; justify-content: center; background-color: rgb(var(--bg-200)); } 
+body > .wrap .lnb ~ footer { width: calc(100% - 24.4rem); margin-left: auto; margin-top: 0;  } 
 body > aside { position: fixed; right: -40rem; top: 0; width: 40rem; height: 100vh; box-shadow: -0.4rem 0 0 0 var(--bg_root); z-index: 1; transition: right 0.3s; display: none; } 
 body.aside-opened > aside { right: 0; } 
 body > aside .aside-header { display: flex; align-items: center; height: 5.2rem; padding: 0 1.6rem; } 
@@ -33,7 +31,7 @@ body > .wrap main [data-bind="posts"] div { overflow: hidden; }
 body > .wrap main [data-bind="posts"][data-postviewtype="grid"] { display: grid; grid-template-columns: repeat(auto-fill, minmax(24rem, 1fr)); gap: 1.2rem; } 
 body > .wrap main [data-bind="posts"][data-postviewtype="grid"] li a img { height: 12rem; } 
 body > .wrap main [data-bind="posts"][data-postviewtype="block"] { display: flex; flex-direction: column; gap: 1.2rem; } 
-body > .wrap main [data-bind="posts"][data-postviewtype="block"] li a { position: relative; display: flex; align-items: center; padding-left: 1.6rem; } 
+body > .wrap main [data-bind="posts"][data-postviewtype="block"] li a { position: relative; display: flex; align-items: center; padding-left: 1.6rem !important; } 
 body > .wrap main [data-bind="posts"][data-postviewtype="block"] li a img { width: 7.2rem; height: 7.2rem; border-radius: 0.8rem; } 
 body > .wrap main [data-bind="posts"][data-postviewtype="block"] li a div { flex: 1; } 
 body > .wrap main [data-bind="posts"][data-postviewtype="block"] li a div p:last-of-type { position: absolute; right: 1.6rem; top: 1.6rem; margin-top: 0; } 
