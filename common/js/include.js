@@ -120,6 +120,8 @@ const SPA = {
                 this.renderLNB(dep1Key);
                 this.setActive(params.linkcd);
                 this.runScripts(params.linkcd);
+                window.ui?.init(this.wrap);
+                window.common?.init(this.wrap);
 
                 if (replaceHistory) {
                     history.replaceState(params, "", `/${window.rootDir}`);

@@ -11,11 +11,13 @@
 .mt-36 { margin-top: 3.6rem !important; } 
 .ml-auto { margin-left: auto !important; } 
 .mb-0 { margin-bottom: 0 !important; } 
-.mb-8 { margin-bottom: 0.8rem !important; }
+.mb-8 { margin-bottom: 0.8rem !important; } 
 /* ==================== 모서리 곡률 ==================== */
-.r-0 { border-radius: 0 !important; }
-.r-8 { border-radius: 0.8rem !important; }
-.r-max { border-radius: 99rem !important; }
+.r-0 { border-radius: 0 !important; } 
+.r-8 { border-radius: 0.8rem !important; } 
+.r-max { border-radius: 99rem !important; } 
+.r-t-0 { border-top-left-radius: 0 !important; border-top-right-radius: 0 !important; } 
+.r-b-0 { border-bottom-left-radius: 0 !important; border-bottom-right-radius: 0 !important; } 
 /* ==================== 패딩 ==================== */
 .pd-0 { padding: 0 !important; } 
 .pd-12 { padding: 1.2rem !important; } 
@@ -62,6 +64,6 @@
 .flx-nowrap { flex-wrap: nowrap !important; } 
 /* ==================== GRID ==================== */
 .grid { display: grid !important; grid-template-columns: repeat(auto-fill, minmax(24rem, 1fr)); } 
-.grid.min-240 { grid-template-columns: repeat(auto-fill, minmax(24rem, 1fr)); }
-.grid.min-280 { grid-template-columns: repeat(auto-fill, minmax(28rem, 1fr)); }
-.grid.min-320 { grid-template-columns: repeat(auto-fill, minmax(32rem, 1fr)); }
+.grid.min-240 { grid-template-columns: repeat(auto-fill, minmax(24rem, 1fr)); } 
+.grid.min-280 { grid-template-columns: repeat(auto-fill, minmax(28rem, 1fr)); } 
+.grid.min-320 { grid-template-columns: repeat(auto-fill, minmax(32rem, 1fr)); } 

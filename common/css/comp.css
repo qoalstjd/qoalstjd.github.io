@@ -2,7 +2,7 @@
 .box { display: block; border-radius: 0.8rem; padding: 1.6rem 2.4rem; background-color: rgb(var(--bg-300)); overflow: hidden; } 
 a.box:hover { background-color: rgb(var(--bg-hover)) !important; } 
 /* ==================== 태그 ==================== */
-.tag-wrap { display: flex; gap: 8px; overflow-x: auto; padding: 6px 0; cursor: grab; flex-wrap: nowrap; } 
+.tag-wrap { display: flex; gap: 8px; overflow-x: scroll; padding: 6px 0; cursor: grab; flex-wrap: nowrap; user-select: none; overscroll-behavior-x: contain; } 
 .tag-wrap::-webkit-scrollbar { display: none; } 
 .tag { display: inline-block; font-size: 1.2rem; font-weight: 500; padding: 0.4rem 1.2rem; border-radius: 9rem; color: rgb(var(--txt-900)); background-color: rgb(var(--bg-300)); } 
 .tag.html { background-color: rgb(var(--tag-html)); } 

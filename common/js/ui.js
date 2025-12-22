@@ -1,4 +1,23 @@
 const ui = {
+    init(root = document) {
+        this.global.init();
+        this.page.init(root);
+    },
+    global: {
+        _inited: false,
+        init() {
+            if (this._inited) return;
+            this._inited = true;
+            ui.theme.init();
+        },
+    },
+    page: {
+        init(root) {
+            ui.tag.init(root);
+            ui.swiper.init(root);
+            ui.tab?.init(root);
+        },
+    },
     debouncer: function (fn, delay = 200) {
         let timer;
         return (...args) => {
@@ -8,17 +27,16 @@ const ui = {
     },
     theme: {
         init() {
-            const saved = window.cacheManager.get("theme") || window.defaultTheme || "light";
-            document.documentElement.dataset.theme = saved;
             document.addEventListener("click", (e) => {
                 if (!e.target.closest("[data-action='toggle-theme']")) return;
                 this.toggle();
             });
         },
         toggle() {
-            const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
-            document.documentElement.dataset.theme = next;
-            window.cacheManager.set("theme", next, { persist: false });
+            const root = document.documentElement;
+            const next = root.dataset.theme === "dark" ? "light" : "dark";
+            root.dataset.theme = next;
+            window.cacheManager.set("theme", next)
         },
     },
     lottie: {
@@ -184,47 +202,43 @@ const ui = {
             instance.init();
             return instance;
         },
-        init(selector = ".swiper") {
-            document.querySelectorAll(selector).forEach((el) => {
+        init(root = document, selector = ".swiper") {
+            root.querySelectorAll(selector).forEach((el) => {
                 const inst = this.createInstance(el);
                 this.instances.push(inst);
             });
         },
     },
     tag: {
-        wraps: document.querySelectorAll(".tag-wrap"),
-        isDown: false,
-        startX: 0,
-        startScroll: 0,
-        activeWrap: null,
-        init() {
-            this.wraps.forEach((wrap) => {
+        init(root = document) {
+            root.querySelectorAll(".tag-wrap").forEach((wrap) => {
+                let isDown = false;
+                let startX = 0;
+                let startScroll = 0;
+
                 wrap.style.cursor = "grab";
 
                 wrap.addEventListener("mousedown", (e) => {
-                    this.isDown = true;
-                    this.activeWrap = wrap;
-                    this.startX = e.pageX;
-                    this.startScroll = wrap.scrollLeft;
+                    isDown = true;
+                    startX = e.pageX;
+                    startScroll = wrap.scrollLeft;
                     wrap.style.cursor = "grabbing";
                 });
 
                 wrap.addEventListener("mousemove", (e) => {
-                    if (!this.isDown || this.activeWrap !== wrap) return;
+                    if (!isDown) return;
                     e.preventDefault();
-                    wrap.scrollLeft = this.startScroll - (e.pageX - this.startX);
+                    wrap.scrollLeft = startScroll - (e.pageX - startX);
                 });
-            });
 
-            window.addEventListener("mouseup", () => {
-                this.isDown = false;
-                if (this.activeWrap) {
-                    this.activeWrap.style.cursor = "grab";
-                    this.activeWrap = null;
-                }
+                window.addEventListener("mouseup", () => {
+                    isDown = false;
+                    wrap.style.cursor = "grab";
+                });
             });
         },
     },
+
     dropdown: {
         setupDropdown(dropdown) {
             const label = dropdown.querySelector(".dropdown-label");
@@ -478,16 +492,6 @@ document.querySelectorAll(".inp").forEach((inp) => {
         input.focus();
         input.dispatchEvent(new Event("input"));
     });
-});
-
-// DOMContentLoaded 초기실행
-document.addEventListener("DOMContentLoaded", () => {
-    window.ui.theme.init();
-    window.ui.lottie.init();
-    window.ui.tag.init();
-    // window.ui.dropdown.init();
-    // window.ui.tab.init();
-    // window.ui.scrollTable.init();
 });
 
 window.ui = ui;
