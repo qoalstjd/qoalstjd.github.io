@@ -20,7 +20,6 @@
         <button data-genre="sports">스포츠</button>
         <button data-genre="technology">테크</button>
     </div>
-
     <ul class="news-list"></ul>
 </div>
 <div data-bind="music">
@@ -597,5 +596,11 @@
         };
 
         weather.init();
+
+        window.ui.dialog.open({
+            html: "<p>dim 없는 팝업</p>",
+            dim: false
+        });
+        ui.dialog.fetch("/baelog/pages/01_home/test.html");
     })();
 </script>

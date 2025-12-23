@@ -244,17 +244,17 @@ const ui = {
             el.dataset.sort = next;
             const icon = el.querySelector("i[data-ico]");
             if (icon) {
-                icon.dataset.ico = next === "asc"
-                ? "up-fill"
-                : "down-fill";
+                icon.dataset.ico = next === "asc" ? "up-fill" : "down-fill";
             }
-            el.dispatchEvent(new CustomEvent("sortChange", {
+            el.dispatchEvent(
+                new CustomEvent("sortChange", {
                     bubbles: true,
                     detail: {
-                    key: el.dataset.sortKey,
-                    order: next
-                }
-            }));
+                        key: el.dataset.sortKey,
+                        order: next,
+                    },
+                })
+            );
         },
         toggle(el) {
             el.classList.toggle("is-active");
@@ -388,8 +388,6 @@ const ui = {
                             window.scrollTo({ top: y, behavior: "auto" });
                         });
                     }
-
-                    // 2025.07.03 CMH 추�? .  ?? �??�클�? 처리
                     if (typeof tabClickHandler === "function") {
                         tabClickHandler(tab.getAttribute("aria-controls"));
                     }
@@ -494,6 +492,133 @@ const ui = {
             dim.style.zIndex = "";
             dim.style.pointerEvents = "none";
         }
+    },
+    dialog: {
+        stack: [],
+        z: 1000,
+
+        open({ html = "", parent = document.body, dim = true, esc = true, opener = document.activeElement, onClose } = {}) {
+            const pop = document.createElement("div");
+            pop.className = "dialog";
+            pop.style.zIndex = ++this.z;
+            pop.innerHTML = html;
+
+            let dimEl;
+
+            const close = () => {
+                this.stack.pop();
+                dimEl?.remove();
+                pop.remove();
+                opener?.focus();
+                onClose?.();
+                document.removeEventListener("keydown", escClose);
+                this.syncDim();
+            };
+
+            const escClose = (e) => esc && e.key === "Escape" && this.closeTop();
+
+            pop.querySelectorAll("[data-act='close']").forEach((b) => (b.onclick = close));
+
+            if (dim) {
+                dimEl = document.createElement("div");
+                dimEl.className = "dim";
+                dimEl.style.zIndex = this.z;
+                dimEl.onclick = close;
+                parent.append(dimEl);
+            }
+
+            document.addEventListener("keydown", escClose);
+            parent.append(pop);
+
+            this.bindScripts(pop);
+            this.stack.push({ pop, dimEl, close });
+            this.trapFocus(pop);
+            this.syncDim();
+
+            return { pop, close };
+        },
+
+        closeTop() {
+            this.stack.at(-1)?.close();
+        },
+
+        syncDim() {
+            this.stack.forEach((s, i) => {
+                if (s.dimEl) s.dimEl.style.display = i === this.stack.length - 1 ? "block" : "none";
+            });
+        },
+
+        trapFocus(el) {
+            const f = el.querySelectorAll("button,[href],input,select,textarea,[tabindex]:not([tabindex='-1'])");
+            if (!f.length) return;
+            const [first, last] = [f[0], f[f.length - 1]];
+            first.focus();
+
+            el.onkeydown = (e) => {
+                if (e.key !== "Tab") return;
+                if (e.shiftKey && document.activeElement === first) {
+                    e.preventDefault();
+                    last.focus();
+                }
+                if (!e.shiftKey && document.activeElement === last) {
+                    e.preventDefault();
+                    first.focus();
+                }
+            };
+        },
+
+        bindScripts(root) {
+            root.querySelectorAll("script").forEach((s) => {
+                const ns = document.createElement("script");
+                [...s.attributes].forEach((a) => ns.setAttribute(a.name, a.value));
+                ns.textContent = s.textContent;
+                s.replaceWith(ns);
+            });
+        },
+
+        alert({ title = "알림", message }) {
+            return this.open({
+                html: `
+            <div class="dialog-title">
+                <strong>${title}</strong>
+                <button data-act="close">확인</button>
+            </div>
+            <div class="dialog-content">${message}</div>`,
+            });
+        },
+
+        confirm({ title = "확인", message, onConfirm }) {
+            const { pop, close } = this.open({
+                html: `
+            <div class="dialog-title">
+                <strong>${title}</strong>
+                <div>
+                    <button data-act="close">취소</button>
+                    <button data-act="ok" class="primary">확인</button>
+                </div>
+            </div>
+            <div class="dialog-content">${message}</div>`,
+            });
+
+            pop.querySelector("[data-act='ok']").onclick = () => {
+                onConfirm?.();
+                close();
+            };
+        },
+
+        toast(message, delay = 2500) {
+            const el = document.createElement("div");
+            el.className = "toast";
+            el.textContent = message;
+            el.style.zIndex = ++this.z;
+            document.body.append(el);
+            setTimeout(() => el.remove(), delay);
+        },
+
+        async fetch(url, opts = {}) {
+            const html = await (await fetch(url)).text();
+            return this.open({ html, ...opts });
+        },
     },
 };
 
