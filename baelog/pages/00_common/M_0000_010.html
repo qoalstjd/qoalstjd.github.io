@@ -1,0 +1,90 @@
+<div class="tit-wrap ty-post">
+    <img data-bind-src="/baelog/images/post/bnr_{{slug}}.png" data-bind-onerror="/baelog/images/post/bnr_{{category}}.png" src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1280' height='120'%3E%3Cpath fill='%23cccccc' d='M0 0h480v120H0z'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-size='14' font-weight='bold' fill='%230c0b0f'%3E이미지%3C/text%3E%3C/svg%3E" />
+    <h1 data-bind-txt="{{title}}">$Title$</h1>
+    <p data-bind-txt="{{summary}}" class="txt-700">$Summary$</p>
+    <a data-bind-txt="{{category}}" data-bind-href="/baelog/index.html?linkcd={{parentLinkcd}}" class="txt-500 txt-underline fs-14">$category$</a>
+    <p data-bind-txt="{{date}}" class="txt-500 fs-14">$date$</p>
+</div>
+<div class="cont-wrap ty-post">
+    <section data-bind="post"></section>
+    <aside data-bind="toc">
+        <div>
+            <div class="box r-b-0">
+                <b>On This Page</b>
+                <ul class="txt-700"></ul>
+            </div>
+            <div class="box bg-400 flx gap-8 r-t-0">
+                <button class="ico wh-24" data-ico="copy"><span class="hidden">링크복사</span></button>
+                <a href="#comment" class="ico wh-24 ml-auto" data-ico="comment"><span class="hidden">댓글</span></a>
+                <a href="#top" class="ico wh-24" data-ico="pageup"><span class="hidden">맨위로</span></a>
+            </div>
+        </div>
+    </aside>
+</div>
+<section class="related-wrap box mt-32">
+    <h2 data-bind-txt="{{category}}" class="fs-20 mb-8">$category$</h2>
+    <div class="flx ai-c gap-12">
+        <div class="flx ai-c gap-4">
+            <i class="ico wh-16 bg-500" data-ico="list"><span class="hidden">리스트</span></i>
+            <p data-bind-txt="{{id}} / {{postLength}}" class="txt-500 mt-0">1 / 1</p>
+        </div>
+        <div class="flx ai-c gap-4">
+            <i class="ico wh-16 bg-500" data-ico="clock"><span class="hidden">시계</span></i>
+            <p data-bind-txt="{{date}}" class="txt-500 mt-0">$date$</p>
+        </div>
+    </div>
+    <p data-bind-txt="{{summary}}" class="txt-700">$summary$</p>
+    <div class="tb-wrap ty-row mt-12">
+        <table>
+            <caption>
+                관련 포스트에 대한 표
+            </caption>
+            <colgroup>
+                <col style="width: 3.6rem" />
+                <col style="width: auto" />
+                <col style="width: 10rem" />
+            </colgroup>
+            <tbody data-bind="relatedPost">
+                <tr></tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+<section class="comment-wrap mt-32" id="comment">
+    <ul class="box bg-200">
+        <li class="flx">
+            <img alt="profile" class="c-ico lazyautosizes lazyloaded" />
+            <div class="c-bubble">
+                <div class="c-head">
+                    <p>선인장 🌵</p>
+                </div>
+                <p class="c-content commentMediaClass">좋은 내용 잘 읽었습니다 👍🏻</p>
+                <div class="c-bottom">
+                    <span class="date"><i class="far fa-clock me-1"></i>2023.03.08 11:17 <a href="" onclick="window.open(this.href, 'ThisBlogReportPopup', 'width=550, height=510, toolbar=no, menubar=no, status=no, scrollbars=no'); return false;">신고</a></span>
+                    <a href="#" data-tooltip="수정/삭제">
+                        <i class="far fa-comment-alt-slash fs-17px"></i>
+                    </a>
+                    <a href="#" data-tooltip="답글쓰기">
+                        <i class="far fa-comment-alt-edit fs-17px"></i>
+                    </a>
+                </div>
+            </div>
+        </li>
+    </ul>
+    <form class="box" method="post" action="/comment/" onsubmit="return false" style="position: sticky; bottom: 0">
+        <div class="flx">
+            <p>
+                <input type="text" name="name" value="" placeholder="이름" />
+            </p>
+            <p>
+                <input type="password" maxlength="8" name="password" value="" placeholder="비밀번호" />
+            </p>
+        </div>
+        <textarea name="" id=""></textarea>
+    </form>
+</section>
+<script>
+    (() => {
+        common?.postDetail.init();
+    })();
+</script>

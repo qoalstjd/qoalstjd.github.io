@@ -8,7 +8,7 @@ const ui = {
         init() {
             if (this._inited) return;
             this._inited = true;
-            ui.theme.init();
+            ui.btn.init();
         },
     },
     page: {
@@ -24,20 +24,6 @@ const ui = {
             clearTimeout(timer);
             timer = setTimeout(() => fn(...args), delay);
         };
-    },
-    theme: {
-        init() {
-            document.addEventListener("click", (e) => {
-                if (!e.target.closest("[data-action='toggle-theme']")) return;
-                this.toggle();
-            });
-        },
-        toggle() {
-            const root = document.documentElement;
-            const next = root.dataset.theme === "dark" ? "light" : "dark";
-            root.dataset.theme = next;
-            window.cacheManager.set("theme", next)
-        },
     },
     lottie: {
         init() {
@@ -238,7 +224,42 @@ const ui = {
             });
         },
     },
-
+    btn: {
+        init() {
+            document.addEventListener("click", (e) => {
+                const el = e.target.closest("[data-action]");
+                if (!el) return;
+                const action = el.dataset.action;
+                this[action]?.(el);
+            });
+        },
+        theme() {
+            const root = document.documentElement;
+            const next = root.dataset.theme === "dark" ? "light" : "dark";
+            root.dataset.theme = next;
+            window.cacheManager.set("theme", next);
+        },
+        sort(el) {
+            const next = el.dataset.sort === "desc" ? "asc" : "desc";
+            el.dataset.sort = next;
+            const icon = el.querySelector("i[data-ico]");
+            if (icon) {
+                icon.dataset.ico = next === "asc"
+                ? "up-fill"
+                : "down-fill";
+            }
+            el.dispatchEvent(new CustomEvent("sortChange", {
+                    bubbles: true,
+                    detail: {
+                    key: el.dataset.sortKey,
+                    order: next
+                }
+            }));
+        },
+        toggle(el) {
+            el.classList.toggle("is-active");
+        },
+    },
     dropdown: {
         setupDropdown(dropdown) {
             const label = dropdown.querySelector(".dropdown-label");

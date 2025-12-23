@@ -170,6 +170,12 @@ const bindData = (root, data) => {
     });
     root.querySelectorAll("[data-bind-src]").forEach((el) => {
         el.src = tpl(el.dataset.bindSrc, data);
+        if (el.dataset.bindOnerror) {
+            el.onerror = () => {
+            el.onerror = null; // 무한루프 방지
+            el.src = tpl(el.dataset.bindOnerror, data);
+            };
+        }
     });
     root.querySelectorAll("[data-bind-href]").forEach((el) => {
         el.href = tpl(el.dataset.bindHref, data);

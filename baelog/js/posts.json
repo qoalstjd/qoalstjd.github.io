@@ -47,7 +47,7 @@
         "title": "펜션 홈페이지 구축 회고",
         "summary": "문제점과 개선 방향 정리",
         "tags": ["retrospective", "improve"],
-        "date": "0000.00.00"
+        "date": "2024.01.01"
     },
     {
         "id": "05",
@@ -57,7 +57,7 @@
         "title": "게시글 관리용 Admin 구현",
         "summary": "관리자 페이지 구조와 기능 정리",
         "tags": ["admin", "crud", "db"],
-        "date": "0000.00.00"
+        "date": "2024.01.01"
     },
     {
         "id": "04",
@@ -67,7 +67,7 @@
         "title": "예약 시스템 구조 설계",
         "summary": "예약 흐름과 데이터 처리 방식",
         "tags": ["booking", "logic", "project"],
-        "date": "0000.00.00"
+        "date": "2024.01.01"
     },
     {
         "id": "02",
@@ -77,7 +77,7 @@
         "title": "공통 컴포넌트 설계와 관리",
         "summary": "반복 요소 분리와 재사용 구조",
         "tags": ["component", "css", "structure"],
-        "date": "0000.00.00"
+        "date": "2024.01.01"
     },
     {
         "id": "01",

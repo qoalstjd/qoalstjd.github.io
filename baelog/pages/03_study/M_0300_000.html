@@ -11,52 +11,6 @@
 
 <script>
     (() => {
-        const h2 = document.querySelector("[data-bind='title']");
-        const posts = document.querySelector("[data-bind='posts']");
-        const curLinkcd = SPA.getLinkcd();
-        const parentObj = SPA.routes[SPA.routes[curLinkcd].parent[0]];
-        const section = parentObj?.name.toLowerCase();
-        const category = SPA.routes[curLinkcd]?.name || "All Posts";
-
-        h2.textContent = category;
-
-        const loadData = async () => {
-            let data = await window.fetchManager.get("/baelog/js/posts.json");
-            data = data.filter(p => p.section.toLowerCase() === section);
-            const frag = document.createDocumentFragment();
-            const filtered = category === "All Posts" ? data : data.filter((p) => p.category.toLowerCase() === category.toLowerCase());
-            if (filtered.length) {
-                filtered.forEach((p) => {
-                    const li = document.createElement("li");
-                    li.innerHTML = `
-                        <a href="/baelog/index.html?linkcd=m0300010&parentLinkcd=${curLinkcd}&fileName=${p.slug !== "" ? p.slug : p.category}_${p.id}" class="box pd-0">
-                            <img src="/baelog/images/post/thum_${p.slug !== "" ? p.slug : p.category}.png" class="w-full">
-                            <div class="pd-16">
-                                <p class="fs-12 txt-500">${p.category}</p>
-                                <strong class="ell-1 mt-4">${p.id}. ${p.title}</strong>
-                                <p class="fs-14 txt-700 ell-1">${p.summary}</p>
-                                <p class="fs-12 txt-500 txt-r">${p.date}</p>
-                            </div>
-                        </a>
-                    `;
-                    frag.appendChild(li);
-                });
-                posts.replaceChildren(frag);
-            } else {
-                posts.style.display = 'block';
-                posts.style.border = 'none';
-                window.ui.lottie.msg(["포스트가 없습니다", "다른 카테고리를 확인해보세요"], posts);
-            }
-        };
-        loadData();
-
-        posts.dataset.postviewtype = window.cacheManager.get("postviewtype") || "grid";
-        document.querySelector("[data-view]").addEventListener("click", (e) => {
-            const type = e.target.closest('[data-ico="grid"]') ? "grid" : e.target.closest('[data-ico="block"]') ? "block" : e.target.closest('[data-ico="table"]') ? "table" : null;
-            if (type) {
-                posts.dataset.postviewtype = type;
-                window.cacheManager.set("postviewtype", type);
-            }
-        });
+        common?.postList.init();
     })();
 </script>

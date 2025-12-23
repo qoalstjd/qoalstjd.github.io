@@ -4,7 +4,7 @@ header .gnb { display: flex; justify-content: space-between; align-items: center
 header .gnb h1 a { width: 15rem; height: 4rem; color: #666; }
 header .gnb ul { display: flex; justify-content: space-between; align-items: center; } 
 header .gnb [data-action="toggle-menu"] { display: none; } 
-header [data-action="toggle-theme"] { position: absolute; right: 0; bottom: 0; } 
+header [data-action="theme"] { position: absolute; right: 0; bottom: 0; } 
 
 .wrap .lnb { position: absolute; width: 100%; left: 0; top: 36rem; } 
 .wrap .lnb h1 { display: none; }

@@ -9,7 +9,12 @@ html {
     --success-500: 0, 160, 120;
     --error-500: 220, 50, 50;
     --link-500: 30, 120, 255; 
+    --green-500: 0, 160, 120;
+    --red-500: 220, 50, 50;
+    --blue-500: 30, 120, 255;
     /* background (등차) */
+    --bg-900: 140, 140, 145;
+    --bg-800: 160, 160, 165;
     --bg-700: 180, 180, 185;
     --bg-600: 200, 200, 205;
     --bg-500: 215, 215, 220;
@@ -40,7 +45,12 @@ html[data-theme="dark"] {
     --success-500: 80, 200, 160;
     --error-500: 255, 90, 90;
     --link-500: 120, 180, 255; 
+    --green-500: 80, 200, 160;
+    --red-500: 255, 90, 90;
+    --blue-500: 70, 130, 255;
     /* background (등차) */
+    --bg-900: 230, 230, 240;
+    --bg-800: 200, 200, 210;
     --bg-700: 170, 170, 180;
     --bg-600: 140, 140, 150;
     --bg-500: 110, 110, 120;
@@ -90,6 +100,9 @@ html[data-theme="dark"] {
 .txt-300 { color: rgb(var(--txt-300)) !important; } 
 .txt-point { color: rgb(var(--primary-500)) !important; } 
 .txt-point-sub { color: rgb(var(--primary-300)) !important; } 
+.txt-green { color: rgb(var(--green-500)) !important; }
+.txt-red { color: rgb(var(--red-500)) !important; }
+.txt-blue { color: rgb(var(--blue-500)) !important; }
 /* ==================== 배경 ==================== */
 .bg-000 { background-color: rgb(var(--bg-000)) !important; } 
 .bg-100 { background-color: rgb(var(--bg-100)) !important; } 
