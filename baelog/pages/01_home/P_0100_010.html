@@ -1,0 +1,19 @@
+<div class="dialog-title">
+    <p>뉴스 상세</p>
+    <button class="ico-wrap pd-4" data-act="close">
+        <i class="ico wh-24" data-ico="close"><span class="hidden">닫기</span></i>
+    </button>
+</div>
+<div class="dialog-content">
+    <strong data-bind="txt">{{title}}</strong>
+    <p data-bind="txt">{{pubDate}}</p>
+    <p data-bind="txt">{{source_id}} {{creator}}</p>
+    <img data-bind="src" src="{{image_url}}" alt="뉴스 상세이미지" />
+    <p data-bind="txt">{{description}}<span>이하생략</span></p>
+    <!-- <span>뉴스 컨텐츠를 불러오는중 오류가 발생했습니다</span> -->
+    <p>출처 : <a data-bind="txt href" href="{{link}}" target="_blank" class="link">{{link}}</a></p>
+</div>
+
+<script>
+    console.log("popup script 실행됨");
+</script>

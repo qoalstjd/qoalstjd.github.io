@@ -3,8 +3,8 @@ header { position: fixed; top: 4rem; z-index: 999; width: 100%; }
 header .gnb { display: flex; justify-content: space-between; align-items: center; max-width: 136rem; height: 8rem; margin: 0 auto; background-color: rgba(var(--bg-000), 0.5); backdrop-filter: blur(5px); padding: 0 2rem; } 
 header .gnb h1 a { width: 15rem; height: 4rem; color: #666; }
 header .gnb ul { display: flex; justify-content: space-between; align-items: center; } 
-header .gnb [data-action="toggle-menu"] { display: none; } 
-header [data-action="theme"] { position: absolute; right: 0; bottom: 0; } 
+header .gnb [data-act="toggle-menu"] { display: none; } 
+header [data-act="theme"] { position: absolute; right: 0; bottom: 0; } 
 
 .wrap .lnb { position: absolute; width: 100%; left: 0; top: 36rem; } 
 .wrap .lnb h1 { display: none; }

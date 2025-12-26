@@ -227,7 +227,7 @@ const ui = {
     btn: {
         init() {
             document.addEventListener("click", (e) => {
-                const el = e.target.closest("[data-action]");
+                const el = e.target.closest("[data-act]");
                 if (!el) return;
                 const action = el.dataset.action;
                 this[action]?.(el);
@@ -493,151 +493,95 @@ const ui = {
             dim.style.pointerEvents = "none";
         }
     },
-    dialog: {
-        stack: [],
-        z: 1000,
+};
 
-        open({ html = "", parent = document.body, dim = true, esc = true, opener = document.activeElement, onClose } = {}) {
-            const pop = document.createElement("div");
-            pop.className = "dialog";
-            pop.style.zIndex = ++this.z;
-            pop.innerHTML = html;
+const dialog = {
+    stack: [],
+    z: 1000,
+    async open({ url, data = {}, parent = document.body, dim = true, esc = true, opener = document.activeElement, onClose } = {}) {
+        if (!url) return;
 
-            let dimEl;
+        const res = await fetch(url);
+        const html = await res.text();
 
-            const close = () => {
-                this.stack.pop();
-                dimEl?.remove();
-                pop.remove();
-                opener?.focus();
-                onClose?.();
-                document.removeEventListener("keydown", escClose);
-                this.syncDim();
-            };
+        const pop = document.createElement("div");
+        pop.className = "dialog md";
+        pop.style.zIndex = ++this.z;
+        pop.innerHTML = html;
 
-            const escClose = (e) => esc && e.key === "Escape" && this.closeTop();
+        // data-bind 처리
+        if (window.bindData) {
+            window.bindData(pop, data);
+        }
+        let dimEl;
 
-            pop.querySelectorAll("[data-act='close']").forEach((b) => (b.onclick = close));
-
-            if (dim) {
-                dimEl = document.createElement("div");
-                dimEl.className = "dim";
-                dimEl.style.zIndex = this.z;
-                dimEl.onclick = close;
-                parent.append(dimEl);
-            }
-
-            document.addEventListener("keydown", escClose);
-            parent.append(pop);
-
-            this.bindScripts(pop);
-            this.stack.push({ pop, dimEl, close });
-            this.trapFocus(pop);
+        const close = () => {
+            this.stack.pop();
+            dimEl?.remove();
+            pop.remove();
+            opener?.focus();
+            onClose?.();
+            document.removeEventListener("keydown", escClose);
             this.syncDim();
+        };
 
-            return { pop, close };
-        },
+        const escClose = (e) => esc && e.key === "Escape" && this.closeTop();
 
-        closeTop() {
-            this.stack.at(-1)?.close();
-        },
+        pop.querySelectorAll("[data-act='close']").forEach((b) => (b.onclick = close));
 
-        syncDim() {
-            this.stack.forEach((s, i) => {
-                if (s.dimEl) s.dimEl.style.display = i === this.stack.length - 1 ? "block" : "none";
-            });
-        },
+        if (dim) {
+            dimEl = document.createElement("div");
+            dimEl.className = "dim";
+            dimEl.style.zIndex = this.z;
+            dimEl.onclick = close;
+            parent.append(dimEl);
+        }
 
-        trapFocus(el) {
-            const f = el.querySelectorAll("button,[href],input,select,textarea,[tabindex]:not([tabindex='-1'])");
-            if (!f.length) return;
-            const [first, last] = [f[0], f[f.length - 1]];
-            first.focus();
+        document.addEventListener("keydown", escClose);
+        parent.append(pop);
+        this.bindScripts(pop);
+        this.stack.push({ pop, dimEl, close });
+        this.trapFocus(pop);
+        this.syncDim();
 
-            el.onkeydown = (e) => {
-                if (e.key !== "Tab") return;
-                if (e.shiftKey && document.activeElement === first) {
-                    e.preventDefault();
-                    last.focus();
-                }
-                if (!e.shiftKey && document.activeElement === last) {
-                    e.preventDefault();
-                    first.focus();
-                }
-            };
-        },
+        return { pop, close };
+    },
+    closeTop() {
+        this.stack.at(-1)?.close();
+    },
+    syncDim() {
+        this.stack.forEach((s, i) => {
+            if (s.dimEl) s.dimEl.style.display = i === this.stack.length - 1 ? "block" : "none";
+        });
+    },
+    trapFocus(el) {
+        const f = el.querySelectorAll("button,[href],input,select,textarea,[tabindex]:not([tabindex='-1'])");
+        if (!f.length) return;
 
-        bindScripts(root) {
-            root.querySelectorAll("script").forEach((s) => {
-                const ns = document.createElement("script");
-                [...s.attributes].forEach((a) => ns.setAttribute(a.name, a.value));
-                ns.textContent = s.textContent;
-                s.replaceWith(ns);
-            });
-        },
+        const [first, last] = [f[0], f[f.length - 1]];
+        first.focus();
 
-        alert({ title = "알림", message }) {
-            return this.open({
-                html: `
-            <div class="dialog-title">
-                <strong>${title}</strong>
-                <button data-act="close">확인</button>
-            </div>
-            <div class="dialog-content">${message}</div>`,
-            });
-        },
-
-        confirm({ title = "확인", message, onConfirm }) {
-            const { pop, close } = this.open({
-                html: `
-            <div class="dialog-title">
-                <strong>${title}</strong>
-                <div>
-                    <button data-act="close">취소</button>
-                    <button data-act="ok" class="primary">확인</button>
-                </div>
-            </div>
-            <div class="dialog-content">${message}</div>`,
-            });
-
-            pop.querySelector("[data-act='ok']").onclick = () => {
-                onConfirm?.();
-                close();
-            };
-        },
-
-        toast(message, delay = 2500) {
-            const el = document.createElement("div");
-            el.className = "toast";
-            el.textContent = message;
-            el.style.zIndex = ++this.z;
-            document.body.append(el);
-            setTimeout(() => el.remove(), delay);
-        },
-
-        async fetch(url, opts = {}) {
-            const html = await (await fetch(url)).text();
-            return this.open({ html, ...opts });
-        },
+        el.onkeydown = (e) => {
+            if (e.key !== "Tab") return;
+            if (e.shiftKey && document.activeElement === first) {
+                e.preventDefault();
+                last.focus();
+            }
+            if (!e.shiftKey && document.activeElement === last) {
+                e.preventDefault();
+                first.focus();
+            }
+        };
+    },
+    bindScripts(root) {
+        root.querySelectorAll("script").forEach((s) => {
+            const ns = document.createElement("script");
+            [...s.attributes].forEach((a) => ns.setAttribute(a.name, a.value));
+            ns.textContent = s.textContent;
+            s.replaceWith(ns);
+        });
     },
 };
 
-document.querySelectorAll(".inp").forEach((inp) => {
-    const input = inp.querySelector("input, textarea");
-    const clearBtn = inp.querySelector(".clear-btn");
-
-    if (!input || !clearBtn) return;
-
-    input.addEventListener("input", () => {
-        clearBtn.style.display = input.value ? "block" : "none";
-    });
-
-    clearBtn.addEventListener("click", () => {
-        input.value = "";
-        clearBtn.style.display = "none";
-        input.focus();
-        input.dispatchEvent(new Event("input"));
-    });
-});
-
 window.ui = ui;
+window.dialog = dialog;

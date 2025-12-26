@@ -21,6 +21,8 @@
 .r-b-0 { border-bottom-left-radius: 0 !important; border-bottom-right-radius: 0 !important; } 
 /* ==================== 패딩 ==================== */
 .pd-0 { padding: 0 !important; } 
+.pd-4 { padding: 0.4rem !important; } 
+.pd-8 { padding: 0.8rem !important; } 
 .pd-12 { padding: 1.2rem !important; } 
 .pd-16 { padding: 1.6rem !important; } 
 .pd-20 { padding: 2.0rem !important; } 

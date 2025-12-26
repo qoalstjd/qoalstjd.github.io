@@ -158,30 +158,23 @@ const fetchManager = {
 // 데이터 바인딩
 // =========================
 const bindData = (root, data) => {
-    const tpl = (str, data) => str.replace(/{{(.*?)}}/g, (_, k) => data[k.trim()] ?? "");
-    /**
-     * 사용 예:
-     * @@ <h2 data-bind-txt="{{title}}"></h2>
-     * @@ <img data-bind-src="/img/{{category}}.png">
-     * @@ <a data-bind-href="/list?id={{id}}">보기</a>
-     */
-    root.querySelectorAll("[data-bind-txt]").forEach((el) => {
-        el.textContent = tpl(el.dataset.bindTxt, data);
-    });
-    root.querySelectorAll("[data-bind-src]").forEach((el) => {
-        el.src = tpl(el.dataset.bindSrc, data);
-        if (el.dataset.bindOnerror) {
-            el.onerror = () => {
-            el.onerror = null; // 무한루프 방지
-            el.src = tpl(el.dataset.bindOnerror, data);
-            };
-        }
-    });
-    root.querySelectorAll("[data-bind-href]").forEach((el) => {
-        el.href = tpl(el.dataset.bindHref, data);
-    });
-    root.querySelectorAll("[data-bind-html]").forEach((el) => {
-        el.innerHTML = tpl(el.dataset.bindHtml, data);
+    const tpl = (s) => s.replace(/{{(.*?)}}/g, (_, k) => data[k.trim()] ?? "");
+
+    root.querySelectorAll("[data-bind]").forEach((el) => {
+        el.dataset.bind.split(/\s+/).forEach((type) => {
+            if (type === "txt") el.textContent = tpl(el.textContent);
+            if (type === "html") el.innerHTML = tpl(el.innerHTML);
+            if (type === "href") el.href = tpl(el.getAttribute("href"));
+            if (type === "src") el.src = tpl(el.getAttribute("src"));
+            if (type === "onerror") {
+                const fallback = el.dataset.onerror;
+                if (!fallback) return;
+                el.onerror = () => {
+                    el.onerror = null;
+                    el.src = tpl(fallback);
+                };
+            }
+        });
     });
 };
 

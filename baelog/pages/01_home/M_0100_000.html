@@ -33,9 +33,9 @@
         </div>
 
         <div class="control">
-            <button data-action="prev">◀</button>
-            <button data-action="play">▶</button>
-            <button data-action="next">▶▶</button>
+            <button data-act="prev">◀</button>
+            <button data-act="play">▶</button>
+            <button data-act="next">▶▶</button>
         </div>
     </div>
 
@@ -43,9 +43,9 @@
 </div>
 <div data-bind="calendar">
     <div class="header">
-        <button data-action="prev">‹</button>
-        <p data-action="today" class="title"></p>
-        <button data-action="next">›</button>
+        <button data-act="prev">‹</button>
+        <p data-act="today" class="title"></p>
+        <button data-act="next">›</button>
     </div>
 
     <div class="days" data-days></div>
@@ -184,11 +184,9 @@
                 this.render();
             },
         };
-        clock.init();
-        calendar.init();
 
-        const News = {
-            API: "null",
+        const news = {
+            API: "https://newsdata.io/api/1/latest?apikey=pub_4558125ba871d0af9d170590f2123f3f41ffe&language=ko",
             genres: ["top", "entertainment", "sports", "technology"],
 
             state: {
@@ -251,14 +249,20 @@
             item(n) {
                 const li = document.createElement("li");
                 li.innerHTML = `
-      <img src="${n.image_url || ""}">
-      <p>${n.title}</p>
-      <p>
-        <span>${this.format(new Date(n.pubDate))}</span>
-        <span>${n.creator || n.source_id}</span>
-      </p>
-    `;
-                li.onclick = () => this.open(n);
+                    <img src="${n.image_url || ""}">
+                    <p>${n.title}</p>
+                    <p>
+                        <span>${this.format(new Date(n.pubDate))}</span>
+                        <span>${n.creator || n.source_id}</span>
+                    </p>
+                `;
+                li.onclick = () => {
+                    console.log(n)
+                    window.dialog.open({
+                        url: "/baelog/pages/01_home/P_0100_010.html",
+                        data: n,
+                    });
+                }
                 this.list.appendChild(li);
             },
 
@@ -277,25 +281,11 @@
                 }, 20000);
             },
 
-            open(n) {
-                this.modal.hidden = false;
-                this.modal.querySelector(".title").textContent = "뉴스 상세";
-                this.modal.querySelector(".content").innerHTML = `
-      <h4>${n.title}</h4>
-      <p>${n.pubDate} · ${n.creator || n.source_id}</p>
-      <img src="${n.image_url || ""}">
-      <p>${n.description || "컨텐츠 오류"}</p>
-      <a href="${n.link}" target="_blank">출처</a>
-    `;
-            },
-
             format(d) {
                 const z = (n) => String(n).padStart(2, "0");
                 return `${z(d.getMonth() + 1)}.${z(d.getDate())} ${z(d.getHours())}:${z(d.getMinutes())}`;
             },
         };
-
-        News.init();
 
         const music = {
             data: [
@@ -391,7 +381,6 @@
             },
         };
 
-        music.init();
         const todo = {
             data: [
                 { id: 1, content: "할 일 1" },
@@ -424,7 +413,7 @@
                 });
 
                 this.list.addEventListener("click", (e) => {
-                    const del = e.target.closest('[data-action="delete"]');
+                    const del = e.target.closest('[data-act="delete"]');
                     if (!del) return;
 
                     const id = +del.dataset.id;
@@ -451,7 +440,7 @@
             <button class="icon16-btn">
               <i class="icon16-pm-pencil">수정</i>
             </button>
-            <button class="icon16-btn" data-action="delete" data-id="${v.id}">
+            <button class="icon16-btn" data-act="delete" data-id="${v.id}">
               <i class="icon16-pm-trashcan">삭제</i>
             </button>
           </div>
@@ -461,8 +450,6 @@
                 });
             },
         };
-
-        todo.init();
 
         const weather = {
             state: {
@@ -595,12 +582,16 @@
             },
         };
 
+        clock.init();
+        calendar.init();
+        news.init();
+        music.init();
+        todo.init();
         weather.init();
 
-        window.ui.dialog.open({
-            html: "<p>dim 없는 팝업</p>",
-            dim: false
-        });
-        ui.dialog.fetch("/baelog/pages/01_home/test.html");
+        // window.dialog.open({
+        //     html: "<p>dim 없는 팝업</p>",
+        //     dim: false
+        // });
     })();
 </script>
