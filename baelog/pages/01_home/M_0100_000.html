@@ -186,15 +186,13 @@
         };
 
         const news = {
-            API: "https://newsdata.io/api/1/latest?apikey=pub_4558125ba871d0af9d170590f2123f3f41ffe&language=ko",
+            API: "https://qoalstjdapis.vercel.app/api/getNews",
             genres: ["top", "entertainment", "sports", "technology"],
-
             state: {
                 genre: "top",
                 news: [],
                 paused: false,
             },
-
             init() {
                 this.wrap = document.querySelector("[data-bind='news']");
                 this.list = this.wrap.querySelector(".news-list");
@@ -205,74 +203,68 @@
                 this.fetch();
                 this.auto();
             },
-
             bind() {
                 this.tabs.forEach((btn) => {
                     btn.addEventListener("click", () => this.changeGenre(btn.dataset.genre));
                 });
-
                 this.wrap.onmouseenter = () => (this.state.paused = true);
                 this.wrap.onmouseleave = () => (this.state.paused = false);
-
                 this.modal.querySelector(".close").onclick = this.modal.querySelector(".modal-dim").onclick = () => (this.modal.hidden = true);
             },
-
+            // 뉴스 데이터 fetch 함수 수정
             async fetch() {
                 const cached = localStorage.getItem("cachedNews");
                 const time = localStorage.getItem("cachedTime");
                 const now = Date.now();
-
                 if (cached && time && now - time < 3600000) {
                     this.state.news = JSON.parse(cached);
                     this.render();
                     return;
                 }
-
                 const result = [];
                 for (const g of this.genres) {
-                    const res = await fetch(`${this.API}&category=${g}`);
+                    const res = await fetch(`${this.API}?category=${g}`);
                     const json = await res.json();
-                    json.results.forEach((n) => result.push({ ...n, genre: g }));
+                    if (json.error) {
+                        console.error("뉴스 데이터 로드 오류:", json.error);
+                        return;
+                    }
+                    json.forEach((n) => result.push({ ...n, genre: g }));
                 }
-
                 this.state.news = result;
                 localStorage.setItem("cachedNews", JSON.stringify(result));
                 localStorage.setItem("cachedTime", now);
                 this.render();
             },
-
             render() {
                 this.list.innerHTML = "";
                 this.state.news.filter((n) => n.genre === this.state.genre).forEach((n) => this.item(n));
             },
-
             item(n) {
                 const li = document.createElement("li");
                 li.innerHTML = `
-                    <img src="${n.image_url || ""}">
+                    <img src="${n.img || ""}">
                     <p>${n.title}</p>
                     <p>
-                        <span>${this.format(new Date(n.pubDate))}</span>
-                        <span>${n.creator || n.source_id}</span>
+                        <span>${this.format(new Date(n.date))}</span>
+                        <span>${n.auth}</span>
                     </p>
                 `;
                 li.onclick = () => {
-                    console.log(n)
+                    console.log(n);
                     window.dialog.open({
                         url: "/baelog/pages/01_home/P_0100_010.html",
                         data: n,
                     });
-                }
+                };
                 this.list.appendChild(li);
             },
-
             changeGenre(g) {
                 this.state.genre = g;
                 this.tabs.forEach((b) => b.classList.toggle("active", b.dataset.genre === g));
                 this.list.scrollTop = 0;
                 this.render();
             },
-
             auto() {
                 setInterval(() => {
                     if (this.state.paused) return;
@@ -280,7 +272,6 @@
                     this.changeGenre(this.genres[(i + 1) % this.genres.length]);
                 }, 20000);
             },
-
             format(d) {
                 const z = (n) => String(n).padStart(2, "0");
                 return `${z(d.getMonth() + 1)}.${z(d.getDate())} ${z(d.getHours())}:${z(d.getMinutes())}`;
