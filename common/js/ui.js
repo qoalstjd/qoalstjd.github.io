@@ -9,6 +9,7 @@ const ui = {
             if (this._inited) return;
             this._inited = true;
             ui.btn.init();
+            ui.tab.init();
         },
     },
     page: {
@@ -229,7 +230,7 @@ const ui = {
             document.addEventListener("click", (e) => {
                 const el = e.target.closest("[data-act]");
                 if (!el) return;
-                const action = el.dataset.action;
+                const action = el.dataset.act;
                 this[action]?.(el);
             });
         },
@@ -367,6 +368,29 @@ const ui = {
         }
     },
     tab: {
+        init() {
+            const tabs = document.querySelectorAll("[id^='tab']");
+            tabs.forEach((el, i) => {
+                el.style.display = i === 0 ? "block" : "none";
+            });
+            const buttons = document.querySelectorAll("[data-tab]");
+            buttons.forEach((btn, i) => {
+                if (i === 0) btn.classList.add("is-active");
+            });
+            document.addEventListener("click", (e) => {
+                const el = e.target.closest("[data-tab]");
+                if (!el) return;
+                const prefix = el.dataset.tab.slice(0, 4); // "tab0"
+
+                // 버튼 활성화 토글
+                buttons.forEach((btn) => btn.classList.toggle("is-active", btn === el));
+
+                // 탭 콘텐츠 토글
+                document.querySelectorAll(`[id^="${prefix}"]`).forEach((c) => {
+                    c.style.display = c.id === el.dataset.tab ? "block" : "none";
+                });
+            });
+        },
         setupTabs(tabWrap) {
             const container = tabWrap.parentElement;
             const tabs = tabWrap.querySelectorAll('[role="tab"]');
@@ -407,21 +431,6 @@ const ui = {
                         tab.setAttribute("aria-selected", href === `#${section.id}`);
                     });
                 }
-            });
-        },
-        init() {
-            document.querySelectorAll('[role="tablist"]').forEach((tabWrap) => {
-                this.setupTabs(tabWrap);
-            });
-            if (document.querySelector(".tab-area .tab-wrap a")?.getAttribute("href").startsWith("#")) {
-                window.addEventListener("scroll", () => this.setupScrollTab());
-            }
-            requestAnimationFrame(() => {
-                requestAnimationFrame(() => {
-                    if (location.hash) {
-                        document.querySelector(location.hash)?.scrollIntoView({ behavior: "instant" });
-                    }
-                });
             });
         },
         scrollTable: {
@@ -527,6 +536,11 @@ const dialog = {
 
         const escClose = (e) => esc && e.key === "Escape" && this.closeTop();
 
+        pop.querySelector(".dialog-title").innerHTML += `
+            <button class="ico-wrap pd-4" data-act="close">
+                <i class="ico wh-24" data-ico="close"><span class="hidden">닫기</span></i>
+            </button>
+        `;
         pop.querySelectorAll("[data-act='close']").forEach((b) => (b.onclick = close));
 
         if (dim) {
@@ -543,6 +557,20 @@ const dialog = {
         this.stack.push({ pop, dimEl, close });
         this.trapFocus(pop);
         this.syncDim();
+
+        pop.style.left = Math.max((window.innerWidth - pop.offsetWidth) / 2, 0) + "px";
+        pop.style.top = Math.max((window.innerHeight - pop.offsetHeight) / 2, 0) + "px";
+        window.addEventListener(
+            "resize",
+            ui.debouncer(() => {
+                const top = window.dialog.stack.at(-1);
+                if (!top) return;
+
+                const { pop } = top;
+                pop.style.left = Math.max((window.innerWidth - pop.offsetWidth) / 2, 0) + "px";
+                pop.style.top = Math.max((window.innerHeight - pop.offsetHeight) / 2, 0) + "px";
+            }, 200)
+        );
 
         return { pop, close };
     },

@@ -37,11 +37,10 @@ h1, h2, h3 { margin: 3.6rem 0 2.4rem; }
 h4, h5, h6 { margin: 2.4rem 0 1.2rem; } 
 h1:first-child, h2:first-child, h3:first-child, h4:first-child, h5:first-child, h6:first-child, p:first-child { margin-top: 0; } 
 nav h1 { font-size: unset; margin: 0; } 
-p { margin-top: 0.4rem; } 
 span { display: inline; } 
 h1, h2, h3, h4, h5, h6, strong, b { font-weight: 700; } 
 em { text-decoration: underline; } 
-
+/* ==================== 타이틀 ==================== */
 .tit-wrap { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2.4rem; } 
 .tit-wrap h1,
 .tit-wrap h2,
@@ -49,7 +48,8 @@ em { text-decoration: underline; }
 .tit-wrap h4,
 .tit-wrap h5,
 .tit-wrap h6 { margin-bottom: 0; } 
-
 /* ==================== 말줄임 ==================== */
 .ell-1 { display: block; width: 100%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; } 
 .ell-2 { display: -webkit-box; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; } 
+/* ==================== 기타 ==================== */
+.wb-all { word-break: break-all !important; }

@@ -1,17 +1,24 @@
 <div class="dialog-title">
-    <p>뉴스 상세</p>
-    <button class="ico-wrap pd-4" data-act="close">
-        <i class="ico wh-24" data-ico="close"><span class="hidden">닫기</span></i>
-    </button>
+    <p class="ell-1">뉴스 상세</p>
 </div>
-<div class="dialog-content">
-    <strong data-bind="txt">{{title}}</strong>
-    <p data-bind="txt">{{date}}</p>
-    <p data-bind="txt">{{auth}}</p>
+<div class="dialog-content news">
+    <strong data-bind="txt" class="fs-18 fw-b ell-2">{{title}}</strong>
+    <div class="flx ai-c gap-8 fs-14 txt-500 mt-4">
+        <p data-bind="txt">{{date}}</p>
+        <i class="vr"></i>
+        <p data-bind="txt">{{creator}}</p>
+    </div>
+    <i class="hr my-12"></i>
     <img data-bind="src" src="{{img}}" alt="뉴스 상세이미지" />
-    <p data-bind="txt">{{desc}}<span>이하생략</span></p>
-    <!-- <span>뉴스 컨텐츠를 불러오는중 오류가 발생했습니다</span> -->
-    <p>출처 : <a data-bind="txt href" href="{{link}}" target="_blank" class="link">{{link}}</a></p>
+    <div class="mt-16">
+        <span data-bind="txt" class="wb-all">{{desc}}</span>
+        <span class="txt-500">이하생략</span>
+    </div>
+    <div class="flx flx-nowrap mt-16 gap-8 of-h">
+        <span class="txt-500">출처 : </span>
+        <img data-bind="src" src="{{publisherIcon}}" alt="언론사 아이콘" class="wh-24 r-4">
+        <a data-bind="txt href" href="{{link}}" target="_blank" class="link ell-1">{{link}}</a>
+    </div>
 </div>
 
 <script>

@@ -1,3 +1,4 @@
+<!-- 시계 -->
 <div data-bind="clock">
     <p class="day">
         <span>SUN</span>
@@ -11,14 +12,76 @@
     <p class="date">8888/88/88</p>
     <p class="time">HH:mm:ss</p>
 </div>
-<div data-bind="weather"></div>
-
+<!-- 날씨 -->
+<div data-bind="weather">
+    <p class="fs-20 fw-700">Seoul, Korea</p>
+    <div class="detail">
+        <i class="ico wh-80" data-ico="shine"></i>
+        <p>##<sup>°C</sup></p>
+        <ul>
+            <li>강수확률 : 0%</li>
+            <li>습도 : 55%</li>
+            <li>풍속 : 3.8m/s</li>
+        </ul>
+        <ul>
+            <li>2025년 12월 30일</li>
+            <li>22시</li>
+            <li>shine</li>
+        </ul>
+    </div>
+    <div class="tab-wrap">
+        <button data-tab="tab11">기온</button>
+        <button data-tab="tab12">강수확률</button>
+        <button data-tab="tab13">강수량</button>
+        <button data-tab="tab14">풍속</button>
+    </div>
+    <div>
+        <div id="tab11">기온</div>
+        <div id="tab12">강수확률</div>
+        <div id="tab13">강수량</div>
+        <div id="tab14">풍속</div>
+    </div>
+    <ul class="list">
+        <li class="">
+            <i class="icon48-pm-shine"></i>
+            <p class="b3 col-t01">15시</p>
+        </li>
+        <li class="">
+            <i class="icon48-pm-shine"></i>
+            <p class="b3 col-t01">16시</p>
+        </li>
+        <li class="">
+            <i class="icon48-pm-shine"></i>
+            <p class="b3 col-t01">17시</p>
+        </li>
+        <li class="">
+            <i class="icon48-pm-shine"></i>
+            <p class="b3 col-t01">18시</p>
+        </li>
+        <li class="">
+            <i class="icon48-pm-shine"></i>
+            <p class="b3 col-t01">19시</p>
+        </li>
+        <li class="">
+            <i class="icon48-pm-shine"></i>
+            <p class="b3 col-t01">20시</p>
+        </li>
+        <li class="">
+            <i class="icon48-pm-shine"></i>
+            <p class="b3 col-t01">21시</p>
+        </li>
+        <li>
+            <i class="icon48-pm-shine"></i>
+            <p class="b3 col-t01">22시</p>
+        </li>
+    </ul>
+</div>
 <div data-bind="news">
     <div class="tab-wrap">
-        <button data-genre="top" class="active">인기</button>
-        <button data-genre="entertainment">연예</button>
-        <button data-genre="sports">스포츠</button>
-        <button data-genre="technology">테크</button>
+        <button data-category="top" class="is-active">인기</button>
+        <button data-category="entertainment">연예</button>
+        <button data-category="sports">스포츠</button>
+        <button data-category="technology">테크</button>
     </div>
     <ul class="news-list"></ul>
 </div>
@@ -42,13 +105,16 @@
     <ul data-bind="list"></ul>
 </div>
 <div data-bind="calendar">
-    <div class="header">
-        <button data-act="prev">‹</button>
-        <p data-act="today" class="title"></p>
-        <button data-act="next">›</button>
+    <div class="header flx jc-bt">
+        <button data-act="prev" class="ico-wrap pd-4" data-tip="이전월">
+            <i class="ico wh-16" data-ico="prev"></i>
+        </button>
+        <button data-act="today" class="title"></button>
+        <button data-act="next" class="ico-wrap pd-4" data-tip="다음월">
+            <i class="ico wh-16" data-ico="next"></i>
+        </button>
     </div>
-
-    <div class="days" data-days></div>
+    <div class="dates"></div>
 </div>
 <div data-bind="todo">
     <div class="txt-center">
@@ -68,217 +134,136 @@
     </form>
 </div>
 
-<!-- modal -->
-<div class="modal" hidden>
-    <div class="modal-dim"></div>
-    <div class="modal-box">
-        <button class="close">×</button>
-        <h4 class="title"></h4>
-        <div class="content"></div>
-    </div>
-</div>
 <script>
     (() => {
+        // 시계
         const clock = {
+            root: document.querySelector('[data-bind="clock"]'),
+            now: null,
             init() {
-                this.root = document.querySelector('[data-bind="clock"]');
                 if (!this.root) return;
                 this.dayEls = this.root.querySelectorAll(".day span");
                 this.dateEl = this.root.querySelector(".date");
                 this.timeEl = this.root.querySelector(".time");
                 this.update();
-                setInterval(() => this.updateTime(), 1000);
-                setInterval(() => this.updateDate(), 60000);
+                setInterval(() => this.update(), 1000);
             },
             update() {
+                this.now = new Date();
                 this.updateDate();
                 this.updateTime();
             },
             updateDate() {
-                const d = new Date();
-                const y = d.getFullYear();
-                const m = String(d.getMonth() + 1).padStart(2, "0");
-                const day = String(d.getDate()).padStart(2, "0");
-                this.dateEl.textContent = `${y}/${m}/${day}`;
-                const cur = d.getDay();
+                this.dateEl.textContent = window.formatDate(this.now, "YYYY/MM/DD");
+                const cur = this.now.getDay();
                 this.dayEls.forEach((el, i) => el.classList.toggle("is-active", i === cur));
             },
             updateTime() {
-                const d = new Date();
-                const h = String(d.getHours()).padStart(2, "0");
-                const m = String(d.getMinutes()).padStart(2, "0");
-                const s = String(d.getSeconds()).padStart(2, "0");
-                this.timeEl.textContent = `${h}:${m}:${s}`;
+                this.timeEl.textContent = window.formatDate(this.now, "HH:mm:ss");
             },
         };
-
-        const calendar = {
-            el: document.querySelector("[data-bind='calendar']"),
-            date: new Date(),
-
-            init() {
-                this.title = this.el.querySelector(".title");
-                this.daysEl = this.el.querySelector("[data-days]");
-
-                this.el.addEventListener("click", (e) => {
-                    if (e.target.dataset.action === "prev") this.prev();
-                    if (e.target.dataset.action === "next") this.next();
-                    if (e.target.dataset.action === "today") this.today();
-                });
-
+        // 날씨
+        const weather = {
+            root: document.querySelector('[data-bind="weather"]'),
+            async init() {
+                this.detailEl = this.root.querySelector(".detail");
+                this.listEl = this.root.querySelector(".list");
+                this.loading(true);
+                try {
+                    this.data = (await window.fetchManager.get("https://qoalstjdapis.vercel.app/api/getWeather")) || [];
+                } catch (e) {
+                    console.error("날씨 불러오기 실패", e);
+                    this.data = [];
+                }
+                this.loading(false);
                 this.render();
             },
-
             render() {
-                const y = this.date.getFullYear();
-                const m = this.date.getMonth();
-                const firstDay = new Date(y, m, 1).getDay();
-                const totalDays = new Date(y, m + 1, 0).getDate();
-                const today = new Date().toDateString();
-
-                this.title.textContent = `${y}년 ${m + 1}월`;
-                this.daysEl.innerHTML = "";
-
-                // prev
-                for (let i = firstDay - 1; i >= 0; i--) {
-                    this.daysEl.append(this.day(new Date(y, m, -i).getDate(), "prev"));
-                }
-
-                // current
-                for (let i = 1; i <= totalDays; i++) {
-                    const d = new Date(y, m, i);
-                    let cls = "";
-                    if (d.toDateString() === today) cls = "today";
-                    if (d.getDay() === 0) cls += " txt-red";
-                    if (d.getDay() === 6) cls += " txt-blue";
-
-                    this.daysEl.append(this.day(i, cls));
-                }
-
-                // next
-                const remain = 42 - (firstDay + totalDays);
-                for (let i = 1; i <= remain; i++) {
-                    this.daysEl.append(this.day(i, "next"));
-                }
+                this.detailEl.innerHTML = `
+                    <i class="ico wh-80" data-ico="shine"></i>
+                    <p>##<sup>°C</sup></p>
+                    <ul>
+                        <li>강수확률 : 0%</li>
+                        <li>습도 : 55%</li>
+                        <li>풍속 : 3.8m/s</li>
+                    </ul>
+                    <ul>
+                        <li>2025년 12월 30일</li>
+                        <li>22시</li>
+                        <li>shine</li>
+                    </ul>`;
+                this.listEl.innerHTML = "";
+                this.data.forEach((d) => {
+                    const sky = d.values.sky.value;
+                    const pty = d.values.pty.value;
+                    console.log(pty)
+                    const li = document.createElement("li");
+                    li.innerHTML = `
+                        <i class="ico wh-48" data-ico="${pty !== "" ? pty : sky}"></i>
+                        <p class="b3 col-t01">${d.time + "시"}</p>`;
+                    this.listEl.appendChild(li);
+                });
             },
-
-            day(text, cls = "") {
-                const div = document.createElement("div");
-                div.className = `day ${cls}`;
-                div.textContent = text;
-                return div;
-            },
-
-            prev() {
-                this.date = new Date(this.date.getFullYear(), this.date.getMonth() - 1);
-                this.render();
-            },
-
-            next() {
-                this.date = new Date(this.date.getFullYear(), this.date.getMonth() + 1);
-                this.render();
-            },
-
-            today() {
-                this.date = new Date();
-                this.render();
+            loading(boolean) {
+                this.root.classList.toggle('loading', boolean);
             },
         };
-
+        // 뉴스
         const news = {
-            API: "https://qoalstjdapis.vercel.app/api/getNews",
-            genres: ["top", "entertainment", "sports", "technology"],
-            state: {
-                genre: "top",
-                news: [],
-                paused: false,
-            },
-            init() {
-                this.wrap = document.querySelector("[data-bind='news']");
-                this.list = this.wrap.querySelector(".news-list");
-                this.tabs = this.wrap.querySelectorAll("[data-genre]");
-                this.modal = document.querySelector(".modal");
-
+            root: document.querySelector("[data-bind='news']"),
+            data: [],
+            async init() {
+                this.list = this.root.querySelector(".news-list");
+                this.tabs = this.root.querySelectorAll("[data-category]");
+                this.loading(true);
+                try {
+                    this.data = (await window.fetchManager.get("https://qoalstjdapis.vercel.app/api/getNews")) || [];
+                } catch (e) {
+                    console.error("뉴스 불러오기 실패", e);
+                    this.data = [];
+                }
+                this.render("top");
                 this.bind();
-                this.fetch();
-                this.auto();
+                this.loading(false);
+            },
+            render(category) {
+                this.list.innerHTML = "";
+                const filteredData = this.data.filter((item) => item.category === category);
+                filteredData.forEach((d) => {
+                    const li = document.createElement("li");
+                    li.innerHTML = `
+                        <img src="${d.img || ""}">
+                        <p class="ell-1 fs-14">${d.title}</p>
+                        <p class="flx ai-c flx-nowrap gap-4 fs-12 txt-500 of-h">
+                            <span>${window.formatDate(new Date(d.date), "YYYY.MM.DD")}</span>
+                            <i class="vr"></i>
+                            <span class="ell-1">${d.creator}</span>
+                        </p>`;
+                    li.onclick = () => {
+                        window.dialog.open({
+                            url: "/baelog/pages/01_home/P_0100_010.html",
+                            data: d,
+                        });
+                    };
+                    this.list.appendChild(li);
+                });
             },
             bind() {
-                this.tabs.forEach((btn) => {
-                    btn.addEventListener("click", () => this.changeGenre(btn.dataset.genre));
-                });
-                this.wrap.onmouseenter = () => (this.state.paused = true);
-                this.wrap.onmouseleave = () => (this.state.paused = false);
-                this.modal.querySelector(".close").onclick = this.modal.querySelector(".modal-dim").onclick = () => (this.modal.hidden = true);
-            },
-            // 뉴스 데이터 fetch 함수 수정
-            async fetch() {
-                const cached = localStorage.getItem("cachedNews");
-                const time = localStorage.getItem("cachedTime");
-                const now = Date.now();
-                if (cached && time && now - time < 3600000) {
-                    this.state.news = JSON.parse(cached);
-                    this.render();
-                    return;
-                }
-                const result = [];
-                for (const g of this.genres) {
-                    const res = await fetch(`${this.API}?category=${g}`);
-                    const json = await res.json();
-                    if (json.error) {
-                        console.error("뉴스 데이터 로드 오류:", json.error);
-                        return;
-                    }
-                    json.forEach((n) => result.push({ ...n, genre: g }));
-                }
-                this.state.news = result;
-                localStorage.setItem("cachedNews", JSON.stringify(result));
-                localStorage.setItem("cachedTime", now);
-                this.render();
-            },
-            render() {
-                this.list.innerHTML = "";
-                this.state.news.filter((n) => n.genre === this.state.genre).forEach((n) => this.item(n));
-            },
-            item(n) {
-                const li = document.createElement("li");
-                li.innerHTML = `
-                    <img src="${n.img || ""}">
-                    <p>${n.title}</p>
-                    <p>
-                        <span>${this.format(new Date(n.date))}</span>
-                        <span>${n.auth}</span>
-                    </p>
-                `;
-                li.onclick = () => {
-                    console.log(n);
-                    window.dialog.open({
-                        url: "/baelog/pages/01_home/P_0100_010.html",
-                        data: n,
+                this.tabs.forEach((tab) => {
+                    tab.addEventListener("click", () => {
+                        this.tabs.forEach((el) => el.classList.remove("is-active"));
+                        tab.classList.add("is-active");
+                        this.render(tab.dataset.category);
                     });
-                };
-                this.list.appendChild(li);
+                });
             },
-            changeGenre(g) {
-                this.state.genre = g;
-                this.tabs.forEach((b) => b.classList.toggle("active", b.dataset.genre === g));
-                this.list.scrollTop = 0;
-                this.render();
-            },
-            auto() {
-                setInterval(() => {
-                    if (this.state.paused) return;
-                    const i = this.genres.indexOf(this.state.genre);
-                    this.changeGenre(this.genres[(i + 1) % this.genres.length]);
-                }, 20000);
-            },
-            format(d) {
-                const z = (n) => String(n).padStart(2, "0");
-                return `${z(d.getMonth() + 1)}.${z(d.getDate())} ${z(d.getHours())}:${z(d.getMinutes())}`;
+            loading(boolean) {
+                this.list.classList.toggle('loading', boolean);
             },
         };
-
+        // 음악
         const music = {
+            root: document.querySelector('[data-bind="music"]'),
             data: [
                 { title: "음악01", src: "https://media.w3.org/2010/07/bunny/04-Death_Becomes_Fur.mp3" },
                 { title: "음악02", src: "https://media.w3.org/2010/07/bunny/04-Death_Becomes_Fur.mp3" },
@@ -286,68 +271,54 @@
             ],
             idx: 0,
             audio: new Audio(),
-
             init() {
-                this.wrap = document.querySelector('[data-bind="music"]');
-                if (!this.wrap) return;
-
-                this.title = this.wrap.querySelector('[data-bind="title"]');
-                this.cur = this.wrap.querySelector('[data-bind="cur"]');
-                this.dur = this.wrap.querySelector('[data-bind="dur"]');
-                this.range = this.wrap.querySelector('input[type="range"]');
-                this.list = this.wrap.querySelector('[data-bind="list"]');
+                this.title = this.root.querySelector('[data-bind="title"]');
+                this.cur = this.root.querySelector('[data-bind="cur"]');
+                this.dur = this.root.querySelector('[data-bind="dur"]');
+                this.range = this.root.querySelector('input[type="range"]');
+                this.list = this.root.querySelector('[data-bind="list"]');
 
                 this.bind();
                 this.renderList();
                 this.load();
             },
-
             bind() {
-                this.wrap.addEventListener("click", (e) => {
-                    const a = e.target.dataset.action;
+                this.root.addEventListener("click", (e) => {
+                    const a = e.target.dataset.act;
                     if (a === "play") this.toggle();
                     if (a === "prev") this.prev();
                     if (a === "next") this.next();
                 });
-
                 this.range.addEventListener("input", () => {
                     this.audio.currentTime = this.range.value;
                 });
-
                 this.audio.addEventListener("timeupdate", () => {
                     this.range.value = this.audio.currentTime;
                     this.cur.textContent = this.fmt(this.audio.currentTime);
                 });
-
                 this.audio.addEventListener("loadedmetadata", () => {
                     this.range.max = this.audio.duration;
                     this.dur.textContent = this.fmt(this.audio.duration);
                 });
-
                 this.audio.addEventListener("ended", () => this.next());
             },
-
             load() {
                 const cur = this.data[this.idx];
                 this.audio.src = cur.src;
                 this.title.textContent = cur.title;
                 this.updateActive();
             },
-
             toggle() {
                 this.audio.paused ? this.audio.play() : this.audio.pause();
             },
-
             prev() {
                 this.idx = (this.idx - 1 + this.data.length) % this.data.length;
                 this.load();
             },
-
             next() {
                 this.idx = (this.idx + 1) % this.data.length;
                 this.load();
             },
-
             renderList() {
                 this.list.innerHTML = "";
                 this.data.forEach((d, i) => {
@@ -360,35 +331,93 @@
                     this.list.appendChild(li);
                 });
             },
-
             updateActive() {
                 [...this.list.children].forEach((li, i) => li.classList.toggle("active", i === this.idx));
             },
-
             fmt(t) {
                 const m = String(Math.floor(t / 60)).padStart(2, "0");
                 const s = String(Math.floor(t % 60)).padStart(2, "0");
                 return `${m}:${s}`;
             },
         };
+        // 달력
+        const calendar = {
+            root: document.querySelector('[data-bind="calendar"]'),
+            date: new Date(),
+            init() {
+                this.titleEl = this.root.querySelector(".title");
+                this.datesEl = this.root.querySelector(".dates");
+                this.root.addEventListener("click", (e) => {
+                    const btn = e.target.closest("[data-act]");
+                    if (!btn) return;
+                    if (btn.dataset.act === "prev") this.prev();
+                    if (btn.dataset.act === "next") this.next();
+                    if (btn.dataset.act === "today") this.today();
+                });
+                this.render();
+            },
+            render() {
+                const y = this.date.getFullYear();
+                const m = this.date.getMonth();
+                const firstDay = new Date(y, m, 1).getDay();
+                const totalDays = new Date(y, m + 1, 0).getDate();
+                const today = new Date().toDateString();
 
+                this.titleEl.textContent = window.formatDate(this.now, "YYYY년 MM월");
+                this.datesEl.innerHTML = "";
+                // prev
+                for (let i = firstDay - 1; i >= 0; i--) {
+                    this.datesEl.append(this.day(new Date(y, m, -i).getDate(), "txt-500"));
+                }
+                // current
+                for (let i = 1; i <= totalDays; i++) {
+                    const d = new Date(y, m, i);
+                    let cls = "";
+                    if (d.toDateString() === today) cls = "today";
+                    if (d.getDay() === 0) cls += " txt-red";
+                    if (d.getDay() === 6) cls += " txt-blue";
+                    this.datesEl.append(this.day(i, cls));
+                }
+                // next
+                const remain = 42 - (firstDay + totalDays);
+                for (let i = 1; i <= remain; i++) {
+                    this.datesEl.append(this.day(i, "txt-500"));
+                }
+            },
+            day(text, cls) {
+                const div = document.createElement("div");
+                if (cls) div.className = cls;
+                div.textContent = text;
+                return div;
+            },
+            prev() {
+                this.date = new Date(this.date.getFullYear(), this.date.getMonth() - 1);
+                this.render();
+            },
+            next() {
+                this.date = new Date(this.date.getFullYear(), this.date.getMonth() + 1);
+                this.render();
+            },
+            today() {
+                this.date = new Date();
+                this.render();
+            },
+        };
+        // 할일
         const todo = {
+            root: document.querySelector('[data-bind="todo"]'),
             data: [
                 { id: 1, content: "할 일 1" },
                 { id: 2, content: "할 일 2" },
                 { id: 3, content: "할 일 3" },
             ],
-
             init() {
-                this.wrap = document.querySelector('[data-bind="todo"]');
-                this.list = this.wrap.querySelector('[data-bind="list"]');
-                this.form = this.wrap.querySelector('[data-bind="form"]');
+                this.list = this.root.querySelector('[data-bind="list"]');
+                this.form = this.root.querySelector('[data-bind="form"]');
                 this.input = this.form.querySelector("input");
-
                 this.bind();
                 this.render();
             },
-
             bind() {
                 this.form.addEventListener("submit", (e) => {
                     e.preventDefault();
@@ -402,7 +431,6 @@
                     this.input.value = "";
                     this.render();
                 });
-
                 this.list.addEventListener("click", (e) => {
                     const del = e.target.closest('[data-act="delete"]');
                     if (!del) return;
@@ -414,7 +442,6 @@
                     this.render();
                 });
             },
-
             render() {
                 this.list.innerHTML = `<li class="b3 txt-center">2024년 5월 31일</li>`;
 
@@ -422,167 +449,30 @@
                     this.list.insertAdjacentHTML(
                         "beforeend",
                         `
-        <li>
-          <p class="b2">${v.content}</p>
-          <div>
-            <button class="icon16-btn">
-              <i class="icon16-pm-check">체크</i>
-            </button>
-            <button class="icon16-btn">
-              <i class="icon16-pm-pencil">수정</i>
-            </button>
-            <button class="icon16-btn" data-act="delete" data-id="${v.id}">
-              <i class="icon16-pm-trashcan">삭제</i>
-            </button>
-          </div>
-        </li>
-      `
+                            <li>
+                            <p class="b2">${v.content}</p>
+                            <div>
+                                <button class="icon16-btn">
+                                <i class="icon16-pm-check">체크</i>
+                                </button>
+                                <button class="icon16-btn">
+                                <i class="icon16-pm-pencil">수정</i>
+                                </button>
+                                <button class="icon16-btn" data-act="delete" data-id="${v.id}">
+                                <i class="icon16-pm-trashcan">삭제</i>
+                                </button>
+                            </div>
+                            </li>`
                     );
                 });
             },
         };
 
-        const weather = {
-            state: {
-                loading: true,
-                data: [],
-                shortly: [],
-                coord: { lat: 35, lon: 135 },
-                baseTime: "",
-                curIndex: 0,
-                curType: "tmp",
-            },
-
-            init() {
-                this.root = document.querySelector('[data-bind="weather"]');
-                this.setBaseTime();
-                this.fetch();
-                this.bind();
-            },
-
-            bind() {
-                this.root.addEventListener("click", (e) => {
-                    const tab = e.target.closest("[data-type]");
-                    const item = e.target.closest("[data-index]");
-                    if (tab) {
-                        this.state.curType = tab.dataset.type;
-                        this.render();
-                    }
-                    if (item) {
-                        this.state.curIndex = +item.dataset.index;
-                        this.render();
-                    }
-                });
-            },
-
-            setBaseTime() {
-                const h = new Date().getHours();
-                const f = (n) => String(n).padStart(2, "0") + "00";
-                this.state.baseTime = h <= 1 ? f(23) : h % 3 === 1 ? f(h - 2) : h % 3 === 2 ? f(h) : f(h - 1);
-            },
-
-            async fetch() {
-                const today = new Date().toISOString().slice(0, 10).replace(/-/g, "");
-                const cache = localStorage.getItem("weather");
-                const time = localStorage.getItem("weather_time");
-                const now = Date.now();
-
-                if (cache && now - time < 3600000) {
-                    this.state.data = JSON.parse(cache);
-                } else {
-                    const WEATHER_API_URL = "null";
-                    const url = `${WEATHER_API_URL}&base_date=${today}&base_time=${this.state.baseTime}&nx=${this.state.coord.lat}&ny=${this.state.coord.lon}`;
-                    const res = await fetch(url).then((r) => r.json());
-                    this.state.data = res.response.body.items.item.map(this.filter).filter(Boolean);
-
-                    localStorage.setItem("weather", JSON.stringify(this.state.data));
-                    localStorage.setItem("weather_time", now);
-                }
-
-                this.state.shortly = this.groupByTime(this.state.data);
-                this.state.loading = false;
-                this.render();
-            },
-
-            filter(v) {
-                if (["UUU", "VVV", "WAV"].includes(v.category)) return;
-                const { baseDate, baseTime, nx, ny, ...rest } = v;
-                return rest;
-            },
-
-            groupByTime(data) {
-                const g = {};
-                data.forEach((v) => {
-                    const k = v.fcstDate + v.fcstTime;
-                    g[k] ??= { date: v.fcstDate, time: v.fcstTime, values: [] };
-                    g[k].values.push({
-                        category: v.category,
-                        value: this.format(v.fcstValue, v.category),
-                    });
-                });
-                return Object.values(g).slice(0, 8);
-            },
-
-            format(v, c) {
-                const map = {
-                    TMP: v,
-                    POP: v + "%",
-                    WSD: v + "m/s",
-                    REH: v + "%",
-                    PCP: v === "강수없음" ? "0mm" : v,
-                    SKY: v === "1" ? "맑음" : v === "3" ? "구름많음" : "흐림",
-                    PTY: ["없음", "비", "비/눈", "눈", "소나기"][v],
-                };
-                return map[c] || v;
-            },
-
-            render() {
-                if (this.state.loading) {
-                    this.root.innerHTML = `<div class="loading"></div>`;
-                    return;
-                }
-
-                const cur = this.state.shortly[this.state.curIndex];
-
-                this.root.innerHTML = `
-      <p class="h3">Seoul, Korea</p>
-
-      <div class="tab-wrap">
-        ${["tmp", "pop", "pcp", "wsd"]
-            .map(
-                (t) =>
-                    `<button data-type="${t}" class="${this.state.curType === t ? "active" : ""}">
-            ${{ tmp: "기온", pop: "강수확률", pcp: "강수량", wsd: "풍속" }[t]}
-          </button>`
-            )
-            .join("")}
-      </div>
-
-      <ul class="details">
-        ${this.state.shortly
-            .map(
-                (v, i) => `
-          <li data-index="${i}" class="${i === this.state.curIndex ? "active" : ""}">
-            <p>${v.time.slice(0, 2)}시</p>
-          </li>
-        `
-            )
-            .join("")}
-      </ul>
-    `;
-            },
-        };
-
         clock.init();
-        calendar.init();
-        news.init();
-        music.init();
-        todo.init();
         weather.init();
-
-        // window.dialog.open({
-        //     html: "<p>dim 없는 팝업</p>",
-        //     dim: false
-        // });
+        news.init();
+        calendar.init();
+        todo.init();
+        music.init();
     })();
 </script>

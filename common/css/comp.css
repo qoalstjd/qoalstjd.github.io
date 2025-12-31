@@ -30,19 +30,18 @@ a.box:hover { background-color: rgb(var(--bg-hover)) !important; }
 .btn.md { height: 4rem; padding: 0 1.6rem; font-size: 1.6rem; } 
 .btn.lg { height: 4.8rem; padding: 0 2%; font-size: 2rem; } 
 .btn.xl { height: 5.6rem; padding: 0 2.4rem; font-size: 2rem; } 
-[data-act]:hover { background-color: rgb(var(--bg-hover)); }
+.ico[data-act]:hover { background-color: rgb(var(--bg-hover)); } 
 /* ==================== 링크 ==================== */
-.link { display: inline-flex; align-items: center; gap: 0.2rem; color: rgb(var(--link-500)); word-break: break-all; } 
+.link { position: relative; padding-right: 1.8rem; color: rgb(var(--link-500)); word-break: break-all; } 
 .link:hover { text-decoration: underline; } 
-.link::after { content: ''; display: block; width: 1.6rem; height: 1.6rem; background-color: currentColor; mask: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6.667 3l9.587 8.628a.5.5 0 010 .744L6.667 21' stroke='%23000' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center / 1.2rem; } 
+.link::after { content: ''; position: absolute; right: 0; top: calc(50% - 0.8rem); display: block; width: 1.6rem; height: 1.6rem; background-color: currentColor; mask: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6.667 3l9.587 8.628a.5.5 0 010 .744L6.667 21' stroke='%23000' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center / 1.2rem; } 
 /* ==================== 탭 ==================== */
-.tab-wrap { display: flex; width: 100%; align-items: center; border-radius: 0.6rem; background: var(--bg_type02); padding: 0.2rem; margin-top: 1.2rem; } 
-.tab-wrap button { position: relative; flex: 1; padding: 0.2rem 0.4rem; font-weight: 600; color: var(--txt_type02); z-index: 1; transition: color 0.4s linear; overflow: hidden; } 
+.tab-wrap { display: flex; align-items: center; width: 100%; border-radius: 0.6rem; background-color: rgb(var(--bg-100)); padding: 0.2rem; } 
+.tab-wrap button { position: relative; flex: 1; padding: 0.2rem 0.4rem; font-size: 1.4rem; font-weight: 600; color: rgb(var(--txt-700)); z-index: 1; transition: color cubic-bezier(0.7, -0.3, 0.2, 1.3) 0.3s, background-color cubic-bezier(0.7, -0.3, 0.2, 1.3) 0.3s; overflow: hidden; } 
 .tab-wrap button:first-child { border-radius: 0.4rem 0 0 0.4rem; } 
 .tab-wrap button:last-child { border-radius: 0 0.4rem 0.4rem 0; } 
-.tab-wrap button::before { content: ''; display: block; width: 0; height: 100%; position: absolute; right: 0; top: 0; background-color: var(--bg_primary); transition: width 0.4s linear; z-index: -1; } 
-.tab-wrap button.active { color: var(--txt_primary); } 
-.tab-wrap button.active::before { width: 100%; right: unset; left: 0; } 
+.tab-wrap button.is-active { background-color: rgb(var(--bg-200)); color: rgb(var(--primary-500)); } 
+.tab-wrap button.is-active::before { width: 100%; right: unset; left: 0; } 
 /* ==================== 표 ==================== */
 .tb-wrap { overflow: hidden; margin-top: 1.2rem; } 
 .tb-wrap table { margin-left: -0.1rem; border-bottom: 0.1rem solid rgb(var(--brd-300)); font-size: 1.4rem; } 
@@ -77,10 +76,12 @@ a.box:hover { background-color: rgb(var(--bg-hover)) !important; }
 .list.num li { padding-left: 2rem; } 
 .list.num li::before { content: counter(num)'.'; counter-increment: num 1; } 
 /* ==================== 대체이미지 ==================== */
-img { position: relative; object-fit: cover; display: block; } 
+img { position: relative; object-fit: cover; display: block; width: 100%; } 
 img[src='']::before, img:not([src])::before { content: '이미지를 불러오는중 오류가 발생했습니다'; display: flex; width: 100%; height: 100%; justify-content: center; align-items: center; background-color: var(--bg_type01); color: var(--txt_primary); font-size: 1.3rem; } 
 /* ==================== 로딩 ==================== */
-.loading { position: absolute; left: calc(50% - 2rem); top: calc(50% - 2rem); width: 4rem; height: 4rem; border-radius: 50%; border: 0.2rem solid var(--brd_type01); border-right-color: var(--color_point); animation: spin 1s linear 0s infinite; } 
+.loading { position: relative; }
+.loading * { display: none !important; }
+.loading::before { content: ""; position: absolute; left: calc(50% - 2rem); top: calc(50% - 2rem); width: 4rem; height: 4rem; border-radius: 50%; border: 0.2rem solid rgb(var(--brd-500)); border-right-color: rgb(var(--primary-500)); animation: spin 1s cubic-bezier(0.7, -0.3, 0.2, 1.3) 0s infinite; } 
 @keyframes spin { 
  0% { transform: rotate(0deg); } 
  100% { transform: rotate(360deg); } 
@@ -121,11 +122,14 @@ img[src='']::before, img:not([src])::before { content: '이미지를 불러오�
 .swiper-pagination span { display: inline-block; width: 8px; height: 8px; background: #ccc; border-radius: 50%; margin: 0 4px; cursor: pointer; } 
 .swiper-pagination span.active { background: #333; } 
 
-.dim { position: fixed; inset: 0; backdrop-filter: blur(4px); } 
-.dialog { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); min-width: 32rem; max-height: 80vh; background: rgb(var(--bg-200)); border-radius: 0.8rem; box-shadow: 0 10px 30px rgba(var(--bg-000),0.2); display: flex; flex-direction: column; border: 0.1rem solid rgb(var(--brd-300)); } 
-.dialog.md { width: 50rem; }
+.dim { position: fixed; inset: 0; backdrop-filter: blur(4px); animation: fadeIn 0.5s cubic-bezier(0.7, -0.3, 0.2, 1.3) 0s 1 forwards; } 
+.dialog { position: fixed; max-height: 80vh; padding: 2.4rem 1.6rem; background-color: rgb(var(--bg-200)); border-radius: 0.8rem; display: flex; flex-direction: column; border: 0.1rem solid rgb(var(--brd-300)); animation: slideUp 0.5s cubic-bezier(0.7, -0.3, 0.2, 1.3) 0s 1 forwards; } 
+.dialog.md { width: 50rem; } 
 
-.dialog-title { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; } 
-.dialog-content { flex: 1; overflow: hidden scroll; padding: 16px; } 
-.dialog button { cursor: pointer; }
+.dialog-title { position: relative; text-align: center; padding: 0 3.6rem; } 
+.dialog-title > p { font-size: 1.8rem; font-weight: 700; line-height: 3.2rem; } 
+.dialog-title > button { position: absolute; top: calc(50% - 1.6rem); } 
+.dialog-title > button[data-act="close"] { right: 0; } 
+.dialog-content { flex: 1; overflow: hidden auto; margin-top: 2.4rem; } 
+.dialog button { cursor: pointer; } 
 .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: rgb(var(--bg-300)); padding: 10px 16px; border-radius: 20px; } 
