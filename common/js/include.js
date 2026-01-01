@@ -1,10 +1,11 @@
+const DEFAULT_LINKCD = "m0100000";
 const SPA = {
     wrap: document.querySelector(".wrap"),
     main: document.querySelector(".wrap > main"),
     routes: {},
     // linkcd 가져오기: history.state → sessionStorage → 기본값
     getLinkcd() {
-        return history.state?.linkcd || sessionStorage.getItem("linkcd") || "m0100000";
+        return history.state?.linkcd || sessionStorage.getItem("linkcd") || DEFAULT_LINKCD;
     },
     // 현재화면의 depth1 메뉴 link 가져오기
     getDep1Key(linkcd) {
@@ -21,7 +22,7 @@ const SPA = {
             503: ["서비스 점검 중입니다.", "잠시 후 다시 이용해주세요."],
             default: ["요청을 처리할 수 없습니다.", "다시 시도해주세요."],
         }[code] || ["요청을 처리할 수 없습니다.", "다시 시도해주세요."];
-        window.ui.lottie.msg(msg, this.main);
+        window.ui?.lottie?.msg?.(msg, this.main);
         history.replaceState({ linkcd: "error" }, "", `/${window.rootDir}`);
     },
     // LNB 렌더링 (dep1key)
@@ -65,9 +66,12 @@ const SPA = {
         lnb?.querySelectorAll("li a").forEach((a) => a.classList.remove("txt-point"));
         const lnbCur = lnb?.querySelector(`a[href*="linkcd=${linkcd}"]`) || lnb?.querySelector("li:first-child a");
         lnbCur?.classList.add("txt-point");
-        this.main.className = this.routes[dep1Key]?.name.toLowerCase() || "";
+        this.main.className = this.routes[dep1Key]?.name?.toLowerCase() || "";
     },
+    _eventBound: false,
     bindEvent() {
+        if (this._eventBound) return;
+        this._eventBound = true;
         document.addEventListener("click", (e) => {
             const a = e.target.closest("a");
             if (!a) return;
@@ -79,7 +83,7 @@ const SPA = {
                 let top = 0;
                 if (href === "#top") {
                     top = 0;
-                } else {
+                } else if (el) {
                     top = el.getBoundingClientRect().top + window.pageYOffset - 80;
                 }
                 window.scrollTo({ top: top });
@@ -90,18 +94,18 @@ const SPA = {
             e.preventDefault();
             const url = new URL(href, location.origin);
             const params = Object.fromEntries(url.searchParams.entries());
-            if (!params.linkcd) params.linkcd = "m0100000";
+            if (!params.linkcd) params.linkcd = DEFAULT_LINKCD;
             sessionStorage.setItem("pageParams", JSON.stringify(params));
             this.loadPage(params, false);
         });
         window.addEventListener("popstate", (e) => {
             const state = e.state || {};
-            if (!state.linkcd) state.linkcd = "m0100000";
+            if (!state.linkcd) state.linkcd = DEFAULT_LINKCD;
             sessionStorage.setItem("pageParams", JSON.stringify(state));
             this.loadPage(state, true);
         });
     },
-    loadPage(params = { linkcd: "m0100000" }, replaceHistory = false) {
+    loadPage(params = { linkcd: DEFAULT_LINKCD }, replaceHistory = false) {
         let route = this.routes[params.linkcd];
         if (!route) return this.showErrorFallback({ code: 404 });
 
@@ -120,8 +124,8 @@ const SPA = {
                 this.renderLNB(dep1Key);
                 this.setActive(params.linkcd);
                 this.runScripts(params.linkcd);
-                window.ui?.init(this.wrap);
-                window.common?.init(this.wrap);
+                window.ui?.init?.(this.wrap);
+                window.common?.init?.(this.wrap);
 
                 if (replaceHistory) {
                     history.replaceState(params, "", `/${window.rootDir}`);
@@ -139,7 +143,10 @@ const SPA = {
     },
     init() {
         fetch(`/${window.rootDir}/js/menu.json`)
-            .then((res) => res.json())
+            .then((res) => {
+                if (!res.ok) throw new Error(res.status);
+                return res.json();
+            })
             .then((data) => {
                 this.routes = data;
                 const url = new URL(window.location.href, window.location.origin);
@@ -148,9 +155,12 @@ const SPA = {
                     const saved = sessionStorage.getItem("pageParams");
                     if (saved) params = JSON.parse(saved);
                 }
-                if (!params.linkcd) params.linkcd = "m0100000";
+                if (!params.linkcd) params.linkcd = DEFAULT_LINKCD;
                 this.loadPage(params, true);
                 this.bindEvent();
+            })
+            .catch((err) => {
+                this.showErrorFallback({ code: err.message || 500 });
             });
     },
 };
