@@ -54,8 +54,8 @@ html[data-theme="dark"] .ico[data-ico="theme"] { mask-image: url('data:image/svg
 .ico[data-ico="table"] { mask-image: url('data:image/svg+xml; charset=utf8,%3Csvg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"%3E%3Crect x="3" y="3" width="18" height="18" rx="1" stroke="currentColor" stroke-width="1.5"/%3E%3Cpath stroke="currentColor" stroke-width="1.5" d="M3 9h18M3 15h18M9 3v18M15 3v18"/%3E%3C/svg%3E'); } 
 
 .ico[data-ico="shine"] { mask-image: url('https://s2.svgbox.net/weather-icons.svg?ic=day-sunny'); } 
-.ico[data-ico="colud"] { mask-image: url('https://s2.svgbox.net/weather-icons.svg?ic=cloud'); } 
-.ico[data-ico="coludy"] { mask-image: url('https://s2.svgbox.net/weather-icons.svg?ic=cloudy'); } 
+.ico[data-ico="cloud"] { mask-image: url('https://s2.svgbox.net/weather-icons.svg?ic=cloud'); } 
+.ico[data-ico="cloudy"] { mask-image: url('https://s2.svgbox.net/weather-icons.svg?ic=cloudy'); } 
 .ico[data-ico="rain"] { mask-image: url('https://s2.svgbox.net/weather-icons.svg?ic=rain'); } 
 .ico[data-ico="sleet"] { mask-image: url('https://s2.svgbox.net/weather-icons.svg?ic=sleet'); } 
 .ico[data-ico="snow"] { mask-image: url('https://s2.svgbox.net/weather-icons.svg?ic=snow'); } 
