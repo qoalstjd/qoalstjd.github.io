@@ -41,41 +41,9 @@
         <div id="tab13">강수량</div>
         <div id="tab14">풍속</div>
     </div>
-    <ul class="list">
-        <li class="">
-            <i class="icon48-pm-shine"></i>
-            <p class="b3 col-t01">15시</p>
-        </li>
-        <li class="">
-            <i class="icon48-pm-shine"></i>
-            <p class="b3 col-t01">16시</p>
-        </li>
-        <li class="">
-            <i class="icon48-pm-shine"></i>
-            <p class="b3 col-t01">17시</p>
-        </li>
-        <li class="">
-            <i class="icon48-pm-shine"></i>
-            <p class="b3 col-t01">18시</p>
-        </li>
-        <li class="">
-            <i class="icon48-pm-shine"></i>
-            <p class="b3 col-t01">19시</p>
-        </li>
-        <li class="">
-            <i class="icon48-pm-shine"></i>
-            <p class="b3 col-t01">20시</p>
-        </li>
-        <li class="">
-            <i class="icon48-pm-shine"></i>
-            <p class="b3 col-t01">21시</p>
-        </li>
-        <li>
-            <i class="icon48-pm-shine"></i>
-            <p class="b3 col-t01">22시</p>
-        </li>
-    </ul>
+    <ul class="list"></ul>
 </div>
+<!-- 뉴스 -->
 <div data-bind="news">
     <div class="tab-wrap">
         <button data-category="top" class="is-active">인기</button>
@@ -85,24 +53,24 @@
     </div>
     <ul class="news-list"></ul>
 </div>
+<!-- 음악 -->
 <div data-bind="music">
+    <div class="detail">
+        <p></p>
+    </div>
     <div class="player">
-        <p data-bind="title"></p>
-
         <div class="range">
-            <span data-bind="cur">00:00</span>
+            <span>00:00</span>
             <input type="range" min="0" value="0" />
-            <span data-bind="dur">00:00</span>
+            <span>00:00</span>
         </div>
-
         <div class="control">
             <button data-act="prev">◀</button>
             <button data-act="play">▶</button>
-            <button data-act="next">▶▶</button>
+            <button data-act="next">▶</button>
         </div>
     </div>
-
-    <ul data-bind="list"></ul>
+    <ul class="playlist"></ul>
 </div>
 <div data-bind="calendar">
     <div class="header flx jc-bt">
@@ -176,31 +144,39 @@
                     this.data = [];
                 }
                 this.loading(false);
-                this.render();
+                this.renderDetail(0);
+                this.renderList();
             },
-            render() {
+            renderDetail(index) {
+                const d = this.data[index];
+                const v = d.values;
+                console.log(d)
                 this.detailEl.innerHTML = `
-                    <i class="ico wh-80" data-ico="shine"></i>
-                    <p>##<sup>°C</sup></p>
+                    <i class="ico wh-80" data-ico="${v.pty.value !== "" ? v.pty.value : v.sky.value}"></i>
+                    <p>${v.tmp.value}<sup>${v.tmp.unit}</sup></p>
                     <ul>
-                        <li>강수확률 : 0%</li>
-                        <li>습도 : 55%</li>
-                        <li>풍속 : 3.8m/s</li>
+                        <li>강수확률 : ${v.pop.value}${v.pop.unit}</li>
+                        <li>습도 : ${v.reh.value}${v.reh.unit}</li>
+                        <li>풍속 : ${v.wsd.value}${v.wsd.unit}</li>
                     </ul>
                     <ul>
-                        <li>2025년 12월 30일</li>
-                        <li>22시</li>
-                        <li>shine</li>
+                        <li>${window.formatDate(d.date, 'YY.MM.DD')}</li>
+                        <li>${d.time.slice(0, -2)}시</li>
+                        <li>${v.pty.value !== "" ? v.pty.value : v.sky.value}</li>
                     </ul>`;
+            },
+            renderList() {
                 this.listEl.innerHTML = "";
-                this.data.forEach((d) => {
+                this.data.forEach((d, i) => {
                     const sky = d.values.sky.value;
                     const pty = d.values.pty.value;
-                    console.log(pty)
                     const li = document.createElement("li");
                     li.innerHTML = `
                         <i class="ico wh-48" data-ico="${pty !== "" ? pty : sky}"></i>
                         <p class="b3 col-t01">${d.time + "시"}</p>`;
+                    li.addEventListener('click', () => {
+                        this.renderDetail(i);
+                    })
                     this.listEl.appendChild(li);
                 });
             },
@@ -264,80 +240,37 @@
         // 음악
         const music = {
             root: document.querySelector('[data-bind="music"]'),
-            data: [
-                { title: "음악01", src: "https://media.w3.org/2010/07/bunny/04-Death_Becomes_Fur.mp3" },
-                { title: "음악02", src: "https://media.w3.org/2010/07/bunny/04-Death_Becomes_Fur.mp3" },
-                { title: "음악03", src: "https://media.w3.org/2010/07/bunny/04-Death_Becomes_Fur.mp3" },
-            ],
-            idx: 0,
-            audio: new Audio(),
-            init() {
-                this.title = this.root.querySelector('[data-bind="title"]');
-                this.cur = this.root.querySelector('[data-bind="cur"]');
-                this.dur = this.root.querySelector('[data-bind="dur"]');
-                this.range = this.root.querySelector('input[type="range"]');
-                this.list = this.root.querySelector('[data-bind="list"]');
-
-                this.bind();
-                this.renderList();
-                this.load();
+            async init() {
+                this.detailEl = this.root.querySelector(".detail");
+                this.playerEl = this.root.querySelector(".player");
+                this.playlistEl = this.root.querySelector(".playlist");
+                this.loading(true);
+                try {
+                    this.data = (await window.fetchManager.get("https://qoalstjdapis.vercel.app/api/getMusic")) || [];
+                } catch (e) {
+                    console.error("음악 불러오기 실패", e);
+                    this.data = [];
+                }
+                this.renderPlaylist();
+                // this.bind();
+                this.loading(false);
             },
-            bind() {
-                this.root.addEventListener("click", (e) => {
-                    const a = e.target.dataset.act;
-                    if (a === "play") this.toggle();
-                    if (a === "prev") this.prev();
-                    if (a === "next") this.next();
-                });
-                this.range.addEventListener("input", () => {
-                    this.audio.currentTime = this.range.value;
-                });
-                this.audio.addEventListener("timeupdate", () => {
-                    this.range.value = this.audio.currentTime;
-                    this.cur.textContent = this.fmt(this.audio.currentTime);
-                });
-                this.audio.addEventListener("loadedmetadata", () => {
-                    this.range.max = this.audio.duration;
-                    this.dur.textContent = this.fmt(this.audio.duration);
-                });
-                this.audio.addEventListener("ended", () => this.next());
-            },
-            load() {
-                const cur = this.data[this.idx];
-                this.audio.src = cur.src;
-                this.title.textContent = cur.title;
-                this.updateActive();
-            },
-            toggle() {
-                this.audio.paused ? this.audio.play() : this.audio.pause();
-            },
-            prev() {
-                this.idx = (this.idx - 1 + this.data.length) % this.data.length;
-                this.load();
-            },
-            next() {
-                this.idx = (this.idx + 1) % this.data.length;
-                this.load();
-            },
-            renderList() {
-                this.list.innerHTML = "";
+            renderDetail() {},
+            renderPlayer() {},
+            renderPlaylist() {
+                this.playlistEl.innerHTML = "";
                 this.data.forEach((d, i) => {
                     const li = document.createElement("li");
-                    li.textContent = d.title;
-                    li.onclick = () => {
-                        this.idx = i;
-                        this.load();
-                    };
-                    this.list.appendChild(li);
+                    li.innerHTML = `
+                        `;
+                    li.addEventListener('click', () => {
+                        this.renderDetail(i);
+                    })
+                    this.playlistEl.appendChild(li);
                 });
             },
-            updateActive() {
-                [...this.list.children].forEach((li, i) => li.classList.toggle("active", i === this.idx));
-            },
-            fmt(t) {
-                const m = String(Math.floor(t / 60)).padStart(2, "0");
-                const s = String(Math.floor(t % 60)).padStart(2, "0");
-                return `${m}:${s}`;
+            loading(boolean) {
+                this.root.classList.toggle('loading', boolean);
             },
         };
         // 달력

@@ -62,7 +62,7 @@ body > .wrap main.home [data-bind="weather"] .visual .vecVisual > div { display:
 body > .wrap main.home [data-bind="weather"] .visual .vecVisual > div div { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2rem; } 
 body > .wrap main.home [data-bind="weather"] .details i, .curDetail i, .visual i { position: relative; transform: none; inset: unset; } 
 
-body > .wrap main.home [data-bind="news"] { grid-area: news; display: flex; flex-direction: column; gap: 0.4rem; height: 100%; } 
+body > .wrap main.home [data-bind="news"] { grid-area: news; display: flex; flex-direction: column; height: 100%; } 
 body > .wrap main.home [data-bind="news"] .news-list { position: relative; flex: 1; overflow-y: auto; height: calc(100% - 3.3rem); } 
 body > .wrap main.home [data-bind="news"] .news-list li { display: grid; grid-template-columns: minmax(4rem, 13%) 1fr; column-gap: 1.2rem; padding: 0.6rem; cursor: pointer; align-items: center; animation-name: slideUp; animation-timing-function: cubic-bezier(0.7, -0.3, 0.2, 1.3); animation-fill-mode: forwards; animation-duration: 0.5s; opacity: 0; }
 body > .wrap main.home [data-bind="news"] .news-list li + li { border-top: 0.1rem solid rgb(var(--brd-300)); } 
