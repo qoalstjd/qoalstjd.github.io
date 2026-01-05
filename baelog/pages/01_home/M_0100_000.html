@@ -55,19 +55,34 @@
 </div>
 <!-- 음악 -->
 <div data-bind="music">
-    <div class="detail">
-        <p></p>
-    </div>
+    <div class="detail"></div>
     <div class="player">
-        <div class="range">
-            <span>00:00</span>
-            <input type="range" min="0" value="0" />
-            <span>00:00</span>
+        <audio></audio>
+        <div class="timeline">
+            <span class="now">0:00</span>
+            <div class="progress">
+                <progress value="0" max="0"></progress>
+                <input type="range" class="seek range" min="0" value="0" />
+            </div>
+            <span class="total">0:00</span>
+        </div>
+        <div class="volume">
+            <i class="ico wh-16" data-ico="speaker">볼륨</i>
+            <div class="progress">
+                <progress class="volPg" max="100" value="50"></progress>
+                <input class="vol range" type="range" min="0" max="100" value="50" />
+            </div>
         </div>
         <div class="control">
-            <button data-act="prev">◀</button>
-            <button data-act="play">▶</button>
-            <button data-act="next">▶</button>
+            <button data-act="prev" class="ico-wrap pd-4">
+                <i class="ico wh-20" data-ico="skipprev"></i>
+            </button>
+            <button data-act="toggle" class="ico-wrap pd-4">
+                <i class="ico wh-20" data-ico="play"></i>
+            </button>
+            <button data-act="next" class="ico-wrap pd-4">
+                <i class="ico wh-20" data-ico="skipnext"></i>
+            </button>
         </div>
     </div>
     <ul class="playlist"></ul>
@@ -85,19 +100,16 @@
     <div class="dates"></div>
 </div>
 <div data-bind="todo">
-    <div class="txt-center">
-        <p class="b2 col-t01">꿈을 쫓는 자가 세상을 움직인다</p>
-        <p class="b3 col-t02">- 헨리 데이비드 소로 -</p>
+    <div class="txt-c">
+        <p class="txt-700">꿈을 쫓는 자가 세상을 움직인다</p>
+        <p class="txt-500">- 헨리 데이비드 소로 -</p>
     </div>
-
-    <ul data-bind="list">
-        <li class="b3 txt-center">2024년 5월 31일</li>
-    </ul>
-
+    <p class="txt-c">YYYY년 MM월 DD일</p>
+    <ul data-bind="list"></ul>
     <form data-bind="form">
         <input type="text" placeholder="추가할 항목을 입력해주세요..." />
-        <button class="icon16-btn">
-            <i class="icon16-pm-send">추가</i>
+        <button class="ico-wrap">
+            <i class="ico wh-16" data-ico="send">추가</i>
         </button>
     </form>
 </div>
@@ -150,7 +162,7 @@
             renderDetail(index) {
                 const d = this.data[index];
                 const v = d.values;
-                console.log(d)
+                console.log(d);
                 this.detailEl.innerHTML = `
                     <i class="ico wh-80" data-ico="${v.pty.value !== "" ? v.pty.value : v.sky.value}"></i>
                     <p>${v.tmp.value}<sup>${v.tmp.unit}</sup></p>
@@ -160,7 +172,7 @@
                         <li>풍속 : ${v.wsd.value}${v.wsd.unit}</li>
                     </ul>
                     <ul>
-                        <li>${window.formatDate(d.date, 'YY.MM.DD')}</li>
+                        <li>${window.formatDate(d.date, "YY.MM.DD")}</li>
                         <li>${d.time.slice(0, -2)}시</li>
                         <li>${v.pty.value !== "" ? v.pty.value : v.sky.value}</li>
                     </ul>`;
@@ -174,14 +186,14 @@
                     li.innerHTML = `
                         <i class="ico wh-48" data-ico="${pty !== "" ? pty : sky}"></i>
                         <p class="b3 col-t01">${d.time + "시"}</p>`;
-                    li.addEventListener('click', () => {
+                    li.addEventListener("click", () => {
                         this.renderDetail(i);
-                    })
+                    });
                     this.listEl.appendChild(li);
                 });
             },
             loading(boolean) {
-                this.root.classList.toggle('loading', boolean);
+                this.root.classList.toggle("loading", boolean);
             },
         };
         // 뉴스
@@ -234,43 +246,119 @@
                 });
             },
             loading(boolean) {
-                this.list.classList.toggle('loading', boolean);
+                this.list.classList.toggle("loading", boolean);
             },
         };
         // 음악
         const music = {
             root: document.querySelector('[data-bind="music"]'),
+            curIdx: 0,
             async init() {
                 this.detailEl = this.root.querySelector(".detail");
-                this.playerEl = this.root.querySelector(".player");
+                this.audio = this.root.querySelector("audio");
                 this.playlistEl = this.root.querySelector(".playlist");
+                this.now = this.root.querySelector(".now");
+                this.total = this.root.querySelector(".total");
+                this.pg = this.root.querySelector("progress");
+                this.seek = this.root.querySelector(".seek");
+                this.vol = this.root.querySelector(".vol");
+                this.volPg = this.root.querySelector(".volPg");
                 this.loading(true);
                 try {
-                    this.data = (await window.fetchManager.get("https://qoalstjdapis.vercel.app/api/getMusic")) || [];
-                } catch (e) {
-                    console.error("음악 불러오기 실패", e);
+                    const res = await fetch("https://qoalstjdapis.vercel.app/api/getMusic");
+                    this.data = await res.json();
+                } catch {
                     this.data = [];
                 }
                 this.renderPlaylist();
-                // this.bind();
+                this.load(this.curIdx);
+                this.bindControls();
+                const v = Math.round(this.audio.volume * 100);
+                this.vol.value = v;
+                this.volPg.value = v;
                 this.loading(false);
             },
-            renderDetail() {},
-            renderPlayer() {},
+            load(i) {
+                this.curIdx = i;
+                const d = this.data[i];
+                this.detailEl.innerHTML = `
+                    <img src="${d.cover}" class="wh-128 r-12">
+                    <div class="mt-12 txt-c">
+                        <strong>${d.title}</strong>
+                        <p>${d.genre} · ${d.mood}</p>
+                    </div>
+                    `;
+                this.audio.src = d.streaming;
+                this.audio.onloadedmetadata = () => {
+                    const dur = Math.floor(this.audio.duration || 0);
+                    this.pg.max = this.seek.max = dur;
+                    this.total.textContent = this.fm(dur);
+                    this.audio.play();
+                };
+                this.audio.ontimeupdate = () => {
+                    const cur = Math.floor(this.audio.currentTime || 0);
+                    this.pg.value = this.seek.value = cur;
+                    this.now.textContent = this.fm(cur);
+                };
+                this.audio.onplay = () => (this.root.querySelector("[data-act='toggle'] [data-ico]").dataset.ico = "pause");
+                this.audio.onpause = () => (this.root.querySelector("[data-act='toggle'] [data-ico]").dataset.ico = "play");
+                this.audio.onended = () => this.next();
+            },
+
+            bindControls() {
+                this.root.querySelector('[data-act="prev"]').onclick = () => this.prev();
+                this.root.querySelector('[data-act="next"]').onclick = () => this.next();
+                this.root.querySelector('[data-act="toggle"]').onclick = () => (this.audio.paused ? this.audio.play() : this.audio.pause());
+                this.seek.oninput = (e) => (this.audio.currentTime = Number(e.target.value));
+                this.vol.oninput = (e) => {
+                    const v = Number(e.target.value);
+                    this.audio.volume = v / 100;
+                    this.volPg.value = v;
+                };
+                this.audio.onvolumechange = () => {
+                    const v = Math.round(this.audio.volume * 100);
+                    this.vol.value = v;
+                    this.volPg.value = v;
+                };
+            },
+            prev() {
+                this.load((this.curIdx - 1 + this.data.length) % this.data.length);
+            },
+            next() {
+                this.load((this.curIdx + 1) % this.data.length);
+            },
             renderPlaylist() {
                 this.playlistEl.innerHTML = "";
+
                 this.data.forEach((d, i) => {
                     const li = document.createElement("li");
+                    li.className = "flx gap-12 pd-8 flx-nowrap r-8"
                     li.innerHTML = `
-                        `;
-                    li.addEventListener('click', () => {
-                        this.renderDetail(i);
-                    })
+                        <img src="${d.cover}" class="wh-48 r-4">
+                        <div class="of-h">
+                            <strong class="ell-1">${d.title}</strong>
+                            <p class="flx ai-c gap-8 txt-500">
+                                <span>${d.genre}</span>
+                                <i class="vr"></i>
+                                <span class="ell-1">${d.mood}</span>
+                        </div>
+                    `;
+                    li.onclick = () => {
+                        this.playlistEl.querySelectorAll("li").forEach((l) => l.classList.remove("is-active"));
+                        li.classList.add("is-active");
+                        this.load(i);
+                    };
                     this.playlistEl.appendChild(li);
                 });
+                this.playlistEl.children[0]?.classList.add("is-active");
+            },
+            fm(s) {
+                const m = Math.floor(s / 60);
+                const ss = String(s % 60).padStart(2, "0");
+                return `${m}:${ss}`;
             },
             loading(boolean) {
-                this.root.classList.toggle('loading', boolean);
+                this.root.classList.toggle("loading", boolean);
             },
         };
         // 달력
@@ -376,8 +464,6 @@
                 });
             },
             render() {
-                this.list.innerHTML = `<li class="b3 txt-center">2024년 5월 31일</li>`;
-
                 this.data.forEach((v) => {
                     this.list.insertAdjacentHTML(
                         "beforeend",
@@ -385,14 +471,14 @@
                             <li>
                             <p class="b2">${v.content}</p>
                             <div>
-                                <button class="icon16-btn">
-                                <i class="icon16-pm-check">체크</i>
+                                <button class="ico-wrap pd-4">
+                                    <i class="ico wh-16" data-ico="check">체크</i>
                                 </button>
-                                <button class="icon16-btn">
-                                <i class="icon16-pm-pencil">수정</i>
+                                <button class="ico-wrap pd-4">
+                                    <i class="ico wh-16" data-ico="pencil">수정</i>
                                 </button>
-                                <button class="icon16-btn" data-act="delete" data-id="${v.id}">
-                                <i class="icon16-pm-trashcan">삭제</i>
+                                <button class="ico-wrap pd-4" data-act="delete" data-id="${v.id}">
+                                    <i class="ico wh-16" data-ico="trashcan">삭제</i>
                                 </button>
                             </div>
                             </li>`

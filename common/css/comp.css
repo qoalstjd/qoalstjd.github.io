@@ -79,13 +79,24 @@ a.box:hover { background-color: rgb(var(--bg-hover)) !important; }
 img { position: relative; object-fit: cover; display: block; width: 100%; } 
 img[src='']::before, img:not([src])::before { content: '이미지를 불러오는중 오류가 발생했습니다'; display: flex; width: 100%; height: 100%; justify-content: center; align-items: center; background-color: var(--bg_type01); color: var(--txt_primary); font-size: 1.3rem; } 
 /* ==================== 로딩 ==================== */
-.loading { position: relative; }
-.loading * { display: none !important; }
+.loading { position: relative; } 
+.loading * { display: none !important; } 
 .loading::before { content: ""; position: absolute; left: calc(50% - 2rem); top: calc(50% - 2rem); width: 4rem; height: 4rem; border-radius: 50%; border: 0.2rem solid rgb(var(--brd-500)); border-right-color: rgb(var(--primary-500)); animation: spin 1s cubic-bezier(0.7, -0.3, 0.2, 1.3) 0s infinite; } 
 @keyframes spin { 
  0% { transform: rotate(0deg); } 
  100% { transform: rotate(360deg); } 
  }
+/* ==================== 폼 ==================== */
+/* Progress */
+.progress { position:relative; width:100%; height:8px; } 
+.progress progress { width:100%; height:8px; -webkit-appearance:none; appearance:none; border-radius:999px; overflow:hidden; } 
+.progress progress::-webkit-progress-bar { background-color: rgb(var(--bg-200)); } 
+.progress progress::-webkit-progress-value { background-color: rgb(var(--primary-700)); } 
+.progress .range { position:absolute; left:0; top:50%; width:100%; height:16px; transform:translateY(-50%); background:transparent; -webkit-appearance:none; appearance:none; cursor:pointer; } 
+.progress .range::-webkit-slider-thumb { -webkit-appearance:none; appearance:none; width:14px; height:14px; border-radius:50%; background: rgb(var(--primary-500)); border: 0.2rem solid white; box-shadow:0 0 0 0.2rem rgba(0,0,0,.1); } 
+.progress .range::-moz-range-thumb { width:14px; height:14px; border-radius:50%; background: rgb(var(--primary-500)); border: 0.2rem solid white; } 
+.progress .range::-webkit-slider-runnable-track { background:transparent; } 
+.progress .range::-moz-range-track { background:transparent; } 
 /* ==================== 모달 ==================== */
 .modal-wrap { position: fixed; left: 0; top: 0; width: 100%; background: none; height: 100%; z-index: 100; display: flex; align-items: center; justify-content: center; } 
 .modal-wrap .modal-bg { position: absolute; width: 100%; height: 100%; left: 0; top: 0; animation: modalBgOpen 0.5s ease-in-out 0s forwards; } 

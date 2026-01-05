@@ -20,6 +20,7 @@
 .r-0 { border-radius: 0 !important; } 
 .r-4 { border-radius: 0.4rem !important; } 
 .r-8 { border-radius: 0.8rem !important; } 
+.r-12 { border-radius: 1.2rem !important; } 
 .r-max { border-radius: 99rem !important; } 
 .r-t-0 { border-top-left-radius: 0 !important; border-top-right-radius: 0 !important; } 
 .r-b-0 { border-bottom-left-radius: 0 !important; border-bottom-right-radius: 0 !important; } 
@@ -68,6 +69,7 @@ i.vr { display: block; width: 0.1rem; height: auto; min-height: 1.2rem; backgrou
 .wh-32 { width: 3.2rem !important; height: 3.2rem !important; } 
 .wh-48 { width: 4.8rem !important; height: 4.8rem !important; } 
 .wh-80 { width: 8rem !important; height: 8rem !important; } 
+.wh-128 { width: 12.8rem !important; height: 12.8rem !important; } 
 /* Gap */
 .gap-0 { gap: 0 !important; } 
 .gap-4 { gap: 0.4rem !important; } 

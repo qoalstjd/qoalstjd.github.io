@@ -142,6 +142,9 @@ const SPA = {
             });
     },
     init() {
+        if(window.cacheManager.get('theme')) {
+            document.documentElement.dataset.theme = window.cacheManager.get('theme');
+        }
         fetch(`/${window.rootDir}/js/menu.json`)
             .then((res) => {
                 if (!res.ok) throw new Error(res.status);
