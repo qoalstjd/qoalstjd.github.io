@@ -53,13 +53,13 @@ const common = {
             const key = p.slug || p.category;
             const li = document.createElement("li");
             li.innerHTML = `
-                <a href="/baelog/index.html?linkcd=m0000010&parentLinkcd=${this.curLinkcd}&fileName=${key}_${p.id}" class="box pd-0">
+                <a href="/baelog/index.html?linkcd=m0001&parentLinkcd=${this.curLinkcd}&fileName=${key}_${p.id}" class="box pd-0">
                     <img src="/baelog/images/post/thum_${key}.png" class="w-full">
                     <div class="pd-16">
                     <p class="fs-12 txt-500">${p.category}</p>
                     <strong class="ell-1 mt-4">${p.id}. ${p.title}</strong>
                     <p class="fs-14 txt-700 ell-1">${p.summary}</p>
-                    <p class="fs-12 txt-500 txt-r">${p.date}</p>
+                    <p class="fs-12 txt-500 ta-r">${p.date}</p>
                     </div>
                 </a>
             `;
@@ -113,7 +113,7 @@ const common = {
         bindMeta(meta, parentLinkcd) {
             bindData(document.querySelector(".tit-wrap"), {
                 ...meta,
-                parentLinkcd: parentLinkcd || "m0000000",
+                parentLinkcd: parentLinkcd || "m0100",
             });
         },
         async loadContent(fileName) {
@@ -166,9 +166,9 @@ const common = {
                     tr.tabIndex = 0;
                     tr.role = "button";
                     tr.innerHTML = `
-                        <td class="txt-700 txt-c">${p.id}</td>
+                        <td class="txt-700 ta-c">${p.id}</td>
                         <td class="ell-1">${p.title} <span class="txt-500">- ${p.summary}</span></td>
-                        <td class="txt-700 txt-c">${p.date}</td>
+                        <td class="txt-700 ta-c">${p.date}</td>
                     `;
                     if (key === fileName) {
                         tr.querySelectorAll("td").forEach((td) => td.classList.add("txt-point"));
@@ -176,7 +176,7 @@ const common = {
                     }
                     tr.addEventListener("click", () => {
                         const params = {
-                            linkcd: "m0000010",
+                            linkcd: "m0001",
                             parentLinkcd,
                             fileName: key,
                         };

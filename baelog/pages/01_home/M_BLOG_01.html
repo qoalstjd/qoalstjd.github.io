@@ -1,5 +1,6 @@
 <!-- 시계 -->
 <div data-bind="clock">
+    <p class="date">8888/88/88</p>
     <p class="day">
         <span>SUN</span>
         <span>MON</span>
@@ -9,37 +10,23 @@
         <span>FRI</span>
         <span>SAT</span>
     </p>
-    <p class="date">8888/88/88</p>
     <p class="time">HH:mm:ss</p>
 </div>
 <!-- 날씨 -->
 <div data-bind="weather">
     <p class="fs-20 fw-700">Seoul, Korea</p>
-    <div class="detail">
-        <i class="ico wh-80" data-ico="shine"></i>
-        <p>##<sup>°C</sup></p>
-        <ul>
-            <li>강수확률 : 0%</li>
-            <li>습도 : 55%</li>
-            <li>풍속 : 3.8m/s</li>
-        </ul>
-        <ul>
-            <li>2025년 12월 30일</li>
-            <li>22시</li>
-            <li>shine</li>
-        </ul>
-    </div>
+    <div class="detail"></div>
     <div class="tab-wrap">
         <button data-tab="tab11">기온</button>
         <button data-tab="tab12">강수확률</button>
         <button data-tab="tab13">강수량</button>
         <button data-tab="tab14">풍속</button>
     </div>
-    <div>
-        <div id="tab11">기온</div>
-        <div id="tab12">강수확률</div>
-        <div id="tab13">강수량</div>
-        <div id="tab14">풍속</div>
+    <div class="visual">
+        <div id="tab11" data-type="tmp"></div>
+        <div id="tab12" data-type="pop"></div>
+        <div id="tab13" data-type="pcp"></div>
+        <div id="tab14" data-type="wsd"></div>
     </div>
     <ul class="list"></ul>
 </div>
@@ -67,21 +54,21 @@
             <span class="total">0:00</span>
         </div>
         <div class="volume">
-            <i class="ico wh-16" data-ico="speaker">볼륨</i>
+            <i class="ico wh-16" data-ico="speaker"><span class="hidden">볼륨</span></i>
             <div class="progress">
                 <progress class="volPg" max="100" value="50"></progress>
                 <input class="vol range" type="range" min="0" max="100" value="50" />
             </div>
         </div>
         <div class="control">
-            <button data-act="prev" class="ico-wrap pd-4">
-                <i class="ico wh-20" data-ico="skipprev"></i>
+            <button data-act="prev" class="ico-wrap pd-4" data-tip="이전곡">
+                <i class="ico wh-20" data-ico="skipprev"><span class="hidden">이전곡</span></i>
             </button>
-            <button data-act="toggle" class="ico-wrap pd-4">
-                <i class="ico wh-20" data-ico="play"></i>
+            <button data-act="toggle" class="ico-wrap pd-4" data-tip="재생/일시정지">
+                <i class="ico wh-20" data-ico="play"><span class="hidden">재생/일시정지</span></i>
             </button>
-            <button data-act="next" class="ico-wrap pd-4">
-                <i class="ico wh-20" data-ico="skipnext"></i>
+            <button data-act="next" class="ico-wrap pd-4" data-tip="다음곡">
+                <i class="ico wh-20" data-ico="skipnext"><span class="hidden">다음곡</span></i>
             </button>
         </div>
     </div>
@@ -90,26 +77,26 @@
 <div data-bind="calendar">
     <div class="header flx jc-bt">
         <button data-act="prev" class="ico-wrap pd-4" data-tip="이전월">
-            <i class="ico wh-16" data-ico="prev"></i>
+            <i class="ico wh-16" data-ico="prev"><span class="hidden">이전월</span></i>
         </button>
         <button data-act="today" class="title"></button>
         <button data-act="next" class="ico-wrap pd-4" data-tip="다음월">
-            <i class="ico wh-16" data-ico="next"></i>
+            <i class="ico wh-16" data-ico="next"><span class="hidden">다음월</span></i>
         </button>
     </div>
     <div class="dates"></div>
 </div>
 <div data-bind="todo">
-    <div class="txt-c">
-        <p class="txt-700">꿈을 쫓는 자가 세상을 움직인다</p>
-        <p class="txt-500">- 헨리 데이비드 소로 -</p>
-    </div>
-    <p class="txt-c">YYYY년 MM월 DD일</p>
-    <ul data-bind="list"></ul>
-    <form data-bind="form">
+    <figure class="quote">
+        <blockquote>꿈을 쫓는 자가 세상을 움직인다</blockquote>
+        <figcaption>헨리 데이비드 소로</figcaption>
+    </figure>
+    <p class="date">YYYY년 MM월 DD일</p>
+    <ul class="list"></ul>
+    <form class="inp">
         <input type="text" placeholder="추가할 항목을 입력해주세요..." />
-        <button class="ico-wrap">
-            <i class="ico wh-16" data-ico="send">추가</i>
+        <button class="ico-wrap pd-4">
+            <i class="ico wh-12" data-ico="send"><span class="hidden">추가</span></i>
         </button>
     </form>
 </div>
@@ -122,8 +109,8 @@
             now: null,
             init() {
                 if (!this.root) return;
-                this.dayEls = this.root.querySelectorAll(".day span");
                 this.dateEl = this.root.querySelector(".date");
+                this.dayEls = this.root.querySelectorAll(".day span");
                 this.timeEl = this.root.querySelector(".time");
                 this.update();
                 setInterval(() => this.update(), 1000);
@@ -147,6 +134,7 @@
             root: document.querySelector('[data-bind="weather"]'),
             async init() {
                 this.detailEl = this.root.querySelector(".detail");
+                this.visualEl = this.root.querySelector(".visual");
                 this.listEl = this.root.querySelector(".list");
                 this.loading(true);
                 try {
@@ -157,25 +145,108 @@
                 }
                 this.loading(false);
                 this.renderDetail(0);
+                this.renderVisual();
                 this.renderList();
             },
             renderDetail(index) {
                 const d = this.data[index];
                 const v = d.values;
-                console.log(d);
+                const sky = v.sky.value;
+                const pty = v.pty.value;
                 this.detailEl.innerHTML = `
-                    <i class="ico wh-80" data-ico="${v.pty.value !== "" ? v.pty.value : v.sky.value}"></i>
-                    <p>${v.tmp.value}<sup>${v.tmp.unit}</sup></p>
-                    <ul>
-                        <li>강수확률 : ${v.pop.value}${v.pop.unit}</li>
-                        <li>습도 : ${v.reh.value}${v.reh.unit}</li>
-                        <li>풍속 : ${v.wsd.value}${v.wsd.unit}</li>
-                    </ul>
-                    <ul>
-                        <li>${window.formatDate(d.date, "YY.MM.DD")}</li>
-                        <li>${d.time.slice(0, -2)}시</li>
-                        <li>${v.pty.value !== "" ? v.pty.value : v.sky.value}</li>
-                    </ul>`;
+                        <i class="ico wh-80 bg-point" data-ico="${pty !== "none" ? pty : sky}"></i>
+                        <p class="fs-36 fw-600 w-100">${v.tmp.value}<sup class="fs-20">${v.tmp.unit}</sup></p>
+                        <ul class="ml-12 fs-14 txt-700">
+                            <li>강수확률 : ${v.pop.value}${v.pop.unit}</li>
+                            <li>습도 : ${v.reh.value}${v.reh.unit}</li>
+                            <li>풍속 : ${v.wsd.value}${v.wsd.unit}</li>
+                        </ul>
+                        <ul class="ml-auto fs-14 ta-r">
+                            <li>${window.formatDate(d.date, "YY.MM.DD")}</li>
+                            <li>${d.time.slice(0, -2)}시</li>
+                            <li>${pty !== "none" ? pty.toUpperCase() : sky.toUpperCase()}</li>
+                        </ul>`;
+            },
+            chartDraw(values) {
+                // values 배열의 각 요소를 0이면 1로 치환
+                const adjustedValues = values.map((value) => (value === 0 ? 1 : value));
+                return `polygon(
+                    0% ${adjustedValues[0]}%,
+                    ${100 / 8 - 6.25}% ${adjustedValues[0]}%,
+                    ${200 / 8 - 6.25}% ${adjustedValues[1]}%,
+                    ${300 / 8 - 6.25}% ${adjustedValues[2]}%,
+                    ${400 / 8 - 6.25}% ${adjustedValues[3]}%,
+                    ${500 / 8 - 6.25}% ${adjustedValues[4]}%,
+                    ${600 / 8 - 6.25}% ${adjustedValues[5]}%,
+                    ${700 / 8 - 6.25}% ${adjustedValues[6]}%,
+                    ${800 / 8 - 6.25}% ${adjustedValues[7]}%,
+                    100% ${adjustedValues[7]}%,
+                    100% ${adjustedValues[7] - 1}%,
+                    ${800 / 8 - 6.25}% ${adjustedValues[7] - 1}%,
+                    ${700 / 8 - 6.25}% ${adjustedValues[6] - 1}%,
+                    ${600 / 8 - 6.25}% ${adjustedValues[5] - 1}%,
+                    ${500 / 8 - 6.25}% ${adjustedValues[4] - 1}%,
+                    ${400 / 8 - 6.25}% ${adjustedValues[3] - 1}%,
+                    ${300 / 8 - 6.25}% ${adjustedValues[2] - 1}%,
+                    ${200 / 8 - 6.25}% ${adjustedValues[1] - 1}%,
+                    ${100 / 8 - 6.25}% ${adjustedValues[0] - 1}%,
+                    0% ${adjustedValues[0] - 1}%
+                )`;
+            },
+            renderVisual() {
+                this.visualEl.querySelectorAll("[data-type]").forEach((tab) => {
+                    const type = tab.dataset.type;
+
+                    const values = document.createElement("div");
+                    values.className = "values";
+                    const yaxis = document.createElement("ul");
+                    yaxis.className = "yaxis";
+                    if (type === "tmp") {
+                        const tmpValues = this.data.map((v) => Math.round((Number(v.values.tmp.value) + 20) * 1.6666));
+
+                        values.style.clipPath = this.chartDraw(tmpValues);
+                        yaxis.innerHTML = `<li>40</li><li>30</li><li>20</li><li>10</li><li>0</li><li>-10</li><li>-20</li>`;
+                        tab.appendChild(values);
+                        tab.appendChild(yaxis);
+                    } else if (type === "pop") {
+                        const popValues = this.data.map((v) => v.values.pop.value);
+
+                        popValues.forEach((v) => {
+                            const d = document.createElement("li");
+                            d.style.bottom = v + "%";
+                            values.appendChild(d);
+                        });
+                        yaxis.innerHTML = `<li>100%</li><li>80%</li><li>60%</li><li>40%</li><li>20%</li><li>0%</li>`;
+                        tab.appendChild(values);
+                        tab.appendChild(yaxis);
+                    } else if (type === "pcp") {
+                        const pcpValues = this.data.map((v) => Math.round((Number(v.values.pcp.value.slice(0, -2)) / 30) * 100));
+                        console.log(this.data[0].values.pcp.value)
+
+                        values.style.clipPath = this.chartDraw(pcpValues);
+                        yaxis.innerHTML = `<li>30</li><li>25</li><li>20</li><li>15</li><li>10</li><li>5</li><li>0</li>`;
+                        tab.appendChild(values);
+                        tab.appendChild(yaxis);
+                    } else if (type === "wsd") {
+                        const wsdValues = this.data.map((v) => v.values.wsd.value);
+                        const vecValues = this.data.map((v) => v.values.vec.value);
+
+                        vecValues.forEach((deg, i) => {
+                            const item = document.createElement("li");
+                            const ico = document.createElement("i");
+                            ico.className = "ico wh-48";
+                            ico.dataset.ico = "arrow";
+                            ico.style.transform = `rotate(${deg}deg) scale(${wsdValues[i] / 2})`;
+                            const p = document.createElement("p");
+                            p.className = "fs-14 txt-500";
+                            p.textContent = wsdValues[i] + "m/s";
+                            item.appendChild(ico);
+                            item.appendChild(p);
+                            values.appendChild(item);
+                        });
+                        tab.appendChild(values);
+                    }
+                });
             },
             renderList() {
                 this.listEl.innerHTML = "";
@@ -184,10 +255,11 @@
                     const pty = d.values.pty.value;
                     const li = document.createElement("li");
                     li.innerHTML = `
-                        <i class="ico wh-48" data-ico="${pty !== "" ? pty : sky}"></i>
-                        <p class="b3 col-t01">${d.time + "시"}</p>`;
+                            <i class="ico wh-48" data-ico="${pty !== "none" ? pty : sky}"></i>
+                            <p class="fs-14 txt-700">${d.time.slice(0, -2) + "시"}</p>`;
                     li.addEventListener("click", () => {
                         this.renderDetail(i);
+                        this.listEl.style.setProperty("--cur-index", i);
                     });
                     this.listEl.appendChild(li);
                 });
@@ -220,16 +292,18 @@
                 filteredData.forEach((d) => {
                     const li = document.createElement("li");
                     li.innerHTML = `
-                        <img src="${d.img || ""}">
-                        <p class="ell-1 fs-14">${d.title}</p>
-                        <p class="flx ai-c flx-nowrap gap-4 fs-12 txt-500 of-h">
-                            <span>${window.formatDate(new Date(d.date), "YYYY.MM.DD")}</span>
-                            <i class="vr"></i>
-                            <span class="ell-1">${d.creator}</span>
-                        </p>`;
+                        <img src="${d.img || ""}" class="wh-48 r-4">
+                        <div class="of-h">
+                            <strong class="ell-1">${d.title}</strong>
+                            <p class="flx ai-c gap-8 txt-500 flx-nowrap">
+                                <span>${window.formatDate(new Date(d.date), "YYYY.MM.DD")}</span>
+                                <i class="vr"></i>
+                                <span class="ell-1">${d.creator}</span>
+                            </p>
+                        </div>`;
                     li.onclick = () => {
                         window.dialog.open({
-                            url: "/baelog/pages/01_home/P_0100_010.html",
+                            url: "/baelog/pages/00_common/P_BLOG_00_newsDetail.html",
                             data: d,
                         });
                     };
@@ -237,7 +311,7 @@
                 });
             },
             bind() {
-                this.tabs.forEach((tab) => {
+                this.tabs.forEach((tab, i) => {
                     tab.addEventListener("click", () => {
                         this.tabs.forEach((el) => el.classList.remove("is-active"));
                         tab.classList.add("is-active");
@@ -282,18 +356,18 @@
                 this.curIdx = i;
                 const d = this.data[i];
                 this.detailEl.innerHTML = `
-                    <img src="${d.cover}" class="wh-128 r-12">
-                    <div class="mt-12 txt-c">
-                        <strong>${d.title}</strong>
-                        <p>${d.genre} · ${d.mood}</p>
-                    </div>
-                    `;
+                        <img src="${d.cover}" class="wh-128 r-12">
+                        <div class="mt-12 ta-c">
+                            <strong>${d.title}</strong>
+                            <p>${d.genre} · ${d.mood}</p>
+                        </div>
+                        `;
                 this.audio.src = d.streaming;
                 this.audio.onloadedmetadata = () => {
                     const dur = Math.floor(this.audio.duration || 0);
                     this.pg.max = this.seek.max = dur;
                     this.total.textContent = this.fm(dur);
-                    this.audio.play();
+                    // this.audio.play();
                 };
                 this.audio.ontimeupdate = () => {
                     const cur = Math.floor(this.audio.currentTime || 0);
@@ -332,17 +406,17 @@
 
                 this.data.forEach((d, i) => {
                     const li = document.createElement("li");
-                    li.className = "flx gap-12 pd-8 flx-nowrap r-8"
                     li.innerHTML = `
-                        <img src="${d.cover}" class="wh-48 r-4">
-                        <div class="of-h">
-                            <strong class="ell-1">${d.title}</strong>
-                            <p class="flx ai-c gap-8 txt-500">
-                                <span>${d.genre}</span>
-                                <i class="vr"></i>
-                                <span class="ell-1">${d.mood}</span>
-                        </div>
-                    `;
+                            <img src="${d.cover}" class="wh-48 r-4">
+                            <div class="of-h">
+                                <strong class="ell-1">${d.title}</strong>
+                                <p class="flx ai-c gap-8 txt-500 flx-nowrap">
+                                    <span>${d.genre}</span>
+                                    <i class="vr"></i>
+                                    <span class="ell-1">${d.mood}</span>
+                                </p>
+                            </div>
+                        `;
                     li.onclick = () => {
                         this.playlistEl.querySelectorAll("li").forEach((l) => l.classList.remove("is-active"));
                         li.classList.add("is-active");
@@ -433,8 +507,8 @@
                 { id: 3, content: "할 일 3" },
             ],
             init() {
-                this.list = this.root.querySelector('[data-bind="list"]');
-                this.form = this.root.querySelector('[data-bind="form"]');
+                this.list = this.root.querySelector(".list");
+                this.form = this.root.querySelector(".inp");
                 this.input = this.form.querySelector("input");
                 this.bind();
                 this.render();
@@ -448,7 +522,6 @@
                         id: Date.now(),
                         content: this.input.value,
                     });
-
                     this.input.value = "";
                     this.render();
                 });
@@ -468,20 +541,20 @@
                     this.list.insertAdjacentHTML(
                         "beforeend",
                         `
-                            <li>
-                            <p class="b2">${v.content}</p>
-                            <div>
-                                <button class="ico-wrap pd-4">
-                                    <i class="ico wh-16" data-ico="check">체크</i>
-                                </button>
-                                <button class="ico-wrap pd-4">
-                                    <i class="ico wh-16" data-ico="pencil">수정</i>
-                                </button>
-                                <button class="ico-wrap pd-4" data-act="delete" data-id="${v.id}">
-                                    <i class="ico wh-16" data-ico="trashcan">삭제</i>
-                                </button>
-                            </div>
-                            </li>`
+                                <li>
+                                    <p class="b2">${v.content}</p>
+                                <div>
+                                    <button class="ico-wrap pd-4">
+                                        <i class="ico wh-16" data-ico="check"><span class="hidden">체크</span></i>
+                                    </button>
+                                    <button class="ico-wrap pd-4">
+                                        <i class="ico wh-16" data-ico="pencil"><span class="hidden">수정</span></i>
+                                    </button>
+                                    <button class="ico-wrap pd-4" data-act="delete" data-id="${v.id}">
+                                        <i class="ico wh-16" data-ico="trashcan"><span class="hidden">삭제</span></i>
+                                    </button>
+                                </div>
+                                </li>`
                     );
                 });
             },

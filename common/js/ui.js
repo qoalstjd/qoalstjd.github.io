@@ -19,6 +19,9 @@ const ui = {
             ui.tab?.init(root);
         },
     },
+    loading: function (target, boolean) {
+        target.classList.toggle("loading", boolean);
+    },
     debouncer: function (fn, delay = 200) {
         let timer;
         return (...args) => {
@@ -569,7 +572,7 @@ const dialog = {
                 const { pop } = top;
                 pop.style.left = Math.max((window.innerWidth - pop.offsetWidth) / 2, 0) + "px";
                 pop.style.top = Math.max((window.innerHeight - pop.offsetHeight) / 2, 0) + "px";
-            }, 200)
+            }, 50)
         );
 
         return { pop, close };

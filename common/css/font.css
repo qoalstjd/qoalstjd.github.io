@@ -4,9 +4,9 @@
 @font-face { font-family: 'LCD14'; src: local("LCD14"), url("/common/font/LCD14.woff2") format("woff2"); } 
 
 /* ==================== 정렬 ==================== */
-.txt-l { text-align: left !important; } 
-.txt-c { text-align: center !important; } 
-.txt-r { text-align: right !important; } 
+.ta-l { text-align: left !important; } 
+.ta-c { text-align: center !important; } 
+.ta-r { text-align: right !important; } 
 /* ==================== 크기 ==================== */
 .fs-12 { font-size: 1.2rem !important; } 
 .fs-14 { font-size: 1.4rem !important; } 
@@ -19,9 +19,12 @@
 .fs-28 { font-size: 2.8rem !important; } 
 .fs-30 { font-size: 3.0rem !important; } 
 .fs-32 { font-size: 3.2rem !important; } 
+.fs-36 { font-size: 3.6rem !important; } 
+.fs-48 { font-size: 4.8rem !important; } 
 /* ==================== 굵기 ==================== */
 .fw-300 { font-weight: 300 !important; } 
 .fw-500 { font-weight: 500 !important; } 
+.fw-600 { font-weight: 600 !important; } 
 .fw-700 { font-weight: 700 !important; } 
 /* ==================== 장식 ==================== */
 .txt-underline { text-decoration: underline !important; } 

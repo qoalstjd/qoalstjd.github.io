@@ -1,4 +1,4 @@
-const DEFAULT_LINKCD = "m0100000";
+const DEFAULT_LINKCD = "m0100";
 const SPA = {
     wrap: document.querySelector(".wrap"),
     main: document.querySelector(".wrap > main"),
@@ -88,7 +88,7 @@ const SPA = {
                 }
                 window.scrollTo({ top: top });
                 return;
-            };
+            }
             if (!href.startsWith(`/${window.rootDir}`)) return;
             if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
             e.preventDefault();
@@ -142,9 +142,10 @@ const SPA = {
             });
     },
     init() {
-        if(window.cacheManager.get('theme')) {
-            document.documentElement.dataset.theme = window.cacheManager.get('theme');
+        if (window.cacheManager.get("theme")) {
+            document.documentElement.dataset.theme = window.cacheManager.get("theme");
         }
+        window.ui.loading(this.main, true);
         fetch(`/${window.rootDir}/js/menu.json`)
             .then((res) => {
                 if (!res.ok) throw new Error(res.status);
@@ -164,6 +165,9 @@ const SPA = {
             })
             .catch((err) => {
                 this.showErrorFallback({ code: err.message || 500 });
+            })
+            .finally(() => {
+                window.ui.loading(this.main, false);
             });
     },
 };

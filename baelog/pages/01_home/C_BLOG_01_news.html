@@ -1,0 +1,63 @@
+<div class="news">
+    <div class="tab-wrap">
+        <button data-category="top" class="is-active">인기</button>
+        <button data-category="entertainment">연예</button>
+        <button data-category="sports">스포츠</button>
+        <button data-category="technology">테크</button>
+    </div>
+    <ul class="news-list"></ul>
+</div>
+<script>
+    (() => {
+        const news = {
+            root: document.querySelector(".news"),
+            data: [],
+            async init() {
+                this.list = this.root.querySelector(".news-list");
+                this.tabs = this.root.querySelectorAll("[data-category]");
+                try {
+                    this.data = (await window.fetchManager.get("https://qoalstjdapis.vercel.app/api/getNews")) || [];
+                } catch (e) {
+                    console.error("뉴스 불러오기 실패", e);
+                    this.data = [];
+                }
+                this.render("top");
+                this.bind();
+            },
+            render(category) {
+                this.list.innerHTML = "";
+                const filteredData = this.data.filter((item) => item.category === category);
+                filteredData.forEach((d) => {
+                    const li = document.createElement("li");
+                    li.innerHTML = `
+                        <img src="${d.img || ""}" class="wh-48 r-4">
+                        <div class="of-h">
+                            <strong class="ell-1">${d.title}</strong>
+                            <p class="flx ai-c gap-8 txt-500 flx-nowrap">
+                                <span>${window.formatDate(new Date(d.date), "YYYY.MM.DD")}</span>
+                                <i class="vr"></i>
+                                <span class="ell-1">${d.creator}</span>
+                            </p>
+                        </div>`;
+                    li.onclick = () => {
+                        window.dialog.open({
+                            url: "/baelog/pages/00_common/P_BLOG_00_newsDetail.html",
+                            data: d,
+                        });
+                    };
+                    this.list.appendChild(li);
+                });
+            },
+            bind() {
+                this.tabs.forEach((tab, i) => {
+                    tab.addEventListener("click", () => {
+                        this.tabs.forEach((el) => el.classList.remove("is-active"));
+                        tab.classList.add("is-active");
+                        this.render(tab.dataset.category);
+                    });
+                });
+            },
+        };
+        news.init();
+    })();
+</script>

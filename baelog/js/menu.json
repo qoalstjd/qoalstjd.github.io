@@ -1,26 +1,27 @@
 {
-    "m0100000": { "name": "Home", "depth": 1, "path": "/baelog/pages/01_home/M_0100_000.html" },
+    "m0100": { "name": "Home", "depth": 1, "path": "/baelog/pages/01_home/M_BLOG_01.html" },
 
-    "m0200000": { "name": "About", "depth": 1, "path": "/baelog/pages/02_about/M_0200_000.html" },
+    "m0200": { "name": "About", "depth": 1, "path": "/baelog/pages/02_about/M_BLOG_02.html" },
 
-    "m0300000": { "name": "Study", "depth": 1, "path": "/baelog/pages/03_study/M_0300_000.html" },
-    "m0301000": { "name": "All Posts", "depth": 2, "path": "/baelog/pages/03_study/M_0300_000.html", "parent": ["m0300000"], "tab": "00" },
-    "m0302000": { "name": "HTML", "depth": 2, "path": "/baelog/pages/03_study/M_0300_000.html", "parent": ["m0300000"], "tab": "01" },
+    "m0300": { "name": "Study", "depth": 1, "path": "/baelog/pages/03_study/M_BLOG_03.html" },
+    "m0301": { "name": "All Posts", "depth": 2, "path": "/baelog/pages/03_study/M_BLOG_03.html", "parent": ["m0300"], "tab": "00" },
+    "m0302": { "name": "HTML", "depth": 2, "path": "/baelog/pages/03_study/M_BLOG_03.html", "parent": ["m0300"], "tab": "01" },
 
-    "m0400000": { "name": "Project", "depth": 1, "path": "/baelog/pages/04_project/M_0400_000.html" },
-    "m0401000": { "name": "All Posts", "depth": 2, "path": "/baelog/pages/04_project/M_0400_000.html", "parent": ["m0400000"], "tab": "00" },
-    "m0402000": { "name": "Renewal", "depth": 2, "path": "/baelog/pages/04_project/M_0400_000.html", "parent": ["m0400000"], "tab": "01" },
-    "m0403000": { "name": "Pension", "depth": 2, "path": "/baelog/pages/04_project/M_0400_000.html", "parent": ["m0400000"], "tab": "02" },
-    "m0404000": { "name": "Toy", "depth": 2, "path": "/baelog/pages/04_project/M_0400_000.html", "parent": ["m0400000"], "tab": "03" },
-    
-    "m0500000": { "name": "UIDocs", "depth": 1, "path": "/baelog/pages/05_uidocs/M_0501_000.html" },
-    "m0501000": { "name": "Typography", "depth": 2, "path": "/baelog/pages/05_uidocs/M_0501_000.html", "parent": ["m0500000"] },
-    "m0502000": { "name": "Naming", "depth": 2, "path": "/baelog/pages/05_uidocs/M_0502_000.html", "parent": ["m0500000"] },
-    "m0503000": { "name": "Component", "depth": 2, "path": "/baelog/pages/05_uidocs/M_0503_000.html", "parent": ["m0500000"] },
-    "m0504000": { "name": "Box", "depth": 2, "path": "/baelog/pages/05_uidocs/M_0504_000.html", "parent": ["m0500000"] },
-    "m0505000": { "name": "List", "depth": 2, "path": "/baelog/pages/05_uidocs/M_0505_000.html", "parent": ["m0500000"] },
-    "m0506000": { "name": "Table", "depth": 2, "path": "/baelog/pages/05_uidocs/M_0506_000.html", "parent": ["m0500000"] },
-    "m0507000": { "name": "Icon", "depth": 2, "path": "/baelog/pages/05_uidocs/M_0507_000.html", "parent": ["m0500000"] },
-    
-    "m0000010": { "name": "Post", "depth": 3, "path": "/baelog/pages/00_common/M_0000_010.html", "parent": [null] }
+    "m0400": { "name": "Project", "depth": 1, "path": "/baelog/pages/04_project/M_BLOG_04.html" },
+    "m0401": { "name": "All Posts", "depth": 2, "path": "/baelog/pages/04_project/M_BLOG_04.html", "parent": ["m0400"], "tab": "00" },
+    "m0402": { "name": "Renewal", "depth": 2, "path": "/baelog/pages/04_project/M_BLOG_04.html", "parent": ["m0400"], "tab": "01" },
+    "m0403": { "name": "Pension", "depth": 2, "path": "/baelog/pages/04_project/M_BLOG_04.html", "parent": ["m0400"], "tab": "02" },
+    "m0404": { "name": "Toy", "depth": 2, "path": "/baelog/pages/04_project/M_BLOG_04.html", "parent": ["m0400"], "tab": "03" },
+
+    "m0500": { "name": "UIDocs", "depth": 1, "path": "/baelog/pages/05_uidocs/M_BLOG_05_01.html" },
+    "m0501": { "name": "Typography", "depth": 2, "path": "/baelog/pages/05_uidocs/M_BLOG_05_01.html", "parent": ["m0500"] },
+    "m0502": { "name": "Naming", "depth": 2, "path": "/baelog/pages/05_uidocs/M_BLOG_05_02.html", "parent": ["m0500"] },
+    "m0503": { "name": "Component", "depth": 2, "path": "/baelog/pages/05_uidocs/M_BLOG_05_03.html", "parent": ["m0500"] },
+    "m0504": { "name": "Box", "depth": 2, "path": "/baelog/pages/05_uidocs/M_BLO_05G_04.html", "parent": ["m0500"] },
+    "m0505": { "name": "List", "depth": 2, "path": "/baelog/pages/05_uidocs/M_BLOG_05_05.html", "parent": ["m0500"] },
+    "m0506": { "name": "Table", "depth": 2, "path": "/baelog/pages/05_uidocs/M_BLOG_05_06.html", "parent": ["m0500"] },
+    "m0507": { "name": "Icon", "depth": 2, "path": "/baelog/pages/05_uidocs/M_BLOG_05_07.html", "parent": ["m0500"] },
+
+    "m0000": { "name": "Common", "depth": 1, "path": null },
+    "m0001": { "name": "Post", "depth": 2, "path": "/baelog/pages/00_common/M_BLOG_00_postDetail.html", "parent": ["m0000"] }
 }
