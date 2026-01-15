@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/static/css/main.4e0ef123.css",
-    "main.js": "/static/js/main.3a4ad3a1.js",
-    "static/media/ChosunSm.TTF": "/static/media/ChosunSm.03c1a6b41c84ca625625.TTF",
-    "static/media/ChosunKm.TTF": "/static/media/ChosunKm.a83ce54f9048bfd856c9.TTF",
-    "static/media/ChosunLo.TTF": "/static/media/ChosunLo.77ecc025be0173b3d824.TTF",
-    "static/media/ChosunKg.TTF": "/static/media/ChosunKg.5922e50828ed29451f92.TTF",
-    "static/media/ChosunSg.TTF": "/static/media/ChosunSg.382aa014624a78828d1e.TTF",
-    "static/media/paper.png": "/static/media/paper.a532964c9210ba08c020.png",
-    "static/media/overview.jpg": "/static/media/overview.26dfe9b5fd7a70e2a5c0.jpg",
-    "static/media/overview_tablet.jpg": "/static/media/overview_tablet.57be7e18793f111bfae4.jpg",
-    "static/media/overview_mobile.jpg": "/static/media/overview_mobile.efd1a8d648da08a8543b.jpg",
-    "index.html": "/index.html",
-    "main.4e0ef123.css.map": "/static/css/main.4e0ef123.css.map",
-    "main.3a4ad3a1.js.map": "/static/js/main.3a4ad3a1.js.map"
+    "main.css": "/bonjour/static/css/main.ced24092.css",
+    "main.js": "/bonjour/static/js/main.2cbc6e20.js",
+    "static/media/ChosunSm.TTF": "/bonjour/static/media/ChosunSm.03c1a6b41c84ca625625.TTF",
+    "static/media/ChosunKm.TTF": "/bonjour/static/media/ChosunKm.a83ce54f9048bfd856c9.TTF",
+    "static/media/ChosunLo.TTF": "/bonjour/static/media/ChosunLo.77ecc025be0173b3d824.TTF",
+    "static/media/ChosunKg.TTF": "/bonjour/static/media/ChosunKg.5922e50828ed29451f92.TTF",
+    "static/media/ChosunSg.TTF": "/bonjour/static/media/ChosunSg.382aa014624a78828d1e.TTF",
+    "static/media/paper.png": "/bonjour/static/media/paper.a532964c9210ba08c020.png",
+    "static/media/overview.jpg": "/bonjour/static/media/overview.26dfe9b5fd7a70e2a5c0.jpg",
+    "static/media/overview_tablet.jpg": "/bonjour/static/media/overview_tablet.57be7e18793f111bfae4.jpg",
+    "static/media/overview_mobile.jpg": "/bonjour/static/media/overview_mobile.efd1a8d648da08a8543b.jpg",
+    "index.html": "/bonjour/index.html",
+    "main.ced24092.css.map": "/bonjour/static/css/main.ced24092.css.map",
+    "main.2cbc6e20.js.map": "/bonjour/static/js/main.2cbc6e20.js.map"
   },
   "entrypoints": [
-    "static/css/main.4e0ef123.css",
-    "static/js/main.3a4ad3a1.js"
+    "static/css/main.ced24092.css",
+    "static/js/main.2cbc6e20.js"
   ]
 }

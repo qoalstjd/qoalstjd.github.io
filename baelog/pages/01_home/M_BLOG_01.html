@@ -292,7 +292,7 @@
                 filteredData.forEach((d) => {
                     const li = document.createElement("li");
                     li.innerHTML = `
-                        <img src="${d.img || ""}" class="wh-48 r-4">
+                        <img src="${d.img || ""}" loading="lazy" class="wh-48 r-4">
                         <div class="of-h">
                             <strong class="ell-1">${d.title}</strong>
                             <p class="flx ai-c gap-8 txt-500 flx-nowrap">

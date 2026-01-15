@@ -616,3 +616,29 @@ const dialog = {
 
 window.ui = ui;
 window.dialog = dialog;
+
+const fallbackSvg =
+    "data:image/svg+xml;utf8," +
+    encodeURIComponent(`
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+        <rect width="100%" height="100%" fill="#eee"/>
+        <text x="50%" y="50%"
+            dominant-baseline="middle"
+            text-anchor="middle"
+            font-size="20"
+            fill="#aaa">
+            IMG
+        </text>
+    </svg>
+`);
+
+document.addEventListener(
+    "error",
+    (e) => {
+        const img = e.target;
+        if (img.tagName !== "IMG") return;
+        e.preventDefault?.();
+        img.src = fallbackSvg;
+    },
+    true
+);
