@@ -13,7 +13,7 @@ const common = {
     },
     postList: {
         init() {
-            if (!SPA) return;
+            // if (!window.SPA) return;
             this.run();
         },
         run() {
@@ -89,7 +89,7 @@ const common = {
     },
     postDetail: {
         init() {
-            if (!SPA) return;
+            if (!window.SPA) return;
             this.run();
         },
         run() {
@@ -151,9 +151,10 @@ const common = {
             });
         },
         buildRelated(list, meta, fileName, parentLinkcd) {
-            const related = list.filter((p) => p.category === meta.category);
             const tbody = document.querySelector("[data-bind='relatedPost']");
-            tbody.innerHTML = "";
+            const wrap = document.querySelector(".related-wrap");
+            if (!tbody || !wrap) return;
+            const related = list.filter((p) => p.category === meta.category);
             if (!related.length) {
                 tbody.innerHTML = "<tr><td>같은 카테고리의 포스트가 없습니다.</td></tr>";
                 return;

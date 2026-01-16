@@ -59,10 +59,10 @@ const SPA = {
     setActive(linkcd) {
         const gnb = document.querySelector(".gnb");
         const lnb = document.querySelector(".lnb");
-        gnb?.querySelectorAll("li a i").forEach((i) => i.classList.remove("bg-point"));
+        gnb?.querySelectorAll("li a").forEach((a) => a.classList.remove("txt-point"));
         const route = this.routes[linkcd];
         const dep1Key = route?.depth === 1 ? linkcd : route?.parent?.[0] || linkcd;
-        gnb?.querySelector(`a[href*="linkcd=${dep1Key}"] i`)?.classList.add("bg-point");
+        gnb?.querySelector(`a[href*="linkcd=${dep1Key}"]`)?.classList.add("txt-point");
         lnb?.querySelectorAll("li a").forEach((a) => a.classList.remove("txt-point"));
         const lnbCur = lnb?.querySelector(`a[href*="linkcd=${linkcd}"]`) || lnb?.querySelector("li:first-child a");
         lnbCur?.classList.add("txt-point");
@@ -121,9 +121,10 @@ const SPA = {
             .then((r) => (r.ok ? r.text() : Promise.reject(r.status)))
             .then((html) => {
                 this.main.innerHTML = html;
-                this.renderLNB(dep1Key);
+                if (route.lnb !== false) this.renderLNB(dep1Key);
                 this.setActive(params.linkcd);
-                this.runScripts(params.linkcd);
+                // this.runScripts(params.linkcd);
+                this.loadPageScript(route, params);
                 window.ui?.init?.(this.wrap);
                 window.common?.init?.(this.wrap);
 
@@ -140,6 +141,19 @@ const SPA = {
             .catch((code) => {
                 this.showErrorFallback({ code });
             });
+    },
+    loadPageScript(route, params) {
+        if (!route) return;
+        const jsPath = route.path.replace(/\.html$/, ".js");
+        import(jsPath + '?v=' + Date.now())
+            .then((m) =>
+                m.init?.({
+                    wrap: this.wrap,
+                    main: this.main,
+                    params,
+                })
+            )
+            .catch((e) => {}); // js 없는 페이지 허용
     },
     init() {
         if (window.cacheManager.get("theme")) {
@@ -173,3 +187,5 @@ const SPA = {
 };
 
 SPA.init();
+
+window.SPA = SPA;

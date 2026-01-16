@@ -20,45 +20,51 @@
     </head>
     <body>
         <header>
-            <!-- <div class="util pd-12"
-                <button class="ico wh-24" data-ico="about"><span class="hidden">사용자</span></button>
-            </div> -->
+            <a href="#related" class="ico-wrap pd-4" data-tip="공유">
+                <svg><use href="/common/images/icon.svg#share"></use></svg>
+            </a>
             <div class="scrollGauge"></div>
         </header>
         <nav class="gnb">
             <h1>
-                <a class="ico" data-ico="baelog" href="/baelog/index.html">배로그</a>
+                <a href="/baelog/index.html">
+                    <svg><use href="/common/images/icon.svg#baelog"></use></svg>
+                    <span class="hidden">Baelog</span>
+                </a>
             </h1>
             <ul>
-                <li class="active">
+                <li>
                     <a class="ico-wrap pd-12" href="/baelog/index.html?linkcd=m0100" data-tip="홈">
-                        <i class="ico wh-24" data-ico="home"><span class="hidden">홈</span></i>
+                        <svg><use href="/common/images/icon.svg#home"></use></svg>
                     </a>
                 </li>
                 <li>
                     <a class="ico-wrap pd-12" href="/baelog/index.html?linkcd=m0200" data-tip="어바웃">
-                        <i class="ico wh-24" data-ico="about"><span class="hidden">어바웃</span></i>
+                        <svg><use href="/common/images/icon.svg#user"></use></svg>
                     </a>
                 </li>
                 <li>
-                    <a class="ico-wrap pd-12" href="/baelog/index.html?linkcd=m0301" data-tip="공부">
-                        <i class="ico wh-24" data-ico="study"><span class="hidden">공부</span></i>
+                    <a class="ico-wrap pd-12" href="/baelog/index.html?linkcd=m0300" data-tip="공부">
+                        <svg><use href="/common/images/icon.svg#code"></use></svg>
                     </a>
                 </li>
                 <li>
-                    <a class="ico-wrap pd-12" href="/baelog/index.html?linkcd=m0401" data-tip="프로젝트">
-                        <i class="ico wh-24" data-ico="project"><span class="hidden">프로젝트</span></i>
+                    <a class="ico-wrap pd-12" href="/baelog/index.html?linkcd=m0400" data-tip="프로젝트">
+                        <svg><use href="/common/images/icon.svg#puzzle"></use></svg>
                     </a>
                 </li>
                 <li>
                     <a class="ico-wrap pd-12" href="/baelog/index.html?linkcd=m0500" data-tip="UI문서">
-                        <i class="ico wh-24" data-ico="puzzle"><span class="hidden">UI문서</span></i>
+                        <svg><use href="/common/images/icon.svg#note"></use></svg>
                     </a>
                 </li>
             </ul>
             <div class="util">
-                <button class="ico-wrap pd-12" data-act="theme">
-                    <i class="ico wh-24" data-ico="theme"><span class="hidden">테마모드 변경</span></i>
+                <button class="ico-wrap pd-12" data-act="theme" data-tip="테마모드 변경">
+                    <svg>
+                        <use href="/common/images/icon.svg#sun"></use>
+                        <use href="/common/images/icon.svg#moon"></use>
+                    </svg>
                 </button>
             </div>
         </nav>

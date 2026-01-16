@@ -23,5 +23,5 @@
     "m0507": { "name": "Icon", "depth": 2, "path": "/baelog/pages/05_uidocs/M_BLOG_05_07.html", "parent": ["m0500"] },
 
     "m0000": { "name": "Common", "depth": 1, "path": null },
-    "m0001": { "name": "Post", "depth": 2, "path": "/baelog/pages/00_common/M_BLOG_00_postDetail.html", "parent": ["m0000"] }
+    "m0001": { "name": "Post", "depth": 2, "path": "/baelog/pages/00_common/M_BLOG_00_postDetail.html", "parent": ["m0000"], "lnb": false }
 }

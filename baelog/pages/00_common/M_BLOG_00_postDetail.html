@@ -15,23 +15,29 @@
                 <b>On This Page</b>
                 <ul class="txt-700"></ul>
             </div>
-            <div class="box bg-400 flx gap-8 r-t-0">
-                <button class="ico wh-24" data-ico="copy"><span class="hidden">링크복사</span></button>
-                <a href="#comment" class="ico wh-24 ml-auto" data-ico="comment"><span class="hidden">댓글</span></a>
-                <a href="#top" class="ico wh-24" data-ico="pageup"><span class="hidden">맨위로</span></a>
+            <div class="box bg-400 flx gap-8 r-t-0 of-v">
+                <a href="#related" class="ico-wrap pd-4" data-tip="관련포스트">
+                    <svg><use href="/common/images/icon.svg#list"></use></svg>
+                </a>
+                <a href="#comment" class="ico-wrap pd-4 ml-auto" data-tip="댓글">
+                    <svg><use href="/common/images/icon.svg#comment"></use></svg>
+                </a>
+                <a href="#top" class="ico-wrap pd-4" data-tip="맨위로">
+                    <svg><use href="/common/images/icon.svg#arrow-top"></use></svg>
+                </a>
             </div>
         </div>
     </aside>
 </div>
-<section class="related-wrap box mt-32">
+<section class="related-wrap box mt-32" id="related">
     <h2 data-bind="txt" class="fs-20 mb-8">{{category}}</h2>
     <div class="flx ai-c gap-12">
-        <div class="flx ai-c gap-4">
-            <i class="ico wh-16 bg-500" data-ico="list"><span class="hidden">리스트</span></i>
+        <div class="ico-wrap">
+            <svg class="wh-16"><use href="/common/images/icon.svg#list"></use></svg>
             <p data-bind="txt" class="txt-500 mt-0">{{id}} / {{postLength}}</p>
         </div>
         <div class="flx ai-c gap-4">
-            <i class="ico wh-16 bg-500" data-ico="clock"><span class="hidden">시계</span></i>
+            <svg class="wh-16"><use href="/common/images/icon.svg#clock"></use></svg>
             <p data-bind="txt" class="txt-500 mt-0">{{date}}</p>
         </div>
     </div>
@@ -85,8 +91,3 @@
         <textarea name="" id=""></textarea>
     </form>
 </section>
-<script>
-    (() => {
-        common?.postDetail.init();
-    })();
-</script>

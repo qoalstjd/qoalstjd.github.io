@@ -52,7 +52,7 @@ const ui = {
                 clearCanvas: true,
             });
         },
-        msg(msg, target = document.body, src = "/common/json/error.json") {
+        msg(msg, target = document.body, src = "/common/images/error.json") {
             const wrap = document.createElement("div");
             wrap.className = "lottie-wrap";
             wrap.innerHTML = `
@@ -621,12 +621,13 @@ const fallbackSvg =
     "data:image/svg+xml;utf8," +
     encodeURIComponent(`
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-        <rect width="100%" height="100%" fill="#eee"/>
+        <rect width="100%" height="100%" fill="#00000088"/>
         <text x="50%" y="50%"
             dominant-baseline="middle"
             text-anchor="middle"
             font-size="20"
-            fill="#aaa">
+            font-family="Pretendard"
+            fill="#ffffffaa">
             IMG
         </text>
     </svg>

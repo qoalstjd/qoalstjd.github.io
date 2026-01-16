@@ -83,6 +83,7 @@ i.vr { display: block; width: 0.1rem; height: auto; min-height: 1.2rem; backgrou
 .gap-20 { gap: 2.0rem !important; } 
 .gap-24 { gap: 2.4rem !important; } 
 /* oveflow */
+.of-v { overflow: visible !important; }
 .of-h { overflow: hidden !important; }
 .of-x { overflow-x: hidden !important; }
 .of-y { overflow-y: hidden !important; }
