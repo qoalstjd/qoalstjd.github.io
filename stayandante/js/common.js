@@ -21,6 +21,17 @@ const common = {
             },
             { once: true }
         );
+        document.addEventListener(
+            "spa:change",
+            (e) => {
+                const { linkcd } = e.detail;
+                const btnMenu = document.querySelector('.toggle-menu');
+                if(btnMenu.classList.contains('is-active')) {
+                    btnMenu.classList.remove('is-active');
+                }
+            },
+            { once: true }
+        );
         const openHeader = () => {
             if (isAnimating || gnb.classList.contains("is-opened")) return;
             gnb.classList.add("is-opened");

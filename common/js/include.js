@@ -146,6 +146,9 @@ const SPA = {
                         history.pushState(params, "", url);
                     }
                 }
+                document.dispatchEvent(
+                    new CustomEvent("spa:change", { detail: params })
+                );
             })
             .catch((code) => {
                 this.showErrorFallback({ code });
