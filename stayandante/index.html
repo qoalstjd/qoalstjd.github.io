@@ -9,7 +9,7 @@
                 const theme = localStorage.getItem("theme") || "dark";
                 document.documentElement.dataset.theme = theme;
 
-                const svg = await fetch("/common/images/icon.svg" + '?v=' + Date.now()).then(r => r.text());
+                const svg = await fetch("/common/images/icon.svg" + "?v=" + Date.now()).then((r) => r.text());
                 document.body.insertAdjacentHTML("afterbegin", svg);
             })();
         </script>
@@ -20,7 +20,7 @@
         <header>
             <nav class="gnb">
                 <h1>
-                    <span class="hidden">StayPOC</span>
+                    <span class="hidden">StayAndante 스테이안단테</span>
                     <a href="/stayandante/index.html">
                         <svg><use href="#brand-pension"></use></svg>
                     </a>
@@ -32,13 +32,18 @@
                     <i></i>
                 </button>
                 <ul>
-                    <li><a href="/stayandante/index.html?linkcd=m0200">펜션소개</a></li>
+                    <li>
+                        <a href="/stayandante/index.html?linkcd=m0200">펜션소개</a>
+                        <ul>
+                            <li><a href="/stayandante/index.html?linkcd=m0201">펜션개요</a></li>
+                            <li><a href="/stayandante/index.html?linkcd=m0202">부대시설</a></li>
+                        </ul>
+                    </li>
                     <li>
                         <a href="/stayandante/index.html?linkcd=m0300">객실소개</a>
                         <ul>
-                            <li><a href="/stayandante/index.html?linkcd=m0301">RoomA</a></li>
-                            <li><a href="/stayandante/index.html?linkcd=m0302">RoomB</a></li>
-                            <li><a href="/stayandante/index.html?linkcd=m0303">RoomC</a></li>
+                            <li><a href="/stayandante/index.html?linkcd=m0301">객실배치도</a></li>
+                            <li><a href="/stayandante/index.html?linkcd=m0302">객실상세</a></li>
                         </ul>
                     </li>
                     <li><a href="/stayandante/index.html?linkcd=m0400">예약하기</a></li>
@@ -50,44 +55,31 @@
                         </ul>
                     </li>
                 </ul>
+                <button class="btn sm ico-wrap" data-act="theme">
+                    <svg class="wh-20">
+                        <use href="#ui-sun"></use>
+                        <use href="#ui-moon"></use>
+                    </svg>
+                    테마
+                </button>
             </nav>
-            <button class="ico-wrap pd-12" data-act="theme">
-                <i class="ico wh-24" data-ico="theme"><span class="hidden">테마모드 변경</span></i>
-            </button>
         </header>
         <div class="wrap">
             <main></main>
         </div>
         <footer>
-            <div class="footer-wrap">
-                <svg><use href="#brand-pension"></use></svg>
-                <nav class="sitemap">
-                    <ul>
-                        <li><a href="/stayandante/index.html?linkcd=m0200">펜션소개</a></li>
-                        <li><a href="/stayandante/index.html?linkcd=m0300">객실소개</a></li>
-                        <li><a href="/stayandante/index.html?linkcd=m0400">예약하기</a></li>
-                        <li><a href="/stayandante/index.html?linkcd=m0500">고객서비스</a></li>
-                    </ul>
-                </nav>
-                <div class="footer-mid">
-                    <address>
-                        <dl>
-                            <dt>KB Securities</dt>
-                            <dd>The-K Tower, 50 Yeouinaru-ro, Yeongdeungpo-gu, Seoul, Republic of Korea</dd>
-                            <dt>E-mail Address</dt>
-                            <dd><button onclick="window.ui.copyClipBoard('kbseceng@kbsec.com')">kbseceng@kbsec.com</button></dd>
-                            <dt>Office Number</dt>
-                            <dd><a href="tel:+82261140114">+82-2-6114-0114</a></dd>
-                        </dl>
-                    </address>
-                    <div class="sns">
-                        <a href="https://www.linkedin.com/company/kbsecurities/posts/?feedView=all" target="_blank" rel="noopener" class="btn dgray icon sns-li">LinkedIn</a>
-                        <a href="https://www.facebook.com/kbsecable1" target="_blank" rel="noopener" class="btn dgray icon sns-fb">LinkedIn</a>
-                        <a href="https://x.com/kbsecable?s=11" target="_blank" rel="noopener" class="btn dgray icon sns-x">X</a>
-                    </div>
+            <svg><use href="#brand-pension"></use></svg>
+            <div class="flx col-fit">
+                <div>
+                    <p><a href="tel: 010-2738-7772">010-1234-5678</a></p>
+                    <p>인천광역시 강화군 삼산면 삼산남로 442-13</p>
                 </div>
-                <div class="footer-btm">
-                    <small class="copy">Copyright&copy;2026 StayPOC. All Rights Reserved</small>
+                <div>
+                    <p>업체명 : 업체명 | 대표 : 대표명</p>
+                    <p>계좌번호 : 은행명 123-456-7890 / 예금주 : 예금주명</p>
+                </div>
+                <div>
+                    <p>Copyright&copy;2026 StayAndante. All Rights Reserved</p>
                 </div>
             </div>
         </footer>
