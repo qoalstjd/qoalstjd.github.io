@@ -1,0 +1,100 @@
+<html lang="ko" data-theme="light">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>pension</title>
+        <meta name="description" content="개인용으로 제작된 블로그입니다." />
+        <script>
+            (async () => {
+                const theme = localStorage.getItem("theme") || "dark";
+                document.documentElement.dataset.theme = theme;
+
+                const svg = await fetch("/common/images/icon.svg" + '?v=' + Date.now()).then(r => r.text());
+                document.body.insertAdjacentHTML("afterbegin", svg);
+            })();
+        </script>
+        <link rel="stylesheet" href="/common/css/global.css" />
+        <link rel="stylesheet" href="/stayandante/css/common.css" />
+    </head>
+    <body>
+        <header>
+            <nav class="gnb">
+                <h1>
+                    <span class="hidden">StayPOC</span>
+                    <a href="/stayandante/index.html">
+                        <svg><use href="#brand-pension"></use></svg>
+                    </a>
+                </h1>
+                <button class="toggle-menu" data-act="toggle">
+                    <i></i>
+                    <i></i>
+                    <i></i>
+                    <i></i>
+                </button>
+                <ul>
+                    <li><a href="/stayandante/index.html?linkcd=m0200">펜션소개</a></li>
+                    <li>
+                        <a href="/stayandante/index.html?linkcd=m0300">객실소개</a>
+                        <ul>
+                            <li><a href="/stayandante/index.html?linkcd=m0301">RoomA</a></li>
+                            <li><a href="/stayandante/index.html?linkcd=m0302">RoomB</a></li>
+                            <li><a href="/stayandante/index.html?linkcd=m0303">RoomC</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="/stayandante/index.html?linkcd=m0400">예약하기</a></li>
+                    <li>
+                        <a href="/stayandante/index.html?linkcd=m0500">고객서비스</a>
+                        <ul>
+                            <li><a href="/stayandante/index.html?linkcd=m0501">공지</a></li>
+                            <li><a href="/stayandante/index.html?linkcd=m0502">새소식</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+            <button class="ico-wrap pd-12" data-act="theme">
+                <i class="ico wh-24" data-ico="theme"><span class="hidden">테마모드 변경</span></i>
+            </button>
+        </header>
+        <div class="wrap">
+            <main></main>
+        </div>
+        <footer>
+            <div class="footer-wrap">
+                <svg><use href="#brand-pension"></use></svg>
+                <nav class="sitemap">
+                    <ul>
+                        <li><a href="/stayandante/index.html?linkcd=m0200">펜션소개</a></li>
+                        <li><a href="/stayandante/index.html?linkcd=m0300">객실소개</a></li>
+                        <li><a href="/stayandante/index.html?linkcd=m0400">예약하기</a></li>
+                        <li><a href="/stayandante/index.html?linkcd=m0500">고객서비스</a></li>
+                    </ul>
+                </nav>
+                <div class="footer-mid">
+                    <address>
+                        <dl>
+                            <dt>KB Securities</dt>
+                            <dd>The-K Tower, 50 Yeouinaru-ro, Yeongdeungpo-gu, Seoul, Republic of Korea</dd>
+                            <dt>E-mail Address</dt>
+                            <dd><button onclick="window.ui.copyClipBoard('kbseceng@kbsec.com')">kbseceng@kbsec.com</button></dd>
+                            <dt>Office Number</dt>
+                            <dd><a href="tel:+82261140114">+82-2-6114-0114</a></dd>
+                        </dl>
+                    </address>
+                    <div class="sns">
+                        <a href="https://www.linkedin.com/company/kbsecurities/posts/?feedView=all" target="_blank" rel="noopener" class="btn dgray icon sns-li">LinkedIn</a>
+                        <a href="https://www.facebook.com/kbsecable1" target="_blank" rel="noopener" class="btn dgray icon sns-fb">LinkedIn</a>
+                        <a href="https://x.com/kbsecable?s=11" target="_blank" rel="noopener" class="btn dgray icon sns-x">X</a>
+                    </div>
+                </div>
+                <div class="footer-btm">
+                    <small class="copy">Copyright&copy;2026 StayPOC. All Rights Reserved</small>
+                </div>
+            </div>
+        </footer>
+        <script src="/common/js/lottie.min.js"></script>
+        <script src="/common/js/util.js"></script>
+        <script src="/common/js/ui.js"></script>
+        <script src="/stayandante/js/common.js"></script>
+        <script src="/common/js/include.js"></script>
+    </body>
+</html>

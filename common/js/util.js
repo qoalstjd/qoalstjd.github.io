@@ -43,8 +43,10 @@ const paramManager = {
 // localStorage 캐시 관리
 // =========================
 const cacheManager = {
-    prefix: "cache_",
     defaultTTL: 3600 * 1000, // 1시간
+    get prefix() {
+        return `${window.rootDir || "app"}_cache_`;
+    },
     _getKey(key) {
         return this.prefix + key;
     },
@@ -97,8 +99,9 @@ const cacheManager = {
     },
     /** prefix 기준 전체 캐시 제거 */
     clear() {
+        const prefix = this.prefix;
         Object.keys(localStorage)
-            .filter((k) => k.startsWith(this.prefix))
+            .filter((k) => k.startsWith(prefix))
             .forEach((k) => localStorage.removeItem(k));
     },
 };
@@ -112,7 +115,7 @@ const fetchManager = {
      * @@ get(url, { parse: "text" })
      */
     async get(url, options = {}) {
-        const parse = options.parse || "json";
+        const { parse = "json", caching = true } = options;
 
         try {
             const cached = cacheManager.get(url);
@@ -136,7 +139,9 @@ const fetchManager = {
                     data = await res.json();
             }
 
-            cacheManager.set(url, data);
+            if (caching) {
+                cacheManager.set(url, data);
+            }
             return data;
         } catch (err) {
             console.error("fetchManager 에러:", err);
@@ -221,7 +226,7 @@ const formatDate = (input = new Date(), format = "YYYY-MM-DD HH:mm:ss") => {
                 A: h < 12 ? "AM" : "PM",
             }[t])
     );
-}
+};
 
 window.paramManager = paramManager;
 window.cacheManager = cacheManager;

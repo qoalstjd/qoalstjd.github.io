@@ -246,10 +246,6 @@ const ui = {
         sort(el) {
             const next = el.dataset.sort === "desc" ? "asc" : "desc";
             el.dataset.sort = next;
-            const icon = el.querySelector("i[data-ico]");
-            if (icon) {
-                icon.dataset.ico = next === "asc" ? "up-fill" : "down-fill";
-            }
             el.dispatchEvent(
                 new CustomEvent("sortChange", {
                     bubbles: true,
@@ -541,7 +537,7 @@ const dialog = {
 
         pop.querySelector(".dialog-title").innerHTML += `
             <button class="ico-wrap pd-4" data-act="close">
-                <i class="ico wh-24" data-ico="close"><span class="hidden">닫기</span></i>
+                <svg><use href="#act-close"></use></svg>
             </button>
         `;
         pop.querySelectorAll("[data-act='close']").forEach((b) => (b.onclick = close));
@@ -616,30 +612,3 @@ const dialog = {
 
 window.ui = ui;
 window.dialog = dialog;
-
-const fallbackSvg =
-    "data:image/svg+xml;utf8," +
-    encodeURIComponent(`
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-        <rect width="100%" height="100%" fill="#00000088"/>
-        <text x="50%" y="50%"
-            dominant-baseline="middle"
-            text-anchor="middle"
-            font-size="20"
-            font-family="Pretendard"
-            fill="#ffffffaa">
-            IMG
-        </text>
-    </svg>
-`);
-
-document.addEventListener(
-    "error",
-    (e) => {
-        const img = e.target;
-        if (img.tagName !== "IMG") return;
-        e.preventDefault?.();
-        img.src = fallbackSvg;
-    },
-    true
-);

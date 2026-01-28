@@ -42,7 +42,13 @@
 </div>
 <!-- 음악 -->
 <div data-bind="music">
-    <div class="detail"></div>
+    <div class="detail">
+        <img src="/baelog/images/common/fallback_1x1.png" class="wh-128 r-12" />
+        <div class="mt-12 ta-c">
+            <strong>${d.title}</strong>
+            <p>${d.genre} · ${d.mood}</p>
+        </div>
+    </div>
     <div class="player">
         <audio></audio>
         <div class="timeline">
@@ -54,7 +60,7 @@
             <span class="total">0:00</span>
         </div>
         <div class="volume">
-            <svg class="wh-16"><use href="/common/images/icon.svg?v=1#volume"></use></svg>
+            <svg class="wh-16"><use href="#media-volume"></use></svg>
             <div class="progress">
                 <progress class="volPg" max="100" value="50"></progress>
                 <input class="vol range" type="range" min="0" max="100" value="50" />
@@ -62,14 +68,16 @@
         </div>
         <div class="control">
             <button data-act="prev" class="ico-wrap pd-4" data-tip="이전곡">
-                <svg class="wh-16"><use href="/common/images/icon.svg?v=1#skip-back"></use></svg>
+                <svg class="wh-16"><use href="#media-back"></use></svg>
             </button>
             <button data-act="toggle" class="ico-wrap pd-4" data-tip="재생/일시정지">
-                <svg class="wh-16"><use href="/common/images/icon.svg?v=1#play"></use></svg>
-                <svg class="wh-16"><use href="/common/images/icon.svg?v=1#pause"></use></svg>
+                <svg class="wh-16">
+                    <use href="#media-play"></use>
+                    <use href="#media-pause"></use>
+                </svg>
             </button>
             <button data-act="next" class="ico-wrap pd-4" data-tip="다음곡">
-                <svg class="wh-16"><use href="/common/images/icon.svg?v=1#skip-forward"></use></svg>
+                <svg class="wh-16"><use href="#media-forward"></use></svg>
             </button>
         </div>
     </div>
@@ -78,11 +86,11 @@
 <div data-bind="calendar">
     <div class="header flx jc-bt">
         <button data-act="prev" class="ico-wrap pd-4" data-tip="이전월">
-            <svg class="wh-16"><use href="/common/images/icon.svg?v=1#arrow-left"></use></svg>
+            <svg class="wh-16"><use href="#dir-chevron-left"></use></svg>
         </button>
         <button data-act="today" class="title"></button>
         <button data-act="next" class="ico-wrap pd-4" data-tip="다음월">
-            <svg class="wh-16"><use href="/common/images/icon.svg?v=1#arrow-right"></use></svg>
+            <svg class="wh-16"><use href="#dir-chevron-right"></use></svg>
         </button>
     </div>
     <div class="dates"></div>
@@ -97,7 +105,7 @@
     <form class="inp">
         <input type="text" placeholder="추가할 항목을 입력해주세요..." />
         <button class="ico-wrap pd-4">
-            <svg><use href="/common/images/icon.svg?v=2#send"></use></svg>
+            <svg><use href="#act-send"></use></svg>
         </button>
     </form>
 </div>

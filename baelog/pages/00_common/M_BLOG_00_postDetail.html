@@ -1,5 +1,5 @@
 <div class="tit-wrap ty-post">
-    <img data-bind="src onerror" data-onerror="/baelog/images/post/bnr_{{category}}.png" src="/baelog/images/post/bnr_{{slug}}.png" />
+    <img data-bind="src onerror" src="/baelog/images/post/bnr_{{slug}}.png" data-onerror="/baelog/images/post/bnr_{{category}}.png" />
     <h1 data-bind="txt">{{title}}</h1>
     <p data-bind="txt" class="txt-700">{{summary}}</p>
     <a data-bind="txt href" href="/baelog/index.html?linkcd={{parentLinkcd}}" class="txt-500 txt-underline fs-14">{{category}}</a>
@@ -17,13 +17,13 @@
             </div>
             <div class="box bg-400 flx gap-8 r-t-0 of-v">
                 <a href="#related" class="ico-wrap pd-4" data-tip="관련포스트">
-                    <svg><use href="/common/images/icon.svg#list"></use></svg>
+                    <svg><use href="#content-list"></use></svg>
                 </a>
                 <a href="#comment" class="ico-wrap pd-4 ml-auto" data-tip="댓글">
-                    <svg><use href="/common/images/icon.svg#comment"></use></svg>
+                    <svg><use href="#act-comment"></use></svg>
                 </a>
                 <a href="#top" class="ico-wrap pd-4" data-tip="맨위로">
-                    <svg><use href="/common/images/icon.svg#arrow-top"></use></svg>
+                    <svg><use href="#dir-arrow-totop"></use></svg>
                 </a>
             </div>
         </div>
@@ -33,11 +33,11 @@
     <h2 data-bind="txt" class="fs-20 mb-8">{{category}}</h2>
     <div class="flx ai-c gap-12">
         <div class="ico-wrap">
-            <svg class="wh-16"><use href="/common/images/icon.svg#list"></use></svg>
+            <svg class="wh-16"><use href="#content-list"></use></svg>
             <p data-bind="txt" class="txt-500 mt-0">{{id}} / {{postLength}}</p>
         </div>
         <div class="flx ai-c gap-4">
-            <svg class="wh-16"><use href="/common/images/icon.svg#clock"></use></svg>
+            <svg class="wh-16"><use href="#content-clock"></use></svg>
             <p data-bind="txt" class="txt-500 mt-0">{{date}}</p>
         </div>
     </div>

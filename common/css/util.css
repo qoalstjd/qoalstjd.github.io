@@ -106,6 +106,7 @@ i.vr { display: block; width: 0.1rem; height: auto; min-height: 1.2rem; backgrou
 .flx-nowrap .ell-1 { flex: 1; width: auto; max-width: fit-content; } 
 /* ==================== GRID ==================== */
 .grid { display: grid !important; grid-template-columns: repeat(auto-fill, minmax(24rem, 1fr)); } 
+.grid.min-120 { grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr)); } 
 .grid.min-240 { grid-template-columns: repeat(auto-fill, minmax(24rem, 1fr)); } 
 .grid.min-280 { grid-template-columns: repeat(auto-fill, minmax(28rem, 1fr)); } 
 .grid.min-320 { grid-template-columns: repeat(auto-fill, minmax(32rem, 1fr)); } 

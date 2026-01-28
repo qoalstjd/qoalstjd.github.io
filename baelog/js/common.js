@@ -75,7 +75,7 @@ const common = {
         bindView() {
             this.posts.dataset.postviewtype = window.cacheManager?.get("postviewtype") || "grid";
             this.viewWrap?.addEventListener("click", (e) => {
-                const type = e.target.closest('[data-ico="grid"]') ? "grid" : e.target.closest('[data-ico="block"]') ? "block" : e.target.closest('[data-ico="table"]') ? "table" : null;
+                const type = e.target.closest('[data-act="grid"]') ? "grid" : e.target.closest('[data-act="block"]') ? "block" : e.target.closest('[data-act="table"]') ? "table" : null;
                 if (!type) return;
                 this.posts.dataset.postviewtype = type;
                 window.cacheManager?.set("postviewtype", type);
@@ -117,7 +117,7 @@ const common = {
             });
         },
         async loadContent(fileName) {
-            const html = await fetchManager.get(`/baelog/uploads/posts/${fileName}.html`, { parse: "text" });
+            const html = await fetchManager.get(`/baelog/uploads/posts/${fileName}.html`, { parse: "text", caching: false });
             this.post.innerHTML = html;
         },
         buildTOC() {

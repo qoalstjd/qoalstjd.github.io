@@ -1,0 +1,67 @@
+/* ==================== 레이아웃 ==================== */
+header { position: fixed; top: 4rem; z-index: 999; width: 100%; } 
+header .gnb { position: relative; display: flex; justify-content: space-between; align-items: flex-start; max-width: 136rem; height: 7.2rem; margin: 0 auto; background-color: rgba(var(--bg-000), 0.5); backdrop-filter: blur(5px); padding: 2rem 4rem; } 
+header .gnb h1 a svg { width: 8rem; height: 3.2rem; } 
+header .gnb::before { content: ''; position: absolute; left: 50%; top: 0; display: block; width: 100%; height: 100%; background-color: rgb(var(--bg-000)); transform-origin: center; transform: translateX(-50%); z-index: -1; opacity: 0; } 
+header .gnb > ul { display: flex; justify-content: space-between; align-items: flex-start; width: 58rem; height: 3.2rem; overflow: hidden; } 
+header .gnb > ul > li > a { font-weight: 600; line-height: 3.2rem; } 
+header .gnb li:hover > a { color: rgb(var(--primary-500)); } 
+header .gnb > ul > li > ul { margin-top: 3.2rem; } 
+header .gnb > ul > li > ul > li + li { margin-top: 1.2rem; } 
+header .gnb > ul > li > ul > li > a { display: block; width: 100%; font-weight: 600; color: rgb(var(--txt-700)); } 
+header .gnb > ul > li > ul > li > a:hover { text-decoration: underline; color: rgb(var(--txt-700)); } 
+header .gnb.is-opened > ul { height: 22.8rem; transition: height 0.4s ease-in-out 0.2s; } 
+header .gnb.is-closing > ul { transition: height 0.2s ease-in-out; } 
+header .gnb.is-opened::before { animation: expand 0.4s ease-in-out forwards; box-shadow: 0.5rem 0.5rem 1rem rgba(var(--bg-900), 0.2); } 
+header .gnb.is-closing::before { animation: shrink 0.4s ease-in-out forwards; box-shadow: 0.5rem 0.5rem 1rem rgba(var(--bg-900), 0.2); } 
+@keyframes expand { 
+ 0% { width: 100%; height: 100%; top: 0; opacity: 0; } 
+ 50% { width: 100dvw; height: 100%; top: 0; opacity: 1; } 
+ 100% { width: 100dvw; height: 36rem; top: -4rem; opacity: 1; } 
+ }
+@keyframes shrink { 
+ 0% { width: 100dvw; height: 36rem; top: -4rem; opacity: 1; } 
+ 50% { width: 100dvw; height: 100%; top: 0; opacity: 1; } 
+ 100% { width: 100%; height: 100%; top: 0; opacity: 0; } 
+ }
+
+header .gnb .toggle-menu { display: none; position: relative; width: 3.2rem; height: 3.2rem; z-index: 1; } 
+header .gnb .toggle-menu i { display: block; width: 100%; height: 0.2rem; border-radius: 0.1rem; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); background-color: rgb(var(--txt-900)); transition: transform 0.3s ease-in-out, margin-top 0.3s ease-in-out, width 0.3s ease-in-out; } 
+header .gnb .toggle-menu i:nth-child(1) { margin-top: -1.2rem; }
+header .gnb .toggle-menu i:nth-child(2) { margin-top: 0; }
+header .gnb .toggle-menu i:nth-child(3) { margin-top: 0; }
+header .gnb .toggle-menu i:nth-child(4) { margin-top: 1.2rem; }
+header .gnb .toggle-menu.is-active i:nth-child(1) { width: 0; margin-top: 0; }
+header .gnb .toggle-menu.is-active i:nth-child(2) { transform: translate(-50%,-50%) rotate(45deg); }
+header .gnb .toggle-menu.is-active i:nth-child(3) { transform: translate(-50%,-50%) rotate(-45deg); }
+header .gnb .toggle-menu.is-active i:nth-child(4) { width: 0; margin-top: 0; }
+header [data-act="theme"] { position: absolute; right: 0; bottom: 0; } 
+
+.wrap .lnb { position: absolute; width: 100%; left: 0; top: 36rem; } 
+.wrap .lnb h1 { display: none; } 
+.wrap .lnb ul { display: flex; } 
+.wrap .lnb ul li a { padding: 0 2rem; line-height: 6rem; font-weight: 700; } 
+.wrap .lnb,
+.wrap .cont-wrap section,
+footer { padding-left: calc(50vw - 68rem); padding-right: calc(50vw - 68rem); } 
+.wrap .tit-wrap.dep-1 { padding-left: calc(50vw - 64rem); padding-right: calc(50vw - 64rem); }
+
+footer { padding-top: 3.6rem; } 
+/* ==================== 타이틀 ==================== */
+.lnb + main .tit-wrap { margin-bottom: 6rem; } 
+.tit-wrap { flex-direction: column; } 
+.tit-wrap.dep-1 { background-color: rgb(var(--bg-500)); height: 36rem; justify-content: center; align-items: flex-start; padding-top: 11.2rem; margin-bottom: 0; } 
+/* ==================== 컨텐츠 ==================== */
+.cont-wrap { } 
+.cont-wrap section { padding: 3.6rem 0; } 
+.cont-wrap section:nth-of-type(odd) { background-color: rgb(var(--bg-300)); } 
+
+@media screen and (max-width: 1439px) { 
+    header .gnb > ul { position: absolute; right: -36rem; top: -4rem; flex-direction: column; justify-content: flex-start; width: 32rem; height: 100dvh; padding: 4rem; background-color: rgb(var(--bg-100)); transition: right 0.3s ease-in-out; }
+    header .gnb > .toggle-menu.is-active + ul { right: 0; }
+    header .gnb .toggle-menu { display: block; } 
+}
+@media screen and (max-width: 767px) { body > .wrap main.home { grid-template-areas: unset; grid-template-columns: 1fr; } 
+ body > .wrap main.home > [data-bind] { grid-area: unset; } 
+ body > .wrap main.home [data-bind="music"] .playlist { max-height: unset; } 
+ }

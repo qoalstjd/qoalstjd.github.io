@@ -64,8 +64,8 @@ body > .wrap main.home [data-bind="weather"] .visual [data-type="tmp"] .values,
 body > .wrap main.home [data-bind="weather"] .visual [data-type="pcp"] .values { background-color: rgb(var(--primary-500)); transform: scaleY(-1); background-clip: content-box; } 
 body > .wrap main.home [data-bind="weather"] .visual [data-type="pop"] .values { display: flex; align-items: flex-end; } 
 body > .wrap main.home [data-bind="weather"] .visual [data-type="pop"] .values li { position: relative; background-color: rgb(var(--primary-500)); height: 0.2rem; flex: 1; transform: translateY(0.1rem); } 
-body > .wrap main.home [data-bind="weather"] .visual [data-type="wsd"] .values { display: flex; align-items: center } 
-body > .wrap main.home [data-bind="weather"] .visual [data-type="wsd"] .values li { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 0.4rem; overflow: hidden; } 
+body > .wrap main.home [data-bind="weather"] .visual [data-type="wsd"] .values { display: flex; align-items: center; gap: 0.8rem; } 
+body > .wrap main.home [data-bind="weather"] .visual [data-type="wsd"] .values li { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2.4rem; } 
 body > .wrap main.home [data-bind="weather"] .list { display: flex; align-items: center; width: 100%; gap: 0.8rem; margin-top: 1.2rem; padding: 0 3.2rem; flex-wrap: wrap; --el-width: calc((100% - 9.6rem - 0.8rem * 7) / 8); --cur-index: 0; } 
 body > .wrap main.home [data-bind="weather"] .list::before { content: ''; display: block; width: var(--el-width); height: calc(100% - 20rem); position: absolute; left: calc(var(--cur-index) * var(--el-width) + 4.8rem + var(--cur-index) * 0.8rem); bottom: 1.6rem; background-color: rgba(var(--primary-500), 0.1); border-radius: 0.4rem; transition: left 0.3s; } 
 body > .wrap main.home [data-bind="weather"] .list li { flex: 1; display: flex; flex-direction: column; align-items: center; cursor: pointer; padding: 0.8rem 0; background-color: rgb(var(--bg-300)); border-radius: 0.4rem; } 
@@ -82,10 +82,11 @@ body > .wrap main.home [data-bind="news"] .news-list li:hover img { filter: gray
 body > .wrap main.home [data-bind="music"] { grid-area: music; display: flex; flex-direction: column; height: 100%; } 
 body > .wrap main.home [data-bind="music"] .detail { display: flex; flex-direction: column; align-items: center; } 
 body > .wrap main.home [data-bind="music"] .player { position: relative; width: 100%; padding: 1.2rem; background-color: rgb(var(--bg-100)); border-radius: 0.8rem; margin-top: 1.2rem; } 
-body > .wrap main.home [data-bind="music"] .player .timeline { display: flex; align-items: center; } 
 body > .wrap main.home [data-bind="music"] .player .volume { display: flex; align-items: center; position: absolute; right: 1.2rem; bottom: 1.2rem; width: 7.2rem; } 
 body > .wrap main.home [data-bind="music"] .player .timeline { display: grid; align-items: center; grid-template-columns: 4.4rem 1fr 4.4rem; width: 100%; text-align: center; gap: 0.8rem; } 
 body > .wrap main.home [data-bind="music"] .player .control { display: flex; justify-content: center; align-items: center; } 
+body > .wrap main.home [data-bind="music"] .player .control [data-act="toggle"]:not(.is-active) use[href$="#media-pause"]  { display: none; }
+body > .wrap main.home [data-bind="music"] .player .control [data-act="toggle"].is-active use[href$="#media-play"] { display: none; }
 body > .wrap main.home [data-bind="music"] .playlist { flex: 1; overflow-y: auto; margin-top: 1.2rem; } 
 body > .wrap main.home [data-bind="music"] .playlist li { display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto; align-items: center; gap: 1.2rem; padding: 0.8rem; border-radius: 0.8rem; font-size: 1.4rem; } 
 body > .wrap main.home [data-bind="music"] .playlist li:hover { background-color: rgb(var(--bg-hover)); cursor: pointer; } 
@@ -145,4 +146,4 @@ body > .wrap main [data-bind="posts"][data-postviewtype="table"] li + li a { bor
  }
 
  /* POPUP */
-.dialog .dialog-content.news img { aspect-ratio: 16 / 9; object-fit: contain; background-color: rgb(var(--bg-000)); } 
+.dialog .dialog-content.news img { width: 100%; aspect-ratio: 16 / 9; object-fit: contain; background-color: rgb(var(--bg-000)); } 

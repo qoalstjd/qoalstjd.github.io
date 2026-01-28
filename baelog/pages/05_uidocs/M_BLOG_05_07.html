@@ -1,35 +1,5 @@
-<h2>Icon</h2>
-<ul class="flx" data-bind="ico"></ul>
-<script>
-    (function () {
-        const icoSelectors = [];
-        function scanSheet(sheet) {
-            let rules;
-            try {
-                rules = sheet.cssRules;
-            } catch (e) {
-                return; // CORS 또는 접근 불가
-            }
-            for (const rule of rules) {
-                if (rule instanceof CSSImportRule) {
-                    // import된 stylesheet 재귀탐색
-                    scanSheet(rule.styleSheet);
-                } else if (rule instanceof CSSStyleRule) {
-                    const sel = rule.selectorText;
-                    if (sel && sel.includes("data-ico")) {
-                        icoSelectors.push(sel);
-                    }
-                }
-            }
-        }
-        for (const sheet of document.styleSheets) {
-            if (sheet.href?.includes("/common/css/global.css")) {
-                scanSheet(sheet);
-            }
-        }
-        icoSelectors.forEach((el) => {
-            const icoName = el.split("[")[1].slice(0, -1);
-            document.querySelector("[data-bind='ico']").innerHTML += `<li class="ico wh-48" ${icoName}></li>`;
-        });
-    })();
-</script>
+<h1>Icon</h1>
+<!-- <section>
+    <h2 class="mt-24 mb-12">${prefix}</h2>
+    <ul class="grid min-120 gap-12 ta-c" data-bind="ico"></ul>
+</section> -->

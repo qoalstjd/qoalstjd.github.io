@@ -108,6 +108,14 @@ const SPA = {
     loadPage(params = { linkcd: DEFAULT_LINKCD }, replaceHistory = false) {
         let route = this.routes[params.linkcd];
         if (!route) return this.showErrorFallback({ code: 404 });
+        const gnb = document.querySelector(".gnb");
+        if (gnb?.classList.contains("is-opened")) {
+            gnb.classList.remove("is-opened");
+            gnb.classList.add("is-closing");
+            gnb.addEventListener("animationend", () => {
+                gnb.classList.remove("is-closing");
+            }, { once: true });
+        }
 
         const dep1Key = this.getDep1Key(params.linkcd);
         if (route.depth === 1) {
@@ -121,20 +129,21 @@ const SPA = {
             .then((r) => (r.ok ? r.text() : Promise.reject(r.status)))
             .then((html) => {
                 this.main.innerHTML = html;
+                window.scrollTo({ top: 0, behavior: "auto" });
                 if (route.lnb !== false) this.renderLNB(dep1Key);
                 this.setActive(params.linkcd);
-                // this.runScripts(params.linkcd);
                 this.loadPageScript(route, params);
                 window.ui?.init?.(this.wrap);
                 window.common?.init?.(this.wrap);
 
+                const url = `/${window.rootDir}/index.html?${new URLSearchParams(params).toString()}`;
                 if (replaceHistory) {
-                    history.replaceState(params, "", `/${window.rootDir}`);
+                    history.replaceState(params, "", url);
                 } else {
                     if (history.state?.linkcd === "error") {
-                        history.replaceState(params, "", `/${window.rootDir}`);
+                        history.replaceState(params, "", url);
                     } else {
-                        history.pushState(params, "", `/${window.rootDir}`);
+                        history.pushState(params, "", url);
                     }
                 }
             })
@@ -145,11 +154,10 @@ const SPA = {
     loadPageScript(route, params) {
         if (!route) return;
         const jsPath = route.path.replace(/\.html$/, ".js");
-        import(jsPath + '?v=' + Date.now())
+        import(jsPath)
             .then((m) =>
                 m.init?.({
-                    wrap: this.wrap,
-                    main: this.main,
+                    root: this.main,
                     params,
                 })
             )
