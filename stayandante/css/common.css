@@ -31,10 +31,10 @@ header .gnb .toggle-menu.is-active ~ [data-act="theme"] { right: 0; top: calc(10
 
 header .gnb .toggle-menu { display: none; position: relative; width: 3.2rem; height: 3.2rem; z-index: 1; } 
 header .gnb .toggle-menu i { display: block; width: 100%; height: 0.2rem; border-radius: 0.1rem; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); background-color: rgb(var(--txt-900)); transition: transform 0.3s ease-in-out, margin-top 0.3s ease-in-out, width 0.3s ease-in-out; } 
-header .gnb .toggle-menu i:nth-child(1) { margin-top: -1.2rem; } 
+header .gnb .toggle-menu i:nth-child(1) { margin-top: -1rem; } 
 header .gnb .toggle-menu i:nth-child(2) { margin-top: 0; } 
 header .gnb .toggle-menu i:nth-child(3) { margin-top: 0; } 
-header .gnb .toggle-menu i:nth-child(4) { margin-top: 1.2rem; } 
+header .gnb .toggle-menu i:nth-child(4) { margin-top: 1rem; } 
 header .gnb .toggle-menu.is-active i:nth-child(1) { width: 0; margin-top: 0; } 
 header .gnb .toggle-menu.is-active i:nth-child(2) { transform: translate(-50%,-50%) rotate(45deg); } 
 header .gnb .toggle-menu.is-active i:nth-child(3) { transform: translate(-50%,-50%) rotate(-45deg); } 
@@ -50,24 +50,40 @@ footer { padding-left: calc(50vw - 68rem); padding-right: calc(50vw - 68rem); }
 .wrap .tit-wrap.dep-1 { padding-left: calc(50vw - 64rem); padding-right: calc(50vw - 64rem); } 
 
 footer { padding-top: 3.6rem; padding-bottom: 3.6rem; background-color: rgb(var(--bg-500)); } 
+ footer svg { width: 16rem; }
 /* ==================== 타이틀 ==================== */
 .lnb + main .tit-wrap { margin-bottom: 6rem; } 
 .tit-wrap { flex-direction: column; } 
-.tit-wrap.dep-1 { background-color: rgb(var(--bg-500)); height: 36rem; justify-content: center; align-items: flex-start; padding-top: 11.2rem; margin-bottom: 0; } 
+.tit-wrap.dep-1 { background: rgb(var(--bg-500)) no-repeat center / cover; height: 36rem; justify-content: center; align-items: flex-start; padding-top: 11.2rem; margin-bottom: 0; color: rgb(var(--txt-white)); } 
 /* ==================== 컨텐츠 ==================== */
 .cont-wrap { } 
-.cont-wrap section { padding: 3.6rem 0; } 
+.cont-wrap section { padding: 6rem 0; } 
 .cont-wrap section:nth-of-type(odd) { background-color: rgb(var(--bg-300)); } 
 
-/* 메인 */
-.wrap main.home .swiper-slide { height: 50rem; display: flex; background: no-repeat center / cover; color: rgb(var(--txt-100)); }
-.wrap main.home .swiper-slide[data-swiper-slide-index="0"] { background-image: url("/stayandante/images/home/hero_main_01.jpg"); }
-.wrap main.home .swiper-slide[data-swiper-slide-index="1"] { background-image: url("/stayandante/images/home/hero_main_02.jpg"); }
-.wrap main.home .swiper-slide[data-swiper-slide-index="2"] { background-image: url("/stayandante/images/home/hero_main_03.jpg"); }
-.wrap main.home .swiper-slide[data-swiper-slide-index="3"] { background-image: url("/stayandante/images/home/hero_main_04.jpg"); }
+/* 홈 */
+.wrap main.home .swiper-slide { min-height: 36rem; height: 70vh; display: flex; }
+.wrap main.home .swiper-slide::before { content: ""; position: absolute; inset: 0; background: no-repeat center / 100%; transition: transform 6s ease-in-out 1.5s; }
+.wrap main.home .swiper-slide[data-swiper-slide-index="0"]::before { background-image: url("/stayandante/images/home/hero_main_01.jpg"); }
+.wrap main.home .swiper-slide[data-swiper-slide-index="1"]::before { background-image: url("/stayandante/images/home/hero_main_02.jpg"); }
+.wrap main.home .swiper-slide[data-swiper-slide-index="2"]::before { background-image: url("/stayandante/images/home/hero_main_03.jpg"); }
+.wrap main.home .swiper-slide[data-swiper-slide-index="3"]::before { background-image: url("/stayandante/images/home/hero_main_04.jpg"); }
+.wrap main.home .swiper-slide.swiper-slide-active::before { transform: scale(1.1); }
+.wrap main.home .swiper-slide > * { z-index: 1; }
+
+/* 펜션소개 */
+.wrap main.about .tit-wrap.dep-1 { background-image: url("/stayandante/images/home/hero_main_01.jpg") }
+
+/* 객실소개 */
+.wrap main.room .tit-wrap.dep-1 { background-image: url("/stayandante/images/home/hero_main_02.jpg") }
+
+/* 예약하기 */
+.wrap main.book .tit-wrap.dep-1 { background-image: url("/stayandante/images/home/hero_main_03.jpg") }
+
+/* 고객서비스 */
+.wrap main.cs .tit-wrap.dep-1 { background-image: url("/stayandante/images/home/hero_main_04.jpg") }
 
 @media screen and (max-width: 1439px) { header .gnb { max-width: calc(100vw - 8rem); } 
- header .gnb > ul { position: absolute; right: -44rem; top: -4rem; flex-direction: column; justify-content: flex-start; width: 40rem; height: 100vh; padding: 6.2rem 8rem 4rem 4rem; background-color: rgb(var(--bg-100)); transition: right 0.3s ease-in-out; } 
+ header .gnb > ul { position: absolute; right: -44rem; top: -4rem; flex-direction: column; justify-content: flex-start; width: 40rem; height: 100vh; padding: 6.2rem 8rem; background-color: rgb(var(--bg-100)); transition: right 0.3s ease-in-out; } 
  header .gnb > ul > li + li { margin-top: 2.4rem; } 
  header .gnb > ul > li > a { line-height: inherit; } 
  header .gnb > ul > li > ul { margin-top: 0.8rem; } 
@@ -77,16 +93,19 @@ footer { padding-top: 3.6rem; padding-bottom: 3.6rem; background-color: rgb(var(
  .wrap .lnb,
  .wrap .cont-wrap section,
  footer { padding-left: 4rem; padding-right: 4rem; } 
- .wrap .tit-wrap.dep-1 { padding-left: 8rem; padding-right: 8rem; } 
+ footer > div {  flex-direction: column; }
+ .wrap .tit-wrap.dep-1 { padding-left: 8rem; padding-right: 8rem; will-change: transform; backface-visibility: hidden; transform: translateZ(0); } 
+ .wrap .tit-wrap.dep-1::before { will-change: transform; backface-visibility: hidden; transform: translateZ(0); }
  }
 @media screen and (max-width: 767px) { header { top: 0; } 
  header .gnb { max-width: unset; padding: 1.6rem 2rem; } 
- header .gnb .toggle-menu { width: 2.4rem; height: 2.4rem; } 
+ header .gnb .toggle-menu { width: 2.4rem; height: 2.4rem; margin-top: 0.4rem; } 
  header .gnb .toggle-menu i:nth-child(1) { margin-top: -0.6rem; } 
  header .gnb .toggle-menu i:nth-child(2) { margin-top: 0; } 
  header .gnb .toggle-menu i:nth-child(3) { margin-top: 0; } 
  header .gnb .toggle-menu i:nth-child(4) { margin-top: 0.6rem; } 
- header .gnb > ul { right: -32rem; top: 0; width: 32rem; padding: 2rem 8rem 2rem 4rem; } 
+ header .gnb > ul { right: -30rem; top: 0; width: 30rem; padding: 2rem 4.4rem; } 
+ header .gnb > .toggle-menu.is-active + ul { right: 0; } 
  .wrap .lnb,
  .wrap .cont-wrap section,
  footer { padding-left: 2rem; padding-right: 2rem; } 
