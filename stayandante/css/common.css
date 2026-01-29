@@ -61,14 +61,14 @@ footer { padding-top: 3.6rem; padding-bottom: 3.6rem; background-color: rgb(var(
 .cont-wrap section:nth-of-type(odd) { background-color: rgb(var(--bg-300)); } 
 
 /* 홈 */
-.wrap main.home .swiper-slide { min-height: 36rem; height: 70vh; display: flex; }
+.wrap main.home .swiper-slide { min-height: 36rem; height: 70vh; display: flex; overflow: hidden; }
 .wrap main.home .swiper-slide::before { content: ""; position: absolute; inset: 0; background: no-repeat center / cover; transition: transform 6s ease-in-out 1.5s; }
 .wrap main.home .swiper-slide[data-swiper-slide-index="0"]::before { background-image: url("/stayandante/images/home/hero_main_01.jpg"); }
 .wrap main.home .swiper-slide[data-swiper-slide-index="1"]::before { background-image: url("/stayandante/images/home/hero_main_02.jpg"); }
 .wrap main.home .swiper-slide[data-swiper-slide-index="2"]::before { background-image: url("/stayandante/images/home/hero_main_03.jpg"); }
 .wrap main.home .swiper-slide[data-swiper-slide-index="3"]::before { background-image: url("/stayandante/images/home/hero_main_04.jpg"); }
 .wrap main.home .swiper-slide.swiper-slide-active::before { transform: scale(1.1); }
-.wrap main.home .swiper-slide > * { z-index: 1; }
+.wrap main.home .tit-wrap.dep-1 { background: unset; }
 
 /* 펜션소개 */
 .wrap main.about .tit-wrap.dep-1 { background-image: url("/stayandante/images/home/hero_main_01.jpg") }
