@@ -68,7 +68,7 @@ footer { padding-top: 3.6rem; padding-bottom: 3.6rem; background-color: rgb(var(
 .wrap main.home .swiper-slide[data-swiper-slide-index="2"]::before { background-image: url("/stayandante/images/home/hero_main_03.jpg"); }
 .wrap main.home .swiper-slide[data-swiper-slide-index="3"]::before { background-image: url("/stayandante/images/home/hero_main_04.jpg"); }
 .wrap main.home .swiper-slide.swiper-slide-active::before { transform: scale(1.1); }
-.wrap main.home .tit-wrap.dep-1 { background: unset; }
+.wrap main.home .swiper-slide > * { z-index: 1; }
 
 /* 펜션소개 */
 .wrap main.about .tit-wrap.dep-1 { background-image: url("/stayandante/images/home/hero_main_01.jpg") }
