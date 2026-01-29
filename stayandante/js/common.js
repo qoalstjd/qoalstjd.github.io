@@ -1,5 +1,4 @@
 window.rootDir = "stayandante";
-window.defaultTheme = "light";
 
 const common = {
     init(root = document) {

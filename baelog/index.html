@@ -9,13 +9,13 @@
                 const theme = localStorage.getItem("theme") || "dark";
                 document.documentElement.dataset.theme = theme;
 
-                const svg = await fetch("/common/images/icon.svg" + '?v=' + Date.now()).then(r => r.text());
+                const svg = await fetch("/common/images/icon.svg" + "?v=" + Date.now()).then((r) => r.text());
                 document.body.insertAdjacentHTML("afterbegin", svg);
             })();
         </script>
         <link rel="stylesheet" href="/common/css/global.css" />
         <link rel="stylesheet" href="/baelog/css/common.css" />
-        <link rel="icon" type="image/x-icon" href="/baelog/images/common/favicon.ico">
+        <link rel="icon" type="image/x-icon" href="/baelog/images/common/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/baelog/images/common/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/baelog/images/common/favicon-16x16.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="/baelog/images/common/apple-touch-icon.png" />

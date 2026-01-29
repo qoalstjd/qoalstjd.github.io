@@ -167,9 +167,6 @@ const SPA = {
             .catch((e) => {}); // js 없는 페이지 허용
     },
     init() {
-        if (window.cacheManager.get("theme")) {
-            document.documentElement.dataset.theme = window.cacheManager.get("theme");
-        }
         window.ui.loading(this.main, true);
         fetch(`/${window.rootDir}/js/menu.json`)
             .then((res) => {

@@ -1,6 +1,4 @@
 window.rootDir = "baelog";
-window.defaultTheme = "dark";
-
 const common = {
     init(root = document) {
         this.lnb(root);

@@ -6,7 +6,7 @@
         <meta name="description" content="개인용으로 제작된 블로그입니다." />
         <script>
             (async () => {
-                const theme = localStorage.getItem("theme") || "dark";
+                const theme = localStorage.getItem("theme") || "light";
                 document.documentElement.dataset.theme = theme;
 
                 const svg = await fetch("/common/images/icon.svg" + "?v=" + Date.now()).then((r) => r.text());
