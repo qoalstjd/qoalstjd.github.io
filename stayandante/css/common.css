@@ -1,6 +1,12 @@
+html {
+    --primary-500: 235, 180, 90;
+}
+html[data-theme="dark"] {
+    --primary-500: 255, 201, 106;
+}
 /* ==================== 레이아웃 ==================== */
 header { position: fixed; top: 4rem; z-index: 999; width: 100%; } 
-header .gnb { position: relative; display: flex; justify-content: space-between; align-items: flex-start; max-width: 136rem; margin: 0 auto; background-color: rgba(var(--bg-000), 0.5); backdrop-filter: blur(5px); padding: 2rem 4rem; } 
+header .gnb { position: relative; display: flex; justify-content: space-between; align-items: flex-start; max-width: 136rem; margin: 0 auto; background-color: rgba(var(--bg-000), 0.8); backdrop-filter: blur(5px); padding: 2rem 4rem; } 
 header .gnb h1 a svg { width: 8rem; height: 3.2rem; } 
 header .gnb::before { content: ''; position: absolute; left: 50%; top: 0; display: block; width: 100%; height: 100%; background-color: rgb(var(--bg-000)); transform-origin: center; transform: translateX(-50%); z-index: -1; opacity: 0; } 
 header .gnb > ul { display: flex; justify-content: space-between; align-items: flex-start; width: 58rem; height: 3.2rem; overflow: hidden; } 
@@ -24,9 +30,15 @@ header .gnb.is-closing::before { animation: shrink 0.4s ease-in-out forwards; bo
  50% { width: 100vw; height: 100%; top: 0; opacity: 1; } 
  100% { width: 100%; height: 100%; top: 0; opacity: 0; } 
  }
-header .gnb [data-act="theme"] { position: absolute; right: 0; bottom: 0; visibility: hidden; opacity: 0; } 
+header .gnb .visual,
+header .gnb [data-act="theme"] { visibility: hidden; opacity: 0; }
+header .gnb.is-opened .visual,
 header .gnb.is-opened [data-act="theme"],
+header .gnb .toggle-menu.is-active ~  .visual,
 header .gnb .toggle-menu.is-active ~ [data-act="theme"] { visibility: visible; opacity: 1; transition: visibility 0s linear 0.4s, opacity 0.2s linear 0.4s; } 
+header .gnb .visual { position: absolute; left: 4rem; bottom: 0; display: flex; align-items: center; }
+header .gnb .visual img { height: 18rem; border-radius: 1.2rem; }
+header .gnb [data-act="theme"] { position: absolute; right: 4rem; bottom: 0; } 
 header .gnb .toggle-menu.is-active ~ [data-act="theme"] { right: 0; top: calc(100vh - 20rem); bottom: unset; } 
 
 header .gnb .toggle-menu { display: none; position: relative; width: 3.2rem; height: 3.2rem; z-index: 1; } 
