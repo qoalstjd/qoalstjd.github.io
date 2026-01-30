@@ -1,8 +1,10 @@
 window.rootDir = "stayandante";
 
+let lnbScrollCtrl;
 const common = {
     init(root = document) {
         this.gnb();
+        this.lnb();
     },
     gnb() {
         const gnb = document.querySelector(".gnb");
@@ -24,9 +26,9 @@ const common = {
             "spa:change",
             (e) => {
                 const { linkcd } = e.detail;
-                const btnMenu = document.querySelector('.toggle-menu');
-                if(btnMenu.classList.contains('is-active')) {
-                    btnMenu.classList.remove('is-active');
+                const btnMenu = document.querySelector(".toggle-menu");
+                if (btnMenu.classList.contains("is-active")) {
+                    btnMenu.classList.remove("is-active");
                 }
             },
             { once: true }
@@ -81,6 +83,36 @@ const common = {
             if (prevLi !== null && li !== prevLi) openHeader();
             prevLi = li;
         });
+    },
+    lnb() {
+        const gnbEl = document.querySelector(".gnb");
+        const lnbEl = document.querySelector(".lnb");
+        if(!lnbEl) return;
+
+        lnbScrollCtrl?.abort();
+        lnbScrollCtrl = new AbortController();
+
+        let titRectHeight = document.querySelector(".tit-wrap.dep-1").getBoundingClientRect().height;
+        let titPaddingTop = parseFloat(getComputedStyle(document.querySelector(".tit-wrap.dep-1")).paddingTop);
+        window.addEventListener(
+            "resize",
+            () => {
+                titRectHeight = document.querySelector(".tit-wrap.dep-1").getBoundingClientRect().height;
+                titPaddingTop = parseFloat(getComputedStyle(document.querySelector(".tit-wrap.dep-1")).paddingTop);
+            },
+            { signal: lnbScrollCtrl.signal }
+        );
+        window.addEventListener(
+            "scroll",
+            () => {
+                if (window.scrollY >= titRectHeight - titPaddingTop) {
+                    lnbEl?.classList.add('is-fixed');
+                } else {
+                    lnbEl?.classList.remove('is-fixed');
+                }
+            },
+            { signal: lnbScrollCtrl.signal }
+        );
     },
 };
 

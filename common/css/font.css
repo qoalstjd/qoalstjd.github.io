@@ -44,7 +44,7 @@ span { display: inline; }
 h1, h2, h3, h4, h5, h6, strong, b { font-weight: 700; } 
 em { text-decoration: underline; } 
 /* ==================== 타이틀 ==================== */
-.tit-wrap { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2.4rem; } 
+.tit-wrap { display: flex; align-items: center; justify-content: space-between; gap: 1.2rem; margin-bottom: 2.4rem; } 
 .tit-wrap h1,
 .tit-wrap h2,
 .tit-wrap h3,

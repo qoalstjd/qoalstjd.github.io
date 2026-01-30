@@ -15,6 +15,6 @@ export function init({ root }) {
             delay: 8000,
             disableOnInteraction: false,
         },
-        speed: 1000,
+        speed: 1500,
     });
 }

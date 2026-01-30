@@ -40,47 +40,55 @@ header .gnb .toggle-menu.is-active i:nth-child(2) { transform: translate(-50%,-5
 header .gnb .toggle-menu.is-active i:nth-child(3) { transform: translate(-50%,-50%) rotate(-45deg); } 
 header .gnb .toggle-menu.is-active i:nth-child(4) { width: 0; margin-top: 0; } 
 
-.wrap .lnb { position: absolute; width: 100%; left: 0; top: 36rem; } 
+.wrap .lnb { position: absolute; width: 100%; left: 0; top: 36rem; padding-top: 11.2rem; margin-top: -11.2rem; background-color: rgb(var(--bg-000)); border-bottom: 0.1rem solid rgb(var(--brd-500)); } 
+.wrap .lnb.is-fixed { position: fixed; top: 11.2rem; } 
 .wrap .lnb h1 { display: none; } 
 .wrap .lnb ul { display: flex; } 
 .wrap .lnb ul li a { padding: 0 2rem; line-height: 6rem; font-weight: 700; } 
 .wrap .lnb,
 .wrap .cont-wrap section,
 footer { padding-left: calc(50vw - 68rem); padding-right: calc(50vw - 68rem); } 
-.wrap .tit-wrap.dep-1 { padding-left: calc(50vw - 64rem); padding-right: calc(50vw - 64rem); } 
+.wrap .tit-wrap.dep-1 { position: relative; padding-left: calc(50vw - 64rem); padding-right: calc(50vw - 64rem); z-index: 1; } 
 
 footer { padding-top: 3.6rem; padding-bottom: 3.6rem; background-color: rgb(var(--bg-500)); } 
- footer svg { width: 16rem; }
+ footer svg { width: 16rem; } 
 /* ==================== 타이틀 ==================== */
 .lnb + main .tit-wrap { margin-bottom: 6rem; } 
 .tit-wrap { flex-direction: column; } 
-.tit-wrap.dep-1 { background: rgb(var(--bg-500)) no-repeat center / cover; height: 36rem; justify-content: center; align-items: flex-start; padding-top: 11.2rem; margin-bottom: 0; color: rgb(var(--txt-white)); } 
+.tit-wrap.dep-1 { background: #1f1d24 no-repeat center / cover; height: 36rem; justify-content: center; align-items: flex-start; padding-top: 11.2rem; margin-bottom: 0; color: rgb(var(--txt-white)); } 
 /* ==================== 컨텐츠 ==================== */
 .cont-wrap { } 
 .cont-wrap section { padding: 6rem 0; } 
 .cont-wrap section:nth-of-type(odd) { background-color: rgb(var(--bg-300)); } 
 
 /* 홈 */
-.wrap main.home .swiper-slide { min-height: 36rem; height: 70vh; display: flex; overflow: hidden; }
-.wrap main.home .swiper-slide::before { content: ""; position: absolute; inset: 0; background: no-repeat center / cover; transition: transform 6s ease-in-out 1.5s; }
-.wrap main.home .swiper-slide[data-swiper-slide-index="0"]::before { background-image: url("/stayandante/images/home/hero_main_01.jpg"); }
-.wrap main.home .swiper-slide[data-swiper-slide-index="1"]::before { background-image: url("/stayandante/images/home/hero_main_02.jpg"); }
-.wrap main.home .swiper-slide[data-swiper-slide-index="2"]::before { background-image: url("/stayandante/images/home/hero_main_03.jpg"); }
-.wrap main.home .swiper-slide[data-swiper-slide-index="3"]::before { background-image: url("/stayandante/images/home/hero_main_04.jpg"); }
-.wrap main.home .swiper-slide.swiper-slide-active::before { transform: scale(1.1); }
-.wrap main.home .swiper-slide > * { z-index: 1; }
+.wrap main.home .tit-wrap.dep-1 { min-height: 36rem; height: 70vh; display: flex; overflow: hidden; } 
+.wrap main.home .tit-wrap.dep-1::before { content: ""; position: absolute; inset: 0; background: no-repeat center / cover; transition: transform 6s ease-in-out 1.5s; pointer-events: none; } 
+.wrap main.home .tit-wrap.dep-1[data-swiper-slide-index="0"]::before { background-image: url("/stayandante/images/home/hero_main_01.jpg"); } 
+.wrap main.home .tit-wrap.dep-1[data-swiper-slide-index="1"]::before { background-image: url("/stayandante/images/home/hero_main_02.jpg"); } 
+.wrap main.home .tit-wrap.dep-1[data-swiper-slide-index="2"]::before { background-image: url("/stayandante/images/home/hero_main_03.jpg"); } 
+.wrap main.home .tit-wrap.dep-1[data-swiper-slide-index="3"]::before { background-image: url("/stayandante/images/home/hero_main_04.jpg"); } 
+.wrap main.home .tit-wrap.dep-1[data-swiper-slide-index="4"]::before { background-image: url("/stayandante/images/home/hero_main_05.jpg"); } 
+.wrap main.home .tit-wrap.dep-1[data-swiper-slide-index="5"]::before { background-image: url("/stayandante/images/home/hero_main_06.jpg"); } 
+.wrap main.home .tit-wrap.dep-1[data-swiper-slide-index="6"]::before { background-image: url("/stayandante/images/home/hero_main_07.jpg"); } 
+.wrap main.home .tit-wrap.dep-1[data-swiper-slide-index="7"]::before { background-image: url("/stayandante/images/home/hero_main_08.jpg"); } 
+.wrap main.home .tit-wrap.dep-1.swiper-slide-active::before { transform: scale(1.1); } 
+.wrap main.home .tit-wrap.dep-1 > * { z-index: 1; } 
+.wrap main.home .tit-wrap.dep-1 p { font-size: 3.2rem; font-weight: 400; z-index: 1; } 
+.wrap main.home .tit-wrap.dep-1 span { font-size: 1.4rem; color: #eee; z-index: 1; } 
+
+/* 서브 */
+.wrap main .tit-wrap.dep-2 h2 { font-size: 1.4rem; } 
+.wrap main .tit-wrap.dep-2 p { font-size: 2.6rem; } 
 
 /* 펜션소개 */
-.wrap main.about .tit-wrap.dep-1 { background-image: url("/stayandante/images/home/hero_main_01.jpg") }
-
+.wrap main.about .tit-wrap.dep-1 { background-image: url("/stayandante/images/home/hero_main_01.jpg") } 
 /* 객실소개 */
-.wrap main.room .tit-wrap.dep-1 { background-image: url("/stayandante/images/home/hero_main_02.jpg") }
-
+.wrap main.room .tit-wrap.dep-1 { background-image: url("/stayandante/images/home/hero_main_02.jpg") } 
 /* 예약하기 */
-.wrap main.book .tit-wrap.dep-1 { background-image: url("/stayandante/images/home/hero_main_03.jpg") }
-
+.wrap main.book .tit-wrap.dep-1 { background-image: url("/stayandante/images/home/hero_main_03.jpg") } 
 /* 고객서비스 */
-.wrap main.cs .tit-wrap.dep-1 { background-image: url("/stayandante/images/home/hero_main_04.jpg") }
+.wrap main.cs .tit-wrap.dep-1 { background-image: url("/stayandante/images/home/hero_main_04.jpg") } 
 
 @media screen and (max-width: 1439px) { header .gnb { max-width: calc(100vw - 8rem); } 
  header .gnb > ul { position: absolute; right: -44rem; top: -4rem; flex-direction: column; justify-content: flex-start; width: 40rem; height: 100vh; padding: 6.2rem 8rem; background-color: rgb(var(--bg-100)); transition: right 0.3s ease-in-out; } 
@@ -93,9 +101,12 @@ footer { padding-top: 3.6rem; padding-bottom: 3.6rem; background-color: rgb(var(
  .wrap .lnb,
  .wrap .cont-wrap section,
  footer { padding-left: 4rem; padding-right: 4rem; } 
- footer > div {  flex-direction: column; }
+ footer > div { flex-direction: column; } 
  .wrap .tit-wrap.dep-1 { padding-left: 8rem; padding-right: 8rem; will-change: transform; backface-visibility: hidden; transform: translateZ(0); } 
- .wrap .tit-wrap.dep-1::before { will-change: transform; backface-visibility: hidden; transform: translateZ(0); }
+ .wrap .tit-wrap.dep-1::before { will-change: transform; backface-visibility: hidden; transform: translateZ(0); } 
+
+ /* 홈 */
+ .wrap main.home .tit-wrap.dep-1 p { font-size: 2rem; } 
  }
 @media screen and (max-width: 767px) { header { top: 0; } 
  header .gnb { max-width: unset; padding: 1.6rem 2rem; } 
@@ -106,6 +117,7 @@ footer { padding-top: 3.6rem; padding-bottom: 3.6rem; background-color: rgb(var(
  header .gnb .toggle-menu i:nth-child(4) { margin-top: 0.6rem; } 
  header .gnb > ul { right: -30rem; top: 0; width: 30rem; padding: 2rem 4.4rem; } 
  header .gnb > .toggle-menu.is-active + ul { right: 0; } 
+ .wrap .lnb.is-fixed { top: 6.4rem; } 
  .wrap .lnb,
  .wrap .cont-wrap section,
  footer { padding-left: 2rem; padding-right: 2rem; } 
