@@ -34,3 +34,4 @@ legend,caption { position: absolute; width: 0.1rem; height: 0.1rem; overflow: hi
 /* ==================== SCROLL ==================== */
 ::-webkit-scrollbar { width: 4px; height: 4px; } 
 ::-webkit-scrollbar-thumb { background: rgba(var(--txt-300)); border-radius: 4px; } 
+::selection { background-color: rgb(var(--primary-500)); }

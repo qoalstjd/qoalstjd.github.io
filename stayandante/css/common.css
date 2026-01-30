@@ -1,9 +1,5 @@
-html {
-    --primary-500: 235, 180, 90;
-}
-html[data-theme="dark"] {
-    --primary-500: 255, 201, 106;
-}
+html { --primary-500: 221,170,3; } 
+html[data-theme="dark"] { --primary-500: 255,215,0; } 
 /* ==================== 레이아웃 ==================== */
 header { position: fixed; top: 4rem; z-index: 999; width: 100%; } 
 header .gnb { position: relative; display: flex; justify-content: space-between; align-items: flex-start; max-width: 136rem; margin: 0 auto; background-color: rgba(var(--bg-000), 0.8); backdrop-filter: blur(5px); padding: 2rem 4rem; } 
@@ -16,10 +12,6 @@ header .gnb > ul > li > ul { margin-top: 3.2rem; }
 header .gnb > ul > li > ul > li + li { margin-top: 1.2rem; } 
 header .gnb > ul > li > ul > li > a { display: block; width: 100%; font-weight: 600; color: rgb(var(--txt-700)); } 
 header .gnb > ul > li > ul > li > a:hover { text-decoration: underline; color: rgb(var(--txt-700)); } 
-header .gnb.is-opened > ul { height: 22.8rem; transition: height 0.2s ease-in-out 0.2s; } 
-header .gnb.is-closing > ul { transition: height 0.2s ease-in-out; } 
-header .gnb.is-opened::before { animation: expand 0.4s ease-in-out forwards; box-shadow: 0.5rem 0.5rem 1rem rgba(var(--bg-900), 0.2); } 
-header .gnb.is-closing::before { animation: shrink 0.4s ease-in-out forwards; box-shadow: 0.5rem 0.5rem 1rem rgba(var(--bg-900), 0.2); } 
 @keyframes expand { 
  0% { width: 100%; height: 100%; top: 0; opacity: 0; } 
  50% { width: 100vw; height: 100%; top: 0; opacity: 1; } 
@@ -31,13 +23,13 @@ header .gnb.is-closing::before { animation: shrink 0.4s ease-in-out forwards; bo
  100% { width: 100%; height: 100%; top: 0; opacity: 0; } 
  }
 header .gnb .visual,
-header .gnb [data-act="theme"] { visibility: hidden; opacity: 0; }
+header .gnb [data-act="theme"] { visibility: hidden; opacity: 0; } 
 header .gnb.is-opened .visual,
 header .gnb.is-opened [data-act="theme"],
-header .gnb .toggle-menu.is-active ~  .visual,
+header .gnb .toggle-menu.is-active ~ .visual,
 header .gnb .toggle-menu.is-active ~ [data-act="theme"] { visibility: visible; opacity: 1; transition: visibility 0s linear 0.4s, opacity 0.2s linear 0.4s; } 
-header .gnb .visual { position: absolute; left: 4rem; bottom: 0; display: flex; align-items: center; }
-header .gnb .visual img { height: 18rem; border-radius: 1.2rem; }
+header .gnb .visual { position: absolute; left: 4rem; bottom: 0; display: flex; align-items: flex-start; gap: 0.8rem; } 
+header .gnb .visual img { width: 30rem; } 
 header .gnb [data-act="theme"] { position: absolute; right: 4rem; bottom: 0; } 
 header .gnb .toggle-menu.is-active ~ [data-act="theme"] { right: 0; top: calc(100vh - 20rem); bottom: unset; } 
 
@@ -90,7 +82,7 @@ footer { padding-top: 3.6rem; padding-bottom: 3.6rem; background-color: rgb(var(
 .wrap main.home .tit-wrap.dep-1 span { font-size: 1.4rem; color: #eee; z-index: 1; } 
 
 /* 서브 */
-.wrap main .tit-wrap.dep-2 h2 { font-size: 1.4rem; } 
+.wrap main .tit-wrap.dep-2 h2 { font-size: 1.4rem; color: rgb(var(--primary-500)); } 
 .wrap main .tit-wrap.dep-2 p { font-size: 2.6rem; } 
 
 /* 펜션소개 */
@@ -103,13 +95,7 @@ footer { padding-top: 3.6rem; padding-bottom: 3.6rem; background-color: rgb(var(
 .wrap main.cs .tit-wrap.dep-1 { background-image: url("/stayandante/images/home/hero_main_04.jpg") } 
 
 @media screen and (max-width: 1439px) { header .gnb { max-width: calc(100vw - 8rem); } 
- header .gnb > ul { position: absolute; right: -44rem; top: -4rem; flex-direction: column; justify-content: flex-start; width: 40rem; height: 100vh; padding: 6.2rem 8rem; background-color: rgb(var(--bg-100)); transition: right 0.3s ease-in-out; } 
- header .gnb > ul > li + li { margin-top: 2.4rem; } 
- header .gnb > ul > li > a { line-height: inherit; } 
- header .gnb > ul > li > ul { margin-top: 0.8rem; } 
- header .gnb > ul > li > ul > li + li { margin-top: 0; } 
- header .gnb > .toggle-menu.is-active + ul { right: -4rem; } 
- header .gnb .toggle-menu { display: block; } 
+header .gnb .visual { display: none; } 
  .wrap .lnb,
  .wrap .cont-wrap section,
  footer { padding-left: 4rem; padding-right: 4rem; } 
@@ -120,6 +106,16 @@ footer { padding-top: 3.6rem; padding-bottom: 3.6rem; background-color: rgb(var(
  /* 홈 */
  .wrap main.home .tit-wrap.dep-1 p { font-size: 2rem; } 
  }
+@media screen and (max-width: 1023px) { header .gnb > ul { position: absolute; right: -44rem; top: -4rem; flex-direction: column; justify-content: flex-start; width: 40rem; height: 100vh; padding: 26rem 8rem 6.2rem; background-color: rgb(var(--bg-100)); transition: right 0.3s ease-in-out; } 
+ header .gnb > ul > li + li { margin-top: 2.4rem; } 
+ header .gnb > ul > li > a { line-height: inherit; } 
+ header .gnb > ul > li > ul { margin-top: 0.8rem; } 
+ header .gnb > ul > li > ul > li + li { margin-top: 0; } 
+ header .gnb > .toggle-menu.is-active + ul { right: -4rem; } 
+ header .gnb .toggle-menu { display: block; } 
+ header .gnb .visual { display: block; right: 0; top: 0; left: unset; } 
+ header .gnb .visual .flx { display: none !important; }
+ }
 @media screen and (max-width: 767px) { header { top: 0; } 
  header .gnb { max-width: unset; padding: 1.6rem 2rem; } 
  header .gnb .toggle-menu { width: 2.4rem; height: 2.4rem; margin-top: 0.4rem; } 
@@ -127,11 +123,16 @@ footer { padding-top: 3.6rem; padding-bottom: 3.6rem; background-color: rgb(var(
  header .gnb .toggle-menu i:nth-child(2) { margin-top: 0; } 
  header .gnb .toggle-menu i:nth-child(3) { margin-top: 0; } 
  header .gnb .toggle-menu i:nth-child(4) { margin-top: 0.6rem; } 
- header .gnb > ul { right: -30rem; top: 0; width: 30rem; padding: 2rem 4.4rem; } 
+ header .gnb > ul { right: -30rem; top: 0; width: 30rem; padding: 22rem 4.4rem 2rem; } 
  header .gnb > .toggle-menu.is-active + ul { right: 0; } 
  .wrap .lnb.is-fixed { top: 6.4rem; } 
  .wrap .lnb,
  .wrap .cont-wrap section,
  footer { padding-left: 2rem; padding-right: 2rem; } 
  .wrap .tit-wrap.dep-1 { padding-top: 6.4rem; padding-left: 4rem; padding-right: 4rem; } 
+ }
+ @media (hover: hover) and (pointer: fine) { header .gnb.is-opened > ul { height: 22.8rem; transition: height 0.2s ease-in-out 0.2s; } 
+header .gnb.is-closing > ul { transition: height 0.2s ease-in-out; } 
+header .gnb.is-opened::before { animation: expand 0.4s ease-in-out forwards; box-shadow: 0.5rem 0.5rem 1rem rgba(var(--bg-900), 0.2); } 
+header .gnb.is-closing::before { animation: shrink 0.4s ease-in-out forwards; box-shadow: 0.5rem 0.5rem 1rem rgba(var(--bg-900), 0.2); } 
  }

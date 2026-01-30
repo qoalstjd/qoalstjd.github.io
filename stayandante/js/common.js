@@ -64,19 +64,19 @@ const common = {
         };
         // 화면 폭 기준으로 PC 동작 결정 (theme와 분리)
         gnb.addEventListener("mouseenter", () => {
-            if (window.innerWidth < 1440) return;
+            if (window.innerWidth < 1024) return;
             if (isMouseOnHeader) return;
             isMouseOnHeader = true;
             openHeader();
         });
         gnb.addEventListener("mouseleave", () => {
-            if (window.innerWidth < 1440) return;
+            if (window.innerWidth < 1024) return;
             isMouseOnHeader = false;
             prevLi = null;
             closeHeader();
         });
         gnb.addEventListener("mouseover", (e) => {
-            if (window.innerWidth < 1440) return;
+            if (window.innerWidth < 1024) return;
             if (!isMouseOnHeader || isAnimating) return;
             const li = e.target.closest("li, h1");
             if (!li || !gnb.contains(li)) return;
