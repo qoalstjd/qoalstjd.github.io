@@ -59,13 +59,13 @@ const SPA = {
     setActive(linkcd) {
         const gnb = document.querySelector(".gnb");
         const lnb = document.querySelector(".lnb");
-        gnb?.querySelectorAll("li a").forEach((a) => a.classList.remove("txt-point"));
+        gnb?.querySelectorAll("li a").forEach((a) => a.classList.remove("is-active"));
         const route = this.routes[linkcd];
         const dep1Key = route?.depth === 1 ? linkcd : route?.parent?.[0] || linkcd;
-        gnb?.querySelector(`a[href*="linkcd=${dep1Key}"]`)?.classList.add("txt-point");
-        lnb?.querySelectorAll("li a").forEach((a) => a.classList.remove("txt-point"));
+        gnb?.querySelector(`a[href*="linkcd=${dep1Key}"]`)?.classList.add("is-active");
+        lnb?.querySelectorAll("li a").forEach((a) => a.classList.remove("is-active"));
         const lnbCur = lnb?.querySelector(`a[href*="linkcd=${linkcd}"]`) || lnb?.querySelector("li:first-child a");
-        lnbCur?.classList.add("txt-point");
+        lnbCur?.classList.add("is-active");
         this.main.className = this.routes[dep1Key]?.name?.toLowerCase() || "";
     },
     _eventBound: false,

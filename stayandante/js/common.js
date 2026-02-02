@@ -26,7 +26,7 @@ const common = {
             "spa:change",
             (e) => {
                 const { linkcd } = e.detail;
-                const btnMenu = document.querySelector(".toggle-menu");
+                const btnMenu = document.querySelector(".menu-toggle");
                 if (btnMenu.classList.contains("is-active")) {
                     btnMenu.classList.remove("is-active");
                 }
