@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="ko" data-theme="light">
     <head>
         <meta charset="utf-8" />
@@ -5,10 +6,10 @@
         <meta name="referrer" contents="always" />
         <meta property="og:type" content="article" />
         <meta property="og:site_name" content="StayAndante" />
-        <meta property="og:url" content="https://qoalstjd.github.io/stayandante" />
+        <meta property="og:url" content="https://stayandante.com" />
         <meta property="og:title" content="[StayAndante] 석모도 스테이안단테펜션" />
-        <meta property="og:image" content="https://qoalstjd.github.io/stayandante/images/home/hero_main_03.jpg" />
-        <meta name="twitter:image" content="https://qoalstjd.github.io/stayandante/images/home/hero_main_03.jpg" />
+        <meta property="og:image" content="https://stayandante.com/images/home/hero_main_03.jpg" />
+        <meta name="twitter:image" content="https://stayandante.com/images/home/hero_main_03.jpg" />
         <meta property="og:description" content="석모도 스테이안단테 펜션입니다." />
         <meta name="keywords" content="석모도,석모도 펜션" />
         <meta name="description" content="석모도 스테이안단테 펜션입니다." />
@@ -20,22 +21,22 @@
                 const theme = localStorage.getItem("theme") || "light";
                 document.documentElement.dataset.theme = theme;
 
-                const svg = await fetch("/common/images/icon.svg?v=" + Date.now()).then(r => r.text());
+                const svg = await fetch("https://cdn.jsdelivr.net/gh/qoalstjd/ui@v1.0.0/images/icon.svg?v=" + Date.now()).then(r => r.text());
                 document.body.insertAdjacentHTML("afterbegin", svg);
 
-                const admin = paramManager.get("admin") === "1";
-                const readyEl = document.getElementById("ready");
-                if (!admin) {
-                    ui.scrollLock.lock();
-                } else {
-                    readyEl.remove();
-                    ui.scrollLock.unlock();
-                }
+                // const admin = paramManager.get("admin") === "1";
+                // const readyEl = document.getElementById("ready");
+                // if (!admin) {
+                //     ui.scrollLock.lock();
+                // } else {
+                //     readyEl.remove();
+                //     ui.scrollLock.unlock();
+                // }
             })();
         </script>
-        <link rel="stylesheet" href="/common/css/global.css" />
-        <link rel="stylesheet" href="/common/library/swiper-bundle.min.css" />
-        <link rel="stylesheet" href="/stayandante/css/common.css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qoalstjd/ui@v1.0.0/css/global.css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qoalstjd/ui@v1.0.0/library/swiper-bundle.min.css" />
+        <link rel="stylesheet" href="/css/common.css" />
         <style>
             #ready { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.8rem; background-color: rgb(var(--bg-900)); z-index: 9999; text-align: center; }
             #ready svg { width: 15rem; height: 9rem; color: rgb(var(--txt-100)); }
@@ -44,16 +45,16 @@
         </style>
     </head>
     <body>
-        <div id="ready">
+        <!-- <div id="ready">
             <svg><use href="#brand-stay"></use></svg>
             <p>현재 페이지를 준비 중입니다.</p>
             <span>곧 찾아뵙겠습니다.<br>감사합니다 😊 </span>
-        </div>
+        </div> -->
         <header>
             <nav class="gnb">
                 <h1>
                     <span class="hidden">StayAndante 스테이안단테</span>
-                    <a href="/stayandante/index.html">
+                    <a href="/index.html">
                         <svg><use href="#brand-stay"></use></svg>
                     </a>
                 </h1>
@@ -82,33 +83,33 @@
                 </button>
                 <ul>
                     <li>
-                        <a href="/stayandante/index.html?linkcd=m0200">펜션소개</a>
+                        <a href="/index.html?linkcd=m0200">펜션소개</a>
                         <ul>
-                            <li><a href="/stayandante/index.html?linkcd=m0201">펜션개요</a></li>
-                            <li><a href="/stayandante/index.html?linkcd=m0202">부대시설</a></li>
+                            <li><a href="/index.html?linkcd=m0201">펜션개요</a></li>
+                            <li><a href="/index.html?linkcd=m0202">부대시설</a></li>
                         </ul>
                     </li>
                     <li>
-                        <a href="/stayandante/index.html?linkcd=m0300">객실소개</a>
+                        <a href="/index.html?linkcd=m0300">객실소개</a>
                         <ul>
-                            <li><a href="/stayandante/index.html?linkcd=m0301">객실배치도</a></li>
-                            <li><a href="/stayandante/index.html?linkcd=m0302">Andante</a></li>
-                            <li><a href="/stayandante/index.html?linkcd=m0303">Moderato</a></li>
-                            <li><a href="/stayandante/index.html?linkcd=m0304">Largo</a></li>
+                            <li><a href="/index.html?linkcd=m0301">객실배치도</a></li>
+                            <li><a href="/index.html?linkcd=m0302">Andante</a></li>
+                            <li><a href="/index.html?linkcd=m0303">Moderato</a></li>
+                            <li><a href="/index.html?linkcd=m0304">Largo</a></li>
                         </ul>
                     </li>
-                    <li><a href="/stayandante/index.html?linkcd=m0400">예약하기</a></li>
+                    <li><a href="/index.html?linkcd=m0400">예약하기</a></li>
                     <li>
-                        <a href="/stayandante/index.html?linkcd=m0500">고객서비스</a>
+                        <a href="/index.html?linkcd=m0500">고객서비스</a>
                         <ul>
-                            <li><a href="/stayandante/index.html?linkcd=m0501">공지</a></li>
-                            <li><a href="/stayandante/index.html?linkcd=m0502">새소식</a></li>
-                            <li><a href="/stayandante/index.html?linkcd=m0503">자주하는 질문</a></li>
+                            <li><a href="/index.html?linkcd=m0501">공지</a></li>
+                            <li><a href="/index.html?linkcd=m0502">새소식</a></li>
+                            <li><a href="/index.html?linkcd=m0503">자주하는 질문</a></li>
                         </ul>
                     </li>
                 </ul>
                 <div class="visual">
-                    <img src="/stayandante/images/home/hero_main_01.jpg" alt="">
+                    <img src="/images/home/hero_main_01.jpg" alt="">
                     <p class="flx col">
                         <span>Stay Andante</span>
                         <span class="mt-24">머무는 시간이<br>휴식이되는 공간</span>
@@ -135,11 +136,11 @@
                 </div>
             </div>
         </footer>
-        <script src="/common/library/lottie.min.js"></script>
-        <script src="/common/library/swiper-bundle.min.js"></script>
-        <script src="/common/js/util.js"></script>
-        <script src="/common/js/ui.js"></script>
-        <script src="/stayandante/js/common.js"></script>
-        <script src="/common/js/include.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/qoalstjd/ui@v1.0.0/library/lottie.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/qoalstjd/ui@v1.0.0/library/swiper-bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/qoalstjd/ui@v1.0.0/js/util.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/qoalstjd/ui@v1.0.0/js/ui.js"></script>
+        <script src="/js/common.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/qoalstjd/ui@v1.0.2/js/include.js?aegeae=1t"></script>
     </body>
 </html>

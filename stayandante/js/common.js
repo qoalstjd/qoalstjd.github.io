@@ -1,5 +1,3 @@
-window.rootDir = "stayandante";
-
 let lnbScrollCtrl;
 const common = {
     init(root = document) {
