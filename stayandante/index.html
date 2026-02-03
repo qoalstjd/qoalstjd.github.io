@@ -20,15 +20,35 @@
                 const theme = localStorage.getItem("theme") || "light";
                 document.documentElement.dataset.theme = theme;
 
-                const svg = await fetch("/common/images/icon.svg" + "?v=" + Date.now()).then((r) => r.text());
+                const svg = await fetch("/common/images/icon.svg?v=" + Date.now()).then(r => r.text());
                 document.body.insertAdjacentHTML("afterbegin", svg);
+
+                const admin = paramManager.get("admin") === "1";
+                const readyEl = document.getElementById("ready");
+                if (!admin) {
+                    ui.scrollLock.lock();
+                } else {
+                    readyEl.remove();
+                    ui.scrollLock.unlock();
+                }
             })();
         </script>
         <link rel="stylesheet" href="/common/css/global.css" />
         <link rel="stylesheet" href="/common/library/swiper-bundle.min.css" />
         <link rel="stylesheet" href="/stayandante/css/common.css" />
+        <style>
+            #ready { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.8rem; background-color: rgb(var(--bg-900)); z-index: 9999; text-align: center; }
+            #ready svg { width: 15rem; height: 9rem; color: rgb(var(--txt-100)); }
+            #ready p { color: rgb(var(--txt-100)); margin-top: 1.2rem; font-size: 2rem; }
+            #ready span { color: rgb(var(--txt-300)); }
+        </style>
     </head>
     <body>
+        <div id="ready">
+            <svg><use href="#brand-stay"></use></svg>
+            <p>현재 페이지를 준비 중입니다.</p>
+            <span>곧 찾아뵙겠습니다.<br>감사합니다 😊 </span>
+        </div>
         <header>
             <nav class="gnb">
                 <h1>
@@ -38,15 +58,15 @@
                     </a>
                 </h1>
                 <div class="util">
-                    <a href="javascript:void(0);" class="btn sm ico-wrap">
+                    <a href="tel:010-8746-1409" class="btn line sm ico-wrap">
                         <svg><use href="#act-call"></use></svg>
                         전화예약
                     </a>
-                    <a href="javascript:void(0);" class="btn sm ico-wrap">
+                    <a href="https://booking.ddnayo.com/booking-calendar-status?accommodationId=105085" target="_blank" class="btn line sm ico-wrap">
                         <svg><use href="#act-calendar"></use></svg>
                         실시간예약
                     </a>
-                    <button class="btn sm ico-wrap" data-act="theme">
+                    <button class="btn line sm ico-wrap" data-act="theme">
                         <svg class="wh-20">
                             <use href="#ui-sun"></use>
                             <use href="#ui-moon"></use>
@@ -72,7 +92,9 @@
                         <a href="/stayandante/index.html?linkcd=m0300">객실소개</a>
                         <ul>
                             <li><a href="/stayandante/index.html?linkcd=m0301">객실배치도</a></li>
-                            <li><a href="/stayandante/index.html?linkcd=m0302">객실상세</a></li>
+                            <li><a href="/stayandante/index.html?linkcd=m0302">Andante</a></li>
+                            <li><a href="/stayandante/index.html?linkcd=m0303">Moderato</a></li>
+                            <li><a href="/stayandante/index.html?linkcd=m0304">Largo</a></li>
                         </ul>
                     </li>
                     <li><a href="/stayandante/index.html?linkcd=m0400">예약하기</a></li>
@@ -81,6 +103,7 @@
                         <ul>
                             <li><a href="/stayandante/index.html?linkcd=m0501">공지</a></li>
                             <li><a href="/stayandante/index.html?linkcd=m0502">새소식</a></li>
+                            <li><a href="/stayandante/index.html?linkcd=m0503">자주하는 질문</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -88,7 +111,7 @@
                     <img src="/stayandante/images/home/hero_main_01.jpg" alt="">
                     <p class="flx col">
                         <span>Stay Andante</span>
-                        <span>머무는 시간이 휴식이되는 공간</span>
+                        <span class="mt-24">머무는 시간이<br>휴식이되는 공간</span>
                     </p>
                 </div>
             </nav>
@@ -98,14 +121,14 @@
         </div>
         <footer>
             <svg><use href="#brand-stay"></use></svg>
-            <div class="flx col-fit">
+            <div class="footer-inner">
                 <div>
-                    <p><a href="tel: 010-2738-7772">010-1234-5678</a></p>
-                    <p>인천광역시 강화군 삼산면 삼산남로 442-13</p>
+                    <p><a href="tel: 010-8746-1409">010-8746-1409</a></p>
+                    <p>인천광역시 강화군 삼산면 삼산남로 442-15</p>
                 </div>
                 <div>
-                    <p>업체명 : 업체명 | 대표 : 대표명</p>
-                    <p>계좌번호 : 은행명 123-456-7890 / 예금주 : 예금주명</p>
+                    <p>업체명 : 스테이안단테 | 대표 : 이은영</p>
+                    <p>계좌번호 : 국민은행 606002-01-113598 | 예금주 : 이은영</p>
                 </div>
                 <div>
                     <p>Copyright&copy;2026 StayAndante. All Rights Reserved</p>

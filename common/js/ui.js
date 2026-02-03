@@ -29,6 +29,21 @@ const ui = {
             timer = setTimeout(() => fn(...args), delay);
         };
     },
+    scrollLock: {
+        _locked: false,
+        lock() {
+            if (this._locked) return;
+            this._locked = true;
+            const sbw = window.innerWidth - document.documentElement.clientWidth;
+            document.body.style.overflow = "hidden";
+            document.body.style.paddingRight = sbw ? sbw + "px" : "";
+        },
+        unlock() {
+            this._locked = false;
+            document.body.style.overflow = "";
+            document.body.style.paddingRight = "";
+        },
+    },
     lottie: {
         init() {
             document.querySelectorAll(".lottie").forEach((el) => {
@@ -530,6 +545,8 @@ const dialog = {
             opener?.focus();
             onClose?.();
             document.removeEventListener("keydown", escClose);
+            
+            if (!this.stack.length) ui.scrollLock.unlock();
             this.syncDim();
         };
 
@@ -554,6 +571,7 @@ const dialog = {
         parent.append(pop);
         this.bindScripts(pop);
         this.stack.push({ pop, dimEl, close });
+        ui.scrollLock.lock();
         this.trapFocus(pop);
         this.syncDim();
 
