@@ -70,14 +70,14 @@ footer .footer-inner { display: flex; justify-content: space-between; gap: 2.4re
 /* 홈 */
 .wrap main.home .tit-wrap.dep-1 { min-height: 36rem; height: 70vh; display: flex; justify-content: flex-end; align-items: flex-end; text-align: right; overflow: hidden; padding-bottom: 6rem; } 
 .wrap main.home .tit-wrap.dep-1::before { content: ""; position: absolute; inset: 0; background: no-repeat center / cover; transition: transform 6s ease-in-out 1.5s; pointer-events: none; } 
-.wrap main.home .tit-wrap.dep-1[data-swiper-slide-index="0"]::before { background-image: url("/images/home/hero_main_01.jpg"); } 
-.wrap main.home .tit-wrap.dep-1[data-swiper-slide-index="1"]::before { background-image: url("/images/home/hero_main_02.jpg"); } 
-.wrap main.home .tit-wrap.dep-1[data-swiper-slide-index="2"]::before { background-image: url("/images/home/hero_main_03.jpg"); } 
-.wrap main.home .tit-wrap.dep-1[data-swiper-slide-index="3"]::before { background-image: url("/images/home/hero_main_04.jpg"); } 
-.wrap main.home .tit-wrap.dep-1[data-swiper-slide-index="4"]::before { background-image: url("/images/home/hero_main_05.jpg"); } 
-.wrap main.home .tit-wrap.dep-1[data-swiper-slide-index="5"]::before { background-image: url("/images/home/hero_main_06.jpg"); } 
-.wrap main.home .tit-wrap.dep-1[data-swiper-slide-index="6"]::before { background-image: url("/images/home/hero_main_07.jpg"); } 
-.wrap main.home .tit-wrap.dep-1[data-swiper-slide-index="7"]::before { background-image: url("/images/home/hero_main_08.jpg"); } 
+.wrap main.home .tit-wrap.dep-1[data-swiper-slide-index="0"]::before { background-image: url("../images/home/hero_main_01.jpg"); } 
+.wrap main.home .tit-wrap.dep-1[data-swiper-slide-index="1"]::before { background-image: url("../images/home/hero_main_02.jpg"); } 
+.wrap main.home .tit-wrap.dep-1[data-swiper-slide-index="2"]::before { background-image: url("../images/home/hero_main_03.jpg"); } 
+.wrap main.home .tit-wrap.dep-1[data-swiper-slide-index="3"]::before { background-image: url("../images/home/hero_main_04.jpg"); } 
+.wrap main.home .tit-wrap.dep-1[data-swiper-slide-index="4"]::before { background-image: url("../images/home/hero_main_05.jpg"); } 
+.wrap main.home .tit-wrap.dep-1[data-swiper-slide-index="5"]::before { background-image: url("../images/home/hero_main_06.jpg"); } 
+.wrap main.home .tit-wrap.dep-1[data-swiper-slide-index="6"]::before { background-image: url("../images/home/hero_main_07.jpg"); } 
+.wrap main.home .tit-wrap.dep-1[data-swiper-slide-index="7"]::before { background-image: url("../images/home/hero_main_08.jpg"); } 
 .wrap main.home .tit-wrap.dep-1.swiper-slide-active::before { transform: scale(1.1); } 
 .wrap main.home .tit-wrap.dep-1 > * { z-index: 1; } 
 .wrap main.home .tit-wrap.dep-1 p { font-size: 3.2rem; font-weight: 600; z-index: 1; } 
@@ -96,13 +96,13 @@ footer .footer-inner { display: flex; justify-content: space-between; gap: 2.4re
 .wrap main .tit-wrap.dep-2 p { font-size: 2.6rem; } 
 
 /* 펜션소개 */
-.wrap main.about .tit-wrap.dep-1 { background-image: url("/images/home/hero_main_01.jpg") } 
+.wrap main.about .tit-wrap.dep-1 { background-image: url("../images/home/hero_main_01.jpg") } 
 /* 객실소개 */
-.wrap main.room .tit-wrap.dep-1 { background-image: url("/images/home/hero_main_02.jpg") } 
+.wrap main.room .tit-wrap.dep-1 { background-image: url("../images/home/hero_main_02.jpg") } 
 /* 예약하기 */
-.wrap main.book .tit-wrap.dep-1 { background-image: url("/images/home/hero_main_03.jpg") } 
+.wrap main.book .tit-wrap.dep-1 { background-image: url("../images/home/hero_main_03.jpg") } 
 /* 고객서비스 */
-.wrap main.cs .tit-wrap.dep-1 { background-image: url("/images/home/hero_main_04.jpg") } 
+.wrap main.cs .tit-wrap.dep-1 { background-image: url("../images/home/hero_main_04.jpg") } 
 
 @media screen and (max-width: 1439px) { header .gnb { max-width: calc(100vw - 8rem); } 
  header .gnb .visual { display: none; } 
