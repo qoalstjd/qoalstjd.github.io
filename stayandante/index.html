@@ -21,7 +21,7 @@
                 const theme = localStorage.getItem("theme") || "light";
                 document.documentElement.dataset.theme = theme;
 
-                const svg = await fetch("https://cdn.jsdelivr.net/gh/qoalstjd/ui@v1.0.0/images/icon.svg?v=" + Date.now()).then(r => r.text());
+                const svg = await fetch("https://cdn.jsdelivr.net/gh/qoalstjd/ui@v1.0.0/images/icon.svg?v=" + Date.now()).then((r) => r.text());
                 document.body.insertAdjacentHTML("afterbegin", svg);
 
                 // const admin = paramManager.get("admin") === "1";
@@ -34,14 +34,36 @@
                 // }
             })();
         </script>
+        <base href="/stayandante/">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qoalstjd/ui@v1.0.0/css/global.css" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qoalstjd/ui@v1.0.0/library/swiper-bundle.min.css" />
-        <link rel="stylesheet" href="/css/common.css" />
+        <link rel="stylesheet" href="css/common.css" />
         <style>
-            #ready { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.8rem; background-color: rgb(var(--bg-900)); z-index: 9999; text-align: center; }
-            #ready svg { width: 15rem; height: 9rem; color: rgb(var(--txt-100)); }
-            #ready p { color: rgb(var(--txt-100)); margin-top: 1.2rem; font-size: 2rem; }
-            #ready span { color: rgb(var(--txt-300)); }
+            #ready {
+                position: fixed;
+                inset: 0;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 0.8rem;
+                background-color: rgb(var(--bg-900));
+                z-index: 9999;
+                text-align: center;
+            }
+            #ready svg {
+                width: 15rem;
+                height: 9rem;
+                color: rgb(var(--txt-100));
+            }
+            #ready p {
+                color: rgb(var(--txt-100));
+                margin-top: 1.2rem;
+                font-size: 2rem;
+            }
+            #ready span {
+                color: rgb(var(--txt-300));
+            }
         </style>
     </head>
     <body>
@@ -53,7 +75,7 @@
         <header>
             <nav class="gnb">
                 <h1>
-                    <span class="hidden">StayAndante 스테이안단테</span>
+                    <span class="hidden">스테이안단테펜션</span>
                     <a href="/index.html?linkcd=m0100">
                         <svg><use href="#brand-stay"></use></svg>
                     </a>
@@ -109,10 +131,10 @@
                     </li>
                 </ul>
                 <div class="visual">
-                    <img src="/images/home/hero_main_01.jpg" alt="">
+                    <img src="/images/home/hero_main_01.jpg" alt="" />
                     <p class="flx col">
                         <span>Stay Andante</span>
-                        <span class="mt-24">머무는 시간이<br>휴식이되는 공간</span>
+                        <span class="mt-24">머무는 시간이<br />휴식이되는 공간</span>
                     </p>
                 </div>
             </nav>
@@ -140,7 +162,7 @@
         <script src="https://cdn.jsdelivr.net/gh/qoalstjd/ui@v1.0.0/library/swiper-bundle.min.js"></script>
         <script src="https://cdn.jsdelivr.net/gh/qoalstjd/ui@v1.0.0/js/util.js"></script>
         <script src="https://cdn.jsdelivr.net/gh/qoalstjd/ui@v1.0.0/js/ui.js"></script>
-        <script src="/js/common.js"></script>
+        <script src="js/common.js"></script>
         <script src="https://cdn.jsdelivr.net/gh/qoalstjd/ui@v1.0.18/js/include.js?t1est=1"></script>
     </body>
 </html>
