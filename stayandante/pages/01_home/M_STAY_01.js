@@ -1,20 +1,16 @@
-export function init({ root }) {
-    const swiper = new Swiper(".swiper", {
+window.initModule = ({ root, params }) => {
+    console.log('성공')
+    const swiperEl = root.querySelector(".swiper");
+    if (!swiperEl) return;
+
+    new Swiper(swiperEl, {
         effect: "fade",
-        fadeEffect: {
-            crossFade: true,
-        },
         slidesPerView: 1,
-        spaceBetween: 0,
-        pagination: {
-            el: ".swiper-pagination",
-            clickable: true,
-        },
         loop: true,
-        autoplay: {
-            delay: 8000,
-            disableOnInteraction: false,
-        },
+        autoplay: { delay: 8000, disableOnInteraction: false },
+        pagination: { el: swiperEl.querySelector(".swiper-pagination"), clickable: true },
         speed: 1500,
     });
-}
+
+    console.log("Swiper initialized on:", swiperEl);
+};

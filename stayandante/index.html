@@ -18,10 +18,6 @@
         <title>StayAndante</title>
         <script>
             (async () => {
-                window.BASE = location.hostname.includes("github.io")
-                    ? "/" + location.pathname.split("/")[1]
-                    : "";
-
                 const theme = localStorage.getItem("theme") || "light";
                 document.documentElement.dataset.theme = theme;
 
@@ -40,7 +36,7 @@
         </script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qoalstjd/ui@v1.0.0/css/global.css" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qoalstjd/ui@v1.0.0/library/swiper-bundle.min.css" />
-        <link rel="stylesheet" href="./css/common.css" />
+        <link rel="stylesheet" href="/css/common.css" />
         <style>
             #ready { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.8rem; background-color: rgb(var(--bg-900)); z-index: 9999; text-align: center; }
             #ready svg { width: 15rem; height: 9rem; color: rgb(var(--txt-100)); }
@@ -58,7 +54,7 @@
             <nav class="gnb">
                 <h1>
                     <span class="hidden">StayAndante 스테이안단테</span>
-                    <a href="/index.html">
+                    <a href="/index.html?linkcd=m0100">
                         <svg><use href="#brand-stay"></use></svg>
                     </a>
                 </h1>
@@ -144,7 +140,7 @@
         <script src="https://cdn.jsdelivr.net/gh/qoalstjd/ui@v1.0.0/library/swiper-bundle.min.js"></script>
         <script src="https://cdn.jsdelivr.net/gh/qoalstjd/ui@v1.0.0/js/util.js"></script>
         <script src="https://cdn.jsdelivr.net/gh/qoalstjd/ui@v1.0.0/js/ui.js"></script>
-        <script src="./js/common.js"></script>
-        <script src="https://cdn.jsdelivr.net/gh/qoalstjd/ui@v1.0.2/js/include.js?aegeae=1t"></script>
+        <script src="/js/common.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/qoalstjd/ui@v1.0.18/js/include.js?t1est=1"></script>
     </body>
 </html>
