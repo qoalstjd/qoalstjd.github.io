@@ -3,13 +3,13 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="referrer" contents="always" />
+        <meta name="referrer" content="always" />
         <meta property="og:type" content="article" />
         <meta property="og:site_name" content="StayAndante" />
         <meta property="og:url" content="https://stayandante.com" />
         <meta property="og:title" content="[StayAndante] 석모도 스테이안단테펜션" />
-        <meta property="og:image" content="https://stayandante.com/images/home/hero_main_03.jpg" />
-        <meta name="twitter:image" content="https://stayandante.com/images/home/hero_main_03.jpg" />
+        <meta property="og:image" content="https://stayandante.com/images/home/hero_main_01.jpg" />
+        <meta name="twitter:image" content="https://stayandante.com/images/home/hero_main_01.jpg" />
         <meta property="og:description" content="석모도 스테이안단테 펜션입니다." />
         <meta name="keywords" content="석모도,석모도 펜션" />
         <meta name="description" content="석모도 스테이안단테 펜션입니다." />
@@ -21,7 +21,7 @@
                 const theme = localStorage.getItem("theme") || "light";
                 document.documentElement.dataset.theme = theme;
 
-                const svg = await fetch("https://cdn.jsdelivr.net/gh/qoalstjd/ui@v1.0.0/images/icon.svg?v=" + Date.now()).then((r) => r.text());
+                const svg = await fetch("https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.0/images/icon.svg?v=" + Date.now()).then((r) => r.text());
                 document.body.insertAdjacentHTML("afterbegin", svg);
 
                 // const admin = paramManager.get("admin") === "1";
@@ -34,10 +34,9 @@
                 // }
             })();
         </script>
-        <base href="/stayandante/">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qoalstjd/ui@v1.0.0/css/global.css" />
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qoalstjd/ui@v1.0.0/library/swiper-bundle.min.css" />
-        <link rel="stylesheet" href="css/common.css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.0/css/global.css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.0/library/swiper-bundle.min.css" />
+        <link rel="stylesheet" href="./css/common.css" />
         <style>
             #ready {
                 position: fixed;
@@ -158,11 +157,11 @@
                 </div>
             </div>
         </footer>
-        <script src="https://cdn.jsdelivr.net/gh/qoalstjd/ui@v1.0.0/library/lottie.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/gh/qoalstjd/ui@v1.0.0/library/swiper-bundle.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/gh/qoalstjd/ui@v1.0.0/js/util.js"></script>
-        <script src="https://cdn.jsdelivr.net/gh/qoalstjd/ui@v1.0.0/js/ui.js"></script>
-        <script src="js/common.js"></script>
-        <script src="https://cdn.jsdelivr.net/gh/qoalstjd/ui@v1.0.18/js/include.js?t1est=1"></script>
+        <script src="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.0/library/lottie.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.0/library/swiper-bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.0/js/util.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.0/js/ui.js"></script>
+        <script src="./js/common.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.0/js/include.js"></script>
     </body>
 </html>

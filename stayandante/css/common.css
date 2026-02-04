@@ -1,7 +1,7 @@
 /* html { --primary-500: 190, 145, 65; } 
 html[data-theme="dark"] { --primary-500: 255, 210, 120; } */
 /* ==================== 공통 ==================== */
-.btn { border-radius: 0; }
+.btn { border-radius: 0; } 
 /* ==================== 레이아웃 ==================== */
 header { position: fixed; top: 4rem; z-index: 999; width: 100%; } 
 header .gnb { position: relative; display: flex; justify-content: space-between; align-items: flex-start; max-width: 136rem; margin: 0 auto; background-color: rgba(var(--bg-000), 0.7); backdrop-filter: blur(5px); padding: 1.6rem 4rem; } 
@@ -64,50 +64,45 @@ footer .footer-inner { display: flex; justify-content: space-between; gap: 2.4re
 .lnb + main .tit-wrap { margin-bottom: 6rem; } 
 .tit-wrap { flex-direction: column; } 
 .tit-wrap.dep-1 { position: relative; background: #1f1d24 no-repeat center / cover; height: 36rem; justify-content: center; align-items: flex-start; padding-top: 11.2rem; margin-bottom: 0; color: rgb(var(--txt-white)); z-index: 1; } 
+.tit-wrap.dep-2 { text-align: center; gap: 0.4rem; } 
+.tit-wrap.dep-2 h2 { font-size: 1.4rem; color: rgb(var(--primary-500)); } 
+.tit-wrap.dep-2 p { font-size: 2.6rem; } 
 /* ==================== 컨텐츠 ==================== */
 .cont-wrap { } 
 .cont-wrap section { padding: 6rem 0; } 
 .cont-wrap section:nth-of-type(odd) { background-color: rgb(var(--bg-200)); } 
 
-/* 홈 */
-.wrap main.home .swiper { position: relative; }
+/* ==================== 홈 ==================== */
+/* 홈 > 스와이퍼 */
+.wrap main.home .swiper { position: relative; } 
 .wrap main.home .swiper-wrapper { min-height: 36rem; height: 70vh; } 
-.wrap main.home .swiper .swiper-wrapper .swiper-slide { position: relative; overflow: hidden; }
-.wrap main.home .swiper .swiper-wrapper .swiper-slide::before { content: ""; position: absolute; inset: 0; background: no-repeat center / cover; transition: transform 6s ease-in-out 1.5s; pointer-events: none; will-change: transform; backface-visibility: hidden; } 
-.wrap main.home .swiper .swiper-wrapper .swiper-slide[data-swiper-slide-index="0"]::before { background-image: url("/images/home/hero_main_01.jpg"); } 
-.wrap main.home .swiper .swiper-wrapper .swiper-slide[data-swiper-slide-index="1"]::before { background-image: url("/images/home/hero_main_02.jpg"); } 
-.wrap main.home .swiper .swiper-wrapper .swiper-slide[data-swiper-slide-index="2"]::before { background-image: url("/images/home/hero_main_03.jpg"); } 
-.wrap main.home .swiper .swiper-wrapper .swiper-slide[data-swiper-slide-index="3"]::before { background-image: url("/images/home/hero_main_04.jpg"); } 
-.wrap main.home .swiper .swiper-wrapper .swiper-slide[data-swiper-slide-index="4"]::before { background-image: url("/images/home/hero_main_05.jpg"); } 
-.wrap main.home .swiper .swiper-wrapper .swiper-slide[data-swiper-slide-index="5"]::before { background-image: url("/images/home/hero_main_06.jpg"); } 
-.wrap main.home .swiper .swiper-wrapper .swiper-slide[data-swiper-slide-index="6"]::before { background-image: url("/images/home/hero_main_07.jpg"); } 
-.wrap main.home .swiper .swiper-wrapper .swiper-slide[data-swiper-slide-index="7"]::before { background-image: url("/images/home/hero_main_08.jpg"); } 
-.wrap main.home .swiper .swiper-wrapper .swiper-slide.swiper-slide-active::before { transform: scale(1.1); } 
-.wrap main.home .swiper .tit-wrap.dep-1 { justify-content: flex-end; align-items: flex-end; gap: 0.4rem; padding-bottom: 4.8rem; position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: none; text-align: right; z-index: 1; pointer-events: none; }
-.wrap main.home .swiper .tit-wrap.dep-1 p { display: flex; flex-wrap: wrap; justify-content: flex-end; }
-.wrap main.home .swiper .tit-wrap.dep-1 .btn { margin-top: 1.2rem; pointer-events: auto; }
-/* .wrap main.home .tit-wrap.dep-1 p { font-size: 3.2rem; font-weight: 600; z-index: 1; } 
-.wrap main.home .tit-wrap.dep-1 span { font-size: 1.4rem; color: #eee; z-index: 1; }  */
-.wrap main.home .cont-wrap section:nth-child(1) > .cont { display: grid; grid-auto-rows: auto; grid-template-columns: repeat(12, 1fr); gap: 1.2rem; grid-column: span 3; grid-row: span 1; } 
-.wrap main.home .cont-wrap section:nth-child(1) > .cont .col-4 { grid-column: span 4; } 
-.wrap main.home .cont-wrap section:nth-child(1) > .cont > div > .box { position: absolute; inset: 0; }
-.wrap main.home .cont-wrap section:nth-child(1) > .cont .col-6 { grid-column: span 6; } 
-.wrap main.home .cont-wrap section:nth-child(1) > .cont .col-8 { grid-column: span 8; } 
-.wrap main.home .cont-wrap section:nth-child(1) > .cont .col-12 { grid-column: span 12; } 
+.wrap main.home .swiper .swiper-wrapper .swiper-slide { position: relative; overflow: hidden; } 
+.wrap main.home .swiper .swiper-wrapper .swiper-slide img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 6s ease-in-out 1.5s; pointer-events: none; will-change: transform; backface-visibility: hidden; }
+.wrap main.home .swiper .swiper-wrapper .swiper-slide.swiper-slide-active img { transform: scale(1.1); } 
+.wrap main.home .swiper .tit-wrap.dep-1 { justify-content: flex-end; align-items: flex-end; gap: 0.4rem; padding-bottom: 4.8rem; position: absolute; left: 0; top: 0; width: 100%; height: 100%; text-align: right; z-index: 1; pointer-events: none; background-color: rgba(0,0,0, 0.2); } 
+.wrap main.home .swiper .tit-wrap.dep-1 p { display: flex; flex-wrap: wrap; justify-content: flex-end; } 
+.wrap main.home .swiper .tit-wrap.dep-1 .btn { margin-top: 1.2rem; pointer-events: auto; border-color: rgb(var(--txt-white)); } 
+/* 홈 > 소개 */
+.wrap main.home .cont-wrap .home-about > .cont { display: flex; flex-wrap: wrap; } 
+.col-4 { width: 33%; } 
+.col-6 { width: calc((100% - var(--gap)) * 2 / 2); } 
+.col-8 { width: 66%; } 
+/* 홈 > 실시간예약 */
+.wrap main.home .cont-wrap .home-book { background: url("../images/home/hero_main_01.jpg") no-repeat center / cover; background-attachment: fixed; }
+.wrap main.home .cont-wrap .home-book .btn { border-color: rgb(var(--txt-white)); }
+/* 홈 > 소식 */
+.wrap main.home .cont-wrap .home-news { display: flex; align-items: flex-start; } 
+.wrap main.home .cont-wrap .home-news > .tit-wrap { flex: 1; width: 50%; margin: 0; } 
+.wrap main.home .cont-wrap .home-news > .cont { flex: 1; width: 50%; } 
 
-/* 서브 */
-.wrap main .tit-wrap.dep-2 { text-align: center; } 
-.wrap main .tit-wrap.dep-2 h2 { font-size: 1.4rem; color: rgb(var(--primary-500)); } 
-.wrap main .tit-wrap.dep-2 p { font-size: 2.6rem; } 
-
-/* 펜션소개 */
-.wrap main.about .tit-wrap.dep-1 { background-image: url("/images/home/hero_main_01.jpg") } 
-/* 객실소개 */
-.wrap main.room .tit-wrap.dep-1 { background-image: url("/images/home/hero_main_02.jpg") } 
-/* 예약하기 */
-.wrap main.book .tit-wrap.dep-1 { background-image: url("/images/home/hero_main_03.jpg") } 
-/* 고객서비스 */
-.wrap main.cs .tit-wrap.dep-1 { background-image: url("/images/home/hero_main_04.jpg") } 
+/* ==================== 펜션소개 ==================== */
+.wrap main.about .tit-wrap.dep-1 { background-image: url("../images/home/hero_main_01.jpg") } 
+/* ==================== 객실소개 ==================== */
+.wrap main.room .tit-wrap.dep-1 { background-image: url("../images/home/hero_main_02.jpg") } 
+/* ==================== 예약하기 ==================== */
+.wrap main.book .tit-wrap.dep-1 { background-image: url("../images/home/hero_main_03.jpg") } 
+/* ==================== 고객서비스 ==================== */
+.wrap main.cs .tit-wrap.dep-1 { background-image: url("../images/home/hero_main_04.jpg") } 
 
 /* ==================== 미디어쿼리 ==================== */
 /* Tablet Landscape ~ */
@@ -164,8 +159,7 @@ footer .footer-inner { display: flex; justify-content: space-between; gap: 2.4re
  .wrap .lnb ul li { flex: 1; } 
  .wrap .lnb ul li a { padding: 0; } 
  /* 홈 */
- /* .wrap main.home .tit-wrap.dep-1 p { font-size: 2rem; }  */
- }
+ /* .wrap main.home .tit-wrap.dep-1 p { font-size: 2rem; } */}
  @media (hover: hover) and (pointer: fine) { header .gnb.is-opened > ul { height: 22.8rem; transition: height 0.2s ease-in-out 0.2s; } 
 header .gnb.is-closing > ul { transition: height 0.2s ease-in-out; } 
 header .gnb.is-opened::before { animation: expand 0.4s ease-in-out forwards; box-shadow: 0.5rem 0.5rem 1rem rgba(0,0,0, 0.2); } 

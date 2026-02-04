@@ -1,5 +1,4 @@
 window.initModule = ({ root, params }) => {
-    console.log('성공')
     const swiperEl = root.querySelector(".swiper");
     if (!swiperEl) return;
 
@@ -11,6 +10,4 @@ window.initModule = ({ root, params }) => {
         pagination: { el: swiperEl.querySelector(".swiper-pagination"), clickable: true },
         speed: 1500,
     });
-
-    console.log("Swiper initialized on:", swiperEl);
 };
