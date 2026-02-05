@@ -21,7 +21,7 @@
                 const theme = localStorage.getItem("theme") || "light";
                 document.documentElement.dataset.theme = theme;
 
-                const svg = await fetch("https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.2/images/icon.svg?v=" + Date.now()).then((r) => r.text());
+                const svg = await fetch("https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.41/images/icon.svg?v=" + Date.now()).then((r) => r.text());
                 document.body.insertAdjacentHTML("afterbegin", svg);
 
                 // const admin = paramManager.get("admin") === "1";
@@ -34,7 +34,7 @@
                 // }
             })();
         </script>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.0/css/global.css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.3/css/global.css" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.0/library/swiper-bundle.min.css" />
         <link rel="stylesheet" href="./css/common.css" />
         <style>
@@ -114,9 +114,9 @@
                         <a href="/index.html?linkcd=m0300">객실소개</a>
                         <ul>
                             <li><a href="/index.html?linkcd=m0301">객실배치도</a></li>
-                            <li><a href="/index.html?linkcd=m0302">안단테</a></li>
-                            <li><a href="/index.html?linkcd=m0303">모데라토</a></li>
-                            <li><a href="/index.html?linkcd=m0304">라르고</a></li>
+                            <li><a href="/index.html?linkcd=m0302">안단테 <span class="fs-12 txt-500">Andante</span></a></li>
+                            <li><a href="/index.html?linkcd=m0303">모데라토 <span class="fs-12 txt-500">Moderato</span></a></li>
+                            <li><a href="/index.html?linkcd=m0304">라르고 <span class="fs-12 txt-500">Largo</span></a></li>
                         </ul>
                     </li>
                     <li><a href="/index.html?linkcd=m0400">예약하기</a></li>
@@ -152,6 +152,20 @@
                     <p>계좌번호 : 국민은행 606002-01-113598 | 예금주 : 이은영</p>
                 </div>
                 <div>
+                    <div class="btn-wrap jc-c txt-white gap-12 mt-0">
+                        <button class="btn md ws-nowrap naver">
+                            <svg class="wh-20">
+                                <use href="#platform-naver"></use>
+                            </svg>
+                            네이버 예약
+                        </button>
+                        <button class="btn md ws-nowrap ddnayo">
+                            <svg class="wh-20">
+                                <use href="#platform-ddnayo"></use>
+                            </svg>
+                            떠나요 예약
+                        </button>
+                    </div>
                     <p>Copyright&copy;2026 StayAndante. All Rights Reserved</p>
                 </div>
             </div>
