@@ -15,13 +15,13 @@
         <meta name="description" content="석모도 스테이안단테 펜션입니다." />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="theme-color" content="#1f1d24" />
-        <title>StayAndante</title>
+        <title>스테이안단테펜션</title>
         <script>
             (async () => {
                 const theme = localStorage.getItem("theme") || "light";
                 document.documentElement.dataset.theme = theme;
 
-                const svg = await fetch("https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.0/images/icon.svg?v=" + Date.now()).then((r) => r.text());
+                const svg = await fetch("https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.2/images/icon.svg?v=" + Date.now()).then((r) => r.text());
                 document.body.insertAdjacentHTML("afterbegin", svg);
 
                 // const admin = paramManager.get("admin") === "1";
@@ -114,9 +114,9 @@
                         <a href="/index.html?linkcd=m0300">객실소개</a>
                         <ul>
                             <li><a href="/index.html?linkcd=m0301">객실배치도</a></li>
-                            <li><a href="/index.html?linkcd=m0302">Andante</a></li>
-                            <li><a href="/index.html?linkcd=m0303">Moderato</a></li>
-                            <li><a href="/index.html?linkcd=m0304">Largo</a></li>
+                            <li><a href="/index.html?linkcd=m0302">안단테</a></li>
+                            <li><a href="/index.html?linkcd=m0303">모데라토</a></li>
+                            <li><a href="/index.html?linkcd=m0304">라르고</a></li>
                         </ul>
                     </li>
                     <li><a href="/index.html?linkcd=m0400">예약하기</a></li>
@@ -129,7 +129,7 @@
                     </li>
                 </ul>
                 <div class="visual">
-                    <img src="/images/home/hero_main_01.jpg" alt="" />
+                    <img src="./images/home/hero_main_01.jpg" alt="" />
                     <p class="flx col">
                         <span>Stay Andante</span>
                         <span class="mt-24">머무는 시간이<br />휴식이되는 공간</span>

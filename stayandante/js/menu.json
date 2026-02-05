@@ -7,13 +7,13 @@
 
     "m0300": { "name": "room", "depth": 1, "path": "/pages/03_room/M_STAY_03_01.html" },
     "m0301": { "name": "객실배치도", "depth": 2, "path": "/pages/03_room/M_STAY_03_01.html", "parent": ["m0300"] },
-    "m0302": { "name": "Andante", "depth": 2, "path": "/pages/03_room/M_STAY_03_02.html", "parent": ["m0300"] },
-    "m0303": { "name": "Moderato", "depth": 2, "path": "/pages/03_room/M_STAY_03_03.html", "parent": ["m0300"] },
-    "m0304": { "name": "Largo", "depth": 2, "path": "/pages/03_room/M_STAY_03_04.html", "parent": ["m0300"] },
+    "m0302": { "name": "안단테", "depth": 2, "path": "/pages/03_room/M_STAY_03_02.html", "parent": ["m0300"] },
+    "m0303": { "name": "모데라토", "depth": 2, "path": "/pages/03_room/M_STAY_03_03.html", "parent": ["m0300"] },
+    "m0304": { "name": "라르고", "depth": 2, "path": "/pages/03_room/M_STAY_03_04.html", "parent": ["m0300"] },
 
     "m0400": { "name": "book", "depth": 1, "path": "/pages/04_book/M_STAY_04.html" },
     
     "m0500": { "name": "cs", "depth": 1, "path": "/pages/05_cs/M_STAY_05_01.html" },
-    "m0501": { "name": "공지", "depth": 2, "path": "/pages/05_cs/M_STAY_05_01.html", "parent": ["m0500"] },
+    "m0501": { "name": "새소식", "depth": 2, "path": "/pages/05_cs/M_STAY_05_01.html", "parent": ["m0500"] },
     "m0502": { "name": "자주하는 질문", "depth": 2, "path": "/pages/05_cs/M_STAY_05_02.html", "parent": ["m0500"] }
 }
