@@ -3,9 +3,9 @@ html[data-theme="dark"] { --primary-500: 255, 210, 120; } */
 /* ==================== 공통 ==================== */
 h1, h2, h3, h4, h5, h6, strong, b { font-weight: 600; } 
 .box { border-radius: 0; } 
-.font-brand { font-family: 'Sacramento', cursive; }
-.btn.naver { background-color: #03c75a; }
-.btn.ddnayo { background-color: #ea1f62; }
+.font-brand { font-family: 'Sacramento', cursive; } 
+.btn.naver { background-color: #03c75a; } 
+.btn.ddnayo { background-color: #ea1f62; } 
 /* ==================== 레이아웃 ==================== */
 header { position: fixed; top: 4rem; z-index: 999; width: 100%; } 
 header .gnb { position: relative; display: flex; justify-content: space-between; align-items: flex-start; max-width: 136rem; margin: 0 auto; background-color: rgba(var(--bg-000), 0.7); backdrop-filter: blur(5px); padding: 1.6rem 4rem; } 
@@ -31,9 +31,7 @@ header .gnb > ul > li > ul > li > a:hover { text-decoration: underline; color: r
  }
 header .gnb .visual,
 header .gnb .util { visibility: hidden; opacity: 0; } 
-header .gnb.is-opened .visual,
-header .gnb.is-opened .util { visibility: visible; opacity: 1; transition: visibility 0s linear 0.4s, opacity 0.2s linear 0.4s; } 
-header .gnb .visual { position: absolute; left: 4rem; bottom: 0; display: flex; align-items: flex-start; gap: 0.8rem; } 
+header .gnb .visual { position: absolute; left: 4rem; bottom: 0; display: flex; align-items: flex-start; gap: 0.8rem; background-color: rgb(var(--bg-000)); } 
 header .gnb .visual img { width: 30rem; } 
 header .gnb .util { position: absolute; right: 4rem; bottom: 0; display: flex; align-items: center; gap: 0.8rem; } 
 
@@ -75,11 +73,11 @@ footer .footer-inner { display: flex; justify-content: space-between; gap: 2.4re
 .cont-wrap { } 
 .cont-wrap section { position: relative; padding: 6rem 0; } 
 .cont-wrap section:nth-of-type(odd) { background-color: rgb(var(--bg-100)); } 
-.cont-wrap section > .cont.ty-row { display: flex; gap: 2.4rem; }
-.cont-wrap section > .cont.ty-row > div { flex: 1; }
-.cont-wrap section > .cont.ty-row > .visual { position: relative; }
+.cont-wrap section > .cont.ty-row { display: flex; gap: 2.4rem; } 
+.cont-wrap section > .cont.ty-row > div { flex: 1; } 
+.cont-wrap section > .cont.ty-row > .visual { position: relative; } 
 .cont-wrap section > .cont.ty-row > .visual img { height: 100%; object-fit: cover; } 
-.cont-wrap section > .cont.ty-row > .visual blockquote { position: absolute; left: -1.2rem; bottom: -2rem; width: calc(100% - 4rem); max-width: 32rem; margin: 0; }
+.cont-wrap section > .cont.ty-row > .visual blockquote { position: absolute; left: -1.2rem; bottom: -2rem; width: calc(100% - 4rem); max-width: 32rem; margin: 0; background-color: rgba(var(--bg-200), 0.9); } 
 .cont-wrap section > .cont.ty-masonry { display: flex; flex-wrap: wrap; --gap: 2rem; gap: var(--gap); } 
 .cont-wrap section > .cont.ty-masonry .box { position: relative; min-height: 25vw; display: flex; flex-direction: column; } 
 .cont-wrap section > .cont.ty-masonry .box > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; } 
@@ -100,29 +98,40 @@ footer .footer-inner { display: flex; justify-content: space-between; gap: 2.4re
 .wrap main.home .swiper .tit-wrap.dep-1 p { display: flex; flex-wrap: wrap; justify-content: flex-end; } 
 .wrap main.home .swiper .tit-wrap.dep-1 .btn { margin-top: 1.2rem; pointer-events: auto; border-color: rgb(var(--txt-white)); } 
 /* 홈 > 소개 */
+.wrap main.home .cont-wrap .home-about .cont > div:first-child > div > div {  }
+/* 홈 > 객실소개 */
+.wrap main.home .cont-wrap .home-room .cont > a { padding-bottom: 1.2rem; border-bottom: 0.1rem solid rgb(var(--brd-700)); transition: border-color 0.3s ease-in-out; } 
+.wrap main.home .cont-wrap .home-room .cont > a .thumb { overflow: hidden; }
+.wrap main.home .cont-wrap .home-room .cont > a .thumb img { transition: transform 0.3s ease-in-out; }
+.wrap main.home .cont-wrap .home-room .cont > a h3,
+.wrap main.home .cont-wrap .home-room .cont > a h3 span { transition: color 0.3s ease-in-out; }
+.wrap main.home .cont-wrap .home-room .cont > a:hover { border-bottom-color: rgb(var(--primary-500)); }
+.wrap main.home .cont-wrap .home-room .cont > a:hover .thumb img { transform: scale(1.1); }
+.wrap main.home .cont-wrap .home-room .cont > a:hover h3,
+.wrap main.home .cont-wrap .home-room .cont > a:hover h3 span { color: rgb(var(--primary-500)) !important; }
 /* 홈 > 실시간예약 */
 .wrap main.home .cont-wrap .home-book { background: url("../images/home/bnr_book.jpg") no-repeat center / cover; background-attachment: fixed; } 
 .wrap main.home .cont-wrap .home-book .btn { border-color: rgb(var(--txt-white)); } 
 /* 홈 > 소식 */
-.wrap main.home .cont-wrap .home-news { } 
-.wrap main.home .cont-wrap .home-news > .cont { } 
-.wrap main.home .cont-wrap .home-news > .cont .bg-point {  }
-.wrap main.home .cont-wrap .home-news > .cont .bg-point img { position: static; width: 100%; max-height: 20rem; object-fit: cover; }
+.wrap main.home .cont-wrap .home-news > .cont .box { cursor: pointer; }
+.wrap main.home .cont-wrap .home-news > .cont .box.bg-point > div { position: relative; }
+.wrap main.home .cont-wrap .home-news > .cont .box.bg-point > div .title { position: absolute; left: 0; bottom: 0; width: 100%; } 
+.wrap main.home .cont-wrap .home-news > .cont .bg-point img { position: static; width: 100%; max-height: 20rem; object-fit: cover; } 
 
-.meta-list { max-width: 128rem; margin: 0 auto; }
-.meta-list > li a { display: flex; align-items: centr; flex-wrap: nowrap; gap: 1.2rem; padding: 1.2rem 2.4rem; white-space: nowrap; border-bottom: 0.1rem solid rgb(var(--brd-500)); }
-.meta-list > li a:hover { background-color: rgb(var(--bg-hover)); }
-.meta-list > li [data-bind="date"] { color: rgb(var(--txt-700)); }
-.meta-list > li [data-bind="title"] { flex: 1; text-overflow: ellipsis; overflow: hidden; font-weight: 600; }
+.meta-list { max-width: 128rem; margin: 0 auto; } 
+.meta-list > li a { display: flex; align-items: centr; flex-wrap: nowrap; gap: 1.2rem; padding: 1.2rem 2.4rem; white-space: nowrap; border-bottom: 0.1rem solid rgb(var(--brd-500)); } 
+.meta-list > li a:hover { background-color: rgb(var(--bg-hover)); } 
+.meta-list > li [data-bind="date"] { color: rgb(var(--txt-700)); } 
+.meta-list > li [data-bind="title"] { flex: 1; text-overflow: ellipsis; overflow: hidden; font-weight: 600; } 
 
 /* ==================== 펜션소개 ==================== */
-.wrap main.about .tit-wrap.dep-1 { background-image: url("../images/home/hero_main_01.jpg"); } 
+.wrap main.about .tit-wrap.dep-1 { background-image: url("../images/about/hero_about.jpg"); } 
 /* ==================== 객실소개 ==================== */
-.wrap main.room .tit-wrap.dep-1 { background-image: url("../images/home/hero_main_02.jpg"); } 
+.wrap main.room .tit-wrap.dep-1 { background-image: url("../images/room/hero_room.jpg"); } 
 /* ==================== 예약하기 ==================== */
-.wrap main.book .tit-wrap.dep-1 { background-image: url("../images/home/hero_main_03.jpg"); } 
+.wrap main.book .tit-wrap.dep-1 { background-image: url("../images/book/hero_book.jpg"); } 
 /* ==================== 고객서비스 ==================== */
-.wrap main.cs .tit-wrap.dep-1 { background-image: url("../images/home/hero_main_04.jpg"); } 
+.wrap main.cs .tit-wrap.dep-1 { background-image: url("../images/cs/hero_cs.jpg"); } 
 
 /* ==================== 미디어쿼리 ==================== */
 /* Tablet Landscape ~ */
@@ -134,7 +143,7 @@ footer .footer-inner { display: flex; justify-content: space-between; gap: 2.4re
  .wrap .tit-wrap.dep-1 { padding-left: 8rem; padding-right: 8rem; } 
  }
 /* Tablet Portrait ~ */
-@media screen and (max-width: 1023px), (hover: none) and (pointer: coarse) and (max-width: 1439px) { header .gnb > ul { position: absolute; right: -44rem; top: -4rem; flex-direction: column; justify-content: flex-start; width: 40rem; height: 100vh; padding: 33rem 8rem 8rem; background-color: rgb(var(--bg-100)); transition: right 0.3s ease-in-out; text-align: left; } 
+@media screen and (max-width: 1023px), (hover: none) and (pointer: coarse) and (max-width: 1439px) { header .gnb > ul { position: absolute; right: -44rem; top: -4rem; flex-direction: column; justify-content: flex-start; width: 40rem; height: 100vh; margin-top: 22.5rem; padding: 8rem; background-color: rgb(var(--bg-100)); transition: right 0.3s ease-in-out; text-align: left; } 
  header .gnb > ul > li + li { margin-top: 2.4rem; } 
  header .gnb > ul > li > a { line-height: inherit; } 
  header .gnb > ul > li > ul { margin-top: 0.8rem; } 
@@ -166,7 +175,7 @@ footer .footer-inner { display: flex; justify-content: space-between; gap: 2.4re
  header .gnb .menu-toggle i:nth-child(2) { margin-top: 0; } 
  header .gnb .menu-toggle i:nth-child(3) { margin-top: 0; } 
  header .gnb .menu-toggle i:nth-child(4) { margin-top: 0.6rem; } 
- header .gnb > ul { right: -30rem; top: 0; width: 30rem; padding: 22rem 4rem 4rem; } 
+ header .gnb > ul { right: -30rem; top: 0; width: 30rem; margin-top: 16.8rem; padding: 4rem; } 
  header .gnb > .menu-toggle.is-active + ul { right: 0; } 
  header .gnb .menu-toggle ~ .visual { right: -30rem; } 
  header .gnb .menu-toggle ~ .visual { top: 0; width: 30rem; } 
@@ -178,10 +187,12 @@ footer .footer-inner { display: flex; justify-content: space-between; gap: 2.4re
  .wrap .tit-wrap.dep-1 { padding-top: 6.4rem; padding-left: 4rem; padding-right: 4rem; } 
  .wrap .lnb ul li { flex: 1; } 
  .wrap .lnb ul li a { padding: 0; } 
-.cont-wrap section > .cont.ty-row { flex-direction: column; }
+.cont-wrap section > .cont.ty-row { flex-direction: column; } 
  /* 홈 */
  /* .wrap main.home .tit-wrap.dep-1 p { font-size: 2rem; } */ } 
- @media (hover: hover) and (pointer: fine) { header .gnb.is-opened > ul { height: 22.8rem; transition: height 0.2s ease-in-out 0.2s; } 
+ @media (hover: hover) and (pointer: fine) {header .gnb.is-opened .visual,
+header .gnb.is-opened .util { visibility: visible; opacity: 1; transition: visibility 0s linear 0.4s, opacity 0.2s linear 0.4s; } 
+ header .gnb.is-opened > ul { height: 22.8rem; transition: height 0.2s ease-in-out 0.2s; } 
 header .gnb.is-closing > ul { transition: height 0.2s ease-in-out; } 
 header .gnb.is-opened::before { animation: expand 0.4s ease-in-out forwards; box-shadow: 0.5rem 0.5rem 1rem rgba(0,0,0, 0.2); } 
 header .gnb.is-closing::before { animation: shrink 0.4s ease-in-out forwards; box-shadow: 0.5rem 0.5rem 1rem rgba(0,0,0, 0.2); } 
