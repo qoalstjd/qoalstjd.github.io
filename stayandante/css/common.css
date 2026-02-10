@@ -91,7 +91,7 @@ footer .footer-inner .btn-wrap { position: absolute; right: 0; top: -5.6rem; }
 .wrap main.home .swiper .swiper-wrapper .swiper-slide img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 6s ease-in-out 1.5s; pointer-events: none; will-change: transform; backface-visibility: hidden; } 
 .wrap main.home .swiper .swiper-wrapper .swiper-slide.swiper-slide-active img { transform: scale(1.1); } 
 .wrap main.home .swiper .tit-wrap.dep-1 { justify-content: flex-end; align-items: flex-end; gap: 0.4rem; padding-bottom: 1.2rem; position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: none; text-align: right; z-index: 2; pointer-events: none; color: rgb(var(--txt-900)); } 
-.wrap main.home .swiper .tit-wrap.dep-1 p { display: flex; flex-wrap: wrap; justify-content: flex-end; } 
+.wrap main.home .swiper .tit-wrap.dep-1 p { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 0 0.4rem; } 
 .wrap main.home .swiper .tit-wrap.dep-1 .btn { margin-top: 1.2rem; pointer-events: auto; color: rgb(var(--txt-white)); } 
 /* 홈 > 소개 */
 .wrap main.home .cont-wrap .home-about .cont > div:first-child > div > div { } 
@@ -110,19 +110,24 @@ footer .footer-inner .btn-wrap { position: absolute; right: 0; top: -5.6rem; }
 .wrap main.home .cont-wrap .home-book .btn { border-color: rgb(var(--txt-white)); } 
 /* 홈 > 소식 */
 .wrap main.home .cont-wrap .home-news > .cont .box:not(:last-child) { cursor: pointer; } 
+.wrap main.home .cont-wrap .home-news > .cont .box .category { display: flex; align-items: center; gap: 0.4rem; color: rgb(var(--primary-500)); font-weight: 600; }
+.wrap main.home .cont-wrap .home-news > .cont .box.bg-point .category { color: rgb(var(--txt-white)); }
 .wrap main.home .cont-wrap .home-news > .cont .box.bg-point > div { position: relative; } 
-.wrap main.home .cont-wrap .home-news > .cont .box.bg-point > div .title { position: absolute; left: 0; bottom: 0; width: 100%; } 
+.wrap main.home .cont-wrap .home-news > .cont .box.bg-point > div .title { position: absolute; left: 0; bottom: 0; width: 100%; height: 100%; background-color: rgba(var(--bg-900), 0.2); display: flex; flex-direction: column; justify-content: flex-end; } 
 .wrap main.home .cont-wrap .home-news > .cont .bg-point img { position: static; width: 100%; max-height: 20rem; object-fit: cover; } 
 
 /* ==================== 펜션소개 ==================== */
 .wrap main.about .tit-wrap.dep-1 { background-image: url("../images/about/hero_about.jpg"); } 
 /* ==================== 객실소개 ==================== */
 .wrap main.room .tit-wrap.dep-1 { background-image: url("../images/room/hero_room.jpg"); } 
+.wrap main.room .cont-wrap .room-detail .col-fit img { min-width: 0; } 
 .wrap main.room .cont-wrap .room-another { padding-left: 0; padding-right: 0; } 
-.wrap main.room .cont-wrap .room-another .cont > .box { display: flex; flex-direction: column; align-items: center; justify-content: center; aspect-ratio: 16/9; background: url("../images/room/hero_room.jpg") no-repeat center / 100%; transition: background-size 0.3s ease-in-out; color: rgb(var(--txt-white)); } 
-.wrap main.room .cont-wrap .room-another .cont > .box:hover { background-size: 110%; } 
-.wrap main.room .cont-wrap .room-another .cont > .box .tit-wrap { margin-bottom: 0; } 
-.wrap main.room .cont-wrap .room-another .cont > .box .btn-wrap { margin-top: 1.2rem; } 
+.wrap main.room .cont-wrap .room-another .cont > .box { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; aspect-ratio: 16/9; background: url("../images/room/hero_room.jpg") no-repeat center / auto 100%; transition: background-size 0.3s ease-in-out; min-height: 32rem; }
+.wrap main.room .cont-wrap .room-another .cont > .box::before { content: ""; position: absolute; inset: 3.2rem; background-color: rgba(var(--bg-100), 0.5); }
+.wrap main.room .cont-wrap .room-another .cont > .box:hover { background-size: auto 110%; } 
+.wrap main.room .cont-wrap .room-another .cont > .box .tit-wrap { position: relative; margin-bottom: 0; padding: 0 1.2rem; } 
+.wrap main.room .cont-wrap .room-another .cont > .box .btn-wrap { position: relative; margin-top: 1.2rem; } 
+/* .wrap main.room .cont-wrap .room-another .cont > .box .btn-wrap .btn { border-color: rgb(var(--txt-white)); } */
 /* ==================== 예약하기 ==================== */
 .wrap main.book .tit-wrap.dep-1 { background-image: url("../images/book/hero_book.jpg"); } 
 /* ==================== 고객서비스 ==================== */
@@ -183,10 +188,10 @@ footer .footer-inner .btn-wrap { position: absolute; right: 0; top: -5.6rem; }
  .wrap .tit-wrap.dep-1 { padding-top: 6.4rem; padding-left: 4rem; padding-right: 4rem; } 
  .wrap .lnb ul li { flex: 1; } 
  .wrap .lnb ul li a { padding: 0; } 
-.cont-wrap section > .cont.ty-row { flex-direction: column; } 
- .cont-wrap section > .cont.ty-row > .visual blockquote { position: static; width: 100%; max-width: unset; margin-top: 1.2rem; } 
- .cont-wrap section > .cont.ty-row > div:first-child > div > div { text-align: center; } 
- .cont-wrap section > .cont.ty-row > div:first-child > div > div svg { margin: 0 auto; } 
+.cont-wrap section .cont.ty-row { flex-direction: column; } 
+ .cont-wrap section .cont.ty-row > .visual blockquote { position: static; width: 100%; max-width: unset; margin-top: 1.2rem; } 
+ .cont-wrap section .cont.ty-row > div:first-child > div > div { text-align: center; } 
+ .cont-wrap section .cont.ty-row > div:first-child > div > div svg { margin: 0 auto; } 
  /* 홈 */
 .wrap main.home .cont-wrap .home-room .cont { flex-direction: column; } 
  }
