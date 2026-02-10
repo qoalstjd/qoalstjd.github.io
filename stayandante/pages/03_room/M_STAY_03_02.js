@@ -1,3 +1,4 @@
 window.initModule = ({ root, params }) => {
-    console.log('Loaded : M_STAY_03_02.js')
+    const { linkcd } = params;
+    root.querySelector(`a[href*="${linkcd}"]`).closest('.box').style.display = 'none';
 };

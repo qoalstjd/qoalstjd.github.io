@@ -21,56 +21,15 @@
                 const theme = localStorage.getItem("theme") || "light";
                 document.documentElement.dataset.theme = theme;
 
-                const svg = await fetch("https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.41/images/icon.svg?v=" + Date.now()).then((r) => r.text());
+                const svg = await fetch("https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.42/images/icon.svg?v=" + Date.now()).then((r) => r.text());
                 document.body.insertAdjacentHTML("afterbegin", svg);
-
-                // const admin = paramManager.get("admin") === "1";
-                // const readyEl = document.getElementById("ready");
-                // if (!admin) {
-                //     ui.scrollLock.lock();
-                // } else {
-                //     readyEl.remove();
-                //     ui.scrollLock.unlock();
-                // }
             })();
         </script>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.3/css/global.css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.42/css/global.css?v=123" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.0/library/swiper-bundle.min.css" />
         <link rel="stylesheet" href="./css/common.css" />
-        <style>
-            #ready {
-                position: fixed;
-                inset: 0;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                gap: 0.8rem;
-                background-color: rgb(var(--bg-900));
-                z-index: 9999;
-                text-align: center;
-            }
-            #ready svg {
-                width: 15rem;
-                height: 9rem;
-                color: rgb(var(--txt-100));
-            }
-            #ready p {
-                color: rgb(var(--txt-100));
-                margin-top: 1.2rem;
-                font-size: 2rem;
-            }
-            #ready span {
-                color: rgb(var(--txt-300));
-            }
-        </style>
     </head>
     <body>
-        <!-- <div id="ready">
-            <svg><use href="#brand-stay"></use></svg>
-            <p>현재 페이지를 준비 중입니다.</p>
-            <span>곧 찾아뵙겠습니다.<br>감사합니다 😊 </span>
-        </div> -->
         <header>
             <nav class="gnb">
                 <h1>
@@ -84,7 +43,7 @@
                         <svg><use href="#act-call"></use></svg>
                         전화예약
                     </a>
-                    <a href="https://booking.ddnayo.com/booking-calendar-status?accommodationId=105085" target="_blank" class="btn line sm ico-wrap">
+                    <a href="https://m.place.naver.com/accommodation/2040729575/room?businessCategory=pension" target="_blank" class="btn line sm ico-wrap">
                         <svg><use href="#act-calendar"></use></svg>
                         실시간예약
                     </a>
@@ -114,12 +73,24 @@
                         <a href="/index.html?linkcd=m0300">객실소개</a>
                         <ul>
                             <li><a href="/index.html?linkcd=m0301">객실배치도</a></li>
-                            <li><a href="/index.html?linkcd=m0302">안단테 <span class="fs-12 txt-500">Andante</span></a></li>
-                            <li><a href="/index.html?linkcd=m0303">모데라토 <span class="fs-12 txt-500">Moderato</span></a></li>
-                            <li><a href="/index.html?linkcd=m0304">라르고 <span class="fs-12 txt-500">Largo</span></a></li>
+                            <li>
+                                <a href="/index.html?linkcd=m0302">안단테 <span class="fs-12 txt-500">Andante</span></a>
+                            </li>
+                            <li>
+                                <a href="/index.html?linkcd=m0303">모데라토 <span class="fs-12 txt-500">Moderato</span></a>
+                            </li>
+                            <li>
+                                <a href="/index.html?linkcd=m0304">라르고 <span class="fs-12 txt-500">Largo</span></a>
+                            </li>
                         </ul>
                     </li>
-                    <li><a href="/index.html?linkcd=m0400">예약하기</a></li>
+                    <li>
+                        <a href="/index.html?linkcd=m0400">예약하기</a>
+                        <ul>
+                            <li><a href="/index.html?linkcd=m0400">예약안내</a></li>
+                            <li><a href="https://m.place.naver.com/accommodation/2040729575/room?businessCategory=pension" target="_blank">실시간예약 </a></li>
+                        </ul>
+                    </li>
                     <li>
                         <a href="/index.html?linkcd=m0500">고객서비스</a>
                         <ul>
@@ -131,8 +102,8 @@
                 <div class="visual">
                     <img src="./images/home/hero_main_01.jpg" alt="" />
                     <p class="flx col">
-                        <span>Stay Andante</span>
-                        <span class="mt-24">머무는 시간이<br />휴식이되는 공간</span>
+                        <span class="font-brand fs-24">Stay Andante</span>
+                        <span class="mt-12">머무는 시간이<br />휴식이되는 공간</span>
                     </p>
                 </div>
             </nav>
@@ -143,6 +114,20 @@
         <footer>
             <svg><use href="#brand-stay"></use></svg>
             <div class="footer-inner">
+                <div class="btn-wrap jc-c txt-white gap-12 mt-0">
+                    <a href="https://m.place.naver.com/accommodation/2040729575/room?businessCategory=pension" target="_blank" class="btn sm ws-nowrap naver">
+                        <svg class="wh-20">
+                            <use href="#platform-naver"></use>
+                        </svg>
+                        네이버 예약
+                    </a>
+                    <a href="" class="btn sm ws-nowrap ddnayo" style="display: none">
+                        <svg class="wh-20">
+                            <use href="#platform-ddnayo"></use>
+                        </svg>
+                        떠나요 예약
+                    </a>
+                </div>
                 <div>
                     <p><a href="tel: 010-8746-1409">010-8746-1409</a></p>
                     <p>인천광역시 강화군 삼산면 삼산남로 442-15</p>
@@ -152,20 +137,6 @@
                     <p>계좌번호 : 국민은행 606002-01-113598 | 예금주 : 이은영</p>
                 </div>
                 <div>
-                    <div class="btn-wrap jc-c txt-white gap-12 mt-0">
-                        <button class="btn md ws-nowrap naver">
-                            <svg class="wh-20">
-                                <use href="#platform-naver"></use>
-                            </svg>
-                            네이버 예약
-                        </button>
-                        <button class="btn md ws-nowrap ddnayo">
-                            <svg class="wh-20">
-                                <use href="#platform-ddnayo"></use>
-                            </svg>
-                            떠나요 예약
-                        </button>
-                    </div>
                     <p>Copyright&copy;2026 StayAndante. All Rights Reserved</p>
                 </div>
             </div>

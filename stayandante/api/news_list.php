@@ -5,7 +5,7 @@ header("Content-Type: application/json; charset=utf-8");
 include $_SERVER['DOCUMENT_ROOT'] . "/../db/conn.php";
 
 $result = $conn->query("
-  SELECT id, title, summary, content, created_at
+  SELECT id, tag, title, content, created_at, view_cnt
   FROM news
   ORDER BY created_at DESC
 ");
