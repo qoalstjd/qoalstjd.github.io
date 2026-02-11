@@ -20,15 +20,13 @@ header .gnb > ul > li > ul { margin-top: 3.2rem; }
 header .gnb > ul > li > ul > li + li { margin-top: 1.2rem; } 
 header .gnb > ul > li > ul > li > a { display: block; width: 100%; font-weight: 600; color: rgb(var(--txt-700)); } 
 header .gnb > ul > li > ul > li > a:hover { text-decoration: underline; color: rgb(var(--txt-700)); } 
-@keyframes expand { 
- 0% { width: 100%; height: 100%; top: 0; opacity: 0; } 
- 50% { width: 100vw; height: 100%; top: 0; opacity: 1; } 
- 100% { width: 100vw; height: 36rem; top: -4rem; opacity: 1; } 
+@keyframes expand {0% { width: 100%; height: 100%; top: 0; opacity: 0; } 
+50% { width: 100vw; height: 100%; top: 0; opacity: 1; } 
+100% { width: 100vw; height: 36rem; top: -4rem; opacity: 1; } 
  }
-@keyframes shrink { 
- 0% { width: 100vw; height: 36rem; top: -4rem; opacity: 1; } 
- 50% { width: 100vw; height: 100%; top: 0; opacity: 1; } 
- 100% { width: 100%; height: 100%; top: 0; opacity: 0; } 
+@keyframes shrink {0% { width: 100vw; height: 36rem; top: -4rem; opacity: 1; } 
+50% { width: 100vw; height: 100%; top: 0; opacity: 1; } 
+100% { width: 100%; height: 100%; top: 0; opacity: 0; } 
  }
 header .gnb .visual,
 header .gnb .util { visibility: hidden; opacity: 0; } 
@@ -107,11 +105,10 @@ footer .footer-inner .btn-wrap { position: absolute; right: 0; top: -5.6rem; }
 .wrap main.home .cont-wrap .home-room .cont > a:hover h3 span { color: rgb(var(--primary-500)) !important; } 
 /* 홈 > 실시간예약 */
 .wrap main.home .cont-wrap .home-book { background: url("../images/home/bnr_book.jpg") no-repeat center / cover; background-attachment: fixed; } 
-.wrap main.home .cont-wrap .home-book .btn { border-color: rgb(var(--txt-white)); } 
 /* 홈 > 소식 */
 .wrap main.home .cont-wrap .home-news > .cont .box:not(:last-child) { cursor: pointer; } 
-.wrap main.home .cont-wrap .home-news > .cont .box .category { display: flex; align-items: center; gap: 0.4rem; color: rgb(var(--primary-500)); font-weight: 600; }
-.wrap main.home .cont-wrap .home-news > .cont .box.bg-point .category { color: rgb(var(--txt-white)); }
+.wrap main.home .cont-wrap .home-news > .cont .box .category { display: flex; align-items: center; gap: 0.4rem; color: rgb(var(--primary-500)); font-weight: 600; } 
+.wrap main.home .cont-wrap .home-news > .cont .box.bg-point .category { color: rgb(var(--txt-white)); } 
 .wrap main.home .cont-wrap .home-news > .cont .box.bg-point > div { position: relative; } 
 .wrap main.home .cont-wrap .home-news > .cont .box.bg-point > div .title { position: absolute; left: 0; bottom: 0; width: 100%; height: 100%; background-color: rgba(var(--bg-900), 0.2); display: flex; flex-direction: column; justify-content: flex-end; } 
 .wrap main.home .cont-wrap .home-news > .cont .bg-point img { position: static; width: 100%; max-height: 20rem; object-fit: cover; } 
@@ -120,86 +117,104 @@ footer .footer-inner .btn-wrap { position: absolute; right: 0; top: -5.6rem; }
 .wrap main.about .tit-wrap.dep-1 { background-image: url("../images/about/hero_about.jpg"); } 
 /* ==================== 객실소개 ==================== */
 .wrap main.room .tit-wrap.dep-1 { background-image: url("../images/room/hero_room.jpg"); } 
-.wrap main.room .cont-wrap .room-detail .col-fit img { min-width: 0; } 
+.wrap main.room .cont-wrap .room-detail .cont .visual { display: flex; flex-direction: column; } 
+.wrap main.room .cont-wrap .room-detail .cont .img-wrap img { cursor: pointer; opacity: 0.8; } 
+.wrap main.room .cont-wrap .room-detail .cont .img-wrap img.is-active { opacity: 1; } 
 .wrap main.room .cont-wrap .room-another { padding-left: 0; padding-right: 0; } 
-.wrap main.room .cont-wrap .room-another .cont > .box { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; aspect-ratio: 16/9; background: url("../images/room/hero_room.jpg") no-repeat center / auto 100%; transition: background-size 0.3s ease-in-out; min-height: 32rem; }
-.wrap main.room .cont-wrap .room-another .cont > .box::before { content: ""; position: absolute; inset: 3.2rem; background-color: rgba(var(--bg-100), 0.5); }
+.wrap main.room .cont-wrap .room-another .cont > .box { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; aspect-ratio: 16/9; background: no-repeat center / auto 100%; transition: background-size 0.3s ease-in-out; min-height: 32rem; } 
+.wrap main.room .cont-wrap .room-another .cont > .box:nth-child(1) { background-image: url("../images/room/card_roomA_01.jpg"); } 
+.wrap main.room .cont-wrap .room-another .cont > .box:nth-child(2) { background-image: url("../images/room/card_roomD_01.jpg"); } 
+.wrap main.room .cont-wrap .room-another .cont > .box:nth-child(3) { background-image: url("../images/room/card_roomH_01.jpg"); } 
+.wrap main.room .cont-wrap .room-another .cont > .box::before { content: ""; position: absolute; inset: 3.2rem; background-color: rgba(var(--bg-100), 0.7); } 
 .wrap main.room .cont-wrap .room-another .cont > .box:hover { background-size: auto 110%; } 
 .wrap main.room .cont-wrap .room-another .cont > .box .tit-wrap { position: relative; margin-bottom: 0; padding: 0 1.2rem; } 
 .wrap main.room .cont-wrap .room-another .cont > .box .btn-wrap { position: relative; margin-top: 1.2rem; } 
 /* .wrap main.room .cont-wrap .room-another .cont > .box .btn-wrap .btn { border-color: rgb(var(--txt-white)); } */
 /* ==================== 예약하기 ==================== */
 .wrap main.book .tit-wrap.dep-1 { background-image: url("../images/book/hero_book.jpg"); } 
+.wrap main.book .cont-wrap .book-realtime { background: url("../images/home/bnr_book.jpg") no-repeat center / cover; background-attachment: fixed; } 
 /* ==================== 고객서비스 ==================== */
 .wrap main.cs .tit-wrap.dep-1 { background-image: url("../images/cs/hero_cs.jpg"); } 
 
 /* ==================== 미디어쿼리 ==================== */
 /* Tablet Landscape ~ */
 @media screen and (max-width: 1439px) { header .gnb { max-width: calc(100vw - 8rem); } 
- header .gnb .visual { display: none; } 
- .wrap .lnb,
- .wrap .cont-wrap section,
- footer { padding-left: 4rem; padding-right: 4rem; } 
- .wrap .tit-wrap.dep-1 { padding-left: 8rem; padding-right: 8rem; } 
+header .gnb .visual { display: none; } 
+.wrap .lnb,
+.wrap .cont-wrap section,
+footer { padding-left: 4rem; padding-right: 4rem; } 
+.wrap .tit-wrap.dep-1 { padding-left: 8rem; padding-right: 8rem; } 
  }
 /* Tablet Portrait ~ */
 @media screen and (max-width: 1023px), (hover: none) and (pointer: coarse) and (max-width: 1439px) { header .gnb > ul { position: absolute; right: -44rem; top: -4rem; flex-direction: column; justify-content: flex-start; width: 40rem; height: 100vh; margin-top: 22.5rem; padding: 8rem; background-color: rgb(var(--bg-100)); transition: right 0.3s ease-in-out; text-align: left; } 
- header .gnb > ul > li + li { margin-top: 2.4rem; } 
- header .gnb > ul > li > a { line-height: inherit; } 
- header .gnb > ul > li > ul { margin-top: 0.8rem; } 
- header .gnb > ul > li > ul > li + li { margin-top: 0; } 
- header .gnb .util { visibility: visible; opacity: 1; position: relative; inset: unset; margin: 0.6rem 1.2rem 0 auto; gap: 1.2rem; } 
- header .gnb .util .ico-wrap { padding: 0; gap: 0; background: none; border: none; font-size: 0; height: auto; } 
- header .gnb .util [data-act="theme"] { display: none; } 
- header .gnb .util svg { width: 2.8rem; height: 2.8rem; } 
- header .gnb > .menu-toggle.is-active + ul { right: -4rem; } 
- header .gnb .menu-toggle { display: block; } 
- header .gnb .menu-toggle ~ .visual img { width: 100%; opacity: 0.8; } 
- header .gnb .visual .flx { display: none !important; } 
- header .gnb .menu-toggle ~ .visual { visibility: visible; opacity: 1; inset: unset; display: flex; transition: right 0.3s ease-in-out; right: -44rem; } 
- header .gnb .menu-toggle ~ .visual { top: -4rem; width: 40rem; } 
- header .gnb .menu-toggle.is-active ~ .visual { right: -4rem; } 
- footer { align-items: center; text-align: center; } 
- footer .footer-inner { flex-direction: column; align-items: center; } 
- footer .footer-inner .btn-wrap { position: static; } 
- .lnb + main .tit-wrap { margin-bottom: 5.2rem; } 
+header .gnb > ul > li + li { margin-top: 2.4rem; } 
+header .gnb > ul > li > a { line-height: inherit; } 
+header .gnb > ul > li > ul { margin-top: 0.8rem; } 
+header .gnb > ul > li > ul > li + li { margin-top: 0; } 
+header .gnb .util { visibility: visible; opacity: 1; position: relative; inset: unset; margin: 0.6rem 1.2rem 0 auto; gap: 1.2rem; } 
+header .gnb .util .ico-wrap { padding: 0; gap: 0; background: none; border: none; font-size: 0; height: auto; } 
+header .gnb .util [data-act="theme"] { display: none; } 
+header .gnb .util svg { width: 2.8rem; height: 2.8rem; } 
+header .gnb > .menu-toggle.is-active + ul { right: -4rem; } 
+header .gnb .menu-toggle { display: block; } 
+header .gnb .menu-toggle ~ .visual img { width: 100%; opacity: 0.8; } 
+header .gnb .visual .flx { display: none !important; } 
+header .gnb .menu-toggle ~ .visual { visibility: visible; opacity: 1; inset: unset; display: flex; transition: right 0.3s ease-in-out; right: -44rem; } 
+header .gnb .menu-toggle ~ .visual { top: -4rem; width: 40rem; } 
+header .gnb .menu-toggle.is-active ~ .visual { right: -4rem; } 
+footer { align-items: center; text-align: center; } 
+footer .footer-inner { flex-direction: column; align-items: center; } 
+footer .footer-inner .btn-wrap { position: static; } 
+.lnb + main .tit-wrap { margin-bottom: 5.2rem; } 
 .wrap .lnb ul li a { line-height: 5.2rem; } 
+.cont-wrap section .cont.ty-row { flex-direction: column; } 
+.cont-wrap section .cont.ty-row > .visual blockquote { position: static; width: 100%; max-width: unset; margin-top: 1.2rem; } 
+.cont-wrap section .cont.ty-row > div:first-child > div > div { text-align: center; } 
+.cont-wrap section .cont.ty-row > div:first-child > div > div svg { margin: 0 auto; } 
  }
 /* Mobile ~ */
 @media screen and (max-width: 767px) { header { top: 0; } 
- header .gnb h1 a svg { height: 3.2rem; } 
- header .gnb { max-width: unset; padding: 1.6rem 2rem; } 
- header .gnb .util { margin-top: 0.4rem; } 
- header .gnb .util .ico-wrap svg { width: 2.4rem; height: 2.4rem; } 
- header .gnb .menu-toggle { width: 2.4rem; height: 2.4rem; margin-top: 0.4rem; } 
- header .gnb .menu-toggle i:nth-child(1) { margin-top: -0.6rem; } 
- header .gnb .menu-toggle i:nth-child(2) { margin-top: 0; } 
- header .gnb .menu-toggle i:nth-child(3) { margin-top: 0; } 
- header .gnb .menu-toggle i:nth-child(4) { margin-top: 0.6rem; } 
- header .gnb > ul { right: -30rem; top: 0; width: 30rem; margin-top: 16.8rem; padding: 4rem; } 
- header .gnb > .menu-toggle.is-active + ul { right: 0; } 
- header .gnb .menu-toggle ~ .visual { right: -30rem; } 
- header .gnb .menu-toggle ~ .visual { top: 0; width: 30rem; } 
- header .gnb .menu-toggle.is-active ~ .visual { right: 0; } 
- .wrap .lnb.is-fixed { top: 6.4rem; } 
- .wrap .lnb { padding-left: 0; padding-right: 0; } 
- .wrap .cont-wrap section,
- footer { padding-left: 2rem; padding-right: 2rem; } 
- .wrap .tit-wrap.dep-1 { padding-top: 6.4rem; padding-left: 4rem; padding-right: 4rem; } 
- .wrap .lnb ul li { flex: 1; } 
- .wrap .lnb ul li a { padding: 0; } 
-.cont-wrap section .cont.ty-row { flex-direction: column; } 
- .cont-wrap section .cont.ty-row > .visual blockquote { position: static; width: 100%; max-width: unset; margin-top: 1.2rem; } 
- .cont-wrap section .cont.ty-row > div:first-child > div > div { text-align: center; } 
- .cont-wrap section .cont.ty-row > div:first-child > div > div svg { margin: 0 auto; } 
- /* 홈 */
+header .gnb h1 a svg { height: 3.2rem; } 
+header .gnb { max-width: unset; padding: 1.6rem 2rem; } 
+header .gnb .util { margin-top: 0.4rem; } 
+header .gnb .util .ico-wrap svg { width: 2.4rem; height: 2.4rem; } 
+header .gnb .menu-toggle { width: 2.4rem; height: 2.4rem; margin-top: 0.4rem; } 
+header .gnb .menu-toggle i:nth-child(1) { margin-top: -0.6rem; } 
+header .gnb .menu-toggle i:nth-child(2) { margin-top: 0; } 
+header .gnb .menu-toggle i:nth-child(3) { margin-top: 0; } 
+header .gnb .menu-toggle i:nth-child(4) { margin-top: 0.6rem; } 
+header .gnb > ul { right: -30rem; top: 0; width: 30rem; margin-top: 16.8rem; padding: 4rem; } 
+header .gnb > .menu-toggle.is-active + ul { right: 0; } 
+header .gnb .menu-toggle ~ .visual { right: -30rem; } 
+header .gnb .menu-toggle ~ .visual { top: 0; width: 30rem; } 
+header .gnb .menu-toggle.is-active ~ .visual { right: 0; } 
+.wrap .lnb.is-fixed { top: 6.4rem; } 
+.wrap .lnb { padding-left: 0; padding-right: 0; } 
+.wrap .cont-wrap section,
+footer { padding-left: 2rem; padding-right: 2rem; } 
+.wrap .tit-wrap.dep-1 { padding-top: 6.4rem; padding-left: 4rem; padding-right: 4rem; } 
+.wrap .lnb ul li { flex: 1; } 
+.wrap .lnb ul li a { padding: 0; font-size: 1.4rem; } 
+/* 홈 */
 .wrap main.home .cont-wrap .home-room .cont { flex-direction: column; } 
+/* 펜션소개 */
+.wrap main.about .cont-wrap .about-facility > .cont > div > div { flex-direction: column; text-align: center; } 
  }
- @media (hover: hover) and (pointer: fine) { header .gnb.is-opened .visual,
+@media (hover: hover) and (pointer: fine) { header .gnb.is-opened .visual,
 header .gnb.is-opened .util { visibility: visible; opacity: 1; transition: visibility 0s linear 0.4s, opacity 0.2s linear 0.4s; } 
- header .gnb.is-opened > ul { height: 22.8rem; transition: height 0.2s ease-in-out 0.2s; } 
+header .gnb.is-opened > ul { height: 22.8rem; transition: height 0.2s ease-in-out 0.2s; } 
 header .gnb.is-closing > ul { transition: height 0.2s ease-in-out; } 
 header .gnb.is-opened::before { animation: expand 0.4s ease-in-out forwards; box-shadow: 0.5rem 0.5rem 1rem rgba(0,0,0, 0.2); } 
 header .gnb.is-closing::before { animation: shrink 0.4s ease-in-out forwards; box-shadow: 0.5rem 0.5rem 1rem rgba(0,0,0, 0.2); } 
  }
- @media (hover: none) and (pointer: coarse) { } 
+@media (hover: none) and (pointer: coarse) { } 
+
+.acc-wrap,
+.acc-wrap .item { display: flex; flex-direction: column; align-items: stretch; }
+.acc-wrap button[data-act="toggle"] { position: relative; padding: 0.8rem 3.6rem 0.8rem 1.2rem; text-align: left; font-size: 1.6rem; font-weight: 600; background-color: rgb(var(--bg-700)); color: rgb(var(--txt-100)); border-radius: 0.8rem; }
+.acc-wrap button[data-act="toggle"]::before { content: ""; display: block; width: 2rem; height: 2rem; position: absolute; right: 0.8rem; top: calc(50% - 1rem); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-color: rgb(var(--txt-100)); transition: transform 0.3s ease-in-out; }
+.acc-wrap button[data-act="toggle"].is-active::before { transform: scaleY(-1); }
+.acc-wrap button[data-act="toggle"] + div { overflow: hidden; max-height: 0; transition: max-height 0.5s ease-in-out; padding: 0 0.8rem; }
+.acc-wrap button[data-act="toggle"] + div > *:first-child { margin-top: 0.8rem; }
+.acc-wrap button[data-act="toggle"] + div > *:last-child { margin-bottom: 0.8rem; }
+.acc-wrap button[data-act="toggle"].is-active + div { max-height: 20rem; }

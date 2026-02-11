@@ -10,22 +10,26 @@
         <meta property="og:title" content="[StayAndante] 석모도 스테이안단테펜션" />
         <meta property="og:image" content="https://stayandante.com/images/home/hero_main_01.jpg" />
         <meta name="twitter:image" content="https://stayandante.com/images/home/hero_main_01.jpg" />
-        <meta property="og:description" content="석모도 스테이안단테 펜션입니다." />
+        <meta property="og:description" content="석모도 스테이안단테펜션입니다." />
         <meta name="keywords" content="석모도,석모도 펜션" />
-        <meta name="description" content="석모도 스테이안단테 펜션입니다." />
+        <meta name="description" content="석모도 스테이안단테펜션입니다." />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="theme-color" content="#1f1d24" />
+        <link rel="icon" type="image/x-icon" href="./images/common/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="./images/common/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="./images/common/favicon-16x16.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="./images/common/apple-touch-icon.png" />
         <title>스테이안단테펜션</title>
         <script>
             (async () => {
                 const theme = localStorage.getItem("theme") || "light";
                 document.documentElement.dataset.theme = theme;
 
-                const svg = await fetch("https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.42/images/icon.svg?v=" + Date.now()).then((r) => r.text());
+                const svg = await fetch("https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.48/images/icon.svg?v=" + Date.now()).then((r) => r.text());
                 document.body.insertAdjacentHTML("afterbegin", svg);
             })();
         </script>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.45/css/global.css?v=123" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.47/css/global.css?v=123" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.0/library/swiper-bundle.min.css" />
         <link rel="stylesheet" href="./css/common.css" />
     </head>
@@ -137,7 +141,7 @@
                     <p>계좌번호 : 국민은행 606002-01-113598 | 예금주 : 이은영</p>
                 </div>
                 <div>
-                    <p>Copyright&copy;2026 StayAndante. All Rights Reserved</p>
+                    <p class="txt-700">Copyright&copy;2026 StayAndante. All Rights Reserved</p>
                 </div>
             </div>
         </footer>

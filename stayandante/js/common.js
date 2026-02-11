@@ -1,12 +1,16 @@
 let lnbScrollCtrl;
+let gnbCtrl;
 const common = {
     init(root = document) {
         this.gnb();
         this.lnb();
     },
     gnb() {
+        gnbCtrl?.abort();
+        gnbCtrl = new AbortController();
         const gnb = document.querySelector(".gnb");
         if (!gnb) return;
+        const btnMenu = document.querySelector(".menu-toggle");
 
         // PC hover 오픈/클로즈 애니메이션
         let isAnimating = false;
@@ -20,16 +24,41 @@ const common = {
             },
             { once: true }
         );
+        function dimToggle(show = true) {
+            if (show) {
+                let dimEl = document.createElement("div");
+                dimEl.className = "dim ty-gnb";
+                dimEl.style.zIndex = 998;
+                document.documentElement.append(dimEl);
+                dimEl.addEventListener("click", function () {
+                    btnMenu.classList.remove("is-active");
+                    dimEl.remove();
+                });
+            }
+            if (!show && document.querySelector(".dim.ty-gnb")) {
+                document.querySelector(".dim.ty-gnb").remove();
+            }
+        }
+        document.addEventListener(
+            "click",
+            (e) => {
+                const toggle = e.target.closest(".menu-toggle");
+                if (!toggle) return;
+
+                const hasDim = document.querySelector(".dim.ty-gnb");
+                dimToggle(!hasDim);
+            },
+            { signal: gnbCtrl.signal }
+        );
         document.addEventListener(
             "spa:change",
             (e) => {
-                const { linkcd } = e.detail;
-                const btnMenu = document.querySelector(".menu-toggle");
                 if (btnMenu.classList.contains("is-active")) {
                     btnMenu.classList.remove("is-active");
                 }
+                dimToggle(false);
             },
-            { once: true }
+            { signal: gnbCtrl.signal }
         );
         const openHeader = () => {
             if (isAnimating || gnb.classList.contains("is-opened")) return;
@@ -85,7 +114,7 @@ const common = {
     lnb() {
         const gnbEl = document.querySelector(".gnb");
         const lnbEl = document.querySelector(".lnb");
-        if(!lnbEl) return;
+        if (!lnbEl) return;
 
         lnbScrollCtrl?.abort();
         lnbScrollCtrl = new AbortController();
@@ -104,9 +133,9 @@ const common = {
             "scroll",
             () => {
                 if (window.scrollY >= titRectHeight - titPaddingTop) {
-                    lnbEl?.classList.add('is-fixed');
+                    lnbEl?.classList.add("is-fixed");
                 } else {
-                    lnbEl?.classList.remove('is-fixed');
+                    lnbEl?.classList.remove("is-fixed");
                 }
             },
             { signal: lnbScrollCtrl.signal }

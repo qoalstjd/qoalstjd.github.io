@@ -12,7 +12,7 @@ window.initModule = ({ root, params }) => {
             this.data.forEach((item) => {
                 const el = document.createElement("li");
                 el.innerHTML = `
-                    <span class="id">${item.id}</span>
+                    <span class="id">${item.id.padStart(2, "0")}</span>
                     <span class="category">
                         <svg class="wh-20">
                             <use href="#ui-${item.tag === "새소식" ? "bell" : "document"}"></use>

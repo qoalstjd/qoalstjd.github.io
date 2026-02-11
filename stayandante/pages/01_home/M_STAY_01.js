@@ -77,7 +77,7 @@ window.initModule = ({ root, params }) => {
                 `<div class="box line pc50 jc-e ai-e">
                     <div class="tit-wrap dep-3 ta-r ai-e">
                         <h4 class="ta-r">머무는 시간의 이야기를 전해요<br></h4>
-                        <p>스테이 안단테의 하루, 소식으로 만나보세요</p>
+                        <p>스테이안단테펜션의 하루, 소식으로 만나보세요</p>
                     </div>
                     <div class="btn-wrap jc-e mt-0">
                         <a href="/index.html?linkcd=m0501" class="btn md line">
