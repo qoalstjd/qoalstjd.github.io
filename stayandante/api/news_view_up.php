@@ -1,9 +1,15 @@
 <?php
 header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json; charset=utf-8");
 
 include $_SERVER['DOCUMENT_ROOT'] . "/../db/conn.php";
 
 $id = (int)($_GET['id'] ?? 0);
+
+if ($id <= 0) {
+  echo json_encode(["ok" => false]);
+  exit;
+}
 
 $conn->query("
   UPDATE news 
@@ -11,13 +17,4 @@ $conn->query("
   WHERE id = $id
 ");
 
-$result = $conn->query("
-  SELECT * 
-  FROM news 
-  WHERE id = $id
-");
-
-echo json_encode(
-  $result->fetch_assoc(),
-  JSON_UNESCAPED_UNICODE
-);
+echo json_encode(["ok" => true]);

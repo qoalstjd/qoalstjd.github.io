@@ -8,6 +8,13 @@ window.initModule = ({ root, params }) => {
             this.wrap.innerHTML = "";
             this.render();
         },
+        increaseView: async (id) => {
+            try {
+                await fetch(`https://stayandante.com/api/news_view_up.php?id=${id}`);
+            } catch (e) {
+                console.error(e);
+            }
+        },
         render() {
             this.data.forEach((item) => {
                 const el = document.createElement("li");
@@ -25,8 +32,9 @@ window.initModule = ({ root, params }) => {
                 el.addEventListener("click", async () => {
                     window.dialog.open({
                         url: "/pages/00_common/P_STAY_00_news.html",
-                        data: await fetch(`https://stayandante.com/api/news_view.php?id=${item.id}`).then((res) => res.json()),
+                        data: item,
                     });
+                    this.increaseView(item.id);
                 });
                 this.wrap.append(el);
             });

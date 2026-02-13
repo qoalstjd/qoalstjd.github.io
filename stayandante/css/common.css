@@ -79,7 +79,8 @@ footer .footer-inner .btn-wrap { position: absolute; right: 0; top: -5.6rem; }
 .cont-wrap section .cont.ty-row > .visual img { height: 100%; object-fit: cover; } 
 .cont-wrap section .cont.ty-row > .visual blockquote { position: absolute; left: -1.2rem; bottom: -2rem; width: calc(100% - 4rem); max-width: 32rem; margin: 0; background-color: rgba(var(--bg-200), 0.9); } 
 .cont-wrap section .cont.ty-row > .visual blockquote cite { align-self: flex-end; } 
-
+.info-wrap { display: flex; margin-top: auto; gap: 1.2rem; }
+.info-wrap > .box { flex: 1; }
 /* ==================== 홈 ==================== */
 /* 홈 > 스와이퍼 */
 .wrap main.home .swiper { position: relative; } 
@@ -195,6 +196,7 @@ footer { padding-left: 2rem; padding-right: 2rem; }
 .wrap .tit-wrap.dep-1 { padding-top: 6.4rem; padding-left: 4rem; padding-right: 4rem; } 
 .wrap .lnb ul li { flex: 1; } 
 .wrap .lnb ul li a { padding: 0; font-size: 1.4rem; } 
+.info-wrap { flex-direction: column; }
 /* 홈 */
 .wrap main.home .cont-wrap .home-room .cont { flex-direction: column; } 
 /* 펜션소개 */
@@ -208,13 +210,3 @@ header .gnb.is-opened::before { animation: expand 0.4s ease-in-out forwards; box
 header .gnb.is-closing::before { animation: shrink 0.4s ease-in-out forwards; box-shadow: 0.5rem 0.5rem 1rem rgba(0,0,0, 0.2); } 
  }
 @media (hover: none) and (pointer: coarse) { } 
-
-.acc-wrap,
-.acc-wrap .item { display: flex; flex-direction: column; align-items: stretch; }
-.acc-wrap button[data-act="toggle"] { position: relative; padding: 0.8rem 3.6rem 0.8rem 1.2rem; text-align: left; font-size: 1.6rem; font-weight: 600; background-color: rgb(var(--bg-700)); color: rgb(var(--txt-100)); border-radius: 0.8rem; }
-.acc-wrap button[data-act="toggle"]::before { content: ""; display: block; width: 2rem; height: 2rem; position: absolute; right: 0.8rem; top: calc(50% - 1rem); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-color: rgb(var(--txt-100)); transition: transform 0.3s ease-in-out; }
-.acc-wrap button[data-act="toggle"].is-active::before { transform: scaleY(-1); }
-.acc-wrap button[data-act="toggle"] + div { overflow: hidden; max-height: 0; transition: max-height 0.5s ease-in-out; padding: 0 0.8rem; }
-.acc-wrap button[data-act="toggle"] + div > *:first-child { margin-top: 0.8rem; }
-.acc-wrap button[data-act="toggle"] + div > *:last-child { margin-bottom: 0.8rem; }
-.acc-wrap button[data-act="toggle"].is-active + div { max-height: 20rem; }
