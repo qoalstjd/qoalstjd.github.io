@@ -20,11 +20,13 @@ header .gnb > ul > li > ul { margin-top: 3.2rem; }
 header .gnb > ul > li > ul > li + li { margin-top: 1.2rem; } 
 header .gnb > ul > li > ul > li > a { display: block; width: 100%; font-weight: 600; color: rgb(var(--txt-700)); } 
 header .gnb > ul > li > ul > li > a:hover { text-decoration: underline; color: rgb(var(--txt-700)); } 
-@keyframes expand {0% { width: 100%; height: 100%; top: 0; opacity: 0; } 
+@keyframes expand { 
+ 0% { width: 100%; height: 100%; top: 0; opacity: 0; } 
 50% { width: 100vw; height: 100%; top: 0; opacity: 1; } 
 100% { width: 100vw; height: 36rem; top: -4rem; opacity: 1; } 
  }
-@keyframes shrink {0% { width: 100vw; height: 36rem; top: -4rem; opacity: 1; } 
+@keyframes shrink { 
+ 0% { width: 100vw; height: 36rem; top: -4rem; opacity: 1; } 
 50% { width: 100vw; height: 100%; top: 0; opacity: 1; } 
 100% { width: 100%; height: 100%; top: 0; opacity: 0; } 
  }
@@ -76,11 +78,11 @@ footer .footer-inner .btn-wrap { position: absolute; right: 0; top: -5.6rem; }
 .cont-wrap section .cont.ty-row { display: flex; gap: 3.2rem; } 
 .cont-wrap section .cont.ty-row > div { flex: 1; } 
 .cont-wrap section .cont.ty-row > .visual { position: relative; } 
-.cont-wrap section .cont.ty-row > .visual img { height: 100%; object-fit: cover; } 
+.cont-wrap section .cont.ty-row > .visual img { width: 100%; height: 100%; object-fit: cover; } 
 .cont-wrap section .cont.ty-row > .visual blockquote { position: absolute; left: -1.2rem; bottom: -2rem; width: calc(100% - 4rem); max-width: 32rem; margin: 0; background-color: rgba(var(--bg-200), 0.9); } 
 .cont-wrap section .cont.ty-row > .visual blockquote cite { align-self: flex-end; } 
-.info-wrap { display: flex; margin-top: auto; gap: 1.2rem; }
-.info-wrap > .box { flex: 1; }
+.info-wrap { display: flex; margin-top: auto; gap: 1.2rem; } 
+.info-wrap > .box { flex: 1; } 
 /* ==================== 홈 ==================== */
 /* 홈 > 스와이퍼 */
 .wrap main.home .swiper { position: relative; } 
@@ -119,7 +121,9 @@ footer .footer-inner .btn-wrap { position: absolute; right: 0; top: -5.6rem; }
 /* ==================== 객실소개 ==================== */
 .wrap main.room .tit-wrap.dep-1 { background-image: url("../images/room/hero_room.jpg"); } 
 .wrap main.room .cont-wrap .room-detail .cont .visual { display: flex; flex-direction: column; } 
-.wrap main.room .cont-wrap .room-detail .cont .img-wrap img { cursor: pointer; opacity: 0.8; } 
+.wrap main.room .cont-wrap .room-detail .cont .visual > img { padding-bottom: 12%; }
+.wrap main.room .cont-wrap .room-detail .cont .img-wrap { position: absolute; left: 0; bottom: 0; } 
+.wrap main.room .cont-wrap .room-detail .cont .img-wrap img { cursor: pointer; opacity: 0.7; } 
 .wrap main.room .cont-wrap .room-detail .cont .img-wrap img.is-active { opacity: 1; } 
 .wrap main.room .cont-wrap .room-another { padding-left: 0; padding-right: 0; } 
 .wrap main.room .cont-wrap .room-another .cont > .box { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; aspect-ratio: 16/9; background: no-repeat center / auto 100%; transition: background-size 0.3s ease-in-out; min-height: 32rem; } 
@@ -196,7 +200,7 @@ footer { padding-left: 2rem; padding-right: 2rem; }
 .wrap .tit-wrap.dep-1 { padding-top: 6.4rem; padding-left: 4rem; padding-right: 4rem; } 
 .wrap .lnb ul li { flex: 1; } 
 .wrap .lnb ul li a { padding: 0; font-size: 1.4rem; } 
-.info-wrap { flex-direction: column; }
+.info-wrap { flex-direction: column; } 
 /* 홈 */
 .wrap main.home .cont-wrap .home-room .cont { flex-direction: column; } 
 /* 펜션소개 */
