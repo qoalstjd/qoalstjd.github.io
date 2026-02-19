@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <title>스테이안단테펜션 | 관리자</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.493/css/global.css?v=123" />
+        <style>
+            #loginDiv {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin: 0 auto;
+                width: 30rem;
+            }
+            #loginDiv input {
+                display: block;
+                width: 100%;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>관리자 페이지</h1>
+
+        <div id="loginDiv">
+            <input type="text" id="loginId" placeholder="ID" />
+            <input type="password" id="loginPw" placeholder="PW" />
+            <button id="loginBtn" class="btn md">로그인</button>
+        </div>
+
+        <div id="adminDiv" class="hidden">
+            <h2>뉴스 관리</h2>
+            <button id="addNewsBtn">뉴스 추가</button>
+            <table id="newsTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Tag</th>
+                        <th>Title</th>
+                        <th>Content</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+
+            <h2>이미지 업로드</h2>
+            <input type="file" id="imgFile" multiple />
+            <button id="uploadBtn">업로드</button>
+            <div id="imgList"></div>
+
+            <h2>FAQ 관리</h2>
+            <button id="addFaqBtn">FAQ 추가</button>
+            <table id="faqTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Type</th>
+                        <th>Question</th>
+                        <th>Answer</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <script>
+            const loginDiv = document.getElementById("loginDiv");
+            const adminDiv = document.getElementById("adminDiv");
+
+            document.getElementById("loginBtn").onclick = async () => {
+                const res = await fetch("login.php", {
+                    method: "POST",
+                    body: JSON.stringify({ id: loginId.value, pw: loginPw.value }),
+                });
+                const data = await res.json();
+                if (data.success) {
+                    loginDiv.classList.add("hidden");
+                    adminDiv.classList.remove("hidden");
+                    loadNews();
+                    loadFaq();
+                } else {
+                    alert("로그인 실패");
+                }
+            };
+
+            // ----- NEWS -----
+            async function loadNews() {
+                const res = await fetch("/admin/news.php?action=list");
+                const news = await res.json();
+                const tbody = document.querySelector("#newsTable tbody");
+                tbody.innerHTML = "";
+                news.forEach((n) => {
+                    const tr = document.createElement("tr");
+                    tr.innerHTML = `<td>${n.id}</td><td contenteditable data-field="tag">${n.tag}</td><td contenteditable data-field="title">${n.title}</td><td contenteditable data-field="content">${n.content}</td>
+<td>
+<button onclick="editNews(${n.id}, this)">저장</button>
+<button onclick="deleteNews(${n.id})">삭제</button>
+</td>`;
+                    tbody.appendChild(tr);
+                });
+            }
+
+            async function editNews(id, btn) {
+                const tr = btn.closest("tr");
+                const form = new FormData();
+                form.append("id", id);
+                form.append("tag", tr.querySelector('[data-field="tag"]').textContent);
+                form.append("title", tr.querySelector('[data-field="title"]').textContent);
+                form.append("content", tr.querySelector('[data-field="content"]').textContent);
+                await fetch("/admin/news.php?action=edit", { method: "POST", body: form });
+                loadNews();
+            }
+
+            async function deleteNews(id) {
+                if (!confirm("삭제할까요?")) return;
+                await fetch(`/admin/news.php?action=delete&id=${id}`);
+                loadNews();
+            }
+
+            // ----- FAQ -----
+            async function loadFaq() {
+                const res = await fetch("/admin/faq.php?action=list");
+                const faqs = await res.json();
+                const tbody = document.querySelector("#faqTable tbody");
+                tbody.innerHTML = "";
+                faqs.forEach((f) => {
+                    const tr = document.createElement("tr");
+                    tr.innerHTML = `<td>${f.id}</td><td contenteditable data-field="type">${f.type}</td><td contenteditable data-field="question">${f.question}</td><td contenteditable data-field="answer">${f.answer}</td>
+<td>
+<button onclick="editFaq(${f.id}, this)">저장</button>
+<button onclick="deleteFaq(${f.id})">삭제</button>
+</td>`;
+                    tbody.appendChild(tr);
+                });
+            }
+
+            async function editFaq(id, btn) {
+                const tr = btn.closest("tr");
+                const form = new FormData();
+                form.append("id", id);
+                form.append("type", tr.querySelector('[data-field="type"]').textContent);
+                form.append("question", tr.querySelector('[data-field="question"]').textContent);
+                form.append("answer", tr.querySelector('[data-field="answer"]').textContent);
+                await fetch("/admin/faq.php?action=edit", { method: "POST", body: form });
+                loadFaq();
+            }
+
+            async function deleteFaq(id) {
+                if (!confirm("삭제할까요?")) return;
+                await fetch(`/admin/faq.php?action=delete&id=${id}`);
+                loadFaq();
+            }
+
+            const imgFile = document.getElementById("imgFile");
+            const uploadBtn = document.getElementById("uploadBtn");
+            const imgList = document.getElementById("imgList");
+
+            async function loadImages() {
+                const res = await fetch("/admin/upload.php?action=list");
+                const imgs = await res.json();
+                imgList.innerHTML = "";
+                imgs.forEach((i) => {
+                    const div = document.createElement("div");
+                    div.innerHTML = `<img src="${i.url}" width="80"> <button onclick="deleteImage(${i.id})">삭제</button>`;
+                    imgList.appendChild(div);
+                });
+            }
+
+            async function deleteImage(id) {
+                if (!confirm("삭제할까요?")) return;
+                await fetch(`/admin/upload.php?action=delete&id=${id}`);
+                loadImages();
+            }
+
+            uploadBtn.onclick = async () => {
+                const files = imgFile.files;
+                if (!files.length) return;
+                for (let f of files) {
+                    const form = new FormData();
+                    form.append("file", f);
+                    await fetch("/admin/upload.php?action=upload", { method: "POST", body: form });
+                }
+                imgFile.value = "";
+                loadImages();
+            };
+
+            // 초기 로드
+            loadImages();
+        </script>
+    </body>
+</html>

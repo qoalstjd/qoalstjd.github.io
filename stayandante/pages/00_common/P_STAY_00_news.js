@@ -1,5 +1,5 @@
 window.initModule = ({ root, params }) => {
-    const titleEl = root.querySelector(".dialog-title");
+    const titleEl = root.querySelector(".dialog-title p");
     if (!titleEl) return;
     titleEl.insertAdjacentHTML(
         "afterbegin",

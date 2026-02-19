@@ -4,13 +4,13 @@ window.initModule = ({ root, params }) => {
         wrap: root.querySelector(".meta-list"),
         data: [],
         async init() {
-            this.data = (await window.fetchManager.get("https://stayandante.com/api/news_list.php")) || [];
+            this.data = (await window.fetchManager.get("https://stayandante.com/admin/news.php?action=list")) || [];
             this.wrap.innerHTML = "";
             this.render();
         },
         increaseView: async (id) => {
             try {
-                await fetch(`https://stayandante.com/api/news_view_up.php?id=${id}`);
+                await fetch(`https://stayandante.com/admin/news.php?action=increase_view&id=${id}`);
             } catch (e) {
                 console.error(e);
             }
