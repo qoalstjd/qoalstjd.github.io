@@ -17,7 +17,7 @@ window.initModule = ({ root, params }) => {
         tabBtnEls.forEach((btn) => {
             btn.addEventListener("click", () => {
                 const roomNameEl = root.querySelector(".room-name");
-                roomNameEl.textContent = "Moderato" + btn.textContent.trim();
+                roomNameEl.textContent = "Moderato " + btn.textContent.trim();
             });
         });
     };
