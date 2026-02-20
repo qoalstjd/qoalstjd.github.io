@@ -27,7 +27,8 @@ window.initModule = ({ root, params }) => {
                 const el = document.createElement("li");
                 const newsData = {
                     ...item,
-                    content: marked.parse(item.content)
+                    content: marked.parse(item.content),
+                    created_at: item.created_at.split(" ")[0].split("-").join(".")
                 };
                 el.innerHTML = `
                     <span class="id">${newsData.id.padStart(2, "0")}</span>

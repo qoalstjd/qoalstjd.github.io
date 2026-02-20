@@ -8,7 +8,7 @@
         <link rel="icon" type="image/png" sizes="32x32" href="/images/common/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/images/common/favicon-16x16.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="/images/common/apple-touch-icon.png" />
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.496/css/global.css?v=123" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.505/css/global.css?v=123" />
         <link rel="stylesheet" href="/css/common.css" />
         <style>
             body {
@@ -166,7 +166,7 @@
             </div>
         </div>
 
-        <script src="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.492/js/ui.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.501/js/ui.js"></script>
         <script>
             ui.init();
 
@@ -204,15 +204,17 @@
                 news.forEach((n) => {
                     const tr = document.createElement("tr");
 
-                    const tagSelect = `<select data-field="tag">
-                        ${["새소식", "공지"].map((t) => `<option value="${t}" ${t === n.tag ? "selected" : ""}>${t}</option>`).join("")}
-                    </select>`;
                     tr.innerHTML = `
                         <td class="ta-c">${n.id}</td>
-                        <td class="ta-c">${tagSelect}</td>
-                        <td contenteditable data-field="title">${n.title}</td>
+                        <td class="ta-c">
+                            <select data-field="tag">
+                                ${["새소식", "공지"].map((t) => `<option value="${t}" ${t === n.tag ? "selected" : ""}>${t}</option>`).join("")}
+                            </select>
+                        </td>
+                        <td data-field="title">${n.title}</td>
+                        <td data-field="date">${n.created_at.split(" ")[0].split("-").join(".")}</td>
                         <td>
-                            <button class="btn sm bg-point" onclick="editNews(${n.id}, this)">
+                            <button class="btn sm bg-point">
                                 <svg class="wh-20"><use href="#act-edit"></use></svg>
                                 수정
                             </button>
@@ -221,6 +223,13 @@
                                 삭제
                             </button>
                         </td>`;
+                    tr.querySelector('.btn.sm.bg-point').addEventListener("click", async () => {
+                        window.dialog.open({
+                            url: "/admin/news_editor.html",
+                            data: n,
+                            size: "lg",
+                        });
+                    });
                     tbody.appendChild(tr);
                 });
             }
@@ -258,7 +267,7 @@
                     li.innerHTML = `
                         <img src="${i.url}" class="wh-32">
                         <span class="title">${i.url}</span>
-                        <button class="btn sm bg-point" onclick="${ui.copyClipBoard(i.url)}">
+                        <button class="btn sm bg-point">
                             <svg class="wh-20"><use href="#act-copy"></use></svg>
                             복사
                         </button>
@@ -267,6 +276,7 @@
                             삭제
                         </button>
                     `;
+                    li.querySelector(".btn.sm.bg-point").onclick = () => ui.copyClipBoard(i.url);
                     imgList.appendChild(li);
                 });
             }
@@ -304,31 +314,31 @@
                 faqs.forEach((f) => {
                     const tr = document.createElement("tr");
 
-                    const typeSelect = `<select data-field="type">
-                            ${["예약", "편의", "기타"].map((t) => `<option value="${t}" ${t === f.type ? "selected" : ""}>${t}</option>`).join("")}
-                        </select>`;
-
                     tr.innerHTML = `
-                            <td class="ta-c">${f.id}</td>
-                            <td class="ta-c">${typeSelect}</td>
-                            <td contenteditable data-field="question">${f.question}</td>
-                            <td>
-                                <ul class="txt-list dot" data-field="answer">
-                                    ${JSON.parse(f.answer)
-                                        .map((data) => `<li contenteditable>${data}</li>`)
-                                        .join("")}
-                                </ul>
-                            </td>
-                            <td>
-                                <button class="btn sm bg-point" onclick="editFaq(${f.id}, this)">
-                                    <svg class="wh-20"><use href="#act-check"></use></svg>
-                                    저장
-                                </button>
-                                <button class="btn sm bg-red" onclick="deleteFaq(${f.id})">
-                                    <svg class="wh-20"><use href="#act-delete"></use></svg>
-                                    삭제
-                                </button>
-                            </td>`;
+                        <td class="ta-c">${f.id}</td>
+                        <td class="ta-c">
+                            <select data-field="type">
+                                ${["예약", "편의", "기타"].map((t) => `<option value="${t}" ${t === f.type ? "selected" : ""}>${t}</option>`).join("")}
+                            </select>
+                        </td>
+                        <td contenteditable data-field="question">${f.question}</td>
+                        <td>
+                            <ul class="txt-list dot" data-field="answer">
+                                ${JSON.parse(f.answer)
+                                    .map((data) => `<li contenteditable>${data}</li>`)
+                                    .join("")}
+                            </ul>
+                        </td>
+                        <td>
+                            <button class="btn sm bg-point" onclick="editFaq(${f.id}, this)">
+                                <svg class="wh-20"><use href="#act-check"></use></svg>
+                                저장
+                            </button>
+                            <button class="btn sm bg-red" onclick="deleteFaq(${f.id})">
+                                <svg class="wh-20"><use href="#act-delete"></use></svg>
+                                삭제
+                            </button>
+                        </td>`;
                     tbody.appendChild(tr);
                 });
             }
@@ -339,10 +349,7 @@
                 form.append("id", id);
                 form.append("type", tr.querySelector('[data-field="type"]').value);
                 form.append("question", tr.querySelector('[data-field="question"]').textContent);
-                form.append(
-                    "answer",
-                    Array.from(tr.querySelector('[data-field="answer"] li')).map((li) => li.textContent)
-                );
+                form.append("answer", JSON.stringify(Array.from(tr.querySelector('[data-field="answer"] li')).map((li) => li.textContent)));
                 await fetch("/api/faq.php?action=edit", {
                     method: "POST",
                     body: form,

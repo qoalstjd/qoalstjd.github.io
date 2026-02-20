@@ -32,7 +32,8 @@ window.initModule = ({ root, params }) => {
                 const el = document.createElement("div");
                 const newsData = {
                     ...item,
-                    content: marked.parse(item.content)
+                    content: marked.parse(item.content),
+                    created_at: item.created_at.split(" ")[0].split("-").join(".")
                 };
                 if (i === 0) {
                     el.classList.add("box", "pc66", "pd-0", "bg-point", "txt-white");
@@ -51,7 +52,7 @@ window.initModule = ({ root, params }) => {
                         </div>
                         <div class="flx col pd-20">
                             <p class="ell-2">${marked.parse(newsData.content)}</p>
-                            <p class="fs-14 mt-12">${newsData.created_at.split(" ")[0].split("-").join(".")}</p>
+                            <p class="fs-14 mt-12">${newsData.created_at}</p>
                         </div>
                     `;
                 } else {
