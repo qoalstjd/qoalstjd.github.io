@@ -4,7 +4,7 @@ window.initModule = ({ root, params }) => {
         wrap: root.querySelector(".acc-wrap"),
         data: [],
         async init() {
-            this.data = (await window.fetchManager.get("https://stayandante.com/admin/faq.php?action=list")) || [];
+            this.data = await fetch("/api/faq.php?action=list") || [];
             this.wrap.innerHTML = "";
             this.render();
         },

@@ -1,11 +1,12 @@
 <?php
-require_once __DIR__ . '/util.php'; // DB 연결, 세션/로그인 체크
+require_once __DIR__ . '/../admin/util.php'; // DB 연결, 세션/로그인 체크
 header("Content-Type: application/json; charset=utf-8");
 
 $conn = dbConn();
-checkAuth(); // 로그인 확인
-
 $action = $_GET['action'] ?? $_POST['action'] ?? 'list';
+if (!in_array($action, ['list'])) {
+    checkAuth();
+}
 
 switch($action) {
     // FAQ 목록	GET	faq.php?action=list

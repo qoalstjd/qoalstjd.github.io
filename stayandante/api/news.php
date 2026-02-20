@@ -3,10 +3,10 @@ require_once __DIR__ . '/../admin/util.php'; // DB 연결, 세션/로그인 체�
 header("Content-Type: application/json; charset=utf-8");
 
 $conn = dbConn();
-checkAuth(); // 로그인 확인
-
 $action = $_GET['action'] ?? $_POST['action'] ?? 'list';
-
+if (!in_array($action, ['list', 'increase_view'])) {
+    checkAuth();
+}
 switch($action) {
     // 뉴스 목록	GET	news.php?action=list
     case 'list':

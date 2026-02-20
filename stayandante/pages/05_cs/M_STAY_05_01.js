@@ -4,13 +4,13 @@ window.initModule = ({ root, params }) => {
         wrap: root.querySelector(".meta-list"),
         data: [],
         async init() {
-            this.data = (await window.fetchManager.get("https://stayandante.com/admin/news.php?action=list")) || [];
+            this.data = await fetch("/api/news.php?action=list") || [];
             this.wrap.innerHTML = "";
             this.render();
         },
         increaseView: async (id) => {
             try {
-                await fetch(`https://stayandante.com/admin/news.php?action=increase_view&id=${id}`);
+                await fetch(`/api/news.php?action=increase_view&id=${id}`);
             } catch (e) {
                 console.error(e);
             }

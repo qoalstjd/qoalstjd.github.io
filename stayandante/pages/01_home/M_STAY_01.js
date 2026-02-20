@@ -14,7 +14,7 @@ window.initModule = ({ root, params }) => {
         wrap: root.querySelector(".home-news .cont"),
         data: [],
         async init() {
-            const res = (await window.fetchManager.get("https://stayandante.com/admin/news.php?action=list")) || [];
+            const res = await fetch("/api/news.php?action=list") || [];
             this.data = res.slice(0, 4);
             this.wrap.innerHTML = "";
             this.render();
@@ -99,7 +99,7 @@ window.initModule = ({ root, params }) => {
         },
         increaseView: async (id) => {
             try {
-                await fetch(`https://stayandante.com/admin/news.php?action=increase_view&id=${id}`);
+                await fetch(`/api/news.php?action=increase_view&id=${id}`);
             } catch (e) {
                 console.error(e);
             }

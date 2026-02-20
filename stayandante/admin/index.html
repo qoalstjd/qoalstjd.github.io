@@ -2,81 +2,171 @@
 <html lang="ko">
     <head>
         <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>스테이안단테펜션 | 관리자</title>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.493/css/global.css?v=123" />
+        <link rel="icon" type="image/x-icon" href="/images/common/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/common/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/common/favicon-16x16.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/common/apple-touch-icon.png" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.495/css/global.css?v=123" />
+        <link rel="stylesheet" href="/css/common.css" />
         <style>
+            body {
+                padding: 2.4rem;
+            }
             #loginDiv {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
                 margin: 0 auto;
-                width: 30rem;
-            }
-            #loginDiv input {
-                display: block;
-                width: 100%;
+                width: 24rem;
+                gap: 1.2rem;
             }
         </style>
     </head>
     <body>
-        <h1>관리자 페이지</h1>
-
-        <div id="loginDiv">
+        <svg xmlns="http://www.w3.org/2000/svg" style="display: none">
+            <defs>
+                <style>
+                    symbol {
+                        fill: none;
+                        stroke: currentColor;
+                        stroke-width: 1.5;
+                        stroke-linecap: round;
+                        stroke-linejoin: round;
+                    }
+                </style>
+            </defs>
+            <symbol id="brand-stay" viewBox="0 0 72 44">
+                <title>brand-stay</title>
+                <desc>스테이안단테</desc>
+                <path
+                    d="M2 30C6.6015 30 8.64662 27.5439 18.0871 13.2982M70 20.1754C38.5 17.2281 27.5451 2.5 25.5 2.5C23.4549 2.5 20.0754 10.1197 18.0871 13.2982M18.0871 13.2982C15.8045 23.614 13.2481 30 18.3609 30C20.406 30 18.6173 26.2334 21.9398 24.1053C23.4737 23.1228 20.9173 30 22.4511 30C23.4737 30 24.0872 24.5965 26.5414 24.5965C29.609 24.5965 26.0301 30 28.0752 30C29.609 30 30.1536 28.79 30.8326 27.0526M33.6992 25.0877C31.9615 25.0877 31.2446 25.9984 30.8326 27.0526M30.8326 27.0526C30.5952 28.0351 30.5293 30 32.1654 30C35.9385 30 37.7895 22.1404 37.7895 17.2281C37.7895 12.3158 34.2105 12.3158 34.2105 17.2281C34.2105 22.1404 35.2331 30 37.2782 30C38.812 30 39.3233 27.7579 40.3459 26.1772M44.4361 25.0877C42.391 24.1053 41.3684 24.5965 40.3459 26.1772M40.3459 26.1772C39.8346 27.4515 39.3233 30 41.3684 30C43.4135 30 43.4135 27.0526 43.9248 27.0526C44.4361 27.0526 44.2835 30 45.9699 30C48.015 30 47.5038 24.1053 50.0602 24.5965C50.8686 24.7518 50.0602 30 50.5714 30C51.0827 30 52.2075 24.3018 54.6617 25.0877C56.7068 25.7427 53.1278 30 56.1955 30C59.2632 30 61.3083 22.1404 61.3083 17.2281C61.3083 12.3158 57.7293 12.3158 57.7293 17.2281C57.7293 22.1404 59.2632 30 62.3308 30C64.3759 30 63.7895 29.0175 63.8647 27.5439M63.8647 27.5439C63.9263 26.3357 64.4157 24.2111 66.4211 24.5965C68.9774 25.0877 67.4436 26.807 66.9323 27.0526C65.9098 27.5439 64.9036 28.3626 63.8647 27.5439ZM63.8647 27.5439C64.8872 29.5088 65.9098 31.4737 70 27.5439M5.06767 17.2281C0.977444 21.6491 2 24.5965 19.8947 21.6491"
+                ></path>
+                <path
+                    d="M2 40.5C2 40.5 4.69841 34 5.77778 34C6.85714 34 9.55556 40.5 9.55556 40.5M10.6349 38.5V34.5C10.6349 34.2239 10.8588 34 11.1349 34H14.4127M10.6349 38.5H14.4127M10.6349 38.5V42.5C10.6349 42.7761 10.8588 43 11.1349 43H14.9524M15.4921 38.5H16.5714M16.5714 34V43M18.1905 34V43M26.8254 34V43M34.9206 34V36M34.9206 38.5V36M34.9206 36H35.4603M28.4444 40V42.5C28.4444 42.7761 28.6683 43 28.9444 43H34.9206M43.5556 34V36M43.5556 38.5V36M43.5556 36H44.0952M37.0794 40V42.5C37.0794 42.7761 37.3032 43 37.5794 43H43.5556M45.1746 38.5V34.5C45.1746 34.2239 45.3985 34 45.6746 34H48.9524M45.1746 38.5H48.9524M45.1746 38.5V42.5C45.1746 42.7761 45.3985 43 45.6746 43H49.4921M51.1111 34V38.5M51.1111 43V38.5M52.7302 34V43M51.1111 38.5H50.0317M53.8095 34L54.8889 34M58.127 34L57.0476 34M54.8889 34V38.5M54.8889 34H57.0476M57.0476 34V38.5M53.8095 38.5H58.127M58.6667 36H59.746M59.746 34V38.5M61.3651 34V38.5M54.3492 40V42.5C54.3492 42.7761 54.5731 43 54.8492 43H61.5M68.9206 35.5H70M70 34V37M70 38.5V37M68.9206 37H70M62.4444 38.5C62.4444 38.5 65.1429 34 65.6825 34C66.2222 34 68.381 38.5 68.381 38.5M62.9841 40V42.5C62.9841 42.7761 63.208 43 63.4841 43H70M41.3968 34H37.0397C36.7635 34 36.5397 34.2239 36.5397 34.5V38C36.5397 38.2761 36.7635 38.5 37.0397 38.5H41.3968M2 43H9.55556M22.5079 34C18.7302 34 18.7302 43 22.5079 43C25.9035 43 26.2857 34 22.5079 34ZM30.6032 34C27.3651 34 27.3651 38.5 30.6032 38.5C33.8413 38.5 33.8413 34 30.6032 34Z"
+                ></path>
+            </symbol>
+        </svg>
+        <h1 class="flx col jc-c ai-c fs-20 gap-12 mt-0 pt-8">
+            <svg style="width: 7.2rem; height: 4.4rem"><use href="#brand-stay"></use></svg>
+            관리자 페이지
+        </h1>
+        <!-- ================== 로그인 ================== -->
+        <form id="loginDiv">
             <input type="text" id="loginId" placeholder="ID" />
             <input type="password" id="loginPw" placeholder="PW" />
-            <button id="loginBtn" class="btn md">로그인</button>
+            <button id="loginBtn" class="btn sm bg-point">로그인</button>
+        </form>
+        <div id="adminDiv" class="mw-1024" style="display: none">
+            <div class="tab-wrap lg">
+                <button data-tab="tab01">뉴스</button>
+                <button data-tab="tab02">FAQ</button>
+            </div>
+            <!-- ================== 뉴스 ================== -->
+            <div id="tab01">
+                <div class="flx jc-e">
+                    <button id="addNewsBtn" class="btn sm bg-point">추가</button>
+                </div>
+                <div class="tb-wrap">
+                    <table id="newsTable">
+                        <colgroup>
+                            <col style="width: 4rem" />
+                            <col style="width: 6rem" />
+                            <col style="width: auto" />
+                            <col style="width: auto" />
+                            <col style="width: 12rem" />
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Tag</th>
+                                <th>Title</th>
+                                <th>Content</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th class="ta-c">00</th>
+                                <th class="ta-c">새소식</th>
+                                <th>Title</th>
+                                <th>Content</th>
+                                <th>
+                                    <button class="btn sm bg-point">저장</button>
+                                    <button class="btn sm bg-red">삭제</button>
+                                </th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2 class="fs-18 ta-c">이미지 업로드</h2>
+                <div class="flx gap-12">
+                    <input type="file" id="imgFile" multiple />
+                    <button id="uploadBtn" class="btn sm bg-point">업로드</button>
+                </div>
+                <div id="imgList"></div>
+            </div>
+            <!-- ================== FAQ ================== -->
+            <div id="tab02">
+                <div class="flx jc-e">
+                    <button id="addFaqBtn" class="btn sm bg-point">추가</button>
+                </div>
+                <div class="tb-wrap">
+                    <table id="faqTable">
+                        <colgroup>
+                            <col style="width: 4rem" />
+                            <col style="width: 6rem" />
+                            <col style="width: auto" />
+                            <col style="width: auto" />
+                            <col style="width: 12rem" />
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Type</th>
+                                <th>Question</th>
+                                <th>Answer</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>00</th>
+                                <th>새소식</th>
+                                <th>Title</th>
+                                <th>Content</th>
+                                <th>
+                                    <button class="btn sm bg-point">저장</button>
+                                    <button class="btn sm bg-red">삭제</button>
+                                </th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
 
-        <div id="adminDiv" class="hidden">
-            <h2>뉴스 관리</h2>
-            <button id="addNewsBtn">뉴스 추가</button>
-            <table id="newsTable">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Tag</th>
-                        <th>Title</th>
-                        <th>Content</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-
-            <h2>이미지 업로드</h2>
-            <input type="file" id="imgFile" multiple />
-            <button id="uploadBtn">업로드</button>
-            <div id="imgList"></div>
-
-            <h2>FAQ 관리</h2>
-            <button id="addFaqBtn">FAQ 추가</button>
-            <table id="faqTable">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Type</th>
-                        <th>Question</th>
-                        <th>Answer</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-        </div>
-
+        <script src="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.492/js/ui.js"></script>
         <script>
+            ui.init();
+
             const loginDiv = document.getElementById("loginDiv");
             const adminDiv = document.getElementById("adminDiv");
-
-            document.getElementById("loginBtn").onclick = async () => {
+            // ================== 로그인 ==================
+            document.getElementById("loginBtn").onclick = async (e) => {
+                e.preventDefault();
                 const res = await fetch("login.php", {
                     method: "POST",
                     body: JSON.stringify({ id: loginId.value, pw: loginPw.value }),
+                    headers: { "Content-Type": "application/json" },
+                    credentials: "same-origin",
                 });
                 const data = await res.json();
                 if (data.success) {
-                    loginDiv.classList.add("hidden");
-                    adminDiv.classList.remove("hidden");
+                    loginDiv.style.display = "none";
+                    adminDiv.style.display = "block";
                     loadNews();
                     loadFaq();
                 } else {
@@ -84,19 +174,29 @@
                 }
             };
 
-            // ----- NEWS -----
+            // ================== 뉴스 ==================
             async function loadNews() {
-                const res = await fetch("/admin/news.php?action=list");
+                const res = await fetch("/api/news.php?action=list", {
+                    credentials: "same-origin",
+                });
                 const news = await res.json();
                 const tbody = document.querySelector("#newsTable tbody");
                 tbody.innerHTML = "";
                 news.forEach((n) => {
                     const tr = document.createElement("tr");
-                    tr.innerHTML = `<td>${n.id}</td><td contenteditable data-field="tag">${n.tag}</td><td contenteditable data-field="title">${n.title}</td><td contenteditable data-field="content">${n.content}</td>
-<td>
-<button onclick="editNews(${n.id}, this)">저장</button>
-<button onclick="deleteNews(${n.id})">삭제</button>
-</td>`;
+
+                    const tagSelect = `<select data-field="tag">
+                        ${["새소식", "공지"].map((t) => `<option value="${t}" ${t === n.tag ? "selected" : ""}>${t}</option>`).join("")}
+                    </select>`;
+                    tr.innerHTML = `
+                        <td class="ta-c">${n.id}</td>
+                        <td class="ta-c">${tagSelect}</td>
+                        <td contenteditable data-field="title">${n.title}</td>
+                        <td contenteditable data-field="content">${n.content}</td>
+                        <td>
+                            <button class="btn sm bg-point" onclick="editNews(${n.id}, this)">저장</button>
+                            <button class="btn sm bg-red" onclick="deleteNews(${n.id})">삭제</button>
+                        </td>`;
                     tbody.appendChild(tr);
                 });
             }
@@ -105,71 +205,48 @@
                 const tr = btn.closest("tr");
                 const form = new FormData();
                 form.append("id", id);
-                form.append("tag", tr.querySelector('[data-field="tag"]').textContent);
+                form.append("tag", tr.querySelector('[data-field="tag"]').value);
                 form.append("title", tr.querySelector('[data-field="title"]').textContent);
                 form.append("content", tr.querySelector('[data-field="content"]').textContent);
-                await fetch("/admin/news.php?action=edit", { method: "POST", body: form });
+                await fetch("/api/news.php?action=edit", {
+                    method: "POST",
+                    body: form,
+                    credentials: "same-origin",
+                });
                 loadNews();
             }
 
             async function deleteNews(id) {
                 if (!confirm("삭제할까요?")) return;
-                await fetch(`/admin/news.php?action=delete&id=${id}`);
+                await fetch(`/api/news.php?action=delete&id=${id}`, {
+                    credentials: "same-origin",
+                });
                 loadNews();
             }
 
-            // ----- FAQ -----
-            async function loadFaq() {
-                const res = await fetch("/admin/faq.php?action=list");
-                const faqs = await res.json();
-                const tbody = document.querySelector("#faqTable tbody");
-                tbody.innerHTML = "";
-                faqs.forEach((f) => {
-                    const tr = document.createElement("tr");
-                    tr.innerHTML = `<td>${f.id}</td><td contenteditable data-field="type">${f.type}</td><td contenteditable data-field="question">${f.question}</td><td contenteditable data-field="answer">${f.answer}</td>
-<td>
-<button onclick="editFaq(${f.id}, this)">저장</button>
-<button onclick="deleteFaq(${f.id})">삭제</button>
-</td>`;
-                    tbody.appendChild(tr);
-                });
-            }
-
-            async function editFaq(id, btn) {
-                const tr = btn.closest("tr");
-                const form = new FormData();
-                form.append("id", id);
-                form.append("type", tr.querySelector('[data-field="type"]').textContent);
-                form.append("question", tr.querySelector('[data-field="question"]').textContent);
-                form.append("answer", tr.querySelector('[data-field="answer"]').textContent);
-                await fetch("/admin/faq.php?action=edit", { method: "POST", body: form });
-                loadFaq();
-            }
-
-            async function deleteFaq(id) {
-                if (!confirm("삭제할까요?")) return;
-                await fetch(`/admin/faq.php?action=delete&id=${id}`);
-                loadFaq();
-            }
-
-            const imgFile = document.getElementById("imgFile");
-            const uploadBtn = document.getElementById("uploadBtn");
-            const imgList = document.getElementById("imgList");
-
+            // ================== 이미지 ==================
             async function loadImages() {
-                const res = await fetch("/admin/upload.php?action=list");
+                const res = await fetch("/api/upload.php?action=list", {
+                    credentials: "same-origin",
+                });
                 const imgs = await res.json();
                 imgList.innerHTML = "";
                 imgs.forEach((i) => {
                     const div = document.createElement("div");
-                    div.innerHTML = `<img src="${i.url}" width="80"> <button onclick="deleteImage(${i.id})">삭제</button>`;
+                    div.innerHTML = `
+                        <img src="${i.url}" width="80">
+                        <span>${i.url}</span>
+                        <button onclick="deleteImage(${i.id})">삭제</button>
+                    `;
                     imgList.appendChild(div);
                 });
             }
 
             async function deleteImage(id) {
                 if (!confirm("삭제할까요?")) return;
-                await fetch(`/admin/upload.php?action=delete&id=${id}`);
+                await fetch(`/api/upload.php?action=delete&id=${id}`, {
+                    credentials: "same-origin",
+                });
                 loadImages();
             }
 
@@ -179,14 +256,70 @@
                 for (let f of files) {
                     const form = new FormData();
                     form.append("file", f);
-                    await fetch("/admin/upload.php?action=upload", { method: "POST", body: form });
+                    await fetch("/api/upload.php?action=upload", {
+                        method: "POST",
+                        body: form,
+                        credentials: "same-origin",
+                    });
                 }
                 imgFile.value = "";
                 loadImages();
             };
 
-            // 초기 로드
-            loadImages();
+            // ================== FAQ ==================
+            async function loadFaq() {
+
+                async function loadFaq() {
+                    const res = await fetch("/api/faq.php?action=list", {
+                        credentials: "same-origin",
+                    });
+                    const faqs = await res.json();
+                    const tbody = document.querySelector("#faqTable tbody");
+                    tbody.innerHTML = "";
+
+                    faqs.forEach((f) => {
+                        const tr = document.createElement("tr");
+
+                        const typeSelect = `<select data-field="type">
+                            ${["예약", "편의", "기타"].map((t) => `<option value="${t}" ${t === f.type ? "selected" : ""}>${t}</option>`).join("")}
+                        </select>`;
+
+                        tr.innerHTML = `
+                            <td class="ta-c">${f.id}</td>
+                            <td class="ta-c">${typeSelect}</td>
+                            <td contenteditable data-field="question">${f.question}</td>
+                            <td contenteditable data-field="answer">${f.answer}</td>
+                            <td>
+                                <button class="btn sm bg-point" onclick="editFaq(${f.id}, this)">저장</button>
+                                <button class="btn sm bg-red" onclick="deleteFaq(${f.id})">삭제</button>
+                            </td>`;
+                        tbody.appendChild(tr);
+                    });
+                }
+            }
+
+            async function editFaq(id, btn) {
+                const tr = btn.closest("tr");
+                const form = new FormData();
+                form.append("id", id);
+                form.append("type", tr.querySelector('[data-field="type"]').value);
+                form.append("question", tr.querySelector('[data-field="question"]').textContent);
+                form.append("answer", tr.querySelector('[data-field="answer"]').textContent);
+                await fetch("/api/faq.php?action=edit", {
+                    method: "POST",
+                    body: form,
+                    credentials: "same-origin",
+                });
+                loadFaq();
+            }
+
+            async function deleteFaq(id) {
+                if (!confirm("삭제할까요?")) return;
+                await fetch(`/api/faq.php?action=delete&id=${id}`, {
+                    credentials: "same-origin",
+                });
+                loadFaq();
+            }
         </script>
     </body>
 </html>
