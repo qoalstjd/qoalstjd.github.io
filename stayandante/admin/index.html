@@ -22,6 +22,19 @@
                 width: 24rem;
                 gap: 1.2rem;
             }
+            #imgList li {
+                position: relative;
+                cursor: auto;
+            }
+            #imgList li img {
+                object-fit: contain;
+                transition: width 0.3s ease-in-out, height 0.3s ease-in-out;
+            }
+            #imgList li:hover img {
+                object-fit: cover;
+                width: 16rem !important;
+                height: 9rem !important;
+            }
         </style>
     </head>
     <body>
@@ -47,9 +60,38 @@
                     d="M2 40.5C2 40.5 4.69841 34 5.77778 34C6.85714 34 9.55556 40.5 9.55556 40.5M10.6349 38.5V34.5C10.6349 34.2239 10.8588 34 11.1349 34H14.4127M10.6349 38.5H14.4127M10.6349 38.5V42.5C10.6349 42.7761 10.8588 43 11.1349 43H14.9524M15.4921 38.5H16.5714M16.5714 34V43M18.1905 34V43M26.8254 34V43M34.9206 34V36M34.9206 38.5V36M34.9206 36H35.4603M28.4444 40V42.5C28.4444 42.7761 28.6683 43 28.9444 43H34.9206M43.5556 34V36M43.5556 38.5V36M43.5556 36H44.0952M37.0794 40V42.5C37.0794 42.7761 37.3032 43 37.5794 43H43.5556M45.1746 38.5V34.5C45.1746 34.2239 45.3985 34 45.6746 34H48.9524M45.1746 38.5H48.9524M45.1746 38.5V42.5C45.1746 42.7761 45.3985 43 45.6746 43H49.4921M51.1111 34V38.5M51.1111 43V38.5M52.7302 34V43M51.1111 38.5H50.0317M53.8095 34L54.8889 34M58.127 34L57.0476 34M54.8889 34V38.5M54.8889 34H57.0476M57.0476 34V38.5M53.8095 38.5H58.127M58.6667 36H59.746M59.746 34V38.5M61.3651 34V38.5M54.3492 40V42.5C54.3492 42.7761 54.5731 43 54.8492 43H61.5M68.9206 35.5H70M70 34V37M70 38.5V37M68.9206 37H70M62.4444 38.5C62.4444 38.5 65.1429 34 65.6825 34C66.2222 34 68.381 38.5 68.381 38.5M62.9841 40V42.5C62.9841 42.7761 63.208 43 63.4841 43H70M41.3968 34H37.0397C36.7635 34 36.5397 34.2239 36.5397 34.5V38C36.5397 38.2761 36.7635 38.5 37.0397 38.5H41.3968M2 43H9.55556M22.5079 34C18.7302 34 18.7302 43 22.5079 43C25.9035 43 26.2857 34 22.5079 34ZM30.6032 34C27.3651 34 27.3651 38.5 30.6032 38.5C33.8413 38.5 33.8413 34 30.6032 34Z"
                 ></path>
             </symbol>
+            <symbol id="act-copy" viewBox="0 0 24 24">
+                <title>act-copy</title>
+                <desc>복사</desc>
+                <path d="M7 9.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667l0 -8.666" />
+                <path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" />
+            </symbol>
+            <symbol id="act-delete" viewBox="0 0 24 24">
+                <title>act-delete</title>
+                <desc>삭제</desc>
+                <path d="M4 7l16 0" />
+                <path d="M10 11l0 6" />
+                <path d="M14 11l0 6" />
+                <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+            </symbol>
+            <symbol id="act-check" viewBox="0 0 24 24">
+                <title>act-check</title>
+                <desc>체크</desc>
+                <path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+                <path d="M9 12l2 2l4 -4" />
+            </symbol>
+            <symbol id="act-edit" viewBox="0 0 24 24">
+                <title>act-edit</title>
+                <desc>수정</desc>
+                <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+                <path d="M13.5 6.5l4 4" />
+            </symbol>
         </svg>
         <h1 class="flx col jc-c ai-c fs-20 gap-12 mt-0 pt-8">
-            <svg style="width: 7.2rem; height: 4.4rem"><use href="#brand-stay"></use></svg>
+            <a href="/index.html?linkcd=m0100">
+                <svg style="width: 7.2rem; height: 4.4rem"><use href="#brand-stay"></use></svg>
+            </a>
             관리자 페이지
         </h1>
         <!-- ================== 로그인 ================== -->
@@ -60,10 +102,10 @@
         </form>
         <div id="adminDiv" class="mw-1024" style="display: none">
             <div class="tab-wrap lg">
-                <button data-tab="tab01">뉴스</button>
+                <button data-tab="tab01">새소식</button>
                 <button data-tab="tab02">FAQ</button>
             </div>
-            <!-- ================== 뉴스 ================== -->
+            <!-- ================== 새소식 ================== -->
             <div id="tab01">
                 <div class="flx jc-e">
                     <button id="addNewsBtn" class="btn sm bg-point">추가</button>
@@ -73,31 +115,18 @@
                         <colgroup>
                             <col style="width: 4rem" />
                             <col style="width: 6rem" />
-                            <col style="width: auto" />
-                            <col style="width: auto" />
-                            <col style="width: 12rem" />
+                            <col style="width: calc(1fr)" />
+                            <col style="width: 16rem" />
                         </colgroup>
                         <thead>
                             <tr>
                                 <th>ID</th>
                                 <th>Tag</th>
                                 <th>Title</th>
-                                <th>Content</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <th class="ta-c">00</th>
-                                <th class="ta-c">새소식</th>
-                                <th>Title</th>
-                                <th>Content</th>
-                                <th>
-                                    <button class="btn sm bg-point">저장</button>
-                                    <button class="btn sm bg-red">삭제</button>
-                                </th>
-                            </tr>
-                        </tbody>
+                        <tbody></tbody>
                     </table>
                 </div>
 
@@ -106,7 +135,7 @@
                     <input type="file" id="imgFile" multiple />
                     <button id="uploadBtn" class="btn sm bg-point">업로드</button>
                 </div>
-                <div id="imgList"></div>
+                <ul id="imgList" class="meta-list"></ul>
             </div>
             <!-- ================== FAQ ================== -->
             <div id="tab02">
@@ -118,9 +147,9 @@
                         <colgroup>
                             <col style="width: 4rem" />
                             <col style="width: 6rem" />
-                            <col style="width: auto" />
-                            <col style="width: auto" />
-                            <col style="width: 12rem" />
+                            <col style="width: 40%" />
+                            <col style="width: 60%" />
+                            <col style="width: 16rem" />
                         </colgroup>
                         <thead>
                             <tr>
@@ -131,18 +160,7 @@
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <th>00</th>
-                                <th>새소식</th>
-                                <th>Title</th>
-                                <th>Content</th>
-                                <th>
-                                    <button class="btn sm bg-point">저장</button>
-                                    <button class="btn sm bg-red">삭제</button>
-                                </th>
-                            </tr>
-                        </tbody>
+                        <tbody></tbody>
                     </table>
                 </div>
             </div>
@@ -168,13 +186,14 @@
                     loginDiv.style.display = "none";
                     adminDiv.style.display = "block";
                     loadNews();
+                    loadImages();
                     loadFaq();
                 } else {
                     alert("로그인 실패");
                 }
             };
 
-            // ================== 뉴스 ==================
+            // ================== 새소식 ==================
             async function loadNews() {
                 const res = await fetch("/api/news.php?action=list", {
                     credentials: "same-origin",
@@ -192,15 +211,19 @@
                         <td class="ta-c">${n.id}</td>
                         <td class="ta-c">${tagSelect}</td>
                         <td contenteditable data-field="title">${n.title}</td>
-                        <td contenteditable data-field="content">${n.content}</td>
                         <td>
-                            <button class="btn sm bg-point" onclick="editNews(${n.id}, this)">저장</button>
-                            <button class="btn sm bg-red" onclick="deleteNews(${n.id})">삭제</button>
+                            <button class="btn sm bg-point" onclick="editNews(${n.id}, this)">
+                                <svg class="wh-20"><use href="#act-edit"></use></svg>
+                                수정
+                            </button>
+                            <button class="btn sm bg-red" onclick="deleteNews(${n.id})">
+                                <svg class="wh-20"><use href="#act-delete"></use></svg>
+                                삭제
+                            </button>
                         </td>`;
                     tbody.appendChild(tr);
                 });
             }
-
             async function editNews(id, btn) {
                 const tr = btn.closest("tr");
                 const form = new FormData();
@@ -215,7 +238,6 @@
                 });
                 loadNews();
             }
-
             async function deleteNews(id) {
                 if (!confirm("삭제할까요?")) return;
                 await fetch(`/api/news.php?action=delete&id=${id}`, {
@@ -232,16 +254,22 @@
                 const imgs = await res.json();
                 imgList.innerHTML = "";
                 imgs.forEach((i) => {
-                    const div = document.createElement("div");
-                    div.innerHTML = `
-                        <img src="${i.url}" width="80">
-                        <span>${i.url}</span>
-                        <button onclick="deleteImage(${i.id})">삭제</button>
+                    const li = document.createElement("li");
+                    li.innerHTML = `
+                        <img src="${i.url}" class="wh-32">
+                        <span class="title">${i.url}</span>
+                        <button class="btn sm bg-point" onclick="${ui.copyClipBoard(i.url)}">
+                            <svg class="wh-20"><use href="#act-copy"></use></svg>
+                            복사
+                        </button>
+                        <button class="btn sm bg-red" onclick="deleteImage(${i.id})">
+                            <svg class="wh-20"><use href="#act-delete"></use></svg>
+                            삭제
+                        </button>
                     `;
-                    imgList.appendChild(div);
+                    imgList.appendChild(li);
                 });
             }
-
             async function deleteImage(id) {
                 if (!confirm("삭제할까요?")) return;
                 await fetch(`/api/upload.php?action=delete&id=${id}`, {
@@ -249,7 +277,6 @@
                 });
                 loadImages();
             }
-
             uploadBtn.onclick = async () => {
                 const files = imgFile.files;
                 if (!files.length) return;
@@ -265,37 +292,45 @@
                 imgFile.value = "";
                 loadImages();
             };
-
             // ================== FAQ ==================
             async function loadFaq() {
+                const res = await fetch("/api/faq.php?action=list", {
+                    credentials: "same-origin",
+                });
+                const faqs = await res.json();
+                const tbody = document.querySelector("#faqTable tbody");
+                tbody.innerHTML = "";
 
-                async function loadFaq() {
-                    const res = await fetch("/api/faq.php?action=list", {
-                        credentials: "same-origin",
-                    });
-                    const faqs = await res.json();
-                    const tbody = document.querySelector("#faqTable tbody");
-                    tbody.innerHTML = "";
+                faqs.forEach((f) => {
+                    const tr = document.createElement("tr");
 
-                    faqs.forEach((f) => {
-                        const tr = document.createElement("tr");
-
-                        const typeSelect = `<select data-field="type">
+                    const typeSelect = `<select data-field="type">
                             ${["예약", "편의", "기타"].map((t) => `<option value="${t}" ${t === f.type ? "selected" : ""}>${t}</option>`).join("")}
                         </select>`;
 
-                        tr.innerHTML = `
+                    tr.innerHTML = `
                             <td class="ta-c">${f.id}</td>
                             <td class="ta-c">${typeSelect}</td>
                             <td contenteditable data-field="question">${f.question}</td>
-                            <td contenteditable data-field="answer">${f.answer}</td>
                             <td>
-                                <button class="btn sm bg-point" onclick="editFaq(${f.id}, this)">저장</button>
-                                <button class="btn sm bg-red" onclick="deleteFaq(${f.id})">삭제</button>
+                                <ul class="txt-list dot" data-field="answer">
+                                    ${JSON.parse(f.answer)
+                                        .map((data) => `<li contenteditable>${data}</li>`)
+                                        .join("")}
+                                </ul>
+                            </td>
+                            <td>
+                                <button class="btn sm bg-point" onclick="editFaq(${f.id}, this)">
+                                    <svg class="wh-20"><use href="#act-check"></use></svg>
+                                    저장
+                                </button>
+                                <button class="btn sm bg-red" onclick="deleteFaq(${f.id})">
+                                    <svg class="wh-20"><use href="#act-delete"></use></svg>
+                                    삭제
+                                </button>
                             </td>`;
-                        tbody.appendChild(tr);
-                    });
-                }
+                    tbody.appendChild(tr);
+                });
             }
 
             async function editFaq(id, btn) {
@@ -304,7 +339,10 @@
                 form.append("id", id);
                 form.append("type", tr.querySelector('[data-field="type"]').value);
                 form.append("question", tr.querySelector('[data-field="question"]').textContent);
-                form.append("answer", tr.querySelector('[data-field="answer"]').textContent);
+                form.append(
+                    "answer",
+                    Array.from(tr.querySelector('[data-field="answer"] li')).map((li) => li.textContent)
+                );
                 await fetch("/api/faq.php?action=edit", {
                     method: "POST",
                     body: form,

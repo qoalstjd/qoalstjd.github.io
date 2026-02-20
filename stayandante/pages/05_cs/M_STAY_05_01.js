@@ -4,7 +4,14 @@ window.initModule = ({ root, params }) => {
         wrap: root.querySelector(".meta-list"),
         data: [],
         async init() {
-            this.data = await fetch("/api/news.php?action=list") || [];
+            try {
+                const res = await fetch("/api/news.php?action=list");
+                if (!res.ok) throw new Error("News 로드 실패");
+                this.data = await res.json(); // JSON으로 변환
+            } catch (e) {
+                console.error(e);
+                this.data = [];
+            }
             this.wrap.innerHTML = "";
             this.render();
         },
@@ -18,23 +25,27 @@ window.initModule = ({ root, params }) => {
         render() {
             this.data.forEach((item) => {
                 const el = document.createElement("li");
+                const newsData = {
+                    ...item,
+                    content: marked.parse(item.content)
+                };
                 el.innerHTML = `
-                    <span class="id">${item.id.padStart(2, "0")}</span>
+                    <span class="id">${newsData.id.padStart(2, "0")}</span>
                     <span class="category">
                         <svg class="wh-20">
-                            <use href="#ui-${item.tag === "새소식" ? "bell" : "document"}"></use>
+                            <use href="#ui-${newsData.tag === "새소식" ? "bell" : "document"}"></use>
                         </svg>
-                        ${item.tag || "새소식"}
+                        ${newsData.tag || "새소식"}
                     </span>
-                    <span class="title">${item.title}</span>
-                    <span class="date">${item.created_at.split(" ")[0].split("-").join(".")}</span>
-                    <span class="view">${item.view_cnt}</span>`;
+                    <span class="title">${newsData.title}</span>
+                    <span class="date">${newsData.created_at.split(" ")[0].split("-").join(".")}</span>
+                    <span class="view">${newsData.view_cnt}</span>`;
                 el.addEventListener("click", async () => {
                     window.dialog.open({
                         url: "/pages/00_common/P_STAY_00_news.html",
-                        data: item,
+                        data: newsData,
                     });
-                    this.increaseView(item.id);
+                    this.increaseView(newsData.id);
                 });
                 this.wrap.append(el);
             });
