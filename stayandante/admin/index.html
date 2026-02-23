@@ -8,34 +8,8 @@
         <link rel="icon" type="image/png" sizes="32x32" href="/images/common/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/images/common/favicon-16x16.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="/images/common/apple-touch-icon.png" />
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.509/css/global.css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.510/css/global.css" />
         <link rel="stylesheet" href="/css/common.css" />
-        <style>
-            body {
-                padding: 2.4rem;
-            }
-            #loginDiv {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                margin: 0 auto;
-                width: 24rem;
-                gap: 1.2rem;
-            }
-            #imgList li {
-                position: relative;
-                cursor: auto;
-            }
-            #imgList li img {
-                object-fit: contain;
-                transition: width 0.3s linear, height 0.3s linear;
-            }
-            #imgList li:hover img {
-                object-fit: cover;
-                width: 16rem !important;
-                height: 9rem !important;
-            }
-        </style>
         <script>
             (async () => {
                 const cache = JSON.parse(localStorage.getItem("app_cache_theme") || "{}");
@@ -47,7 +21,7 @@
             })();
         </script>
     </head>
-    <body>
+    <body class="pd-24">
         <h1 class="flx col jc-c ai-c fs-20 gap-12 mt-0 pt-8">
             <a href="/index.html?linkcd=m0100">
                 <svg style="width: 7.2rem; height: 4.4rem"><use href="#brand-stay"></use></svg>
@@ -55,10 +29,10 @@
             관리자 페이지
         </h1>
         <!-- ================== 로그인 ================== -->
-        <form id="loginDiv">
-            <input type="text" id="loginId" placeholder="ID" />
-            <input type="password" id="loginPw" placeholder="PW" />
-            <button id="loginBtn" class="btn sm bg-point">로그인</button>
+        <form id="loginDiv" class="flx col jc-c w-full gap-12 ai-c">
+            <input class="w-24" type="text" id="loginId" placeholder="ID" />
+            <input class="w-24" type="password" id="loginPw" placeholder="PW" />
+            <button id="loginBtn" class="w-24 btn sm bg-point">로그인</button>
         </form>
         <div id="adminDiv" class="mw-1024" style="display: none">
             <div class="tab-wrap lg">
@@ -68,7 +42,7 @@
             <!-- ================== 새소식 ================== -->
             <div id="tab01">
                 <div class="flx jc-e">
-                    <button id="addNewsBtn" class="btn sm bg-point">추가</button>
+                    <button id="addNewsBtn" class="btn sm bg-point">게시글추가</button>
                 </div>
                 <div class="tb-wrap">
                     <table id="newsTable">
@@ -77,7 +51,7 @@
                             <col style="width: 6rem" />
                             <col style="width: auto" />
                             <col style="width: 10rem" />
-                            <col style="width: 16rem" />
+                            <col style="width: 8rem" />
                         </colgroup>
                         <thead>
                             <tr>
@@ -97,12 +71,12 @@
                     <input type="file" id="imgFile" multiple />
                     <button id="uploadBtn" class="btn sm bg-point">업로드</button>
                 </div>
-                <ul id="imgList" class="meta-list"></ul>
+                <ul id="imgList" class="flx ty-masonry"></ul>
             </div>
             <!-- ================== FAQ ================== -->
             <div id="tab02">
                 <div class="flx jc-e">
-                    <button id="addFaqBtn" class="btn sm bg-point">추가</button>
+                    <button id="addFaqBtn" class="btn sm bg-point">FAQ추가</button>
                 </div>
                 <div class="tb-wrap">
                     <table id="faqTable">
@@ -111,7 +85,7 @@
                             <col style="width: 6rem" />
                             <col style="width: 40%" />
                             <col style="width: 60%" />
-                            <col style="width: 16rem" />
+                            <col style="width: 11rem" />
                         </colgroup>
                         <thead>
                             <tr>
@@ -181,7 +155,7 @@
                                 <button class="btn pd-4 bg-point" data-tip="게시글수정">
                                     <svg class="wh-20"><use href="#act-edit"></use></svg>
                                 </button>
-                                <button class="btn pd-4 bg-red" data-tip="게시글삭제">
+                                <button class="btn pd-4 bg-red" data-tip="삭제">
                                     <svg class="wh-20"><use href="#act-delete"></use></svg>
                                 </button>
                             </td>
@@ -206,10 +180,22 @@
                                 size: "lg",
                             });
                         }
-                        if (e.target.closest('[data-tip="게시글삭제"]')) {
+                        if (e.target.closest('[data-tip="삭제"]')) {
                             this.delete(id);
                         }
                     });
+                    document.getElementById("addNewsBtn").onclick = async () => {
+                        const tr = btn.closest("tr");
+                        const form = new FormData();
+                        form.append("tag", "새소식");
+                        form.append("title", "제목");
+                        form.append("content", "내용을 입력하세요");
+                        const res = await fetch("/api/faq.php?action=add", { method: "POST", body: form, credentials: "same-origin" });
+                        const data = await res.json();
+                        if (data.success) {
+                            this.init();
+                        }
+                    };
                 },
                 delete: async function (id) {
                     if (!confirm("삭제할까요?")) return;
@@ -232,19 +218,22 @@
                 render: function () {
                     this.wrap.innerHTML = "";
                     this.data.forEach((i) => {
-                        const li = document.createElement("li");
-                        li.dataset.id = i.id;
-                        li.innerHTML = `
-                            <img src="${i.url}" class="wh-32">
-                            <span class="title">${i.url}</span>
-                            <button class="btn pd-4 bg-point" data-tip="URL복사">
-                                <svg class="wh-20"><use href="#act-copy"></use></svg>
-                            </button>
-                            <button class="btn pd-4 bg-red" data-tip="이미지삭제">
-                                <svg class="wh-20"><use href="#act-delete"></use></svg>
-                            </button>
+                        const div = document.createElement("div");
+                        div.dataset.id = i.id;
+                        div.className = "box";
+                        div.innerHTML = `
+                            <img src="${i.url}">
+                            <span class="mt-auto bg-100" style="z-index:1;">${i.url}</span>
+                            <div class="btn-wrap mt-8">
+                                <button class="btn pd-4 bg-point" data-tip="URL복사">
+                                    <svg class="wh-20"><use href="#act-copy"></use></svg>
+                                </button>
+                                <button class="btn pd-4 bg-red" data-tip="이미지삭제">
+                                    <svg class="wh-20"><use href="#act-delete"></use></svg>
+                                </button>
+                            </div>
                         `;
-                        this.wrap.appendChild(li);
+                        this.wrap.appendChild(div);
                     });
                 },
                 bindEvents: function () {
@@ -321,7 +310,7 @@
                                 <button class="btn pd-4 bg-point" data-tip="내용저장">
                                     <svg class="wh-20"><use href="#act-check"></use></svg>
                                 </button>
-                                <button class="btn pd-4 bg-red" data-tip="현재질문삭제">
+                                <button class="btn pd-4 bg-red" data-tip="삭제">
                                     <svg class="wh-20"><use href="#act-delete"></use></svg>
                                 </button>
                             </td>`;
@@ -359,12 +348,23 @@
                             });
                             this.init();
                         }
-                        if (e.target.closest('[data-tip="현재질문삭제"]')) {
+                        if (e.target.closest('[data-tip="삭제"]')) {
                             if (!confirm("삭제할까요?")) return;
                             await fetch(`/api/faq.php?action=delete&id=${id}`, { credentials: "same-origin" });
                             this.init();
                         }
                     });
+                    document.getElementById("addFaqBtn").onclick = async () => {
+                        const form = new FormData();
+                        form.append("type", "예약");
+                        form.append("question", "질문");
+                        form.append("answer", JSON.stringify(["답변 내용"]));
+                        const res = await fetch("/api/faq.php?action=add", { method: "POST", body: form, credentials: "same-origin" });
+                        const data = await res.json();
+                        if (data.success) {
+                            this.init();
+                        }
+                    };
                 },
             };
         </script>
