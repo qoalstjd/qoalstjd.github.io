@@ -2,11 +2,11 @@
     <p data-bind="txt">새소식 수정</p>
 </div>
 <div class="dialog-content">
-    <strong data-bind="txt" class="fs-18 fw-b ell-2">{{title}}</strong>
+    <strong data-field="title" data-bind="txt" class="fs-18 fw-b ell-2" contenteditable spellcheck="false">{{title}}</strong>
     <i class="hr my-12"></i>
-    <div class="mt-16 wb-all" data-bind="html">{{content}}</div>
+    <div class="mt-16 wb-all" data-bind="html" contenteditable spellcheck="false" data-field="content">{{content}}</div>
 </div>
 <div class="btn-wrap jc-c">
     <button class="btn md" data-act="close">취소</button>
-    <button class="btn md bg-point">적용</button>
+    <button class="btn md bg-point" data-act="applyNews">적용</button>
 </div>

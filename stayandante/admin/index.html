@@ -8,7 +8,7 @@
         <link rel="icon" type="image/png" sizes="32x32" href="/images/common/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/images/common/favicon-16x16.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="/images/common/apple-touch-icon.png" />
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.505/css/global.css?v=123" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.509/css/global.css" />
         <link rel="stylesheet" href="/css/common.css" />
         <style>
             body {
@@ -28,7 +28,7 @@
             }
             #imgList li img {
                 object-fit: contain;
-                transition: width 0.3s ease-in-out, height 0.3s ease-in-out;
+                transition: width 0.3s linear, height 0.3s linear;
             }
             #imgList li:hover img {
                 object-fit: cover;
@@ -36,58 +36,18 @@
                 height: 9rem !important;
             }
         </style>
+        <script>
+            (async () => {
+                const cache = JSON.parse(localStorage.getItem("app_cache_theme") || "{}");
+                const theme = cache.data ?? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+                document.documentElement.dataset.theme = theme;
+
+                const svg = await fetch("https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.509/images/icon.svg?v=" + Date.now()).then((r) => r.text());
+                document.body.insertAdjacentHTML("afterbegin", svg);
+            })();
+        </script>
     </head>
     <body>
-        <svg xmlns="http://www.w3.org/2000/svg" style="display: none">
-            <defs>
-                <style>
-                    symbol {
-                        fill: none;
-                        stroke: currentColor;
-                        stroke-width: 1.5;
-                        stroke-linecap: round;
-                        stroke-linejoin: round;
-                    }
-                </style>
-            </defs>
-            <symbol id="brand-stay" viewBox="0 0 72 44">
-                <title>brand-stay</title>
-                <desc>스테이안단테</desc>
-                <path
-                    d="M2 30C6.6015 30 8.64662 27.5439 18.0871 13.2982M70 20.1754C38.5 17.2281 27.5451 2.5 25.5 2.5C23.4549 2.5 20.0754 10.1197 18.0871 13.2982M18.0871 13.2982C15.8045 23.614 13.2481 30 18.3609 30C20.406 30 18.6173 26.2334 21.9398 24.1053C23.4737 23.1228 20.9173 30 22.4511 30C23.4737 30 24.0872 24.5965 26.5414 24.5965C29.609 24.5965 26.0301 30 28.0752 30C29.609 30 30.1536 28.79 30.8326 27.0526M33.6992 25.0877C31.9615 25.0877 31.2446 25.9984 30.8326 27.0526M30.8326 27.0526C30.5952 28.0351 30.5293 30 32.1654 30C35.9385 30 37.7895 22.1404 37.7895 17.2281C37.7895 12.3158 34.2105 12.3158 34.2105 17.2281C34.2105 22.1404 35.2331 30 37.2782 30C38.812 30 39.3233 27.7579 40.3459 26.1772M44.4361 25.0877C42.391 24.1053 41.3684 24.5965 40.3459 26.1772M40.3459 26.1772C39.8346 27.4515 39.3233 30 41.3684 30C43.4135 30 43.4135 27.0526 43.9248 27.0526C44.4361 27.0526 44.2835 30 45.9699 30C48.015 30 47.5038 24.1053 50.0602 24.5965C50.8686 24.7518 50.0602 30 50.5714 30C51.0827 30 52.2075 24.3018 54.6617 25.0877C56.7068 25.7427 53.1278 30 56.1955 30C59.2632 30 61.3083 22.1404 61.3083 17.2281C61.3083 12.3158 57.7293 12.3158 57.7293 17.2281C57.7293 22.1404 59.2632 30 62.3308 30C64.3759 30 63.7895 29.0175 63.8647 27.5439M63.8647 27.5439C63.9263 26.3357 64.4157 24.2111 66.4211 24.5965C68.9774 25.0877 67.4436 26.807 66.9323 27.0526C65.9098 27.5439 64.9036 28.3626 63.8647 27.5439ZM63.8647 27.5439C64.8872 29.5088 65.9098 31.4737 70 27.5439M5.06767 17.2281C0.977444 21.6491 2 24.5965 19.8947 21.6491"
-                ></path>
-                <path
-                    d="M2 40.5C2 40.5 4.69841 34 5.77778 34C6.85714 34 9.55556 40.5 9.55556 40.5M10.6349 38.5V34.5C10.6349 34.2239 10.8588 34 11.1349 34H14.4127M10.6349 38.5H14.4127M10.6349 38.5V42.5C10.6349 42.7761 10.8588 43 11.1349 43H14.9524M15.4921 38.5H16.5714M16.5714 34V43M18.1905 34V43M26.8254 34V43M34.9206 34V36M34.9206 38.5V36M34.9206 36H35.4603M28.4444 40V42.5C28.4444 42.7761 28.6683 43 28.9444 43H34.9206M43.5556 34V36M43.5556 38.5V36M43.5556 36H44.0952M37.0794 40V42.5C37.0794 42.7761 37.3032 43 37.5794 43H43.5556M45.1746 38.5V34.5C45.1746 34.2239 45.3985 34 45.6746 34H48.9524M45.1746 38.5H48.9524M45.1746 38.5V42.5C45.1746 42.7761 45.3985 43 45.6746 43H49.4921M51.1111 34V38.5M51.1111 43V38.5M52.7302 34V43M51.1111 38.5H50.0317M53.8095 34L54.8889 34M58.127 34L57.0476 34M54.8889 34V38.5M54.8889 34H57.0476M57.0476 34V38.5M53.8095 38.5H58.127M58.6667 36H59.746M59.746 34V38.5M61.3651 34V38.5M54.3492 40V42.5C54.3492 42.7761 54.5731 43 54.8492 43H61.5M68.9206 35.5H70M70 34V37M70 38.5V37M68.9206 37H70M62.4444 38.5C62.4444 38.5 65.1429 34 65.6825 34C66.2222 34 68.381 38.5 68.381 38.5M62.9841 40V42.5C62.9841 42.7761 63.208 43 63.4841 43H70M41.3968 34H37.0397C36.7635 34 36.5397 34.2239 36.5397 34.5V38C36.5397 38.2761 36.7635 38.5 37.0397 38.5H41.3968M2 43H9.55556M22.5079 34C18.7302 34 18.7302 43 22.5079 43C25.9035 43 26.2857 34 22.5079 34ZM30.6032 34C27.3651 34 27.3651 38.5 30.6032 38.5C33.8413 38.5 33.8413 34 30.6032 34Z"
-                ></path>
-            </symbol>
-            <symbol id="act-copy" viewBox="0 0 24 24">
-                <title>act-copy</title>
-                <desc>복사</desc>
-                <path d="M7 9.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667l0 -8.666" />
-                <path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" />
-            </symbol>
-            <symbol id="act-delete" viewBox="0 0 24 24">
-                <title>act-delete</title>
-                <desc>삭제</desc>
-                <path d="M4 7l16 0" />
-                <path d="M10 11l0 6" />
-                <path d="M14 11l0 6" />
-                <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
-                <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
-            </symbol>
-            <symbol id="act-check" viewBox="0 0 24 24">
-                <title>act-check</title>
-                <desc>체크</desc>
-                <path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
-                <path d="M9 12l2 2l4 -4" />
-            </symbol>
-            <symbol id="act-edit" viewBox="0 0 24 24">
-                <title>act-edit</title>
-                <desc>수정</desc>
-                <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
-                <path d="M13.5 6.5l4 4" />
-            </symbol>
-        </svg>
         <h1 class="flx col jc-c ai-c fs-20 gap-12 mt-0 pt-8">
             <a href="/index.html?linkcd=m0100">
                 <svg style="width: 7.2rem; height: 4.4rem"><use href="#brand-stay"></use></svg>
@@ -115,15 +75,17 @@
                         <colgroup>
                             <col style="width: 4rem" />
                             <col style="width: 6rem" />
-                            <col style="width: calc(1fr)" />
+                            <col style="width: auto" />
+                            <col style="width: 10rem" />
                             <col style="width: 16rem" />
                         </colgroup>
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Tag</th>
-                                <th>Title</th>
-                                <th>Action</th>
+                                <th>태그</th>
+                                <th>제목</th>
+                                <th>날짜</th>
+                                <th>동작</th>
                             </tr>
                         </thead>
                         <tbody></tbody>
@@ -154,10 +116,10 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Type</th>
-                                <th>Question</th>
-                                <th>Answer</th>
-                                <th>Action</th>
+                                <th>유형</th>
+                                <th>질문</th>
+                                <th>답변</th>
+                                <th>동작</th>
                             </tr>
                         </thead>
                         <tbody></tbody>
@@ -166,12 +128,11 @@
             </div>
         </div>
 
-        <script src="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.501/js/ui.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.497/library/marked.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/qoalstjd/common@latest/js/util.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.507/js/ui.js"></script>
         <script>
             ui.init();
-
-            const loginDiv = document.getElementById("loginDiv");
-            const adminDiv = document.getElementById("adminDiv");
             // ================== 로그인 ==================
             document.getElementById("loginBtn").onclick = async (e) => {
                 e.preventDefault();
@@ -183,188 +144,229 @@
                 });
                 const data = await res.json();
                 if (data.success) {
-                    loginDiv.style.display = "none";
-                    adminDiv.style.display = "block";
-                    loadNews();
-                    loadImages();
-                    loadFaq();
+                    document.getElementById("loginDiv").style.display = "none";
+                    document.getElementById("adminDiv").style.display = "block";
+                    news.init();
+                    images.init();
+                    faq.init();
                 } else {
                     alert("로그인 실패");
                 }
             };
-
             // ================== 새소식 ==================
-            async function loadNews() {
-                const res = await fetch("/api/news.php?action=list", {
-                    credentials: "same-origin",
-                });
-                const news = await res.json();
-                const tbody = document.querySelector("#newsTable tbody");
-                tbody.innerHTML = "";
-                news.forEach((n) => {
-                    const tr = document.createElement("tr");
-
-                    tr.innerHTML = `
-                        <td class="ta-c">${n.id}</td>
-                        <td class="ta-c">
-                            <select data-field="tag">
-                                ${["새소식", "공지"].map((t) => `<option value="${t}" ${t === n.tag ? "selected" : ""}>${t}</option>`).join("")}
-                            </select>
-                        </td>
-                        <td data-field="title">${n.title}</td>
-                        <td data-field="date">${n.created_at.split(" ")[0].split("-").join(".")}</td>
-                        <td>
-                            <button class="btn sm bg-point">
-                                <svg class="wh-20"><use href="#act-edit"></use></svg>
-                                수정
-                            </button>
-                            <button class="btn sm bg-red" onclick="deleteNews(${n.id})">
-                                <svg class="wh-20"><use href="#act-delete"></use></svg>
-                                삭제
-                            </button>
-                        </td>`;
-                    tr.querySelector('.btn.sm.bg-point').addEventListener("click", async () => {
-                        window.dialog.open({
-                            url: "/admin/news_editor.html",
-                            data: n,
-                            size: "lg",
-                        });
+            const news = {
+                wrap: document.querySelector("#newsTable tbody"),
+                data: [],
+                init: async function () {
+                    const res = await fetch("/api/news.php?action=list", { credentials: "same-origin" });
+                    this.data = await res.json();
+                    this.render();
+                    this.bindEvents();
+                },
+                render: function () {
+                    this.wrap.innerHTML = "";
+                    this.data.forEach((n) => {
+                        const tr = document.createElement("tr");
+                        tr.dataset.id = n.id;
+                        tr.innerHTML = `
+                            <td class="ta-c">${n.id}</td>
+                            <td class="ta-c">
+                                <select data-field="tag">
+                                    ${["새소식", "공지"].map((t) => `<option value="${t}" ${t === n.tag ? "selected" : ""}>${t}</option>`).join("")}
+                                </select>
+                            </td>
+                            <td data-field="title">${n.title}</td>
+                            <td data-field="date">${n.created_at.split(" ")[0].split("-").join(".")}</td>
+                            <td>
+                                <button class="btn pd-4 bg-point" data-tip="게시글수정">
+                                    <svg class="wh-20"><use href="#act-edit"></use></svg>
+                                </button>
+                                <button class="btn pd-4 bg-red" data-tip="게시글삭제">
+                                    <svg class="wh-20"><use href="#act-delete"></use></svg>
+                                </button>
+                            </td>
+                        `;
+                        this.wrap.appendChild(tr);
                     });
-                    tbody.appendChild(tr);
-                });
-            }
-            async function editNews(id, btn) {
-                const tr = btn.closest("tr");
-                const form = new FormData();
-                form.append("id", id);
-                form.append("tag", tr.querySelector('[data-field="tag"]').value);
-                form.append("title", tr.querySelector('[data-field="title"]').textContent);
-                form.append("content", tr.querySelector('[data-field="content"]').textContent);
-                await fetch("/api/news.php?action=edit", {
-                    method: "POST",
-                    body: form,
-                    credentials: "same-origin",
-                });
-                loadNews();
-            }
-            async function deleteNews(id) {
-                if (!confirm("삭제할까요?")) return;
-                await fetch(`/api/news.php?action=delete&id=${id}`, {
-                    credentials: "same-origin",
-                });
-                loadNews();
-            }
-
+                },
+                bindEvents: function () {
+                    this.wrap.addEventListener("click", (e) => {
+                        const tr = e.target.closest("tr");
+                        if (!tr) return;
+                        const id = tr.dataset.id;
+                        const item = this.data.find((n) => n.id == id);
+                        const newsData = {
+                            ...item,
+                            content: marked.parse(item.content),
+                        };
+                        if (e.target.closest('[data-tip="게시글수정"]')) {
+                            window.dialog.open({
+                                url: "/admin/news_editor.html",
+                                data: item,
+                                size: "lg",
+                            });
+                        }
+                        if (e.target.closest('[data-tip="게시글삭제"]')) {
+                            this.delete(id);
+                        }
+                    });
+                },
+                delete: async function (id) {
+                    if (!confirm("삭제할까요?")) return;
+                    await fetch(`/api/news.php?action=delete&id=${id}`, { credentials: "same-origin" });
+                    this.init();
+                },
+            };
             // ================== 이미지 ==================
-            async function loadImages() {
-                const res = await fetch("/api/upload.php?action=list", {
-                    credentials: "same-origin",
-                });
-                const imgs = await res.json();
-                imgList.innerHTML = "";
-                imgs.forEach((i) => {
-                    const li = document.createElement("li");
-                    li.innerHTML = `
-                        <img src="${i.url}" class="wh-32">
-                        <span class="title">${i.url}</span>
-                        <button class="btn sm bg-point">
-                            <svg class="wh-20"><use href="#act-copy"></use></svg>
-                            복사
-                        </button>
-                        <button class="btn sm bg-red" onclick="deleteImage(${i.id})">
-                            <svg class="wh-20"><use href="#act-delete"></use></svg>
-                            삭제
-                        </button>
-                    `;
-                    li.querySelector(".btn.sm.bg-point").onclick = () => ui.copyClipBoard(i.url);
-                    imgList.appendChild(li);
-                });
-            }
-            async function deleteImage(id) {
-                if (!confirm("삭제할까요?")) return;
-                await fetch(`/api/upload.php?action=delete&id=${id}`, {
-                    credentials: "same-origin",
-                });
-                loadImages();
-            }
-            uploadBtn.onclick = async () => {
-                const files = imgFile.files;
-                if (!files.length) return;
-                for (let f of files) {
-                    const form = new FormData();
-                    form.append("file", f);
-                    await fetch("/api/upload.php?action=upload", {
-                        method: "POST",
-                        body: form,
-                        credentials: "same-origin",
+            const images = {
+                wrap: document.getElementById("imgList"),
+                input: document.getElementById("imgFile"),
+                uploadBtn: document.getElementById("uploadBtn"),
+                data: [],
+                init: async function () {
+                    const res = await fetch("/api/upload.php?action=list", { credentials: "same-origin" });
+                    this.data = await res.json();
+                    this.render();
+                    this.bindEvents();
+                },
+                render: function () {
+                    this.wrap.innerHTML = "";
+                    this.data.forEach((i) => {
+                        const li = document.createElement("li");
+                        li.dataset.id = i.id;
+                        li.innerHTML = `
+                            <img src="${i.url}" class="wh-32">
+                            <span class="title">${i.url}</span>
+                            <button class="btn pd-4 bg-point" data-tip="URL복사">
+                                <svg class="wh-20"><use href="#act-copy"></use></svg>
+                            </button>
+                            <button class="btn pd-4 bg-red" data-tip="이미지삭제">
+                                <svg class="wh-20"><use href="#act-delete"></use></svg>
+                            </button>
+                        `;
+                        this.wrap.appendChild(li);
                     });
-                }
-                imgFile.value = "";
-                loadImages();
+                },
+                bindEvents: function () {
+                    // 이미지 복사 / 삭제 이벤트 위임
+                    this.wrap.addEventListener("click", async (e) => {
+                        const li = e.target.closest("li");
+                        if (!li) return;
+                        const id = li.dataset.id;
+                        const imgUrl = li.querySelector("span.title").textContent;
+                        if (e.target.closest('[data-tip="URL복사"]')) {
+                            ui.copyClipBoard(imgUrl);
+                        }
+                        if (e.target.closest('[data-tip="이미지삭제"]')) {
+                            if (!confirm("삭제할까요?")) return;
+                            await fetch(`/api/upload.php?action=delete&id=${id}`, { credentials: "same-origin" });
+                            this.init();
+                        }
+                    });
+                    // 업로드 버튼
+                    this.uploadBtn.addEventListener("click", async () => {
+                        const files = this.input.files;
+                        if (!files.length) return;
+                        for (let f of files) {
+                            const form = new FormData();
+                            form.append("file", f);
+                            await fetch("/api/upload.php?action=upload", {
+                                method: "POST",
+                                body: form,
+                                credentials: "same-origin",
+                            });
+                        }
+                        this.input.value = "";
+                        this.init();
+                    });
+                },
             };
             // ================== FAQ ==================
-            async function loadFaq() {
-                const res = await fetch("/api/faq.php?action=list", {
-                    credentials: "same-origin",
-                });
-                const faqs = await res.json();
-                const tbody = document.querySelector("#faqTable tbody");
-                tbody.innerHTML = "";
-
-                faqs.forEach((f) => {
-                    const tr = document.createElement("tr");
-
-                    tr.innerHTML = `
-                        <td class="ta-c">${f.id}</td>
-                        <td class="ta-c">
-                            <select data-field="type">
-                                ${["예약", "편의", "기타"].map((t) => `<option value="${t}" ${t === f.type ? "selected" : ""}>${t}</option>`).join("")}
-                            </select>
-                        </td>
-                        <td contenteditable data-field="question">${f.question}</td>
-                        <td>
-                            <ul class="txt-list dot" data-field="answer">
-                                ${JSON.parse(f.answer)
-                                    .map((data) => `<li contenteditable>${data}</li>`)
-                                    .join("")}
-                            </ul>
-                        </td>
-                        <td>
-                            <button class="btn sm bg-point" onclick="editFaq(${f.id}, this)">
-                                <svg class="wh-20"><use href="#act-check"></use></svg>
-                                저장
-                            </button>
-                            <button class="btn sm bg-red" onclick="deleteFaq(${f.id})">
-                                <svg class="wh-20"><use href="#act-delete"></use></svg>
-                                삭제
-                            </button>
-                        </td>`;
-                    tbody.appendChild(tr);
-                });
-            }
-
-            async function editFaq(id, btn) {
-                const tr = btn.closest("tr");
-                const form = new FormData();
-                form.append("id", id);
-                form.append("type", tr.querySelector('[data-field="type"]').value);
-                form.append("question", tr.querySelector('[data-field="question"]').textContent);
-                form.append("answer", JSON.stringify(Array.from(tr.querySelector('[data-field="answer"] li')).map((li) => li.textContent)));
-                await fetch("/api/faq.php?action=edit", {
-                    method: "POST",
-                    body: form,
-                    credentials: "same-origin",
-                });
-                loadFaq();
-            }
-
-            async function deleteFaq(id) {
-                if (!confirm("삭제할까요?")) return;
-                await fetch(`/api/faq.php?action=delete&id=${id}`, {
-                    credentials: "same-origin",
-                });
-                loadFaq();
-            }
+            const faq = {
+                data: [],
+                wrap: null,
+                init: async function () {
+                    const res = await fetch("/api/faq.php?action=list", { credentials: "same-origin" });
+                    this.data = await res.json();
+                    this.wrap = document.querySelector("#faqTable tbody");
+                    this.wrap.innerHTML = "";
+                    this.render();
+                    this.bindEvents();
+                },
+                render: function () {
+                    this.data.forEach((f) => {
+                        const tr = document.createElement("tr");
+                        tr.dataset.id = f.id;
+                        let answerList = [];
+                        try {
+                            answerList = JSON.parse(f.answer);
+                        } catch {}
+                        tr.innerHTML = `
+                            <td class="ta-c">${f.id}</td>
+                            <td class="ta-c">
+                                <select data-field="type">
+                                    ${["예약", "편의", "기타"].map((t) => `<option value="${t}" ${t === f.type ? "selected" : ""}>${t}</option>`).join("")}
+                                </select>
+                            </td>
+                            <td contenteditable spellcheck="false" data-field="question">${f.question}</td>
+                            <td>
+                                <ul class="txt-list dot" data-field="answer">
+                                    ${answerList.map((answer) => `<li contenteditable spellcheck="false">${answer}</li>`).join("")}
+                                </ul>
+                            </td>
+                            <td>
+                                <button class="btn pd-4 bg-green" data-tip="내용추가">
+                                    <svg class="wh-20"><use href="#act-edit"></use></svg>
+                                </button>
+                                <button class="btn pd-4 bg-point" data-tip="내용저장">
+                                    <svg class="wh-20"><use href="#act-check"></use></svg>
+                                </button>
+                                <button class="btn pd-4 bg-red" data-tip="현재질문삭제">
+                                    <svg class="wh-20"><use href="#act-delete"></use></svg>
+                                </button>
+                            </td>`;
+                        this.wrap.appendChild(tr);
+                    });
+                },
+                bindEvents: function () {
+                    this.wrap.addEventListener("click", async (e) => {
+                        const tr = e.target.closest("tr");
+                        if (!tr) return;
+                        const id = tr.dataset.id;
+                        if (e.target.closest('[data-tip="내용추가"]')) {
+                            const li = document.createElement("li");
+                            li.contentEditable = true;
+                            li.spellcheck = false;
+                            tr.querySelector(".txt-list").append(li);
+                        }
+                        if (e.target.closest('[data-tip="내용저장"]')) {
+                            const form = new FormData();
+                            form.append("id", id);
+                            form.append("type", tr.querySelector('[data-field="type"]').value);
+                            form.append("question", tr.querySelector('[data-field="question"]').textContent.trim());
+                            form.append(
+                                "answer",
+                                JSON.stringify(
+                                    Array.from(tr.querySelectorAll('[data-field="answer"] li'))
+                                        .map((li) => li.textContent.trim())
+                                        .filter(Boolean)
+                                )
+                            );
+                            await fetch("/api/faq.php?action=edit", {
+                                method: "POST",
+                                body: form,
+                                credentials: "same-origin",
+                            });
+                            this.init();
+                        }
+                        if (e.target.closest('[data-tip="현재질문삭제"]')) {
+                            if (!confirm("삭제할까요?")) return;
+                            await fetch(`/api/faq.php?action=delete&id=${id}`, { credentials: "same-origin" });
+                            this.init();
+                        }
+                    });
+                },
+            };
         </script>
     </body>
 </html>
