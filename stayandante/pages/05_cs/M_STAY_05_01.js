@@ -17,7 +17,11 @@ window.initModule = ({ root, params }) => {
         },
         increaseView: async (id) => {
             try {
-                await fetch(`/api/news.php?action=increase_view&id=${id}`);
+                await fetch(`/api/news.php?action=increase_view`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                    body: `id=${id}`,
+                });
             } catch (e) {
                 console.error(e);
             }
@@ -28,7 +32,7 @@ window.initModule = ({ root, params }) => {
                 const newsData = {
                     ...item,
                     content: marked.parse(item.content, { baseUrl: "" }),
-                    created_at: item.created_at.split(" ")[0].split("-").join(".")
+                    created_at: item.created_at.split(" ")[0].split("-").join("."),
                 };
                 el.innerHTML = `
                     <span class="id">${newsData.id.padStart(2, "0")}</span>

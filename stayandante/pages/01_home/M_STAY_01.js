@@ -33,6 +33,11 @@ window.initModule = ({ root, params }) => {
                     content: marked.parse(item.content, { baseUrl: "" }),
                     created_at: item.created_at.split(" ")[0].split("-").join("."),
                 };
+                const summary = (() => {
+                    const d = document.createElement("div");
+                    d.innerHTML = marked.parse(newsData.content);
+                    return d.textContent.trim();
+                })();
                 if (i === 0) {
                     el.classList.add("box", "pc66", "pd-0", "bg-point", "txt-white");
                     el.innerHTML = `
@@ -49,7 +54,7 @@ window.initModule = ({ root, params }) => {
                             </div>
                         </div>
                         <div class="flx col pd-20">
-                            <div class="ell-2">${marked.parse(newsData.content, { baseUrl: "" })}</div>
+                            <div class="ell-2">${summary}</div>
                             <p class="fs-14 mt-12">${newsData.created_at}</p>
                         </div>
                     `;
@@ -70,7 +75,7 @@ window.initModule = ({ root, params }) => {
                             <h3 class="mt-8 ell-1">${newsData.title}</h3>
                         </div>
                         <div class="mt-auto">
-                            <div class="ell-2">${marked.parse(newsData.content, { baseUrl: "" })}</div>
+                            <div class="ell-2">${summary}</div>
                             <p class="fs-14 txt-700 mt-12">${newsData.created_at.split(" ")[0].split("-").join(".")}</p>
                         </div>
                     `;
@@ -111,7 +116,11 @@ window.initModule = ({ root, params }) => {
         },
         increaseView: async (id) => {
             try {
-                await fetch(`/api/news.php?action=increase_view&id=${id}`);
+                await fetch(`/api/news.php?action=increase_view`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                    body: `id=${id}`,
+                });
             } catch (e) {
                 console.error(e);
             }
