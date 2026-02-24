@@ -199,7 +199,7 @@
                         const newsDefault = {
                             tag: "공지",
                             title: "제목을 입력해주세요",
-                            content: "내용을 입력해주세요",
+                            content: "<p contenteditable='true'>내용을 입력해주세요</p>",
                         };
                         window.dialog.open({
                             url: "/admin/news_editor.html",
@@ -421,33 +421,34 @@
                             tr.remove();
                         }
                     });
-                    document.getElementById("addFaqBtn").onclick = async () => {
-                        this.wrap.prepend(`
-                            <tr>
-                                <td class="ta-c">##</td>
-                                <td class="ta-c">
-                                    <select data-field="type">
-                                        <option value="예약" selected="">예약</option><option value="편의">편의</option><option value="기타">기타</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <p contenteditable="" spellcheck="false" data-field="question" class="bg-900 txt-100 fw-600">질문을 입력해주세요</p>
-                                    <ul class="txt-list dot mt-16" data-field="answer">
-                                        <li contenteditable="" spellcheck="false">내용을 입력해주세요</li>
-                                    </ul>
-                                </td>
-                                <td>
-                                    <button class="btn pd-4 bg-green" data-tip="답변추가">
-                                        <svg class="wh-20"><use href="#act-edit"></use></svg>
-                                    </button>
-                                    <button class="btn pd-4 bg-point" data-tip="질문등록">
-                                        <svg class="wh-20"><use href="#act-check"></use></svg>
-                                    </button>
-                                    <button class="btn pd-4 bg-red" data-tip="취소">
-                                        <svg class="wh-20"><use href="#act-delete"></use></svg>
-                                    </button>
-                                </td>
-                            </tr>`);
+                    document.getElementById("addFaqBtn").onclick = () => {
+                        const tr = document.createElement("tr");
+                        tr.innerHTML = `
+                            <td class="ta-c">##</td>
+                            <td class="ta-c">
+                                <select data-field="type">
+                                    <option value="예약" selected="">예약</option><option value="편의">편의</option><option value="기타">기타</option>
+                                </select>
+                            </td>
+                            <td>
+                                <p contenteditable="" spellcheck="false" data-field="question" class="bg-900 txt-100 fw-600">질문을 입력해주세요</p>
+                                <ul class="txt-list dot mt-16" data-field="answer">
+                                    <li contenteditable="" spellcheck="false">내용을 입력해주세요</li>
+                                </ul>
+                            </td>
+                            <td>
+                                <button class="btn pd-4 bg-green" data-tip="답변추가">
+                                    <svg class="wh-20"><use href="#act-edit"></use></svg>
+                                </button>
+                                <button class="btn pd-4 bg-point" data-tip="질문등록">
+                                    <svg class="wh-20"><use href="#act-check"></use></svg>
+                                </button>
+                                <button class="btn pd-4 bg-red" data-tip="취소">
+                                    <svg class="wh-20"><use href="#act-delete"></use></svg>
+                                </button>
+                            </td>
+                        `
+                        this.wrap.prepend(tr);
                     };
                 },
             };

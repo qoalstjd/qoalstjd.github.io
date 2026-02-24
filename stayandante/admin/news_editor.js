@@ -56,12 +56,13 @@ window.initModule = ({ root, params }) => {
         },
         img: (img) => {
             const p = document.createElement("p");
-            img.src = "이미지 업로드하여 원하는 이미지 url 복사 후 붙여넣기";
+            img.src = "이미지 업로드 > url 복사 > 붙여넣기";
             img.contentEditable = false;
             p.appendChild(img);
             const srcInput = document.createElement("span");
             srcInput.dataset.act = "src";
             srcInput.contentEditable = true;
+            srcInput.textContent = img.src;
             p.appendChild(srcInput);
             return p;
         },
@@ -110,7 +111,8 @@ window.initModule = ({ root, params }) => {
         const srcInput = document.createElement("span");
         srcInput.dataset.act = "src";
         srcInput.contentEditable = true;
-        srcInput.textContent = el.src;
+        const url = el.src.replace(/^https?:\/\/stayandante\.com/, "");
+        srcInput.textContent = url;
         el.after(srcInput);
     });
     contentEl.addEventListener("keydown", (e) => {
