@@ -17,7 +17,7 @@ window.initModule = ({ root, params }) => {
             try {
                 const res = await fetch("/api/news.php?action=list");
                 if (!res.ok) throw new Error("News 로드 실패");
-                this.data = await res.json().slice(0, 4); // JSON으로 변환
+                this.data = await res.json();
             } catch (e) {
                 console.error(e);
                 this.data = [];
@@ -26,12 +26,12 @@ window.initModule = ({ root, params }) => {
             this.render();
         },
         render() {
-            this.data.forEach((item, i) => {
+            this.data.slice(0, 4).forEach((item, i) => {
                 const el = document.createElement("div");
                 const newsData = {
                     ...item,
-                    content: marked.parse(item.content),
-                    created_at: item.created_at.split(" ")[0].split("-").join(".")
+                    content: marked.parse(item.content, { baseUrl: "" }),
+                    created_at: item.created_at.split(" ")[0].split("-").join("."),
                 };
                 if (i === 0) {
                     el.classList.add("box", "pc66", "pd-0", "bg-point", "txt-white");
@@ -49,7 +49,7 @@ window.initModule = ({ root, params }) => {
                             </div>
                         </div>
                         <div class="flx col pd-20">
-                            <p class="ell-2">${marked.parse(newsData.content)}</p>
+                            <div class="ell-2">${marked.parse(newsData.content, { baseUrl: "" })}</div>
                             <p class="fs-14 mt-12">${newsData.created_at}</p>
                         </div>
                     `;
@@ -70,7 +70,7 @@ window.initModule = ({ root, params }) => {
                             <h3 class="mt-8 ell-1">${newsData.title}</h3>
                         </div>
                         <div class="mt-auto">
-                            <p class="ell-2">${marked.parse(newsData.content)}</p>
+                            <div class="ell-2">${marked.parse(newsData.content, { baseUrl: "" })}</div>
                             <p class="fs-14 txt-700 mt-12">${newsData.created_at.split(" ")[0].split("-").join(".")}</p>
                         </div>
                     `;
@@ -115,7 +115,7 @@ window.initModule = ({ root, params }) => {
             } catch (e) {
                 console.error(e);
             }
-        }
+        },
     };
     news.init();
 };

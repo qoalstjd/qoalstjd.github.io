@@ -9,7 +9,7 @@ window.initModule = ({ root, params }) => {
     });
     const focusEditable = (el) => {
         if (!el) return;
-        const matchEl = el.matches("[contenteditable]") ? el : el.querySelector("[contenteditable]");
+        const matchEl = el.matches("[contenteditable]") ? el : el.querySelector("[contenteditable]:last-child");
         matchEl.focus();
         focusEl = el.closest('[data-field="content"] > *');
     };
@@ -25,35 +25,49 @@ window.initModule = ({ root, params }) => {
         p: (el) => {
             el.contentEditable = true;
             el.textContent = "문구를 입력하세요";
+            return el;
         },
         h2: (el) => {
             el.contentEditable = true;
             el.textContent = "제목을 입력하세요";
+            return el;
         },
         ul: (ul) => {
             const li = document.createElement("li");
             li.contentEditable = true;
             li.textContent = "리스트 항목";
-            ul.append(li);
+            if (focusEl.tagName === "UL") {
+                focusEl.append(li);
+            } else {
+                ul.append(li);
+            }
+            return ul;
         },
         ol: (ol) => {
             const li = document.createElement("li");
             li.contentEditable = true;
             li.textContent = "리스트 항목";
-            ol.append(li);
+            if (focusEl.tagName === "OL") {
+                focusEl.append(li);
+            } else {
+                ol.append(li);
+            }
+            return ol;
         },
         img: (img) => {
-            img.src = "/placeholder.png";
+            const p = document.createElement("p");
+            img.src = "이미지 업로드하여 원하는 이미지 url 복사 후 붙여넣기";
             img.contentEditable = false;
-            const srcInput = document.createElement("div");
+            p.appendChild(img);
+            const srcInput = document.createElement("span");
             srcInput.dataset.act = "src";
             srcInput.contentEditable = true;
-            img.after(srcInput);
+            p.appendChild(srcInput);
+            return p;
         },
     };
     const addEl = (elName) => {
-        const el = document.createElement(elName);
-        elementHandlers[elName]?.(el);
+        const el = elementHandlers[elName](document.createElement(elName));
         focusEl ? focusEl.after(el) : contentEl.append(el);
         focusEditable(el);
     };
@@ -81,6 +95,7 @@ window.initModule = ({ root, params }) => {
         }
         // 삭제
         if (e.target.closest('[data-act="del"]')) {
+            if (!confirm("해당 항목을 삭제하시겠습니까?")) return;
             const next = focusEl.nextElementSibling || focusEl.previousElementSibling;
             focusEl.remove();
             focusEditable(next);
@@ -91,7 +106,8 @@ window.initModule = ({ root, params }) => {
     contentEl.querySelectorAll("li").forEach((li) => (li.contentEditable = true));
     contentEl.querySelectorAll("img").forEach((el) => {
         if (el.nextElementSibling?.dataset.act === "src") return;
-        const srcInput = document.createElement("div");
+        el.closest("p").contentEditable = false;
+        const srcInput = document.createElement("span");
         srcInput.dataset.act = "src";
         srcInput.contentEditable = true;
         srcInput.textContent = el.src;
@@ -115,6 +131,21 @@ window.initModule = ({ root, params }) => {
             img.src = srcInput.textContent.trim();
         }
     });
+    contentEl.addEventListener("input", (e) => {
+        const target = e.target.closest("[data-act='src']");
+        if (!target) return;
+        const img = target.previousElementSibling;
+        if (img?.tagName === "IMG") img.src = target.textContent.trim();
+    });
+    contentEl.addEventListener("paste", (e) => {
+        const target = e.target.closest("[data-act='src']");
+        if (!target) return;
+        e.preventDefault();
+        const text = (e.clipboardData || window.clipboardData).getData("text");
+        target.textContent = text;
+        const img = target.previousElementSibling;
+        if (img?.tagName === "IMG") img.src = text.trim();
+    });
     contentEl.addEventListener("focusout", (e) => {
         if (e.target.closest("li")) {
             const li = e.target.closest("li");
@@ -131,6 +162,7 @@ window.initModule = ({ root, params }) => {
     // 내보내기
     root.querySelector('[data-act="apply"]').onclick = () => {
         const turndownService = new TurndownService();
+        contentEl.querySelectorAll("[data-act='src']").forEach((el) => el.remove());
         const md = turndownService.turndown(contentEl.innerHTML);
         const dlg = window.dialog.stack.at(-1);
         dlg?.apply?.({

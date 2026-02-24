@@ -148,7 +148,7 @@
                             <td class="ta-c">${n.id}</td>
                             <td class="ta-c">${n.tag}</td>
                             <td data-field="title">${n.title}</td>
-                            <td data-field="date">${n.created_at.split(" ")[0].split("-").join(".")}</td>
+                            <td data-field="date" class="ta-c">${n.created_at.split(" ")[0].split("-").join(".")}</td>
                             <td>
                                 <button class="btn pd-4 bg-point" data-tip="게시글수정">
                                     <svg class="wh-20"><use href="#act-edit"></use></svg>
@@ -169,7 +169,7 @@
                         const item = this.data.find((n) => n.id == id);
                         const newsData = {
                             ...item,
-                            content: marked.parse(item.content),
+                            content: marked.parse(item.content, { baseUrl: "" }),
                         };
                         if (e.target.closest('[data-tip="게시글수정"]')) {
                             window.dialog.open({
@@ -195,20 +195,33 @@
                             this.delete(id);
                         }
                     });
-                    document.getElementById("addNewsBtn").onclick = async () => {
-                        const form = new FormData();
-                        form.append("tag", "새소식");
-                        form.append("title", "제목");
-                        form.append("content", "내용을 입력하세요");
-                        const res = await fetch("/api/faq.php?action=add", { method: "POST", body: form, credentials: "same-origin" });
-                        const data = await res.json();
-                        if (data.success) {
-                            this.init();
-                        }
+                    document.getElementById("addNewsBtn").onclick = () => {
+                        const newsDefault = {
+                            tag: "공지",
+                            title: "제목을 입력해주세요",
+                            content: "내용을 입력해주세요",
+                        };
+                        window.dialog.open({
+                            url: "/admin/news_editor.html",
+                            data: newsDefault,
+                            size: "lg",
+                            onApply: async (dialogData) => {
+                                const form = new FormData();
+                                form.append("tag", dialogData.tag);
+                                form.append("title", dialogData.title);
+                                form.append("content", dialogData.content);
+                                await fetch("/api/news.php?action=add", {
+                                    method: "POST",
+                                    body: form,
+                                    credentials: "same-origin",
+                                });
+                                await this.init();
+                            },
+                        });
                     };
                 },
                 delete: async function (id) {
-                    if (!confirm("삭제할까요?")) return;
+                    if (!confirm("삭제하시겠습니까?")) return;
                     await fetch(`/api/news.php?action=delete&id=${id}`, { credentials: "same-origin" });
                     this.init();
                 },
@@ -283,7 +296,17 @@
                     });
                 },
                 delete: async function (id) {
-                    if (!confirm("삭제할까요?")) return;
+                    const imgItem = this.data.find((i) => i.id == id);
+                    if (!imgItem) return;
+                    // 이미지 사용 중인 뉴스 찾기
+                    const usedInNews = news.data.filter((n) => n.content.includes(imgItem.url));
+                    let msg;
+                    if (usedInNews.length) {
+                        msg = `이 이미지는 뉴스에서 사용 중입니다:\n` + usedInNews.map((n) => `- [${n.id}] ${n.title}`).join("\n") + `\n그래도 삭제하시겠습니까?`;
+                    } else {
+                        msg = "삭제하시겠습니까?";
+                    }
+                    if (!confirm(msg)) return;
                     await fetch(`/api/upload.php?action=delete&id=${id}`, { credentials: "same-origin" });
                     this.init();
                 },
@@ -325,10 +348,10 @@
                                 </ul>
                             </td>
                             <td>
-                                <button class="btn pd-4 bg-green" data-tip="내용추가">
+                                <button class="btn pd-4 bg-green" data-tip="답변추가">
                                     <svg class="wh-20"><use href="#act-edit"></use></svg>
                                 </button>
-                                <button class="btn pd-4 bg-point" data-tip="내용저장">
+                                <button class="btn pd-4 bg-point" data-tip="저장">
                                     <svg class="wh-20"><use href="#act-check"></use></svg>
                                 </button>
                                 <button class="btn pd-4 bg-red" data-tip="삭제">
@@ -343,13 +366,13 @@
                         const tr = e.target.closest("tr");
                         if (!tr) return;
                         const id = tr.dataset.id;
-                        if (e.target.closest('[data-tip="내용추가"]')) {
+                        if (e.target.closest('[data-tip="답변추가"]')) {
                             const li = document.createElement("li");
                             li.contentEditable = true;
                             li.spellcheck = false;
                             tr.querySelector(".txt-list").append(li);
                         }
-                        if (e.target.closest('[data-tip="내용저장"]')) {
+                        if (e.target.closest('[data-tip="저장"]')) {
                             const form = new FormData();
                             form.append("id", id);
                             form.append("type", tr.querySelector('[data-field="type"]').value);
@@ -370,21 +393,61 @@
                             this.init();
                         }
                         if (e.target.closest('[data-tip="삭제"]')) {
-                            if (!confirm("삭제할까요?")) return;
+                            if (!confirm("삭제하시겠습니까?")) return;
                             await fetch(`/api/faq.php?action=delete&id=${id}`, { credentials: "same-origin" });
                             this.init();
                         }
+                        if (e.target.closest('[data-tip="질문등록"]')) {
+                            if (!confirm("해당 질문을 추가하시겠습니까?")) return;
+                            const form = new FormData();
+                            form.append("type", tr.querySelector('[data-field="type"]').value);
+                            form.append("question", tr.querySelector('[data-field="question"]').textContent.trim());
+                            form.append(
+                                "answer",
+                                JSON.stringify(
+                                    Array.from(tr.querySelectorAll('[data-field="answer"] li'))
+                                        .map((li) => li.textContent.trim())
+                                        .filter(Boolean)
+                                )
+                            );
+                            const res = await fetch("/api/faq.php?action=add", { method: "POST", body: form, credentials: "same-origin" });
+                            const data = await res.json();
+                            if (data.success) {
+                                this.init();
+                            }
+                        }
+                        if (e.target.closest('[data-tip="취소"]')) {
+                            if (!confirm("질문 추가를 취소하시겠습니까?")) return;
+                            tr.remove();
+                        }
                     });
                     document.getElementById("addFaqBtn").onclick = async () => {
-                        const form = new FormData();
-                        form.append("type", "예약");
-                        form.append("question", "질문");
-                        form.append("answer", JSON.stringify(["답변 내용"]));
-                        const res = await fetch("/api/faq.php?action=add", { method: "POST", body: form, credentials: "same-origin" });
-                        const data = await res.json();
-                        if (data.success) {
-                            this.init();
-                        }
+                        this.wrap.prepend(`
+                            <tr>
+                                <td class="ta-c">##</td>
+                                <td class="ta-c">
+                                    <select data-field="type">
+                                        <option value="예약" selected="">예약</option><option value="편의">편의</option><option value="기타">기타</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <p contenteditable="" spellcheck="false" data-field="question" class="bg-900 txt-100 fw-600">질문을 입력해주세요</p>
+                                    <ul class="txt-list dot mt-16" data-field="answer">
+                                        <li contenteditable="" spellcheck="false">내용을 입력해주세요</li>
+                                    </ul>
+                                </td>
+                                <td>
+                                    <button class="btn pd-4 bg-green" data-tip="답변추가">
+                                        <svg class="wh-20"><use href="#act-edit"></use></svg>
+                                    </button>
+                                    <button class="btn pd-4 bg-point" data-tip="질문등록">
+                                        <svg class="wh-20"><use href="#act-check"></use></svg>
+                                    </button>
+                                    <button class="btn pd-4 bg-red" data-tip="취소">
+                                        <svg class="wh-20"><use href="#act-delete"></use></svg>
+                                    </button>
+                                </td>
+                            </tr>`);
                     };
                 },
             };
