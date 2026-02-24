@@ -68,9 +68,11 @@ footer .footer-inner .btn-wrap { position: absolute; right: 0; top: -5.6rem; }
 .lnb + main .tit-wrap { margin-bottom: 6rem; } 
 .tit-wrap { flex-direction: column; } 
 .tit-wrap.dep-1 { position: relative; background: rgb(var(--bg-500)) no-repeat center / cover; height: 36rem; justify-content: center; align-items: flex-start; padding-top: 11.2rem; margin-bottom: 0; color: rgb(var(--txt-white)); z-index: 2; } 
-.tit-wrap.dep-2 { text-align: center; gap: 0.4rem; } 
-.tit-wrap.dep-2 h2 { font-size: 1.4rem; color: rgb(var(--primary-500)); } 
+.tit-wrap.dep-2 { text-align: center; gap: 0.6rem; } 
+.tit-wrap.dep-2 h2 { font-size: 1.6rem; color: rgb(var(--primary-500)); } 
 .tit-wrap.dep-2 p { font-size: 2.8rem; font-weight: 600; } 
+.cont h3 { font-size: 2rem; }
+.cont h4 { font-size: 1.8rem; }
 /* ==================== 컨텐츠 ==================== */
 .cont-wrap { } 
 .cont-wrap section { position: relative; padding: 6rem 0; } 

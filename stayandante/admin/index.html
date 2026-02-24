@@ -8,7 +8,7 @@
         <link rel="icon" type="image/png" sizes="32x32" href="/images/common/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/images/common/favicon-16x16.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="/images/common/apple-touch-icon.png" />
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.511/css/global.css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.512/css/global.css" />
         <link rel="stylesheet" href="/css/common.css" />
         <script>
             (async () => {
@@ -16,7 +16,7 @@
                 const theme = cache.data ?? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
                 document.documentElement.dataset.theme = theme;
 
-                const svg = await fetch("https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.511/images/icon.svg?v=" + Date.now()).then((r) => r.text());
+                const svg = await fetch("https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.512/images/icon.svg?v=" + Date.now()).then((r) => r.text());
                 document.body.insertAdjacentHTML("afterbegin", svg);
             })();
         </script>
@@ -103,7 +103,7 @@
         <script src="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.497/library/marked.min.js"></script>
         <script src="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.511/library/turndown.min.js"></script>
         <script src="https://cdn.jsdelivr.net/gh/qoalstjd/common@latest/js/util.js"></script>
-        <script src="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.511/js/ui.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.512/js/ui.js"></script>
         <script>
             ui.init();
             // ================== 로그인 ==================
@@ -236,13 +236,13 @@
                         div.className = "box pc25";
                         div.innerHTML = `
                             <img src="${i.url}">
-                            <span class="mt-auto bg-100" style="z-index:1;">${i.url}</span>
+                            <span class="mt-auto bg-100 ta-c pd-4" style="z-index:1;">${i.url}</span>
                             <div class="btn-wrap mt-8">
-                                <button class="btn pd-4 bg-point">
+                                <button class="btn sm bg-point">
                                     <svg class="wh-20"><use href="#act-copy"></use></svg>
                                     URL복사
                                 </button>
-                                <button class="btn pd-4 bg-red">
+                                <button class="btn sm bg-red">
                                     <svg class="wh-20"><use href="#act-delete"></use></svg>
                                     삭제
                                 </button>
@@ -254,10 +254,10 @@
                 bindEvents: function () {
                     // 이미지 복사 / 삭제 이벤트 위임
                     this.wrap.addEventListener("click", (e) => {
-                        const li = e.target.closest("li");
-                        if (!li) return;
-                        const id = li.dataset.id;
-                        const imgUrl = li.querySelector("span.title").textContent;
+                        const div = e.target.closest(".box.pc25");
+                        if (!div) return;
+                        const id = div.dataset.id;
+                        const imgUrl = div.querySelector("span").textContent;
                         if (e.target.closest(".bg-point")) {
                             ui.copyClipBoard(imgUrl);
                         }
