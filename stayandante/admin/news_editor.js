@@ -56,13 +56,13 @@ window.initModule = ({ root, params }) => {
         },
         img: (img) => {
             const p = document.createElement("p");
-            img.src = "이미지 업로드 > url 복사 > 붙여넣기";
+            img.src = "https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.513/images/fallback_16x9.png";
             img.contentEditable = false;
             p.appendChild(img);
             const srcInput = document.createElement("span");
             srcInput.dataset.act = "src";
             srcInput.contentEditable = true;
-            srcInput.textContent = img.src;
+            srcInput.textContent = "이미지 업로드 > url 복사 > 붙여넣기";
             p.appendChild(srcInput);
             return p;
         },
@@ -124,6 +124,18 @@ window.initModule = ({ root, params }) => {
             newLi.textContent = "리스트 항목";
             li.after(newLi);
             newLi.focus();
+        }
+        if (e.target.closest("p, h2") && e.key === "Enter" && !e.shiftKey) {
+            e.preventDefault();
+            const br = document.createElement("br");
+            const sel = window.getSelection();
+            const range = sel.getRangeAt(0);
+            range.deleteContents();
+            range.insertNode(br);
+            range.setStartAfter(br);
+            range.setEndAfter(br);
+            sel.removeAllRanges();
+            sel.addRange(range);
         }
     });
     contentEl.addEventListener("input", (e) => {
