@@ -26,11 +26,11 @@
                 const theme = cache.data ?? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
                 document.documentElement.dataset.theme = theme;
 
-                const svg = await fetch("https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.5/images/icon.svg?v=" + Date.now()).then((r) => r.text());
+                const svg = await fetch("https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.511/images/icon.svg?v=" + Date.now()).then((r) => r.text());
                 document.body.insertAdjacentHTML("afterbegin", svg);
             })();
         </script>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.510/css/global.css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.511/css/global.css" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.0/library/swiper-bundle.min.css" />
         <link rel="stylesheet" href="./css/common.css" />
     </head>
@@ -170,7 +170,7 @@
         <script src="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.0/library/swiper-bundle.min.js"></script>
         <script src="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.497/library/marked.min.js"></script>
         <script src="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.0/js/util.js"></script>
-        <script src="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.507/js/ui.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.511/js/ui.js"></script>
         <script src="/js/common.js"></script>
         <script src="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.1/js/include.js"></script>
     </body>

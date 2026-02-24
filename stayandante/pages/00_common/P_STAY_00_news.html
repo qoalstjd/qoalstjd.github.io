@@ -1,11 +1,11 @@
 <div class="dialog-title">
     <p data-bind="txt">{{tag}}</p>
 </div>
-<div class="dialog-content">
+<div class="dialog-content no-scroll">
     <strong data-bind="txt" class="fs-18 fw-b ell-2">{{title}}</strong>
     <div class="flx ai-c gap-8 fs-14 txt-500 mt-4">
         <p data-bind="txt">{{created_at}}</p>
     </div>
     <i class="hr my-12"></i>
-    <div class="md-content mt-16 wb-all" data-bind="html">{{content}}</div>
+    <div class="md-content mt-16 wb-all scrollable" data-bind="html">{{content}}</div>
 </div>

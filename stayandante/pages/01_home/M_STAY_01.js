@@ -17,12 +17,11 @@ window.initModule = ({ root, params }) => {
             try {
                 const res = await fetch("/api/news.php?action=list");
                 if (!res.ok) throw new Error("News 로드 실패");
-                this.data = await res.json(); // JSON으로 변환
+                this.data = await res.json().slice(0, 4); // JSON으로 변환
             } catch (e) {
                 console.error(e);
                 this.data = [];
             }
-            this.data = res.slice(0, 4);
             this.wrap.innerHTML = "";
             this.render();
         },

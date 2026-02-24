@@ -1,12 +1,45 @@
 <div class="dialog-title">
     <p data-bind="txt">수정</p>
 </div>
-<div class="dialog-content">
+<div class="dialog-content no-scroll">
     <strong data-field="title" data-bind="txt" class="fs-18 fw-b ell-2" contenteditable spellcheck="false">{{title}}</strong>
+    <div class="flx jc-bt">
+        <div class="element flx gap-4">
+            <button class="ico-wrap btn line pd-4" data-act="h2" data-tip="제목">
+                <svg><use href="#contnet-heading"></use></svg>
+            </button>
+            <button class="ico-wrap btn line pd-4" data-act="p" data-tip="문단">
+                <svg><use href="#contnet-typography"></use></svg>
+            </button>
+            <button class="ico-wrap btn line pd-4" data-act="hr" data-tip="구분선">
+                <svg><use href="#contnet-hr"></use></svg>
+            </button>
+            <button class="ico-wrap btn line pd-4" data-act="ul" data-tip="불릿 목록">
+                <svg><use href="#contnet-ul"></use></svg>
+            </button>
+            <button class="ico-wrap btn line pd-4" data-act="ol" data-tip="숫자 목록">
+                <svg><use href="#contnet-ol"></use></svg>
+            </button>
+            <button class="ico-wrap btn line pd-4" data-act="img" data-tip="이미지">
+                <svg><use href="#contnet-img"></use></svg>
+            </button>
+        </div>
+        <div class="util flx gap-4">
+            <button class="ico-wrap btn line pd-4" data-act="up" class="ml-auto">
+                <svg><use href="#dir-caret-up"></use></svg>
+            </button>
+            <button class="ico-wrap btn line pd-4" data-act="down">
+                <svg><use href="#dir-caret-down"></use></svg>
+            </button>
+            <button class="ico-wrap btn line pd-4" data-act="del">
+                <svg><use href="#act-delete"></use></svg>
+            </button>
+        </div>
+    </div>
     <i class="hr my-12"></i>
-    <div class="mt-16 wb-all" data-bind="html" data-field="content">{{content}}</div>
+    <div class="mt-16 wb-all scrollable" data-bind="html" data-field="content">{{content}}</div>
 </div>
 <div class="btn-wrap jc-c">
     <button class="btn md" data-act="close">취소</button>
-    <button class="btn md bg-point" data-act="applyNews">적용</button>
+    <button class="btn md bg-point" data-act="apply">적용</button>
 </div>
