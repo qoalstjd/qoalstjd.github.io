@@ -19,7 +19,6 @@ window.initModule = ({ root, params }) => {
             this.data.forEach((item) => {
                 const el = document.createElement("li");
                 el.classList.add('acc-item');
-                console.log(item.answer);
                 el.innerHTML = `
                     <button class="acc-btn">${item.question}</button>
                     <ul class="acc-panel txt-list dot">

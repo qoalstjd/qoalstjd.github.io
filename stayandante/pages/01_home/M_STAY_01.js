@@ -126,5 +126,5 @@ window.initModule = ({ root, params }) => {
             }
         },
     };
-    news.init();
+    // news.init();
 };
