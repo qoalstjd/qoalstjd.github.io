@@ -69,7 +69,7 @@ window.initModule = ({ root, params }) => {
                                         </tr>
                                         <tr>
                                             <th>홈페이지</th>
-                                            <td>${item.info.homepage ? `<a href="${item.info.homepage}" target="_blank" class="link w-fc">${item.info.homepage}</a>` : "-"}</td>
+                                            <td>${item.info.homepage ? `<a href="${item.info.homepage}" target="_blank" class="link ell-1" style="max-width:fit-content;">${item.info.homepage}</a>` : "-"}</td>
                                         </tr>
                                     </tbody>
                                 </table>
