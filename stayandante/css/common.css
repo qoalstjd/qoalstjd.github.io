@@ -145,10 +145,10 @@ footer .footer-inner .btn-wrap { position: absolute; right: 0; top: -5.6rem; }
 .wrap main.book .cont-wrap .book-realtime { background: url("../images/home/bnr_book.jpg") no-repeat center / cover; background-attachment: fixed; } 
 /* ==================== 고객서비스 ==================== */
 .wrap main.cs .tit-wrap.dep-1 { background-image: url("../images/cs/hero_cs.jpg"); } 
-.wrap main.cs .cont-wrap .arround-detail:nth-child(odd) .cont { flex-direction: row-reverse; }
+.wrap main.cs .cont-wrap .arround-detail:nth-child(odd) .cont { flex-direction: row-reverse; } 
 .wrap main.cs .cont-wrap .arround-detail .cont .visual { display: flex; flex-direction: column; } 
-.wrap main.cs .cont-wrap .arround-detail .cont .visual > img { padding-bottom: 8.8rem; aspect-ratio: 4/3; object-position: bottom; } 
-.wrap main.cs .cont-wrap .arround-detail .cont .img-wrap { position: absolute; left: 0; bottom: 0; width: 100%; height: 8rem; } 
+.wrap main.cs .cont-wrap .arround-detail .cont .visual > img { padding-bottom: 7.8rem; aspect-ratio: 4/3; object-position: bottom; } 
+.wrap main.cs .cont-wrap .arround-detail .cont .img-wrap { position: absolute; left: 0; bottom: 0; width: 100%; height: 7rem; } 
 .wrap main.cs .cont-wrap .arround-detail .cont .img-wrap img { cursor: pointer; opacity: 0.7; } 
 .wrap main.cs .cont-wrap .arround-detail .cont .img-wrap img.is-active { opacity: 1; } 
 /* ==================== 미디어쿼리 ==================== */
@@ -217,6 +217,11 @@ footer { padding-left: 2rem; padding-right: 2rem; }
 .wrap main.home .cont-wrap .home-room .cont { flex-direction: column; } 
 /* 펜션소개 */
 .wrap main.about .cont-wrap .about-facility > .cont > div > div { flex-direction: column; text-align: center; } 
+/* img-wrap */
+.wrap main.room .cont-wrap .room-detail .cont .visual > img { padding-bottom: 6.8rem; } 
+.wrap main.room .cont-wrap .room-detail .cont .img-wrap { height: 6rem; } 
+.wrap main.cs .cont-wrap .arround-detail .cont .visual > img { padding-bottom: 6.8rem; } 
+.wrap main.cs .cont-wrap .arround-detail .cont .img-wrap { height: 6rem; } 
  }
 @media (hover: hover) and (pointer: fine) { header .gnb.is-opened .visual,
 header .gnb.is-opened .util { visibility: visible; opacity: 1; transition: visibility 0s linear 0.4s, opacity 0.2s linear 0.4s; } 
