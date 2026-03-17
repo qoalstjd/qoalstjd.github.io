@@ -75,7 +75,7 @@ window.initModule = ({ root, params }) => {
                             <img src="${item.info.thumbnail}" alt="${item.title} 이미지" />
                             <div class="img-wrap flx col-fit gap-8">
                                 <img src="${item.info.thumbnail}" class="is-active" />
-                                ${item.images.map((img) => `<img src="${img}" alt="${item.title} 이미지" />`).join("")}
+                                ${item.images.slice(0, 5).map((img) => `<img src="${img}" alt="${item.title} 이미지" />`).join("")}
                             </div>
                         </div>
                     </div>
