@@ -67,10 +67,6 @@ window.initModule = ({ root, params }) => {
                                             <th>주차</th>
                                             <td>${this.infoFilter(item.info.parking)}</td>
                                         </tr>
-                                        <tr>
-                                            <th>홈페이지</th>
-                                            <td>${item.info.homepage ? `<a href="${item.info.homepage}" target="_blank" class="link ell-1" style="max-width:fit-content;">${item.info.homepage}</a>` : "-"}</td>
-                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
