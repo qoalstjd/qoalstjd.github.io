@@ -457,7 +457,7 @@ const todo = {
     },
 };
 
-export function init({ root }) {
+window.initModule = ({ root, params }) => {
     clock.init(root);
     weather.init(root);
     news.init(root);

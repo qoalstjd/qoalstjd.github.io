@@ -50,6 +50,6 @@ const iconList = {
     },
 };
 
-export function init({ root }) {
+window.initModule = ({ root, params }) => {
     iconList.init(root);
 }
