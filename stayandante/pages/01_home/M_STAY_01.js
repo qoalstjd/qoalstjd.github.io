@@ -79,7 +79,7 @@ window.initModule = ({ root, params }) => {
                             <p>스테이안단테펜션에서 만나는 여행 이야기</p>
                         </div>
                         <div class="btn-wrap jc-e mt-0">
-                            <a href="/index.html?linkcd=m0501" class="btn md line">
+                            <a href="/index.html?linkcd=m0503" class="btn md line">
                                 주변 여행 더 알아보기
                                 <svg class="wh-20">
                                     <use href="#dir-chevron-right"></use>
