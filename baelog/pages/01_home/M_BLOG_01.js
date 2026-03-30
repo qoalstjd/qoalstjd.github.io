@@ -191,7 +191,7 @@ const news = {
         filteredData.forEach((d) => {
             const li = document.createElement("li");
             li.innerHTML = `
-                        <img src="${d.img || ""}" onerror="this.onerror=null;this.src='/baelog/images/common/fallback_1x1.png'" loading="lazy" class="wh-48 r-4">
+                        <img src="${d.img || ""}" onerror="this.onerror=null;this.src='/images/common/fallback_1x1.png'" loading="lazy" class="wh-48 r-4">
                         <div class="of-h">
                             <strong class="ell-1">${d.title}</strong>
                             <p class="flx ai-c gap-8 txt-500 flx-nowrap">
@@ -202,7 +202,7 @@ const news = {
                         </div>`;
             li.onclick = () => {
                 window.dialog.open({
-                    url: "/baelog/pages/00_common/P_BLOG_00_newsDetail.html",
+                    url: "/pages/00_common/P_BLOG_00_newsDetail.html",
                     data: d,
                 });
             };
@@ -258,7 +258,7 @@ const music = {
         this.curIdx = i;
         const d = this.data[i];
         this.detailEl.innerHTML = `
-            <img src="${d.cover}" onerror="this.onerror=null;this.src='/baelog/images/common/fallback_1x1.png'" class="wh-128 r-12">
+            <img src="${d.cover}" onerror="this.onerror=null;this.src='/images/common/fallback_1x1.png'" class="wh-128 r-12">
             <div class="mt-12 ta-c">
                 <strong>${d.title}</strong>
                 <p>${d.genre} · ${d.mood}</p>
@@ -307,7 +307,7 @@ const music = {
         this.data.forEach((d, i) => {
             const li = document.createElement("li");
             li.innerHTML = `
-                <img src="${d.cover}" onerror="this.onerror=null;this.src='/baelog/images/common/fallback_1x1.png'" class="wh-48 r-4">
+                <img src="${d.cover}" onerror="this.onerror=null;this.src='/images/common/fallback_1x1.png'" class="wh-48 r-4">
                 <div class="of-h">
                     <strong class="ell-1">${d.title}</strong>
                     <p class="flx ai-c gap-8 txt-500 flx-nowrap">

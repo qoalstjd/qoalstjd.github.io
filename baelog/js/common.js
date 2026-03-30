@@ -30,7 +30,7 @@ const common = {
             this.bindSort();
         },
         async load() {
-            let data = await window.fetchManager?.get("/baelog/js/posts.json");
+            let data = await window.fetchManager?.get("/js/posts.json");
             data = data.filter((p) => p.section === this.section);
             this.rawList = (this.category === "All Posts" ? data : data.filter((p) => p.category === this.category.toLowerCase())).map((p) => ({
                 ...p,
@@ -51,8 +51,8 @@ const common = {
             const key = p.slug || p.category;
             const li = document.createElement("li");
             li.innerHTML = `
-                <a href="/baelog/index.html?linkcd=m0001&parentLinkcd=${this.curLinkcd}&fileName=${key}_${p.id}" class="box pd-0">
-                    <img src="/baelog/images/post/thum_${key}.png" class="w-full">
+                <a href="/index.html?linkcd=m0001&parentLinkcd=${this.curLinkcd}&fileName=${key}_${p.id}" class="box pd-0">
+                    <img src="/images/post/thum_${key}.png" class="w-full">
                     <div class="pd-16">
                     <p class="fs-12 txt-500">${p.category}</p>
                     <strong class="ell-1 mt-4">${p.id}. ${p.title}</strong>
@@ -99,7 +99,7 @@ const common = {
             this.load(fileName, parentLinkcd);
         },
         async load(fileName, parentLinkcd) {
-            const list = await fetchManager.get("/baelog/js/posts.json");
+            const list = await fetchManager.get("/js/posts.json");
             const meta = list.find((p) => `${p.slug || p.category}_${p.id}` === fileName);
             if (!meta) return;
             this.bindMeta(meta, parentLinkcd);
@@ -115,7 +115,7 @@ const common = {
             });
         },
         async loadContent(fileName) {
-            const html = await fetchManager.get(`/baelog/uploads/posts/${fileName}.html`, { parse: "text", caching: false });
+            const html = await fetchManager.get(`/uploads/posts/${fileName}.html`, { parse: "text", caching: false });
             this.post.innerHTML = html;
         },
         buildTOC() {
