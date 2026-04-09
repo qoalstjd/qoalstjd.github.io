@@ -4,7 +4,7 @@ window.initModule = ({ root, params }) => {
     titleEl.insertAdjacentHTML(
         "afterbegin",
         `<svg class="wh-24">
-            <use href="#ui-${params.tag === "새소식" ? "bell" : "document"}"></use>
+            <use href="#ui-${params.tag === "소식" ? "bell" : "document"}"></use>
         </svg>`
     );
 };

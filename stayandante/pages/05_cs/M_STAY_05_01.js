@@ -1,56 +1,70 @@
 window.initModule = ({ root, params }) => {
-    // 새소식
+    // 소식
+    function format(dateStr) {
+        const d = new Date(dateStr);
+        const yy = String(d.getFullYear()).slice(2);
+        const mm = String(d.getMonth() + 1).padStart(2, "0");
+        const dd = String(d.getDate()).padStart(2, "0");
+        return `${yy}.${mm}.${dd}`;
+    }
     const news = {
         wrap: root.querySelector(".meta-list"),
         data: [],
         async init() {
             try {
-                const res = await fetch("/api/news.php?action=list");
-                if (!res.ok) throw new Error("News 로드 실패");
-                this.data = await res.json(); // JSON으로 변환
+                this.data = (await window.fetchManager.get(`https://qoalstjdapis.vercel.app/api/getBlog?id=stayandante`)) || [];
             } catch (e) {
-                console.error(e);
+                console.error("소식목록 조회 실패", e);
                 this.data = [];
             }
             this.wrap.innerHTML = "";
             this.render();
         },
-        increaseView: async (id) => {
-            try {
-                await fetch(`/api/news.php?action=increase_view`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                    body: `id=${id}`,
-                });
-            } catch (e) {
-                console.error(e);
-            }
-        },
         render() {
-            this.data.forEach((item) => {
-                const el = document.createElement("li");
-                const newsData = {
+            if (!this.data.length) {
+                this.wrap.innerHTML = `
+                    <li>
+                        <span class="id">00</span>
+                        <span class="category">
+                            <svg class="wh-20">
+                                <use href="#ui-document"></use>
+                            </svg>
+                            오류
+                        </span>
+                        <span class="title">소식을 불러오는중 오류가 발생했습니다.</span>
+                        <span class="date">YY.MM.DD</span>
+                    </li>`;
+                return;
+            }
+            this.data.forEach((item, i) => {
+                const postItem = {
                     ...item,
-                    content: marked.parse(item.content, { baseUrl: "" }),
-                    created_at: item.created_at.split(" ")[0].split("-").join("."),
+                    created_at: format(item.created_at),
                 };
+                const el = document.createElement("li");
                 el.innerHTML = `
-                    <span class="id">${newsData.id.padStart(2, "0")}</span>
+                    <span class="id">${String(Math.abs(i - this.data.length)).padStart(2, "0")}</span>
                     <span class="category">
                         <svg class="wh-20">
-                            <use href="#ui-${newsData.tag === "새소식" ? "bell" : "document"}"></use>
+                            <use href="#ui-${postItem.category === "소식" ? "bell" : "document"}"></use>
                         </svg>
-                        ${newsData.tag || "새소식"}
+                        ${postItem.category || "소식"}
                     </span>
-                    <span class="title">${newsData.title}</span>
-                    <span class="date">${newsData.created_at.split(" ")[0].split("-").join(".")}</span>
-                    <span class="view">${newsData.view_cnt}</span>`;
+                    <span class="title">${postItem.title}</span>
+                    <span class="date">${postItem.created_at}</span>`;
                 el.addEventListener("click", async () => {
-                    window.dialog.open({
+                    const dialogRef = await window.dialog.open({
                         url: "/pages/00_common/P_STAY_00_news.html",
-                        data: newsData,
+                        data: { ...postItem, content: "<div style='height:200rem'><p class='loading' style='position: fixed;left: 50%;top: 50%;'></p></div>" },
                     });
-                    this.increaseView(newsData.id);
+                    const dialogBody = dialogRef.pop.querySelector(".md-content"); // 내부 컨테이너 선택
+                    if (!dialogBody) return;
+                    dialogBody.style.overflow = "hidden";
+                    const detailHtml = await window.fetchManager.get(`https://qoalstjdapis.vercel.app/api/getBlogPost?id=stayandante&no=${postItem.logNo}`, { parse: "text", caching: false });
+                    if (detailHtml) {
+                        dialogBody.removeAttribute("style");
+                        dialogBody.innerHTML = detailHtml;
+                    }
                 });
                 this.wrap.append(el);
             });

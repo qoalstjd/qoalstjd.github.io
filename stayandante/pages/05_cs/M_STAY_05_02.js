@@ -1,5 +1,5 @@
 window.initModule = ({ root, params }) => {
-    // 자주하는 질문
+    // FAQ
     const faq = {
         wrap: root.querySelector(".acc-wrap"),
         data: [],
@@ -16,6 +16,13 @@ window.initModule = ({ root, params }) => {
             this.render();
         },
         render() {
+            if (!this.data.length) {
+                this.wrap.innerHTML = `
+                    <li class="acc-item">
+                        <button class="acc-btn" style="pointer-events:none;">자주하는 질문을 불러오는중 오류가 발생했습니다.</button>
+                    </li>`;
+                return;
+            }
             this.data.forEach((item) => {
                 const el = document.createElement("li");
                 el.classList.add('acc-item');

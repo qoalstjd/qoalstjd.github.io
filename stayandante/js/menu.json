@@ -14,6 +14,7 @@
     "m0400": { "name": "book", "depth": 1, "path": "/pages/04_book/M_STAY_04.html" },
 
     "m0500": { "name": "cs", "depth": 1, "path": "/pages/05_cs/M_STAY_05_02.html" },
-    "m0502": { "name": "자주하는 질문", "depth": 2, "path": "/pages/05_cs/M_STAY_05_02.html", "parent": ["m0500"] },
+    "m0501": { "name": "소식", "depth": 2, "path": "/pages/05_cs/M_STAY_05_01.html", "parent": ["m0500"] },
+    "m0502": { "name": "FAQ", "depth": 2, "path": "/pages/05_cs/M_STAY_05_02.html", "parent": ["m0500"] },
     "m0503": { "name": "주변소개", "depth": 2, "path": "/pages/05_cs/M_STAY_05_03.html", "parent": ["m0500"] }
 }

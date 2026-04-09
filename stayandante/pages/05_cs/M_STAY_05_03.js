@@ -26,6 +26,10 @@ window.initModule = ({ root, params }) => {
             return value || "-";
         },
         render() {
+            if (!this.data.length) {
+                this.wrap.innerHTML += `<section class="arround-detail">주변여행 가이드를 불러오는중 오류가 발생했습니다.</section>`;
+                return;
+            }
             this.data.forEach((item) => {
                 const sectionEl = document.createElement("section");
                 sectionEl.className = "arround-detail";
