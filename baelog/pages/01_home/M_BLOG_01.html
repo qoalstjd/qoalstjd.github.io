@@ -1,3 +1,9 @@
+<!--
+📁 Path      : /pages/01_home/M_BLOG_01_01.html
+📚 Menu      : Home
+📝 Desc      : 위젯 대시보드 형태
+-->
+
 <!-- 시계 -->
 <div data-bind="clock">
     <p class="date">8888/88/88</p>
@@ -42,46 +48,16 @@
 </div>
 <!-- 음악 -->
 <div data-bind="music">
-    <div class="detail">
-        <img src="/images/common/fallback_1x1.png" class="wh-128 r-12" />
-        <div class="mt-12 ta-c">
-            <strong>${d.title}</strong>
-            <p>${d.genre} · ${d.mood}</p>
-        </div>
-    </div>
-    <div class="player">
-        <audio></audio>
-        <div class="timeline">
-            <span class="now">0:00</span>
-            <div class="progress">
-                <progress value="0" max="0"></progress>
-                <input type="range" class="seek range" min="0" value="0" />
-            </div>
-            <span class="total">0:00</span>
-        </div>
-        <div class="volume">
-            <svg class="wh-16"><use href="#media-volume"></use></svg>
-            <div class="progress">
-                <progress class="volPg" max="100" value="50"></progress>
-                <input class="vol range" type="range" min="0" max="100" value="50" />
-            </div>
-        </div>
-        <div class="control">
-            <button data-act="prev" class="ico-wrap pd-4" data-tip="이전곡">
-                <svg class="wh-16"><use href="#media-back"></use></svg>
-            </button>
-            <button data-act="toggle" class="ico-wrap pd-4" data-tip="재생/일시정지">
-                <svg class="wh-16">
-                    <use href="#media-play"></use>
-                    <use href="#media-pause"></use>
-                </svg>
-            </button>
-            <button data-act="next" class="ico-wrap pd-4" data-tip="다음곡">
-                <svg class="wh-16"><use href="#media-forward"></use></svg>
-            </button>
-        </div>
+    <div class="tv">
+    <div class="player"></div>
     </div>
     <ul class="playlist"></ul>
+    <form class="inp with-ico">
+        <input type="text" placeholder="Youtube Live Streaming URL">
+        <button class="ico-wrap pd-4 wh-24">
+            <svg><use href="#act-send"></use></svg>
+        </button>
+    </form>
 </div>
 <div data-bind="calendar">
     <div class="header flx jc-bt">
@@ -102,10 +78,11 @@
     </figure>
     <p class="date">YYYY년 MM월 DD일</p>
     <ul class="list"></ul>
-    <form class="inp">
+    <form class="inp with-icon">
         <input type="text" placeholder="추가할 항목을 입력해주세요..." />
-        <button class="ico-wrap pd-4">
+        <button class="ico-wrap pd-4 wh-24">
             <svg><use href="#act-send"></use></svg>
         </button>
     </form>
 </div>
+<script src="https://www.youtube.com/iframe_api"></script>

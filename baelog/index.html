@@ -1,5 +1,6 @@
 <html lang="ko">
     <head>
+        <base href="/baelog/">
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>BaeLog</title>
@@ -9,12 +10,12 @@
                 const theme = localStorage.getItem("theme") || "dark";
                 document.documentElement.dataset.theme = theme;
 
-                const svg = await fetch("https://cdn.jsdelivr.net/gh/qoalstjd/common@latest/images/icon.svg" + "?v=" + Date.now()).then((r) => r.text());
+                const svg = await fetch("https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.525/images/icon.svg" + "?v=" + Date.now()).then((r) => r.text());
                 document.body.insertAdjacentHTML("afterbegin", svg);
             })();
         </script>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qoalstjd/common@latest/css/global.css" />
-        <link rel="stylesheet" href="/css/common.css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.531/css/global.css" />
+        <link rel="stylesheet" href="./css/common.css" />
         <link rel="icon" type="image/x-icon" href="/images/common/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/images/common/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/images/common/favicon-16x16.png" />
@@ -22,9 +23,15 @@
     </head>
     <body>
         <header>
-            <a href="#none" class="ico-wrap pd-4 ml-auto" data-tip="공유">
+            <button class="ico-wrap pd-4 ml-auto" data-act="share" data-tip="공유">
                 <svg><use href="#act-share"></use></svg>
-            </a>
+            </button>
+            <button class="ico-wrap pd-4" data-act="fullscreen" data-tip="전체화면">
+                <svg>
+                    <use href="#act-maximize"></use>
+                    <use href="#act-minimize"></use>
+                </svg>
+            </button>
             <div class="scrollGauge"></div>
         </header>
         <nav class="gnb">
@@ -76,8 +83,8 @@
         </div>
         <script src="https://cdn.jsdelivr.net/gh/qoalstjd/common@latest/library/lottie.min.js"></script>
         <script src="https://cdn.jsdelivr.net/gh/qoalstjd/common@latest/js/util.js"></script>
-        <script src="https://cdn.jsdelivr.net/gh/qoalstjd/common@latest/js/ui.js"></script>
-        <script src="/js/common.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.531/js/ui.js"></script>
+        <script src="./js/common.js"></script>
         <script src="https://cdn.jsdelivr.net/gh/qoalstjd/common@1.0.515/js/include.js"></script>
     </body>
 </html>

@@ -222,113 +222,122 @@ const news = {
 // 음악
 const music = {
     curIdx: 0,
-    async init(root) {
+    player: null,
+    data: [
+        { id: "jfKfPfyJRdk", title: "Lofi Girl" },
+        { id: "5yx6BWlEVcY", title: "Chillhop Radio" },
+        { id: "Dx5qFachd3A", title: "Jazz Cafe Radio" },
+    ],
+    init(root) {
         this.wrap = root.querySelector("[data-bind='music']");
-
-        this.detailEl = this.wrap.querySelector(".detail");
         this.playerEl = this.wrap.querySelector(".player");
         this.playlistEl = this.wrap.querySelector(".playlist");
+        this.form = this.wrap.querySelector(".inp");
+        this.input = this.wrap.querySelector("input");
 
-        this.audio = this.wrap.querySelector("audio");
-        this.now = this.wrap.querySelector(".now");
-        this.total = this.wrap.querySelector(".total");
-        this.pg = this.wrap.querySelector("progress");
-        this.seek = this.wrap.querySelector(".seek");
-        this.vol = this.wrap.querySelector(".vol");
-        this.volPg = this.wrap.querySelector(".volPg");
-        this.control = this.wrap.querySelector(".control");
-
-        window.ui.loading(this.wrap, true);
-        try {
-            const res = await fetch("https://qoalstjdapis.vercel.app/api/getMusic");
-            this.data = await res.json();
-        } catch {
-            this.data = [];
-        }
+        this.loadCache();
+        this.loadYT();
         this.renderPlaylist();
-        this.load(this.curIdx);
-        this.bindControls();
-        const v = Math.round(this.audio.volume * 100);
-        this.vol.value = v;
-        this.volPg.value = v;
+        this.load(0);
+        this.bind();
+    },
 
-        window.ui.loading(this.wrap, false);
+    /* ---------------- YT ---------------- */
+
+    loadYT() {
+        if (window.YT) return this.createPlayer();
+
+        const tag = document.createElement("script");
+        tag.src = "https://www.youtube.com/iframe_api";
+        document.body.appendChild(tag);
+
+        window.onYouTubeIframeAPIReady = () => this.createPlayer();
+    },
+
+    createPlayer() {
+        this.player = new YT.Player(this.playerEl, {
+            height: "0",
+            width: "0",
+            videoId: this.data[0]?.id,
+            playerVars: { autoplay: 1, controls: 0 },
+        });
     },
     load(i) {
+        const prev = this.playlistEl.children[this.curIdx];
+        prev?.classList.remove("is-active");
         this.curIdx = i;
-        const d = this.data[i];
-        this.detailEl.innerHTML = `
-            <img src="${d.cover}" onerror="this.onerror=null;this.src='/images/common/fallback_1x1.png'" class="wh-128 r-12">
-            <div class="mt-12 ta-c">
-                <strong>${d.title}</strong>
-                <p>${d.genre} · ${d.mood}</p>
-            </div>`;
-        this.audio.src = d.streaming;
-        this.audio.onloadedmetadata = () => {
-            const dur = Math.floor(this.audio.duration || 0);
-            this.pg.max = this.seek.max = dur;
-            this.total.textContent = this.fm(dur);
-            // this.audio.play();
-        };
-        this.audio.ontimeupdate = () => {
-            const cur = Math.floor(this.audio.currentTime || 0);
-            this.pg.value = this.seek.value = cur;
-            this.now.textContent = this.fm(cur);
-        };
-        // this.audio.onplay = () => ();
-        // this.audio.onpause = () => ();
-        this.audio.onended = () => this.next();
+        const next = this.playlistEl.children[i];
+        next?.classList.add("is-active");
+        this.player?.loadVideoById(this.data[i].id);
     },
-    bindControls() {
-        this.wrap.querySelector('.control [data-act="prev"]').onclick = () => this.prev();
-        this.wrap.querySelector('.control [data-act="next"]').onclick = () => this.next();
-        this.wrap.querySelector('.control [data-act="toggle"]').onclick = () => (this.audio.paused ? this.audio.play() : this.audio.pause());
-        this.seek.oninput = (e) => (this.audio.currentTime = Number(e.target.value));
-        this.vol.oninput = (e) => {
-            const v = Number(e.target.value);
-            this.audio.volume = v / 100;
-            this.volPg.value = v;
-        };
-        this.audio.onvolumechange = () => {
-            const v = Math.round(this.audio.volume * 100);
-            this.vol.value = v;
-            this.volPg.value = v;
+    bind() {
+        this.form.onsubmit = (e) => {
+            e.preventDefault();
+            const url = this.input.value.trim();
+            if (!url) return;
+            const id = this.parseId(url);
+            if (!id)
+                return window.dialog.open({
+                    type: "alert",
+                    size: "sm",
+                    html: "올바른 YouTube URL을 입력해 주세요",
+                });
+
+            this.add(id);
+            this.input.value = "";
         };
     },
-    prev() {
-        this.load((this.curIdx - 1 + this.data.length) % this.data.length);
+    async getTitle(id) {
+        const res = await fetch(`https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${id}&format=json`);
+        const data = await res.json();
+        return data.title;
     },
-    next() {
-        this.load((this.curIdx + 1) % this.data.length);
+    parseId(url) {
+        return url.match(/(?:v=|\/)([0-9A-Za-z_-]{11})/)?.[1];
+    },
+    async add(id) {
+        if (this.data.some((d) => d.id === id)) return;
+        this.data.push({
+            id,
+            title: (await this.getTitle(id)) || "Unknown",
+        });
+        this.saveCache();
+        this.renderPlaylist();
+    },
+    remove(i) {
+        this.data.splice(i, 1);
+        if (this.curIdx >= this.data.length) {
+            this.curIdx = 0;
+        }
+        this.saveCache();
+        this.renderPlaylist();
+        this.load(this.curIdx);
     },
     renderPlaylist() {
         this.playlistEl.innerHTML = "";
-
         this.data.forEach((d, i) => {
             const li = document.createElement("li");
             li.innerHTML = `
-                <img src="${d.cover}" onerror="this.onerror=null;this.src='/images/common/fallback_1x1.png'" class="wh-48 r-4">
-                <div class="of-h">
-                    <strong class="ell-1">${d.title}</strong>
-                    <p class="flx ai-c gap-8 txt-500 flx-nowrap">
-                        <span>${d.genre}</span>
-                        <i class="vr"></i>
-                        <span class="ell-1">${d.mood}</span>
-                    </p>
-                </div>`;
-            li.onclick = () => {
-                this.playlistEl.querySelectorAll("li").forEach((l) => l.classList.remove("is-active"));
-                li.classList.add("is-active");
-                this.load(i);
+                <img src="https://img.youtube.com/vi/${d.id}/hqdefault.jpg">
+                <p class="ell-1">${d.title}</p>
+                <button class="ico-wrap pd-4" data-act="delete" data-id="1">
+                    <svg class="wh-16"><use href="#act-delete"></use></svg>
+                </button>
+            `;
+            li.onclick = () => this.load(i);
+            li.querySelector("[data-act='delete']").onclick = (e) => {
+                e.stopPropagation();
+                this.remove(i);
             };
             this.playlistEl.appendChild(li);
         });
-        this.playlistEl.children[0]?.classList.add("is-active");
     },
-    fm(s) {
-        const m = Math.floor(s / 60);
-        const ss = String(s % 60).padStart(2, "0");
-        return `${m}:${ss}`;
+    saveCache() {
+        cacheManager.set("youtubePlayList", this.data, { persist: true });
+    },
+    loadCache() {
+        const cached = cacheManager.get("youtubePlayList");
+        if (cached?.length) this.data = cached;
     },
 };
 // 달력
@@ -464,4 +473,4 @@ window.initModule = ({ root, params }) => {
     calendar.init(root);
     todo.init(root);
     music.init(root);
-}
+};
