@@ -17,7 +17,7 @@
     "m0501": { "name": "Typography", "depth": 2, "path": "/pages/05_uidocs/M_BLOG_05_01.html", "parent": ["m0500"] },
     "m0502": { "name": "Naming", "depth": 2, "path": "/pages/05_uidocs/M_BLOG_05_02.html", "parent": ["m0500"] },
     "m0503": { "name": "Component", "depth": 2, "path": "/pages/05_uidocs/M_BLOG_05_03.html", "parent": ["m0500"] },
-    "m0504": { "name": "Box", "depth": 2, "path": "/pages/05_uidocs/M_BLO_05G_04.html", "parent": ["m0500"] },
+    "m0504": { "name": "Box", "depth": 2, "path": "/pages/05_uidocs/M_BLO_05_04.html", "parent": ["m0500"] },
     "m0505": { "name": "List", "depth": 2, "path": "/pages/05_uidocs/M_BLOG_05_05.html", "parent": ["m0500"] },
     "m0506": { "name": "Table", "depth": 2, "path": "/pages/05_uidocs/M_BLOG_05_06.html", "parent": ["m0500"] },
     "m0507": { "name": "Icon", "depth": 2, "path": "/pages/05_uidocs/M_BLOG_05_07.html", "parent": ["m0500"] },

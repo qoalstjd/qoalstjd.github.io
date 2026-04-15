@@ -30,7 +30,7 @@ const common = {
             this.bindSort();
         },
         async load() {
-            let data = await window.fetchManager?.get("/js/posts.json");
+            let data = await window.fetchManager?.get(window.BASE + "/js/posts.json");
             data = data.filter((p) => p.section === this.section);
             this.rawList = (this.category === "All Posts" ? data : data.filter((p) => p.category === this.category.toLowerCase())).map((p) => ({
                 ...p,
@@ -52,7 +52,7 @@ const common = {
             const li = document.createElement("li");
             li.innerHTML = `
                 <a href="/index.html?linkcd=m0001&parentLinkcd=${this.curLinkcd}&fileName=${key}_${p.id}" class="box pd-0">
-                    <img src="/images/post/thum_${key}.png" class="w-full">
+                    <img src="${window.BASE}/images/post/thum_${key}.png" class="w-full">
                     <div class="pd-16">
                     <p class="fs-12 txt-500">${p.category}</p>
                     <strong class="ell-1 mt-4">${p.id}. ${p.title}</strong>
@@ -86,20 +86,22 @@ const common = {
         },
     },
     postDetail: {
-        init() {
+        init({ root }) {
             if (!window.SPA) return;
-            this.run();
+            this.run(root);
         },
-        run() {
+        run(root) {
+            this.root = root || document;
             const { fileName, parentLinkcd } = history.state || {};
             if (!fileName) return;
-            this.post = document.querySelector('[data-bind="post"]');
-            this.aside = document.querySelector('[data-bind="toc"]');
+            this.post = this.root.querySelector('[data-bind="post"]');
+            this.aside = this.root.querySelector('[data-bind="toc"]');
+            if (!this.post || !this.aside) return;
             SPA.setActive(parentLinkcd);
             this.load(fileName, parentLinkcd);
         },
         async load(fileName, parentLinkcd) {
-            const list = await fetchManager.get("/js/posts.json");
+            const list = await fetchManager.get(window.BASE + "/js/posts.json");
             const meta = list.find((p) => `${p.slug || p.category}_${p.id}` === fileName);
             if (!meta) return;
             this.bindMeta(meta, parentLinkcd);
@@ -109,17 +111,20 @@ const common = {
             this.buildRelated(list, meta, fileName, parentLinkcd);
         },
         bindMeta(meta, parentLinkcd) {
-            bindData(document.querySelector(".tit-wrap"), {
+            const el = this.root.querySelector(".tit-wrap");
+            if (!el) return;
+            bindData(el, {
                 ...meta,
                 parentLinkcd: parentLinkcd || "m0100",
             });
         },
         async loadContent(fileName) {
-            const html = await fetchManager.get(`/uploads/posts/${fileName}.html`, { parse: "text", caching: false });
+            const html = await fetchManager.get(`${window.BASE}/uploads/posts/${fileName}.html`, { parse: "text", caching: false });
             this.post.innerHTML = html;
         },
         buildTOC() {
             const ul = this.aside.querySelector("ul");
+            if (!ul) return;
             ul.innerHTML = "";
             this.headings = [...this.post.querySelectorAll("h2,h3,h4,h5,h6")];
             this.headings.forEach((h, i) => {
@@ -129,10 +134,12 @@ const common = {
             });
         },
         bindScroll() {
+            if (this._scrollBound) return;
+            this._scrollBound = true;
             const links = [...this.aside.querySelectorAll("a")];
-            let tops = [];
+
             const calc = () => {
-                tops = this.headings.map((h) => ({
+                this.tops = this.headings.map((h) => ({
                     id: h.id,
                     top: h.getBoundingClientRect().top + window.pageYOffset - 80,
                 }));
@@ -149,9 +156,10 @@ const common = {
             });
         },
         buildRelated(list, meta, fileName, parentLinkcd) {
-            const tbody = document.querySelector("[data-bind='relatedPost']");
-            const wrap = document.querySelector(".related-wrap");
+            const tbody = this.root.querySelector("[data-bind='relatedPost']");
+            const wrap = this.root.querySelector(".related-wrap");
             if (!tbody || !wrap) return;
+            tbody.innerHTML = "";
             const related = list.filter((p) => p.category === meta.category);
             if (!related.length) {
                 tbody.innerHTML = "<tr><td>같은 카테고리의 포스트가 없습니다.</td></tr>";
@@ -173,7 +181,7 @@ const common = {
                         tr.querySelectorAll("td").forEach((td) => td.classList.add("txt-point"));
                         tr.querySelectorAll("span").forEach((s) => s.classList.add("txt-point-sub"));
                     }
-                    tr.addEventListener("click", () => {
+                    tr.onclick = () => {
                         const params = {
                             linkcd: "m0001",
                             parentLinkcd,
@@ -181,11 +189,10 @@ const common = {
                         };
                         sessionStorage.setItem("pageParams", JSON.stringify(params));
                         SPA.loadPage(params, false);
-                    });
-
+                    };
                     tbody.appendChild(tr);
                 });
-            bindData(document.querySelector(".related-wrap"), {
+            bindData(wrap, {
                 ...meta,
                 postLength: related.length,
             });

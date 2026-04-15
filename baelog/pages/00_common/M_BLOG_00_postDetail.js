@@ -1,3 +1,4 @@
-export function init() {
+window.initModule = ({ root, params }) => {
+    console.log('????')
     common?.postDetail.init();
-}
+};
