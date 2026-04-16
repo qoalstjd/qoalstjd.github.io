@@ -1,4 +1,3 @@
 window.initModule = ({ root, params }) => {
-    console.log('????')
-    common?.postDetail.init();
+    common?.postDetail.init(root);
 };

@@ -49,40 +49,45 @@
 <!-- 음악 -->
 <div data-bind="music">
     <div class="tv">
-    <div class="player"></div>
+        <div class="player"></div>
     </div>
     <ul class="playlist"></ul>
-    <form class="inp with-ico">
-        <input type="text" placeholder="Youtube Live Streaming URL">
+    <form class="inp has-ico">
+        <input type="text" placeholder="Youtube Live Streaming URL" />
         <button class="ico-wrap pd-4 wh-24">
             <svg><use href="#act-send"></use></svg>
         </button>
     </form>
 </div>
+<!-- 달력 -->
 <div data-bind="calendar">
     <div class="header flx jc-bt">
         <button data-act="prev" class="ico-wrap pd-4" data-tip="이전월">
-            <svg class="wh-16"><use href="#dir-chevron-left"></use></svg>
+            <svg class="wh-20"><use href="#dir-chevron-left"></use></svg>
         </button>
-        <button data-act="today" class="title"></button>
+        <button data-act="today" class="title" data-tip="오늘로 가기"></button>
         <button data-act="next" class="ico-wrap pd-4" data-tip="다음월">
-            <svg class="wh-16"><use href="#dir-chevron-right"></use></svg>
+            <svg class="wh-20"><use href="#dir-chevron-right"></use></svg>
         </button>
+    </div>
+    <div class="days">
+        <div class="txt-red">Sun</div>
+        <div>Mon</div>
+        <div>Tue</div>
+        <div>Wed</div>
+        <div>Thu</div>
+        <div>Fri</div>
+        <div class="txt-blue">Sat</div>
     </div>
     <div class="dates"></div>
 </div>
-<div data-bind="todo">
+<div data-bind="schedule">
     <figure class="quote">
         <blockquote>꿈을 쫓는 자가 세상을 움직인다</blockquote>
         <figcaption>헨리 데이비드 소로</figcaption>
     </figure>
     <p class="date">YYYY년 MM월 DD일</p>
     <ul class="list"></ul>
-    <form class="inp with-icon">
-        <input type="text" placeholder="추가할 항목을 입력해주세요..." />
-        <button class="ico-wrap pd-4 wh-24">
-            <svg><use href="#act-send"></use></svg>
-        </button>
-    </form>
 </div>
+
 <script src="https://www.youtube.com/iframe_api"></script>

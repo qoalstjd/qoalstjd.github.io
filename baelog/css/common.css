@@ -8,6 +8,7 @@ body > .gnb .util,
 body > .gnb ul { display: flex; flex-direction: column; align-items: center; gap: 1.6rem; } 
 body > .gnb ul { flex: 1; } 
 body > .gnb ul li a span { display: none; position: absolute; left: calc(100% + 0.4rem); top: calc(50% - 1.45rem); background-color: var(--bg_root); color: var(--txt_primary); padding: 0.4rem 0.8rem; border: 0.1rem solid var(--brd_type01); border-radius: 0.4rem; font-size: 1.4rem; font-weight: 600; } 
+body > .gnb ul li a.is-active { color: rgb(var(--primary-500)); } 
 body > .gnb ul li a:hover span { display: block; } 
 body > .gnb .util { padding-bottom: 2rem; } 
 /* Header */
@@ -24,6 +25,7 @@ body > .wrap.has-lnb { display: grid; grid-template-areas: 'lnb main' 'lnb foote
 body > .wrap.has-lnb .lnb { grid-area: lnb; position: sticky; left: 8.4rem; top: 5.2rem; width: 24rem; height: calc(100dvh - 5.2rem); padding: 6rem 4rem; background-color: rgb(var(--bg-150)); } 
 body > .wrap.has-lnb .lnb ul li a { display: block; padding: 1.2rem 1.6rem; border-radius: 0.8rem; } 
 body > .wrap.has-lnb .lnb ul li a:hover { background-color: rgb(var(--bg-hover)); } 
+body > .wrap.has-lnb .lnb ul li a.is-active { color: rgb(var(--primary-500)); } 
 body > .wrap.has-lnb footer { grid-area: footer; margin-top: 0; } 
 /* Aside */
 body > aside { position: fixed; right: -40rem; top: 0; width: 40rem; height: 100dvh; box-shadow: -0.4rem 0 0 0 var(--bg_root); z-index: 1; transition: right 0.3s; display: none; } 
@@ -35,7 +37,7 @@ body > aside .aside-header .util button i { mask-image: url("https://s2.svgbox.n
 /* Error */
 body > .wrap main.error { display: flex; flex-direction: column; } 
 /* Home */
-body > .wrap main.home { padding: 0; display: grid; grid-template-areas: 'clock weather weather news' 'music weather weather news' 'music calendar todo news'; grid-template-rows: 2fr 2fr 3fr; grid-template-columns: repeat(4, 1fr); gap: 0.4rem; background-color: rgb(var(--bg-000)); max-height: calc(100vh - 10.8rem); } 
+body > .wrap main.home { padding: 0; display: grid; grid-template-areas: 'clock weather weather news' 'music weather weather news' 'music calendar schedule news'; grid-template-rows: 2fr 2fr 3fr; grid-template-columns: repeat(4, 1fr); gap: 0.4rem; background-color: rgb(var(--bg-000)); max-height: calc(100vh - 10.8rem); } 
 body > .wrap main.home > div { position: relative; display: flex; flex-direction: column; height: 100%; padding: 1.6rem; background-color: rgb(var(--bg-150)); } 
 /* Home > Clock */
 body > .wrap main.home [data-bind="clock"] { grid-area: clock; justify-content: center; align-items: stretch; gap: 0.8rem; font-family: LCD14, monospace; z-index: 0; text-align: center; container-type: inline-size; } 
@@ -81,29 +83,39 @@ body > .wrap main.home [data-bind="news"] .news-list li:hover img { filter: gray
 
 body > .wrap main.home [data-bind="music"] { grid-area: music; display: flex; flex-direction: column; justify-content: center; height: 100%; } 
 body > .wrap main.home [data-bind="music"] .detail { display: flex; flex-direction: column; align-items: center; height: 20.8rem; } 
-body > .wrap main.home [data-bind="music"] .player { width: 100%; aspect-ratio: 16/9; height: unset; filter: grayscale(1); } 
-.tv { position: relative; } 
-.tv::after { content: ""; position: absolute; inset: 0; background: rgba(var(--bg-150), 0.2) repeating-linear-gradient( 0deg, rgba(255,255,255,0.1), rgba(255,255,255,0.1) 1px, transparent 1px, transparent 0.6rem ); pointer-events: none; } 
+body > .wrap main.home [data-bind="music"] .tv { position: relative; border-radius: 1rem; overflow: hidden; } 
+body > .wrap main.home [data-bind="music"] .tv iframe { aspect-ratio: 16 / 9; width: 100%; height: unset; filter: grayscale(0.9) contrast(0.8) brightness(1.2) saturate(120%); } 
+body > .wrap main.home [data-bind="music"] .tv::after { content: ""; position: absolute; inset: 0; background: rgba(var(--primary-500), 0.2) repeating-linear-gradient( 0deg, rgba(255,255,255,0.1), rgba(255,255,255,0.1) 1px, transparent 1px, transparent 0.6rem ); mix-blend-mode: overlay; pointer-events: none; } 
 body > .wrap main.home [data-bind="music"] .playlist { flex: 1; overflow-y: auto; margin-top: 1.2rem; } 
 body > .wrap main.home [data-bind="music"] .playlist li { display: grid; grid-template-columns: 4rem 1fr auto; grid-template-rows: auto; align-items: center; gap: 1.2rem; padding: 0.8rem; border-radius: 0.8rem; font-size: 1.4rem; } 
+body > .wrap main.home [data-bind="music"] .playlist li img { filter: grayscale(1); } 
 body > .wrap main.home [data-bind="music"] .playlist li:nth-child(-n+3) [data-act="delete"] { display: none; } 
 body > .wrap main.home [data-bind="music"] .playlist li:hover { background-color: rgb(var(--bg-hover)); cursor: pointer; } 
 body > .wrap main.home [data-bind="music"] .playlist li.is-active { background-color: rgb(var(--bg-200)); } 
 
 body > .wrap main.home [data-bind="calendar"] { grid-area: calendar; display: flex; flex-direction: column; } 
-body > .wrap main.home [data-bind="calendar"] .dates { display: grid; grid-template-rows: repeat(6, 1fr); gap: 0.4rem; grid-template-columns: repeat(7, 1fr); flex: 1; margin-top: 1.2rem; } 
-body > .wrap main.home [data-bind="calendar"] .dates > * { text-align: center; align-content: center; border: 0.1rem solid rgb(var(--brd-300)); } 
-body > .wrap main.home [data-bind="calendar"] .prev, .next { opacity: .3; } 
+body > .wrap main.home [data-bind="calendar"] .days,
+body > .wrap main.home [data-bind="calendar"] .dates { display: grid; grid-template-columns: repeat(7, 1fr); } 
+body > .wrap main.home [data-bind="calendar"] .days > div,
+body > .wrap main.home [data-bind="calendar"] .dates > div { text-align: center; align-content: center; } 
+body > .wrap main.home [data-bind="calendar"] .days { margin-top: 1.2rem; border-bottom: 0.1rem solid rgb(var(--brd-100)); font-size: 1.2rem; color: rgb(var(--txt-500)); line-height: 3.2rem; } 
+body > .wrap main.home [data-bind="calendar"] .dates { display: grid; grid-template-rows: repeat(6, 1fr); flex: 1; } 
+body > .wrap main.home [data-bind="calendar"] .dates > div { position: relative; cursor: pointer; border-radius: 0.4rem; } 
+body > .wrap main.home [data-bind="calendar"] .dates > div.is-active::before { content: ""; position: absolute; inset: 0; border: 0.1rem solid rgb(var(--brd-500)); border-radius: 0.4rem; } 
+body > .wrap main.home [data-bind="calendar"] .dates > div:hover { background-color: rgb(var(--bg-hover)); } 
+body > .wrap main.home [data-bind="calendar"] .dates > div .date { position: relative; } 
+body > .wrap main.home [data-bind="calendar"] .dates > div .events { display: flex; justify-content: center; align-items: center; gap: 0.2rem; width: 100%; position: absolute; left: 0; top: calc(50% + 1.1rem); } 
+body > .wrap main.home [data-bind="calendar"] .dates > div .events i { display: block; width: 0.3rem; height: 0.3rem; border-radius: 9rem; } 
+body > .wrap main.home [data-bind="calendar"] .prev, .next { opacity: .2; } 
 body > .wrap main.home [data-bind="calendar"] .today { color: rgb(var(--primary-500)); } 
 
-body > .wrap main.home [data-bind="todo"] { grid-area: todo; } 
-body > .wrap main.home [data-bind="todo"] .date { background-color: rgb(var(--bg-100)); padding: 0.4rem; font-size: 1.4rem; border-radius: 0.8rem; text-align: center; } 
-body > .wrap main.home [data-bind="todo"] .list { flex: 1; overflow-y: auto; } 
-body > .wrap main.home [data-bind="todo"] .list li { position: relative; padding: 0.4rem 5.2rem 0.4rem 2.8rem; border-radius: 0.4rem; background-color: var(--bg_type01); } 
-body > .wrap main.home [data-bind="todo"] .list li + li { margin-top: 0.4rem; } 
-body > .wrap main.home [data-bind="todo"] .list li div { position: absolute; left: 0; top: 0; width: 100%; height: 100%; padding: 0.4rem 0.8rem; display: flex; align-items: center; } 
-body > .wrap main.home [data-bind="todo"] .list li div button:nth-child(2) { margin-left: auto; } 
-body > .wrap main.home [data-bind="todo"] .list li div button:nth-child(3) { margin-left: 0.4rem; } 
+body > .wrap main.home [data-bind="schedule"] { grid-area: schedule; } 
+body > .wrap main.home [data-bind="schedule"] .date { background-color: rgb(var(--bg-100)); padding: 0.4rem; font-size: 1.4rem; border-radius: 0.8rem; text-align: center; } 
+body > .wrap main.home [data-bind="schedule"] .list { flex: 1; overflow-y: auto; margin-top: 0.8rem; } 
+body > .wrap main.home [data-bind="schedule"] .list li { display: flex; align-items: center; gap: 0.4rem; } 
+body > .wrap main.home [data-bind="schedule"] .list li + li { margin-top: 0.4rem; } 
+body > .wrap main.home [data-bind="schedule"] .list li i { flex-shrink: 0; width: 1.6rem; height: 1.6rem; border-radius: 0.4rem; opacity: 0.8; border-radius: 0.4rem; } 
+body > .wrap main.home [data-bind="schedule"] .list li p { font-size: 1.4rem; } 
 
 /* Posts */
 body > .wrap main [data-bind="posts"] div { overflow: hidden; } 
@@ -133,7 +145,7 @@ body > .wrap main [data-bind="posts"][data-postviewtype="table"] li + li a { bor
 .cont-wrap.ty-post aside > div ul li + li { margin-top: 0.4rem; } 
 .cont-wrap.ty-post > section hr { border: 0; border-top: 0.1rem dashed rgb(var(--brd-500)); margin: 3.2rem 0; } 
 
-@media screen and (max-width: 1279px) { body > .wrap main.home { max-height: unset; grid-template-areas: 'clock weather' 'news weather' 'news music' 'calendar todo'; grid-template-rows: auto; grid-template-columns: 1fr 2fr; } 
+@media screen and (max-width: 1279px) { body > .wrap main.home { max-height: unset; grid-template-areas: 'clock weather' 'news weather' 'news music' 'calendar schedule'; grid-template-rows: auto; grid-template-columns: 1fr 2fr; } 
  body > .wrap main.home [data-bind="weather"] .list { display: none; } 
  body > .wrap main.home [data-bind="music"] .playlist { max-height: 50dvh; } 
  }

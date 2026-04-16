@@ -52,7 +52,7 @@ const weather = {
         const sky = v.sky.value;
         const pty = v.pty.value;
         this.detailEl.innerHTML = `
-            <svg class="wh-80 txt-point"><use href="#${pty !== "none" ? "ui-" + pty : "ui-" + sky}"></use></svg>
+            <svg class="wh-80 pd-8 txt-point"><use href="#${pty !== "none" ? "ui-" + pty : "ui-" + sky}"></use></svg>
             <p class="fs-36 fw-600 w-100">${v.tmp.value}<sup class="fs-20">${v.tmp.unit}</sup></p>
             <ul class="ml-12 fs-14 txt-700">
                 <li>강수확률 : ${v.pop.value}${v.pop.unit}</li>
@@ -155,7 +155,7 @@ const weather = {
             const pty = d.values.pty.value;
             const li = document.createElement("li");
             li.innerHTML = `
-                <svg class="wh-48"><use href="#${pty !== "none" ? "ui-" + pty : "ui-" + sky}"></use></svg>
+                <svg class="wh-48 pd-4"><use href="#${pty !== "none" ? "ui-" + pty : "ui-" + sky}"></use></svg>
                 <p class="fs-14 txt-700">${d.time.slice(0, -2) + "시"}</p>`;
             li.addEventListener("click", () => {
                 this.renderDetail(i);
@@ -191,7 +191,7 @@ const news = {
         filteredData.forEach((d) => {
             const li = document.createElement("li");
             li.innerHTML = `
-                        <img src="${d.img || ""}" onerror="this.onerror=null;this.src='/images/common/fallback_1x1.png'" loading="lazy" class="wh-48 r-4">
+                        <img src="${d.img || ""}" onerror="this.onerror=null;this.src='${window.BASE}/images/common/fallback_1x1.png'" loading="lazy" class="wh-48 r-4">
                         <div class="of-h">
                             <strong class="ell-1">${d.title}</strong>
                             <p class="flx ai-c gap-8 txt-500 flx-nowrap">
@@ -212,6 +212,7 @@ const news = {
     bind() {
         this.tabs.forEach((tab, i) => {
             tab.addEventListener("click", () => {
+                this.list.scrollTo({ top: 0, behavior: "auto" });
                 this.tabs.forEach((el) => el.classList.remove("is-active"));
                 tab.classList.add("is-active");
                 this.render(tab.dataset.category);
@@ -342,127 +343,144 @@ const music = {
 };
 // 달력
 const calendar = {
-    date: new Date(),
-    init(root) {
+    state: {
+        view: new Date(), // 보고있는 달
+        selected: window.formatDate(new Date(), "YYYY-MM-DD"),
+        data: [],
+        map: {},
+    },
+    async init(root) {
         this.wrap = root.querySelector("[data-bind='calendar']");
         this.titleEl = this.wrap.querySelector(".title");
         this.datesEl = this.wrap.querySelector(".dates");
-        this.wrap.addEventListener("click", (e) => {
-            const btn = e.target.closest("[data-act]");
-            if (!btn) return;
-            if (btn.dataset.act === "prev") this.prev();
-            if (btn.dataset.act === "next") this.next();
-            if (btn.dataset.act === "today") this.today();
-        });
-        this.render();
+        this.scheduleWrap = root.querySelector("[data-bind='schedule']");
+        this.scheduleDateEl = this.scheduleWrap.querySelector(".date");
+        this.scheduleListEl = this.scheduleWrap.querySelector(".list");
+        const res = await fetch("https://qoalstjdapis.vercel.app/api/getCalendar?id=msvmflaldja@gmail.com");
+        this.state.data = await res.json();
+        this.render(this.state.view);
+        this.renderSchedule(this.state.selected);
+        this.bindEvents();
     },
-    render() {
-        const y = this.date.getFullYear();
-        const m = this.date.getMonth();
-        const firstDay = new Date(y, m, 1).getDay();
-        const totalDays = new Date(y, m + 1, 0).getDate();
-        const today = new Date().toDateString();
-
-        this.titleEl.textContent = window.formatDate(this.date, "YYYY년 MM월");
+    renderSchedule(date) {
+        const data = this.state.data[date];
+        this.scheduleDateEl.innerHTML = window.formatDate(date, "YYYY년 MM월 DD일");
+        if (data) {
+            window.ui.empty(this.scheduleListEl, false);
+            this.scheduleListEl.innerHTML = "";
+            data.forEach((d) => {
+                this.scheduleListEl.innerHTML += `
+                    <li>
+                        <i style="background-color:${d.color};"></i>
+                        <p class="ell-1">${d.title}</p>
+                    </li>
+                `;
+            });
+        } else {
+            window.ui.empty(this.scheduleListEl, true, "calendar", "해당 일자에 일정이 없어요");
+        }
+    },
+    bindEvents() {
+        this.wrap.addEventListener("click", (e) => {
+            const act = e.target.closest("[data-act]")?.dataset.act;
+            if (act) {
+                if (act === "prev") return this.render(this.getPrevMonth());
+                if (act === "next") return this.render(this.getNextMonth());
+                if (act === "today") return this.render(new Date());
+            }
+            const cell = e.target.closest("[data-date]");
+            if (cell) {
+                this.datesEl.querySelector(".is-active")?.classList.remove("is-active");
+                cell.classList.add("is-active");
+                this.renderSchedule(cell.dataset.date);
+            }
+        });
+    },
+    /* ---------- 날짜 ---------- */
+    getPrevMonth() {
+        const { view } = this.state;
+        return new Date(view.getFullYear(), view.getMonth() - 1);
+    },
+    getNextMonth() {
+        const { view } = this.state;
+        return new Date(view.getFullYear(), view.getMonth() + 1);
+    },
+    getMonthInfo(date) {
+        const year = date.getFullYear();
+        const month = date.getMonth();
+        return {
+            year,
+            month,
+            firstDay: new Date(year, month, 1).getDay(),
+            totalDays: new Date(year, month + 1, 0).getDate(),
+        };
+    },
+    /* ---------- 렌더 ---------- */
+    render(date) {
+        this.state.view = date;
+        const { year, month, firstDay, totalDays } = this.getMonthInfo(date);
+        this.renderTitle(date);
+        this.renderDates(year, month, firstDay, totalDays);
+    },
+    renderTitle(date) {
+        this.titleEl.textContent = window.formatDate(date, "YYYY년 MM월");
+    },
+    renderDates(year, month, firstDay, totalDays) {
+        const frag = document.createDocumentFragment();
+        frag.append(...this.renderPrevDays(year, month, firstDay));
+        frag.append(...this.renderCurrentDays(year, month, totalDays));
+        frag.append(...this.renderNextDays(firstDay, totalDays));
         this.datesEl.innerHTML = "";
-        // prev
+        this.datesEl.append(frag);
+    },
+    /* ---------- days ---------- */
+    renderPrevDays(year, month, firstDay) {
+        const list = [];
         for (let i = firstDay - 1; i >= 0; i--) {
-            this.datesEl.append(this.day(new Date(y, m, -i).getDate(), "txt-500"));
+            list.push(this.createDay({ text: new Date(year, month, -i).getDate(), muted: true }));
         }
-        // current
+        return list;
+    },
+    renderCurrentDays(year, month, totalDays) {
+        const list = [];
+        const today = window.formatDate(new Date(), "YYYY-MM-DD");
         for (let i = 1; i <= totalDays; i++) {
-            const d = new Date(y, m, i);
-            let cls = "";
-            if (d.toDateString() === today) cls = "today";
-            if (d.getDay() === 0) cls += " txt-red";
-            if (d.getDay() === 6) cls += " txt-blue";
-            this.datesEl.append(this.day(i, cls));
+            const d = new Date(year, month, i);
+            const ymd = window.formatDate(d, "YYYY-MM-DD");
+            list.push(
+                this.createDay({
+                    ymd,
+                    text: i,
+                    today: ymd === today,
+                    sunday: d.getDay() === 0,
+                    saturday: d.getDay() === 6,
+                    active: ymd === this.state.selected,
+                    events: this.state.data[ymd] || [],
+                })
+            );
         }
-        // next
+        return list;
+    },
+    renderNextDays(firstDay, totalDays) {
+        const list = [];
         const remain = 42 - (firstDay + totalDays);
         for (let i = 1; i <= remain; i++) {
-            this.datesEl.append(this.day(i, "txt-500"));
+            list.push(this.createDay({ text: i, muted: true }));
         }
+        return list;
     },
-    day(text, cls) {
-        const div = document.createElement("div");
-        if (cls) div.className = cls;
-        div.textContent = text;
-        return div;
-    },
-    prev() {
-        this.date = new Date(this.date.getFullYear(), this.date.getMonth() - 1);
-        this.render();
-    },
-    next() {
-        this.date = new Date(this.date.getFullYear(), this.date.getMonth() + 1);
-        this.render();
-    },
-    today() {
-        this.date = new Date();
-        this.render();
-    },
-};
-// 할일
-const todo = {
-    data: [
-        { id: 1, content: "할 일 1" },
-        { id: 2, content: "할 일 2" },
-        { id: 3, content: "할 일 3" },
-    ],
-    init(root) {
-        this.wrap = root.querySelector("[data-bind='todo']");
-        this.list = this.wrap.querySelector(".list");
-        this.form = this.wrap.querySelector(".inp");
-        this.input = this.form.querySelector("input");
-        this.bind();
-        this.render();
-    },
-    bind() {
-        this.form.addEventListener("submit", (e) => {
-            e.preventDefault();
-            if (!this.input.value.trim()) return;
-
-            this.data.push({
-                id: Date.now(),
-                content: this.input.value,
-            });
-            this.input.value = "";
-            this.render();
-        });
-        this.list.addEventListener("click", (e) => {
-            const del = e.target.closest('[data-act="delete"]');
-            if (!del) return;
-
-            const id = +del.dataset.id;
-            if (!confirm("삭제하시겠습니까?")) return;
-
-            this.data = this.data.filter((v) => v.id !== id);
-            this.render();
-        });
-    },
-    render() {
-        this.list.innerHTML = "";
-        this.data.forEach((v) => {
-            this.list.insertAdjacentHTML(
-                "beforeend",
-                `
-                                <li>
-                                    <p class="b2">${v.content}</p>
-                                <div>
-                                    <button class="ico-wrap pd-4">
-                                        <svg class="wh-16"><use href="#act-check"></use></svg>
-                                    </button>
-                                    <button class="ico-wrap pd-4">
-                                        <svg class="wh-16"><use href="#act-edit"></use></svg>
-                                    </button>
-                                    <button class="ico-wrap pd-4" data-act="delete" data-id="${v.id}">
-                                        <svg class="wh-16"><use href="#act-delete"></use></svg>
-                                    </button>
-                                </div>
-                                </li>`
-            );
-        });
+    /* ---------- day ---------- */
+    createDay({ ymd, text, today, sunday, saturday, muted, active, events = [] }) {
+        const el = document.createElement("div");
+        if (ymd) el.dataset.date = ymd;
+        el.className = [muted && "txt-500", today && "today", sunday && "txt-red", saturday && "txt-blue", active && "is-active"].filter(Boolean).join(" ");
+        el.innerHTML = `
+            <span class="date">${text}</span>
+            <div class="events">
+                ${events.map((e) => `<i style="background:${e.color};" title="${e.title}"></i>`).join("")}
+            </div>
+        `;
+        return el;
     },
 };
 
@@ -471,6 +489,19 @@ window.initModule = ({ root, params }) => {
     weather.init(root);
     news.init(root);
     calendar.init(root);
-    todo.init(root);
     music.init(root);
+
+    const scheduleRefresh = (fn) => {
+        const now = new Date();
+        const delay = (60 - now.getMinutes()) * 60 * 1000 - now.getSeconds() * 1000;
+        setTimeout(() => {
+            fn();
+            setInterval(fn, 60 * 60 * 1000);
+        }, delay);
+    };
+    scheduleRefresh(() => {
+        weather.init(root);
+        news.init(root);
+        calendar.init(root);
+    });
 };

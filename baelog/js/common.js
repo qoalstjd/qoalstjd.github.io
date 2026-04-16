@@ -51,7 +51,7 @@ const common = {
             const key = p.slug || p.category;
             const li = document.createElement("li");
             li.innerHTML = `
-                <a href="/index.html?linkcd=m0001&parentLinkcd=${this.curLinkcd}&fileName=${key}_${p.id}" class="box pd-0">
+                <a href="${window.BASE}/index.html?linkcd=m0001&parentLinkcd=${this.curLinkcd}&fileName=${key}_${p.id}" class="box pd-0">
                     <img src="${window.BASE}/images/post/thum_${key}.png" class="w-full">
                     <div class="pd-16">
                     <p class="fs-12 txt-500">${p.category}</p>
@@ -87,7 +87,6 @@ const common = {
     },
     postDetail: {
         init({ root }) {
-            if (!window.SPA) return;
             this.run(root);
         },
         run(root) {
