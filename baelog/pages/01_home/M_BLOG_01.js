@@ -7,8 +7,8 @@ const clock = {
         this.dayEls = this.wrap.querySelectorAll(".day span");
         this.timeEl = this.wrap.querySelector(".time");
 
-        this.update();
-        setInterval(() => this.update(), 1000);
+        if (this.timer) clearInterval(this.timer);
+        this.timer = setInterval(() => this.update(), 1000);
     },
     update() {
         this.now = new Date();
@@ -105,6 +105,7 @@ const weather = {
 
                     values.style.clipPath = this.chartDraw(tmpValues);
                     yaxis.innerHTML = `<li>40</li><li>30</li><li>20</li><li>10</li><li>0</li><li>-10</li><li>-20</li>`;
+                    tab.innerHTML = "";
                     tab.appendChild(values);
                     tab.appendChild(yaxis);
                 },
@@ -239,13 +240,13 @@ const music = {
         this.loadCache();
         this.loadYT();
         this.renderPlaylist();
-        this.load(0);
         this.bind();
     },
 
     /* ---------------- YT ---------------- */
 
     loadYT() {
+        if (this.player) return;
         if (window.YT) return this.createPlayer();
 
         const tag = document.createElement("script");
@@ -261,9 +262,15 @@ const music = {
             width: "0",
             videoId: this.data[0]?.id,
             playerVars: { autoplay: 1, controls: 0 },
+            events: {
+                onReady: () => {
+                    this.load(0);
+                },
+            },
         });
     },
     load(i) {
+        if (!this.player || !this.player.loadVideoById) return;
         const prev = this.playlistEl.children[this.curIdx];
         prev?.classList.remove("is-active");
         this.curIdx = i;
@@ -344,9 +351,11 @@ const music = {
 // 달력
 const calendar = {
     state: {
+        today: new Date(), // 오늘
+        todayStr: window.formatDate(new Date(), "YYYY-MM-DD"),
         view: new Date(), // 보고있는 달
-        selected: window.formatDate(new Date(), "YYYY-MM-DD"),
-        data: [],
+        selected: window.formatDate(new Date(), "YYYY-MM-DD"), // 선택일자
+        data: {},
         map: {},
     },
     async init(root) {
@@ -362,37 +371,20 @@ const calendar = {
         this.renderSchedule(this.state.selected);
         this.bindEvents();
     },
-    renderSchedule(date) {
-        const data = this.state.data[date];
-        this.scheduleDateEl.innerHTML = window.formatDate(date, "YYYY년 MM월 DD일");
-        if (data) {
-            window.ui.empty(this.scheduleListEl, false);
-            this.scheduleListEl.innerHTML = "";
-            data.forEach((d) => {
-                this.scheduleListEl.innerHTML += `
-                    <li>
-                        <i style="background-color:${d.color};"></i>
-                        <p class="ell-1">${d.title}</p>
-                    </li>
-                `;
-            });
-        } else {
-            window.ui.empty(this.scheduleListEl, true, "calendar", "해당 일자에 일정이 없어요");
-        }
-    },
     bindEvents() {
         this.wrap.addEventListener("click", (e) => {
             const act = e.target.closest("[data-act]")?.dataset.act;
             if (act) {
                 if (act === "prev") return this.render(this.getPrevMonth());
                 if (act === "next") return this.render(this.getNextMonth());
-                if (act === "today") return this.render(new Date());
+                if (act === "today") return this.render(this.state.today);
             }
             const cell = e.target.closest("[data-date]");
             if (cell) {
                 this.datesEl.querySelector(".is-active")?.classList.remove("is-active");
                 cell.classList.add("is-active");
-                this.renderSchedule(cell.dataset.date);
+                this.state.selected = cell.dataset.date;
+                this.renderSchedule(this.state.selected);
             }
         });
     },
@@ -443,17 +435,17 @@ const calendar = {
     },
     renderCurrentDays(year, month, totalDays) {
         const list = [];
-        const today = window.formatDate(new Date(), "YYYY-MM-DD");
         for (let i = 1; i <= totalDays; i++) {
             const d = new Date(year, month, i);
+            const day = d.getDay();
             const ymd = window.formatDate(d, "YYYY-MM-DD");
             list.push(
                 this.createDay({
                     ymd,
                     text: i,
-                    today: ymd === today,
-                    sunday: d.getDay() === 0,
-                    saturday: d.getDay() === 6,
+                    today: ymd === this.state.todayStr,
+                    sunday: day === 0,
+                    saturday: day === 6,
                     active: ymd === this.state.selected,
                     events: this.state.data[ymd] || [],
                 })
@@ -473,35 +465,151 @@ const calendar = {
     createDay({ ymd, text, today, sunday, saturday, muted, active, events = [] }) {
         const el = document.createElement("div");
         if (ymd) el.dataset.date = ymd;
-        el.className = [muted && "txt-500", today && "today", sunday && "txt-red", saturday && "txt-blue", active && "is-active"].filter(Boolean).join(" ");
+
+        const hasHoliday = events.some((e) => e.type === "holiday");
+        const eventList = events.filter((e) => e.type !== "holiday");
+
+        el.className = [muted && "txt-500", today && "today", (sunday || hasHoliday) && "txt-red", saturday && "txt-blue", active && "is-active"].filter(Boolean).join(" ");
         el.innerHTML = `
             <span class="date">${text}</span>
             <div class="events">
-                ${events.map((e) => `<i style="background:${e.color};" title="${e.title}"></i>`).join("")}
+                ${eventList.map((e) => `<i style="background:${e.color};" title="${e.title}"></i>`).join("")}
             </div>
         `;
         return el;
     },
+    renderSchedule(date) {
+        const data = this.state.data[date] || [];
+
+        const d = new Date(date);
+        const day = d.getDay();
+
+        const isSunday = day === 0;
+        const isSaturday = day === 6;
+        const hasHoliday = data.some((e) => e.type === "holiday");
+        let typeClassName = "";
+        if (isSunday || hasHoliday) {
+            typeClassName = "is-holiday";
+        } else if (isSaturday) {
+            typeClassName = "is-saturday";
+        }
+        this.scheduleDateEl.className = `date ${typeClassName}`;
+        this.scheduleDateEl.innerHTML = window.formatDate(date, "YYYY년 MM월 DD일 E요일");
+        if (!data.length) {
+            return window.ui.empty(this.scheduleListEl, true, "calendar", "등록된 일정이 없어요");
+        }
+        window.ui.empty(this.scheduleListEl, false);
+        const groups = {};
+        for (const v of data) {
+            (groups[v.type] ??= []).push(v);
+        }
+        const order = ["holiday", "division", "event"];
+        this.scheduleListEl.innerHTML = order
+            .flatMap((type) =>
+                (groups[type] || []).map(
+                    (item) => `
+                        <li class="${item.type}">
+                            <i style="background-color:${item.color};"></i>
+                            <p class="ell-1">${item.title}${item.desc ? ` <span class='txt-700'>|${item.desc}</span>` : ""}</p>
+                        </li>
+                    `
+                )
+            )
+            .join("");
+    },
+};
+// 지수
+const index = {
+    data: [],
+    updatedAt: "",
+    async init(root) {
+        this.wrap = root.querySelector("[data-bind='index']");
+        this.listEl = this.wrap.querySelector(".index-list");
+        window.ui.loading(this.wrap, true);
+        try {
+            const res = await fetch("https://qoalstjdapis.vercel.app/api/getMarketIndex");
+            const d = await res.json();
+            this.data = d.data;
+            this.updatedAt = d.updatedAt;
+        } catch (e) {
+            console.error("지수 데이터 로딩 실패", e);
+            this.data = [];
+        }
+        this.render();
+        window.ui.loading(this.wrap, false);
+    },
+    render() {
+        this.listEl.style.removeProperty("--w");
+        this.listEl.innerHTML = "";
+        const html = this.data
+            .map((d) => {
+                const isUp = d.change >= 0 ? "is-up" : "is-down";
+                const formatNumber = (num) => Math.abs(Number(num).toFixed(2));
+                return `
+                    <li class="ticker ${isUp}">
+                        <strong>${d.label}</strong>
+                        <em>${Number(d.price).toLocaleString()}</em>
+                        <svg class="wh-16">
+                            <use href="#dir-caret-up-fill"></use>
+                            <use href="#dir-caret-down-fill"></use>
+                        </svg>
+                        <span>
+                            ${formatNumber(d.change)}
+                            (${formatNumber(d.percent)}%)
+                        </span>
+                    </li>
+                `;
+            })
+            .join("");
+        this.listEl.innerHTML = "";
+        this.listEl.innerHTML = html + html;
+        requestAnimationFrame(() => {
+            const width = this.listEl.scrollWidth / 2;
+            this.listEl.style.setProperty("--w", `${width}px`);
+        });
+    },
 };
 
-window.initModule = ({ root, params }) => {
+window.initModule = ({ root }) => {
+    const cleaners = [];
+    /* ---------- timer utils ---------- */
+    const addTimeout = (fn, delay) => {
+        const t = setTimeout(fn, delay);
+        cleaners.push(() => clearTimeout(t));
+        return t;
+    };
+    const addInterval = (fn, sec) => {
+        const t = setInterval(fn, sec * 1000);
+        cleaners.push(() => clearInterval(t));
+        return t;
+    };
+    const scheduleRefresh = (fn, sec = 3600) => {
+        const now = new Date();
+        const delay = (60 - now.getMinutes()) * 60 * 1000 - now.getSeconds() * 1000;
+        addTimeout(() => {
+            fn();
+            addInterval(fn, sec);
+        }, delay);
+    };
+    /* ---------- init ---------- */
     clock.init(root);
     weather.init(root);
     news.init(root);
     calendar.init(root);
     music.init(root);
-
-    const scheduleRefresh = (fn) => {
-        const now = new Date();
-        const delay = (60 - now.getMinutes()) * 60 * 1000 - now.getSeconds() * 1000;
-        setTimeout(() => {
-            fn();
-            setInterval(fn, 60 * 60 * 1000);
-        }, delay);
-    };
+    index.init(root);
+    /* ---------- refresh ---------- */
     scheduleRefresh(() => {
         weather.init(root);
         news.init(root);
         calendar.init(root);
     });
+    /* ---------- clock interval cleanup 등록 ---------- */
+    if (clock.timer) {
+        cleaners.push(() => clearInterval(clock.timer));
+    }
+    /* ---------- destroy ---------- */
+    return () => {
+        cleaners.forEach((fn) => fn());
+    };
 };

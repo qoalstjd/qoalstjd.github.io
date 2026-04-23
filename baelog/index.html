@@ -10,11 +10,11 @@
                 const theme = localStorage.getItem("theme") || "dark";
                 document.documentElement.dataset.theme = theme;
 
-                const svg = await fetch("https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.525/images/icon.svg" + "?v=" + Date.now()).then((r) => r.text());
+                const svg = await fetch("https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.543/images/icon.svg" + "?v=" + Date.now()).then((r) => r.text());
                 document.body.insertAdjacentHTML("afterbegin", svg);
             })();
         </script>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.539/css/global.css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.542/css/global.css" />
         <link rel="stylesheet" href="./css/common.css" />
         <link rel="icon" type="image/x-icon" href="./images/common/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="./images/common/favicon-32x32.png" />
@@ -69,7 +69,7 @@
                 </li>
             </ul>
             <div class="util">
-                <button class="ico-wrap pd-12" data-act="theme" data-tip="테마모드 변경">
+                <button class="ico-wrap pd-12" data-act="theme" data-tip="테마모드 변경" data-tip-pos="top">
                     <svg>
                         <use href="#ui-sun"></use>
                         <use href="#ui-moon"></use>
@@ -79,12 +79,12 @@
         </nav>
         <div class="wrap">
             <main></main>
-            <footer>©2025 BaeMinseong. All Right Reserved.</footer>
+            <footer>© 2026 BaeMinseong. All Rights Reserved.</footer>
         </div>
         <script src="https://cdn.jsdelivr.net/gh/qoalstjd/common@latest/library/lottie.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.538/js/util.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.546/js/util.js"></script>
         <script src="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.540/js/ui.js"></script>
         <script src="./js/common.js"></script>
-        <script src="https://cdn.jsdelivr.net/gh/qoalstjd/common@1.0.540/js/include.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/qoalstjd/common@1.0.544/js/include.js"></script>
     </body>
 </html>

@@ -1,4 +1,3 @@
-window.rootDir = "baelog";
 const common = {
     init(root = document) {
         this.lnb(root);
@@ -12,9 +11,6 @@ const common = {
     postList: {
         init() {
             // if (!window.SPA) return;
-            this.run();
-        },
-        run() {
             this.h2 = document.querySelector("[data-bind='title']");
             this.posts = document.querySelector("[data-bind='posts']");
             this.viewWrap = document.querySelector("[data-view]");
@@ -52,7 +48,7 @@ const common = {
             const li = document.createElement("li");
             li.innerHTML = `
                 <a href="${window.BASE}/index.html?linkcd=m0001&parentLinkcd=${this.curLinkcd}&fileName=${key}_${p.id}" class="box pd-0">
-                    <img src="${window.BASE}/images/post/thum_${key}.png" class="w-full">
+                    <img src="${window.BASE}/images/post/thum_${key}.png">
                     <div class="pd-16">
                     <p class="fs-12 txt-500">${p.category}</p>
                     <strong class="ell-1 mt-4">${p.id}. ${p.title}</strong>
@@ -71,10 +67,15 @@ const common = {
             });
         },
         bindView() {
-            this.posts.dataset.postviewtype = window.cacheManager?.get("postviewtype") || "grid";
+            const curViewType = window.cacheManager?.get("postviewtype") || "table";
+            this.posts.dataset.postviewtype = curViewType;
+            this.viewWrap.querySelector(".is-active")?.classList.remove("is-active");
+            this.viewWrap.querySelector(`[data-act='${curViewType}']`).classList.add("is-active");
             this.viewWrap?.addEventListener("click", (e) => {
-                const type = e.target.closest('[data-act="grid"]') ? "grid" : e.target.closest('[data-act="block"]') ? "block" : e.target.closest('[data-act="table"]') ? "table" : null;
+                const type = e.target.closest("[data-act]") ? e.target.dataset.act : null;
                 if (!type) return;
+                this.viewWrap.querySelector(".is-active")?.classList.remove("is-active");
+                e.target.closest(`[data-act="${type}"]`).classList.add("is-active");
                 this.posts.dataset.postviewtype = type;
                 window.cacheManager?.set("postviewtype", type);
             });
@@ -87,9 +88,6 @@ const common = {
     },
     postDetail: {
         init({ root }) {
-            this.run(root);
-        },
-        run(root) {
             this.root = root || document;
             const { fileName, parentLinkcd } = history.state || {};
             if (!fileName) return;
@@ -136,23 +134,33 @@ const common = {
             if (this._scrollBound) return;
             this._scrollBound = true;
             const links = [...this.aside.querySelectorAll("a")];
-
-            const calc = () => {
+            this._onResize = () => {
                 this.tops = this.headings.map((h) => ({
                     id: h.id,
                     top: h.getBoundingClientRect().top + window.pageYOffset - 80,
                 }));
             };
-            calc();
-            window.addEventListener("resize", calc);
-            window.addEventListener("scroll", () => {
+            this._onScroll = () => {
                 const y = window.scrollY + 100;
                 let current;
+
                 for (const h of this.headings) {
                     if (y >= h.offsetTop) current = h.id;
                 }
+
                 links.forEach((a) => a.classList.toggle("txt-point", a.hash === `#${current}`));
-            });
+            };
+            this._onResize();
+            window.addEventListener("resize", this._onResize);
+            window.addEventListener("scroll", this._onScroll);
+        },
+        unbindScroll() {
+            if (!this._scrollBound) return;
+
+            window.removeEventListener("resize", this._onResize);
+            window.removeEventListener("scroll", this._onScroll);
+
+            this._scrollBound = false;
         },
         buildRelated(list, meta, fileName, parentLinkcd) {
             const tbody = this.root.querySelector("[data-bind='relatedPost']");
@@ -191,6 +199,7 @@ const common = {
                     };
                     tbody.appendChild(tr);
                 });
+            console.log(meta)
             bindData(wrap, {
                 ...meta,
                 postLength: related.length,
