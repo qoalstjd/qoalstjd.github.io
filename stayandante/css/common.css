@@ -56,8 +56,8 @@ header .gnb .menu-toggle.is-active i:nth-child(4) { width: 0; margin-top: 0; }
 .wrap .lnb,
 .wrap .cont-wrap section,
 footer { padding-left: calc(50vw - 68.2rem); padding-right: calc(50vw - 68.2rem); } 
-[data-env="pc"] footer .link[href^="tel:"] { display: block; color: inherit; padding-right: 0; pointer-events: none; }
-[data-env="pc"] footer .link[href^="tel:"]::after { content: unset; }
+[data-env="pc"] footer .link[href^="tel:"] { display: block; color: inherit; padding-right: 0; pointer-events: none; } 
+[data-env="pc"] footer .link[href^="tel:"]::after { content: unset; } 
 .wrap .tit-wrap.dep-1 { padding-left: calc(50vw - 64rem); padding-right: calc(50vw - 64rem); } 
 
 .wrap main { min-height: 50rem; } 
@@ -111,10 +111,10 @@ footer .footer-inner .btn-wrap { position: absolute; right: 0; top: -5.6rem; }
 .wrap main.home .cont-wrap .home-room .cont > a:hover h3,
 .wrap main.home .cont-wrap .home-room .cont > a:hover h3 span { color: rgb(var(--primary-500)) !important; } 
 /* 홈 > 실시간예약 */
-.wrap main.home .cont-wrap .home-book { background: url("../images/home/bnr_book.jpg") no-repeat center / cover; background-attachment: fixed; } 
+.wrap main.home .cont-wrap .home-book { background: url("../images/home/spring_bnr_book.jpg") no-repeat center / cover; background-attachment: fixed; } 
 /* 홈 > 주변소개 */
-.wrap main.home .cont-wrap .home-arround > .cont > .box { padding: 0; }
-.wrap main.home .cont-wrap .home-arround > .cont > .box > .box { background-color: rgba(var(--bg-100), 0.8); height: 100%; }
+.wrap main.home .cont-wrap .home-arround > .cont > .box { padding: 0; } 
+.wrap main.home .cont-wrap .home-arround > .cont > .box > .box { background-color: rgba(var(--bg-100), 0.8); height: 100%; } 
 /* 홈 > 새소식 */
 .wrap main.home .cont-wrap .home-news > .cont .box:not(:last-child) { cursor: pointer; } 
 .wrap main.home .cont-wrap .home-news > .cont .box .category { display: flex; align-items: center; gap: 0.4rem; color: rgb(var(--primary-500)); font-weight: 600; } 
@@ -127,9 +127,9 @@ footer .footer-inner .btn-wrap { position: absolute; right: 0; top: -5.6rem; }
 .wrap main.home .cont-wrap .home-news .ty-masonry > .box:last-child .btn-wrap { position: relative; z-index: 1; } 
 
 /* ==================== 펜션소개 ==================== */
-.wrap main.about .tit-wrap.dep-1 { background-image: url("../images/about/hero_about.jpg"); } 
+.wrap main.about .tit-wrap.dep-1 { background-image: url("../images/about/spring_hero_about.jpg"); } 
 /* ==================== 객실소개 ==================== */
-.wrap main.room .tit-wrap.dep-1 { background-image: url("../images/room/hero_room.jpg"); } 
+.wrap main.room .tit-wrap.dep-1 { background-image: url("../images/room/spring_hero_room.jpg"); } 
 .wrap main.room .cont-wrap .room-another { padding-left: 0; padding-right: 0; } 
 .wrap main.room .cont-wrap .room-another .cont > .box { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; aspect-ratio: 16/9; background: no-repeat center / auto 100%; transition: background-size 0.3s ease-in-out; min-height: 32rem; } 
 .wrap main.room .cont-wrap .room-another .cont > .box:nth-child(1) { background-image: url("../images/room/card_roomA_01.jpg"); } 
@@ -141,19 +141,21 @@ footer .footer-inner .btn-wrap { position: absolute; right: 0; top: -5.6rem; }
 .wrap main.room .cont-wrap .room-another .cont > .box .btn-wrap { position: relative; margin-top: 1.2rem; } 
 /* .wrap main.room .cont-wrap .room-another .cont > .box .btn-wrap .btn { border-color: rgb(var(--txt-white)); } */
 /* ==================== 예약하기 ==================== */
-.wrap main.book .tit-wrap.dep-1 { background-image: url("../images/book/hero_book.jpg"); } 
-.wrap main.book .cont-wrap .book-realtime { background: url("../images/home/bnr_book.jpg") no-repeat center / cover; background-attachment: fixed; } 
+.wrap main.book .tit-wrap.dep-1 { background-image: url("../images/book/spring_hero_book.jpg"); } 
+.wrap main.book .cont-wrap .book-realtime { background: url("../images/home/spring_bnr_book.jpg") no-repeat center / cover; background-attachment: fixed; } 
 /* ==================== 고객서비스 ==================== */
-.wrap main.cs .tit-wrap.dep-1 { background-image: url("../images/cs/hero_cs.jpg"); } 
+.wrap main.cs .tit-wrap.dep-1 { background-image: url("../images/cs/spring_hero_cs.jpg"); } 
 .wrap main.cs .cont-wrap .arround-detail:nth-child(odd) .cont { flex-direction: row-reverse; } 
 /* ==================== img-wrap ==================== */
+.wrap main.about .cont-wrap .about-facility .cont .visual,
 .wrap main.room .cont-wrap .room-detail .cont .visual,
 .wrap main.cs .cont-wrap .arround-detail .cont .visual { padding-bottom: 7.8rem; } 
+.wrap main.about .cont-wrap .about-facility .cont .visual > img,
 .wrap main.room .cont-wrap .room-detail .cont .visual > img,
 .wrap main.cs .cont-wrap .arround-detail .cont .visual > img { object-position: bottom; aspect-ratio: 16/9; height: auto; } 
 .img-wrap { position: absolute; left: 0; bottom: 0; width: 100%; height: 7rem; overflow: hidden; flex-wrap: nowrap !important; } 
 .img-wrap img { cursor: pointer; opacity: 0.7; width: auto !important; height: 100% !important; } 
-.img-wrap img.is-active { opacity: 1; }
+.img-wrap img.is-active { opacity: 1; } 
 /* ==================== 미디어쿼리 ==================== */
 /* Tablet Landscape ~ */
 @media screen and (max-width: 1439px) { header .gnb { max-width: calc(100vw - 8rem); } 
@@ -188,6 +190,7 @@ footer svg { width: 12.8rem; height: 8rem; }
 .lnb + main .tit-wrap { margin-bottom: 5.2rem; } 
 .wrap .lnb ul li a { line-height: 5.2rem; } 
 .cont-wrap section .cont.ty-row { flex-direction: column !important; } 
+.cont-wrap section .cont.ty-row > .visual { order: -1; } 
 .cont-wrap section .cont.ty-row > .visual blockquote { position: static; width: 100%; max-width: unset; margin-top: 1.2rem; } 
 .cont-wrap section .cont.ty-row > div:first-child > div > div { text-align: center; } 
 .cont-wrap section .cont.ty-row > div:first-child > div > div svg { margin: 0 auto; } 
@@ -219,16 +222,17 @@ footer { padding-left: 2rem; padding-right: 2rem; }
 /* 홈 */
 .wrap main.home .swiper-wrapper { aspect-ratio: 4/5; } 
 .wrap main.home .cont-wrap .home-room .cont { flex-direction: column; } 
-.wrap main.home .cont-wrap .home-arround > .cont > .box > img { aspect-ratio: 2/1; object-position: bottom; }
-.wrap main.home .cont-wrap .home-arround > .cont > .box > .box { background-color: rgba(var(--bg-100), 0.8); height: 100%; }
+.wrap main.home .cont-wrap .home-arround > .cont > .box > img { aspect-ratio: 2/1; object-position: bottom; } 
+.wrap main.home .cont-wrap .home-arround > .cont > .box > .box { background-color: rgba(var(--bg-100), 0.8); height: 100%; } 
 /* 펜션소개 */
 .wrap main.about .cont-wrap .about-facility > .cont > div > div { flex-direction: column; text-align: center; } 
 /* img-wrap */
+.wrap main.about .cont-wrap .about-facility .cont .visual,
 .wrap main.room .cont-wrap .room-detail .cont .visual,
 .wrap main.cs .cont-wrap .arround-detail .cont .visual { padding-bottom: 6.8rem; } 
 .img-wrap { height: 6rem !important; } 
  }
-@media (hover: hover) and (pointer: fine) { header .gnb.is-opened .visual,
+@media (hover: hover) { header .gnb.is-opened .visual,
 header .gnb.is-opened .util { visibility: visible; opacity: 1; transition: visibility 0s linear 0.4s, opacity 0.2s linear 0.4s; } 
 header .gnb.is-opened > ul { height: 22.8rem; transition: height 0.2s ease-in-out 0.2s; } 
 header .gnb.is-closing > ul { transition: height 0.2s ease-in-out; } 
