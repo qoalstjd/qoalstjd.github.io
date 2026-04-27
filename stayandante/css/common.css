@@ -35,6 +35,7 @@ header .gnb .util { visibility: hidden; opacity: 0; }
 header .gnb .visual { position: absolute; left: 4rem; bottom: 0; display: flex; align-items: flex-start; gap: 1.2rem; background-color: rgb(var(--bg-000)); } 
 header .gnb .visual img { width: 30rem; } 
 header .gnb .util { position: absolute; right: 4rem; bottom: 0; display: flex; align-items: center; gap: 0.8rem; } 
+header .gnb > [data-act="theme"] { visibility:hidden; position: absolute; top: calc(50% - 1.2rem); right: 7.6rem; z-index:9; opacity: 0; } 
 
 header .gnb .menu-toggle { display: none; position: relative; z-index: 1; width: 2.8rem; height: 2.8rem; margin-top: 0.6rem; } 
 header .gnb .menu-toggle i { display: block; width: calc(100% - 0.4rem); height: 0.2rem; border-radius: 0.1rem; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); background-color: rgb(var(--txt-900)); transition: transform 0.3s ease-in-out, margin-top 0.3s ease-in-out, width 0.3s ease-in-out; } 
@@ -90,15 +91,15 @@ footer .footer-inner .btn-wrap { position: absolute; right: 0; top: -5.6rem; }
 /* ==================== 홈 ==================== */
 /* 홈 > 스와이퍼 */
 .wrap main.home .swiper { position: relative; } 
-/* .wrap main.home .swiper::before { content: ""; display: block; width: 100%; height: 18rem; position: absolute; left: 0; bottom: 0; background: linear-gradient( to bottom, transparent, rgb(var(--bg-100)) 50%, rgb(var(--bg-100)) ); z-index: 2; } */
+.wrap main.home .swiper::before { content: ""; display: block; width: 100%; height: 100%; position: absolute; left: 0; bottom: 0; background: rgba(var(--txt-black), 0.12); z-index: 2; pointer-events: none; } 
 .wrap main.home .swiper-wrapper { min-height: 36rem; aspect-ratio: 16/9; max-height: 85vh; } 
 .wrap main.home .swiper .swiper-wrapper .swiper-slide { position: relative; overflow: hidden; } 
 .wrap main.home .swiper .swiper-wrapper .swiper-slide img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 6s ease-in-out 1.5s; pointer-events: none; will-change: transform; backface-visibility: hidden; } 
 .wrap main.home .swiper .swiper-wrapper .swiper-slide.swiper-slide-active img { transform: scale(1.1); } 
-.wrap main.home .swiper .tit-wrap.dep-1 { gap: 0.4rem; align-items: center; position: absolute; left: 50%; top: 50%; transform: translate(-50%, calc(-50% + 5.6rem)); height: auto; padding: 0; background: none; text-align: center; z-index: 2; pointer-events: none; color: rgb(0,0,0); color: rgb(var(--txt-white)); white-space: nowrap; } 
+.wrap main.home .swiper .tit-wrap.dep-1 { gap: 0.4rem; align-items: center; position: absolute; left: 50%; top: 50%; transform: translate(-50%, calc(-50% + 5.6rem)); height: auto; padding: 0; background: none; text-align: center; z-index: 2; color: rgb(0,0,0); color: rgb(var(--txt-white)); white-space: nowrap; } 
 .wrap main.home .swiper .tit-wrap.dep-1 h1 { text-shadow: 0 0 0.5rem rgb(var(--txt-black)); } 
 .wrap main.home .swiper .tit-wrap.dep-1 p { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 0 0.4rem; text-shadow: 0 0 0.5rem rgb(var(--txt-black)); } 
-.wrap main.home .swiper .tit-wrap.dep-1 .btn { margin-top: 1.2rem; pointer-events: auto; color: rgb(var(--txt-white)); } 
+.wrap main.home .swiper .tit-wrap.dep-1 .btn { margin-top: 1.2rem; color: rgb(var(--txt-white)); } 
 /* 홈 > 소개 */
 .wrap main.home .cont-wrap .home-about .cont > div:first-child > div > div { } 
 /* 홈 > 객실소개 */
@@ -173,6 +174,7 @@ header .gnb > ul > li > a { line-height: inherit; }
 header .gnb > ul > li > ul { margin-top: 0.8rem; } 
 header .gnb > ul > li > ul > li + li { margin-top: 0; } 
 header .gnb .util { visibility: visible; opacity: 1; position: relative; inset: unset; margin: 0.6rem 1.2rem 0 auto; gap: 1.2rem; } 
+header .gnb > [data-act="theme"],
 header .gnb .util .ico-wrap { padding: 0; gap: 0; background: none; border: none; font-size: 0; height: auto; } 
 header .gnb .util [data-act="theme"] { display: none; } 
 header .gnb .util svg { width: 2.8rem; height: 2.8rem; } 
@@ -183,6 +185,7 @@ header .gnb .visual .flx { display: none !important; }
 header .gnb .menu-toggle ~ .visual { visibility: visible; opacity: 1; inset: unset; display: flex; transition: right 0.3s ease-in-out; right: -44rem; } 
 header .gnb .menu-toggle ~ .visual { top: -4rem; width: 40rem; } 
 header .gnb .menu-toggle.is-active ~ .visual { right: -4rem; } 
+header .gnb .menu-toggle.is-active ~ [data-act="theme"] { visibility: visible; opacity: 1; transition: opacity 0.3s ease-in-out 0.3s; } 
 footer { align-items: center; text-align: center; } 
 footer .footer-inner { flex-direction: column; align-items: center; font-size: 1.4rem; } 
 footer .footer-inner .btn-wrap { position: static; } 
@@ -212,6 +215,7 @@ header .gnb > .menu-toggle.is-active + ul { right: 0; }
 header .gnb .menu-toggle ~ .visual { right: -30rem; } 
 header .gnb .menu-toggle ~ .visual { top: 0; width: 30rem; } 
 header .gnb .menu-toggle.is-active ~ .visual { right: 0; } 
+header .gnb > [data-act="theme"] { right: 5.2rem; }
 .wrap .lnb.is-fixed { top: 6.4rem; } 
 .wrap .lnb { padding-left: 0; padding-right: 0; } 
 .wrap .cont-wrap section,
