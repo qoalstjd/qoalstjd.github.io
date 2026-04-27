@@ -90,13 +90,14 @@ footer .footer-inner .btn-wrap { position: absolute; right: 0; top: -5.6rem; }
 /* ==================== 홈 ==================== */
 /* 홈 > 스와이퍼 */
 .wrap main.home .swiper { position: relative; } 
-.wrap main.home .swiper::before { content: ""; display: block; width: 100%; height: 18rem; position: absolute; left: 0; bottom: 0; background: linear-gradient( to bottom, transparent, rgb(var(--bg-100)) 50%, rgb(var(--bg-100)) ); z-index: 2; } 
+/* .wrap main.home .swiper::before { content: ""; display: block; width: 100%; height: 18rem; position: absolute; left: 0; bottom: 0; background: linear-gradient( to bottom, transparent, rgb(var(--bg-100)) 50%, rgb(var(--bg-100)) ); z-index: 2; } */
 .wrap main.home .swiper-wrapper { min-height: 36rem; aspect-ratio: 16/9; max-height: 85vh; } 
 .wrap main.home .swiper .swiper-wrapper .swiper-slide { position: relative; overflow: hidden; } 
 .wrap main.home .swiper .swiper-wrapper .swiper-slide img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 6s ease-in-out 1.5s; pointer-events: none; will-change: transform; backface-visibility: hidden; } 
 .wrap main.home .swiper .swiper-wrapper .swiper-slide.swiper-slide-active img { transform: scale(1.1); } 
-.wrap main.home .swiper .tit-wrap.dep-1 { justify-content: flex-end; align-items: flex-end; gap: 0.4rem; padding-bottom: 1.2rem; position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: none; text-align: right; z-index: 2; pointer-events: none; color: rgb(var(--txt-900)); } 
-.wrap main.home .swiper .tit-wrap.dep-1 p { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 0 0.4rem; } 
+.wrap main.home .swiper .tit-wrap.dep-1 { gap: 0.4rem; align-items: center; position: absolute; left: 50%; top: 50%; transform: translate(-50%, calc(-50% + 5.6rem)); height: auto; padding: 0; background: none; text-align: center; z-index: 2; pointer-events: none; color: rgb(0,0,0); color: rgb(var(--txt-white)); white-space: nowrap; } 
+.wrap main.home .swiper .tit-wrap.dep-1 h1 { text-shadow: 0 0 0.5rem rgb(var(--txt-black)); } 
+.wrap main.home .swiper .tit-wrap.dep-1 p { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 0 0.4rem; text-shadow: 0 0 0.5rem rgb(var(--txt-black)); } 
 .wrap main.home .swiper .tit-wrap.dep-1 .btn { margin-top: 1.2rem; pointer-events: auto; color: rgb(var(--txt-white)); } 
 /* 홈 > 소개 */
 .wrap main.home .cont-wrap .home-about .cont > div:first-child > div > div { } 
@@ -225,7 +226,6 @@ footer { padding-left: 2rem; padding-right: 2rem; }
 .wrap main.home .cont-wrap .home-arround > .cont > .box > img { aspect-ratio: 2/1; object-position: bottom; } 
 .wrap main.home .cont-wrap .home-arround > .cont > .box > .box { background-color: rgba(var(--bg-100), 0.8); height: 100%; } 
 /* 펜션소개 */
-.wrap main.about .cont-wrap .about-facility > .cont > div > div { flex-direction: column; text-align: center; } 
 /* img-wrap */
 .wrap main.about .cont-wrap .about-facility .cont .visual,
 .wrap main.room .cont-wrap .room-detail .cont .visual,
