@@ -22,8 +22,8 @@ body > .wrap main > h1:first-child,
 body > .wrap main > .tit-wrap:first-child { position: sticky; top: 5.2rem; margin: -4rem 0 0; padding: 4rem 0 2.4rem; background-color: rgb(var(--bg-150)); z-index: 1; } 
 body footer { display: flex; align-items: center; justify-content: center; width: 100%; height: 5.2rem; margin-top: 0.4rem; background-color: rgb(var(--bg-150)); } 
 /* Wrap (has-lnb) */
-body > .wrap.has-lnb { display: grid; grid-template-areas: 'lnb main' 'lnb footer'; grid-template-columns: 24rem minmax(0, 1fr); gap: 0.4rem; } 
-body > .wrap.has-lnb .lnb { grid-area: lnb; position: sticky; left: 8.4rem; top: 5.2rem; width: 24rem; height: calc(100dvh - 5.2rem); padding: 4rem; background-color: rgb(var(--bg-150)); } 
+body > .wrap.has-lnb { display: grid; grid-template-areas: 'lnb main' 'lnb footer'; grid-template-columns: 26rem minmax(0, 1fr); gap: 0.4rem; } 
+body > .wrap.has-lnb .lnb { grid-area: lnb; position: sticky; left: 8.4rem; top: 5.2rem; width: 26rem; height: calc(100dvh - 5.2rem); padding: 4rem; background-color: rgb(var(--bg-150)); } 
 body > .wrap.has-lnb .lnb ul li a { display: block; padding: 1.2rem 1.6rem; border-radius: 0.8rem; } 
 body > .wrap.has-lnb .lnb ul li a:hover { background-color: rgb(var(--bg-hover)); } 
 body > .wrap.has-lnb .lnb ul li a.is-active { color: rgb(var(--primary-500)); } 
@@ -134,7 +134,7 @@ body > .wrap main.project .tit-wrap button.is-active svg { color: rgb(var(--prim
 body > .wrap main.study .tit-wrap h1,
 body > .wrap main.project .tit-wrap h1 { min-height: 4.8rem; } 
 body > .wrap main [data-bind="posts"] div { overflow: hidden; } 
-body > .wrap main [data-bind="posts"][data-postviewtype="grid"] { display: grid; grid-template-columns: repeat(auto-fill, minmax(24rem, 1fr)); gap: 1.2rem; } 
+body > .wrap main [data-bind="posts"][data-postviewtype="grid"] { display: grid; grid-template-columns: repeat(auto-fill, minmax(26rem, 1fr)); gap: 1.2rem; } 
 body > .wrap main [data-bind="posts"][data-postviewtype="grid"] li a img { width: 100%; } 
 body > .wrap main [data-bind="posts"][data-postviewtype="block"] { display: flex; flex-direction: column; gap: 1.2rem; } 
 body > .wrap main [data-bind="posts"][data-postviewtype="block"] li a { position: relative; display: flex; align-items: center; padding-left: 1.6rem !important; } 

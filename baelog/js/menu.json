@@ -13,14 +13,21 @@
     "m0403": { "name": "Pension", "depth": 2, "path": "/pages/04_project/M_BLOG_04.html", "parent": ["m0400"], "tab": "02" },
     "m0404": { "name": "Toy", "depth": 2, "path": "/pages/04_project/M_BLOG_04.html", "parent": ["m0400"], "tab": "03" },
 
-    "m0500": { "name": "UIDocs", "depth": 1, "path": "/pages/05_uidocs/M_BLOG_05_01.html" },
-    "m0501": { "name": "Typography", "depth": 2, "path": "/pages/05_uidocs/M_BLOG_05_01.html", "parent": ["m0500"] },
-    "m0502": { "name": "Naming", "depth": 2, "path": "/pages/05_uidocs/M_BLOG_05_02.html", "parent": ["m0500"] },
-    "m0503": { "name": "Component", "depth": 2, "path": "/pages/05_uidocs/M_BLOG_05_03.html", "parent": ["m0500"] },
-    "m0504": { "name": "Box", "depth": 2, "path": "/pages/05_uidocs/M_BLO_05_04.html", "parent": ["m0500"] },
-    "m0505": { "name": "List", "depth": 2, "path": "/pages/05_uidocs/M_BLOG_05_05.html", "parent": ["m0500"] },
-    "m0506": { "name": "Table", "depth": 2, "path": "/pages/05_uidocs/M_BLOG_05_06.html", "parent": ["m0500"] },
-    "m0507": { "name": "Icon", "depth": 2, "path": "/pages/05_uidocs/M_BLOG_05_07.html", "parent": ["m0500"] },
+    "m0500": { "name": "Foundation", "depth": 1, "path": "/pages/05_foundation/M_BLOG_05_01.html" },
+    "m0501": { "name": "Color", "depth": 2, "path": "/pages/05_foundation/M_BLOG_05_01.html", "parent": ["m0500"] },
+    "m0502": { "name": "Typography", "depth": 2, "path": "/pages/05_foundation/M_BLOG_05_02.html", "parent": ["m0500"] },
+    "m0503": { "name": "Spacing", "depth": 2, "path": "/pages/05_foundation/M_BLOG_05_03.html", "parent": ["m0500"] },
+    
+    "m0600": { "name": "Style", "depth": 1, "path": "/pages/06_style/M_BLOG_06_01.html" },
+    "m0601": { "name": "Interaction", "depth": 2, "path": "/pages/06_style/M_BLOG_06_01.html", "parent": ["m0600"] },
+    "m0602": { "name": "Accessibility", "depth": 2, "path": "/pages/06_style/M_BLOG_06_02.html", "parent": ["m0600"] },
+
+    "m0700": { "name": "Component", "depth": 1, "path": "/pages/07_component/M_BLOG_07_01.html" },
+    "m0701": { "name": "Button", "depth": 2, "path": "/pages/07_component/M_BLOG_07_01.html", "parent": ["m0700"] },
+    "m0702": { "name": "Input", "depth": 2, "path": "/pages/07_component/M_BLOG_07_02.html", "parent": ["m0700"] },
+    "m0703": { "name": "Modal", "depth": 2, "path": "/pages/07_component/M_BLOG_07_03.html", "parent": ["m0700"] },
+    "m0704": { "name": "Card", "depth": 2, "path": "/pages/07_component/M_BLOG_07_04.html", "parent": ["m0700"] },
+    "m0705": { "name": "Navigation", "depth": 2, "path": "/pages/07_component/M_BLOG_07_05.html", "parent": ["m0700"] },
 
     "m0000": { "name": "Common", "depth": 1, "path": null },
     "m0001": { "name": "Post", "depth": 2, "path": "/pages/00_common/M_BLOG_00_postDetail.html", "parent": ["m0000"], "lnb": false }

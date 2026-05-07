@@ -10,7 +10,7 @@
                 const theme = localStorage.getItem("theme") || "dark";
                 document.documentElement.dataset.theme = theme;
 
-                const svg = await fetch("https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.543/images/icon.svg" + "?v=" + Date.now()).then((r) => r.text());
+                const svg = await fetch("https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.548/images/icon.svg" + "?v=" + Date.now()).then((r) => r.text());
                 document.body.insertAdjacentHTML("afterbegin", svg);
             })();
         </script>
@@ -59,12 +59,23 @@
                 </li>
                 <li>
                     <a class="ico-wrap pd-12" href="/index.html?linkcd=m0400" data-tip="프로젝트">
-                        <svg><use href="#nav-puzzle"></use></svg>
+                        <svg><use href="#nav-folder"></use></svg>
+                    </a>
+                </li>
+                <li class="txt-700 fs-12"><i class="hr" style="width: 2.4rem;"></i></li>
+                <li>
+                    <a class="ico-wrap pd-12" href="/index.html?linkcd=m0500" data-tip="기초">
+                        <svg><use href="#nav-wall"></use></svg>
                     </a>
                 </li>
                 <li>
-                    <a class="ico-wrap pd-12" href="/index.html?linkcd=m0500" data-tip="UI문서">
-                        <svg><use href="#nav-note"></use></svg>
+                    <a class="ico-wrap pd-12" href="/index.html?linkcd=m0600" data-tip="스타일">
+                        <svg><use href="#nav-palette"></use></svg>
+                    </a>
+                </li>
+                <li>
+                    <a class="ico-wrap pd-12" href="/index.html?linkcd=m0700" data-tip="컴포넌트">
+                        <svg><use href="#nav-cube"></use></svg>
                     </a>
                 </li>
             </ul>
