@@ -1,6 +1,26 @@
 const common = {
     init(root = document) {
         this.lnb(root);
+
+        if (this._boundSpaChange) return;
+        this._boundSpaChange = true;
+        document.addEventListener("spa:change", (e) => {
+            const dep1Key = SPA.getDep1Key(e.detail.linkcd);
+            this.setGuideClass(dep1Key);
+        });
+    },
+    setGuideClass(dep1Key) {
+        const main = document.querySelector(".wrap main");
+        if (!main) return;
+        const CLASS_MAP = {
+            m0500: "foundation",
+            m0600: "style",
+            m0700: "component",
+        };
+        const pageClass = CLASS_MAP[dep1Key];
+        if (!pageClass) return;
+        main.className = ["guide", pageClass].filter(Boolean).join(" ");
+        this.guideItem.init();
     },
     lnb(root) {
         const wrap = document.querySelector(".wrap");
@@ -199,11 +219,100 @@ const common = {
                     };
                     tbody.appendChild(tr);
                 });
-            console.log(meta)
+            console.log(meta);
             bindData(wrap, {
                 ...meta,
                 postLength: related.length,
             });
+        },
+    },
+    guideItem: {
+        init() {
+            document.querySelectorAll(".guide-preview").forEach((item) => {
+                // preview 내부 HTML 가져오기
+                const source = item.innerHTML.trim();
+                const formatted = this.formatHTML(source);
+                // tools
+                const tools = document.createElement("div");
+                tools.className = "guide-tools";
+                tools.innerHTML = this.insertTools();
+                // code block
+                const code = document.createElement("code");
+                code.className = "guide-code";
+                code.innerHTML = this.parseHTML(formatted);
+                // 펼치기 토글버튼
+                const toggle = document.createElement("button");
+                toggle.className = "guide-toggle";
+                toggle.dataset.act = "toggle";
+                toggle.innerHTML = "더보기";
+                // preview 아래 삽입
+                item.insertAdjacentElement("afterend", toggle);
+                item.insertAdjacentElement("afterend", code);
+                item.insertAdjacentElement("afterend", tools);
+            });
+        },
+        // 도구 삽입
+        insertTools() {
+            const html = `
+                <button class="ico-wrap pd-4 ml-auto" data-act="copy" data-tip="복사">
+                    <svg><use href="#act-copy"></use></svg>
+                </button>`;
+            return html;
+        },
+        // HTML 들여쓰기 정리
+        formatHTML(html) {
+            html = html.replace(/>\s+</g, "><").trim();
+            const div = document.createElement("div");
+            div.innerHTML = html;
+            const formatNode = (node, depth = 0) => {
+                const indent = "    ".repeat(depth);
+                let output = "";
+                node.childNodes.forEach((child) => {
+                    // element
+                    if (child.nodeType === 1) {
+                        const tag = child.tagName.toLowerCase();
+                        // 자식이 text 하나만 있으면 inline 유지
+                        const isInlineText = child.childNodes.length === 1 && child.firstChild.nodeType === 3;
+                        if (isInlineText) {
+                            output += `${indent}<${tag}`;
+                            [...child.attributes].forEach((attr) => {
+                                output += ` ${attr.name}="${attr.value}"`;
+                            });
+                            output += `>${child.textContent}</${tag}>\n`;
+                        } else {
+                            output += `${indent}<${tag}`;
+                            [...child.attributes].forEach((attr) => {
+                                output += ` ${attr.name}="${attr.value}"`;
+                            });
+                            output += `>\n`;
+                            output += formatNode(child, depth + 1);
+                            output += `${indent}</${tag}>\n`;
+                        }
+                    }
+                    // text
+                    else if (child.nodeType === 3) {
+                        const text = child.textContent.trim();
+                        if (text) {
+                            output += `${indent}${text}\n`;
+                        }
+                    }
+                });
+                return output;
+            };
+            return formatNode(div).trim();
+        },
+        // HTML Syntax Highlight
+        parseHTML(str) {
+            str = str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+            str = str.replace(/(&lt;\/?)([\w-]+)(.*?)(\/?&gt;)/g, (_, start, tagName, attrs, end) => {
+                attrs = attrs.replace(/([\w-:]+)=(".*?"|'.*?')/g, (_, attrName, attrValue) => {
+                    const quote = attrValue[0];
+                    const value = attrValue.slice(1, -1);
+                    return `<span class="code-attr">${attrName}</span><span class="code-equals">=</span><span class="code-quote">${quote}</span><span class="code-string">${value}</span><span class="code-quote">${quote}</span>`;
+                });
+                return `<span class="code-tag">${start}</span><span class="code-tag-name">${tagName}</span>${attrs}<span class="code-tag">${end}</span>`;
+            });
+            return str;
         },
     },
 };

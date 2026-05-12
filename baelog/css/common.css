@@ -19,7 +19,7 @@ body > header .scrollgauge { position: absolute; left: 0; bottom: 0; display: bl
 body > .wrap { grid-area: main; } 
 body > .wrap main { min-height: calc(100dvh - 10.8rem); padding: 4rem; background-color: rgb(var(--bg-150)); } 
 body > .wrap main > h1:first-child,
-body > .wrap main > .tit-wrap:first-child { position: sticky; top: 5.2rem; margin: -4rem 0 0; padding: 4rem 0 2.4rem; background-color: rgb(var(--bg-150)); z-index: 1; } 
+body > .wrap main > .tit-wrap:first-child { position: sticky; top: 5.2rem; margin: -4rem 0 0; padding: 4rem 0 2.4rem; background-color: rgb(var(--bg-150)); z-index: 2; } 
 body footer { display: flex; align-items: center; justify-content: center; width: 100%; height: 5.2rem; margin-top: 0.4rem; background-color: rgb(var(--bg-150)); } 
 /* Wrap (has-lnb) */
 body > .wrap.has-lnb { display: grid; grid-template-areas: 'lnb main' 'lnb footer'; grid-template-columns: 26rem minmax(0, 1fr); gap: 0.4rem; } 
@@ -171,3 +171,30 @@ body > .wrap main > .cont-wrap.ty-post > section hr { border: 0; border-top: 0.1
 
  /* POPUP */
 .dialog .dialog-content.news img { width: 100%; aspect-ratio: 16 / 9; object-fit: contain; background-color: rgb(var(--bg-000)); } 
+
+/* GUIDE */
+
+body > .wrap main.guide { } 
+body > .wrap main.guide .cont { flex: 1; overflow: hidden; }
+body > .wrap main.guide section + section { margin-top: 3.2rem; } 
+body > .wrap main.guide h2 { position: relative; padding-left: 1.2rem; } 
+body > .wrap main.guide h2::before { content: ""; display: block; width: 0.5rem; height: calc(100% - 1.6rem); position: absolute; left: 0; top: 0.8rem; background-color: rgb(var(--primary-300)); } 
+body > .wrap main.guide .guide-item { border: 1px solid rgb(var(--brd-500)); border-radius: 0.8rem; overflow: hidden; background-color: rgb(var(--bg-200)); margin-top: 1.2rem; } 
+body > .wrap main.guide .guide-item > * { display: block; width: 100%; position: relative; padding: 1.2rem 2rem; } 
+body > .wrap main.guide .guide-item .guide-preview { background-image: linear-gradient(45deg, rgba(var(--bg-100), 0.6) 25%, transparent 25%), linear-gradient(135deg, rgba(var(--bg-100), 0.6) 25%, transparent 25%), linear-gradient(45deg, transparent 75%, rgba(var(--bg-100), 0.6) 75%), linear-gradient(135deg, transparent 75%, rgba(var(--bg-100), 0.6) 75%); background-size: 20px 20px; background-position: 0 0, 10px 0, 10px -10px, 0 10px; } 
+body > .wrap main.guide .guide-item .guide-tools { display: flex; align-items: center; border: solid rgb(var(--brd-500)); border-width: 0.1rem 0; } 
+body > .wrap main.guide .guide-item .guide-code { white-space: pre; font-family: monospace; font-size: 1.4rem; } 
+body > .wrap main.guide .guide-item .guide-toggle { padding: 0.4em 1.2rem; font-size: 1.4rem; color: rgb(var(--txt-700)); } 
+body > .wrap main.guide [data-bind="toc"] { width: 26rem; } 
+
+.guide-variants { display: flex; gap: 3.2rem; } 
+.card { padding: 16px; border-radius: 10px; border: 1px solid #eee; } 
+.card.do { border-left: 3px solid #2ecc71; } 
+.card.dont { border-left: 3px solid #e74c3c; } 
+
+.guide-code .code-tag { color: rgb(var(--blue-500)); /* < > 브라켓 색상 */ } 
+.guide-code .code-tag-name { color: rgb(var(--blue-500)); /* 태그 이름 색상 */ } 
+.guide-code .code-attr { color: rgb(var(--link-500)); /* 속성 이름 */ } 
+.guide-code .code-equals { color: rgba(var(--error-500), 0.5); /* = 기호 */ } 
+.guide-code .code-quote { color: rgb(var(--green-500)); /* 따옴표 */ } 
+.guide-code .code-string { color: rgb(var(--green-500)); /* 속성 값 */ } 
