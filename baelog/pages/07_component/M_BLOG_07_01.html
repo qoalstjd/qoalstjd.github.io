@@ -6,7 +6,7 @@
 
 <h1>List</h1>
 
-<section>
+<section style="display: none;">
     <h2>개요</h2>
     <p class="txt-700">
         List 컴포넌트는 텍스트 기반 정보를 구조적으로 전달하기 위한 UI 요소입니다. 이를 통해 콘텐츠의 가독성과 정보 흐름을 개선할 수 있습니다.<br />
@@ -49,7 +49,6 @@
             <button data-tab="tab04">Ref</button>
         </div>
         <div class="guide-item" id="tab01">
-            <div class="guide-emmet">ul.txt-list.<span class="txt-point">dot</span>&gt;li*3</div>
             <div class="guide-preview">
                 <ul class="txt-list dot">
                     <li>일반적인 정보</li>
@@ -57,9 +56,11 @@
                     <li>중립적이고 정보 전달 중심</li>
                 </ul>
             </div>
+            <div class="guide-tools">
+                <p class="code-emmet">ul.txt-list.<span class="txt-point">dot</span>&gt;li*3</p>
+            </div>
         </div>
         <div class="guide-item" id="tab02">
-            <div class="guide-emmet">ul.txt-list.<span class="txt-point">dash</span>&gt;li*3</div>
             <div class="guide-preview">
                 <ul class="txt-list dash">
                     <li>계층적 하위 항목</li>
@@ -67,9 +68,11 @@
                     <li>가독성을 높이기 위해 계층 구조 명확히</li>
                 </ul>
             </div>
+            <div class="guide-tools">
+                <p class="code-emmet">ul.txt-list.<span class="txt-point">dash</span>&gt;li*3</p>
+            </div>
         </div>
         <div class="guide-item" id="tab03">
-            <div class="guide-emmet">ul.txt-list.<span class="txt-point">star</span>&gt;li*3</div>
             <div class="guide-preview">
                 <ul class="txt-list star">
                     <li>중요한 항목이나 주목해야 할 정보 강조</li>
@@ -77,15 +80,20 @@
                     <li>핵심 내용 빠르게 인지</li>
                 </ul>
             </div>
+            <div class="guide-tools">
+                <p class="code-emmet">ul.txt-list.<span class="txt-point">star</span>&gt;li*3</p>
+            </div>
         </div>
         <div class="guide-item" id="tab04">
-            <div class="guide-emmet">ul.txt-list.<span class="txt-point">ref</span>&gt;li*3</div>
             <div class="guide-preview">
                 <ul class="txt-list ref">
                     <li>참고 자료나 외부 정보를 제공</li>
                     <li>관련 링크, 문서, 규격</li>
                     <li>참고 용도로 명확히 구분</li>
                 </ul>
+            </div>
+            <div class="guide-tools">
+                <p class="code-emmet">ul.txt-list.<span class="txt-point">ref</span>&gt;li*3</p>
             </div>
         </div>
 
@@ -96,13 +104,15 @@
         </p>
 
         <div class="guide-item">
-            <div class="guide-emmet">ol.txt-list.<span class="txt-point">num</span>&gt;li*3</div>
             <div class="guide-preview">
                 <ol class="txt-list num">
                     <li>준비 작업 수행</li>
                     <li>데이터 수집 및 검증</li>
                     <li>최종 결과 검토 및 제출</li>
                 </ol>
+            </div>
+            <div class="guide-tools">
+                <p class="code-emmet">ol.txt-list.<span class="txt-point">num</span>&gt;li*3</p>
             </div>
         </div>
 
@@ -113,7 +123,6 @@
         </p>
 
         <div class="guide-item">
-            <div class="guide-emmet">dl.def-list&gt;(div>dt+dd)*3</div>
             <div class="guide-preview">
                 <dl class="def-list">
                     <div>
@@ -129,6 +138,9 @@
                         <dd>동일 기능이나 요소는 사이트 전반에서 동일한 방식으로 표시 및 동작하도록 설계하여, 사용자가 혼란 없이 인터랙션할 수 있도록 보장하는 원칙.</dd>
                     </div>
                 </dl>
+            </div>
+            <div class="guide-tools">
+                <p class="code-emmet">dl.def-list&gt;(div>dt+dd)*3</p>
             </div>
         </div>
     </div>
@@ -168,7 +180,7 @@
     </aside>
 </section>
 
-<section>
+<section style="display: none;">
     <h2>가이드라인</h2>
     <p class="txt-700">List 컴포넌트는 단순한 시각 요소가 아니라 정보 구조를 정의하는 UI입니다. 따라서 스타일보다 정보의 의미를 기준으로 선택해야 합니다.</p>
     <p class="txt-700">동일한 리스트라도 목적에 따라 의미가 달라질 수 있으므로, 사용 시 항상 “왜 이 구조가 필요한가”를 먼저 판단해야 합니다.</p>
@@ -209,7 +221,7 @@
     </div>
 </section>
 
-<section>
+<section style="display: none;">
     <h2>접근성</h2>
     <p class="txt-700">List 컴포넌트는 HTML 시맨틱 구조를 기반으로 동작해야 하며, 스크린 리더에서도 동일한 정보 구조로 인식되어야 합니다.</p>
     <p class="txt-700">시각적 스타일은 변경 가능하지만 정보 구조 자체는 변경되어서는 안 됩니다.</p>

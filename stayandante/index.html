@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" data-theme="light">
     <head>
-        <!-- <base href="/stayandante/"> -->
+        <base href="/stayandante/">
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="referrer" content="always" />
@@ -36,7 +36,7 @@
                 const theme = cache.data ?? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
                 document.documentElement.dataset.theme = theme;
 
-                const svg = await fetch("https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.512/images/icon.svg?v=" + Date.now()).then((r) => r.text());
+                const svg = await fetch("https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.549/images/icon.svg?v=" + Date.now()).then((r) => r.text());
                 document.body.insertAdjacentHTML("afterbegin", svg);
             })();
         </script>
@@ -58,7 +58,7 @@
                         <svg><use href="#act-call"></use></svg>
                         전화예약
                     </a>
-                    <a href="https://booking.ddnayo.com/booking-calendar-status?accommodationId=106090" target="_blank" class="btn line sm ico-wrap">
+                    <a href="https://booking.ddnayo.com/booking-calendar-status?accommodationId=106090" target="_blank" class="btn line sm ico-wrap" title="새창으로 열기">
                         <svg><use href="#act-calendar"></use></svg>
                         실시간예약
                     </a>
@@ -103,7 +103,12 @@
                         <a href="/index.html?linkcd=m0400">예약하기</a>
                         <ul>
                             <li><a href="/index.html?linkcd=m0400">예약안내</a></li>
-                            <li><a href="https://booking.ddnayo.com/booking-calendar-status?accommodationId=106090" target="_blank">실시간예약 </a></li>
+                            <li>
+                                <a href="https://booking.ddnayo.com/booking-calendar-status?accommodationId=106090" target="_blank" class="flx ai-c gap-4" title="새창으로 열기">
+                                    실시간예약
+                                    <svg class="wh-20"><use href="#act-external-link"></use></svg>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     <li>

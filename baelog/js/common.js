@@ -228,33 +228,32 @@ const common = {
     },
     guideItem: {
         init() {
-            document.querySelectorAll(".guide-preview").forEach((item) => {
+            document.querySelectorAll(".guide-item").forEach((item) => {
                 // preview 내부 HTML 가져오기
-                const source = item.innerHTML.trim();
+                const previewEl = item.querySelector('.guide-preview');
+                const source = previewEl.innerHTML.trim();
                 const formatted = this.formatHTML(source);
-                // tools
-                const tools = document.createElement("div");
-                tools.className = "guide-tools";
-                tools.innerHTML = this.insertTools();
+                // tools 삽입
+                const toolsEl = item.querySelector(".guide-tools");
+                toolsEl.innerHTML += this.insertTools();
                 // code block
-                const code = document.createElement("code");
-                code.className = "guide-code";
-                code.innerHTML = this.parseHTML(formatted);
+                const codeEl = document.createElement("code");
+                codeEl.className = "guide-code";
+                codeEl.innerHTML = this.parseHTML(formatted);
                 // 펼치기 토글버튼
-                const toggle = document.createElement("button");
-                toggle.className = "guide-toggle";
-                toggle.dataset.act = "toggle";
-                toggle.innerHTML = "더보기";
-                // preview 아래 삽입
-                item.insertAdjacentElement("afterend", toggle);
-                item.insertAdjacentElement("afterend", code);
-                item.insertAdjacentElement("afterend", tools);
+                const toggleEl = document.createElement("button");
+                toggleEl.className = "guide-toggle";
+                toggleEl.dataset.act = "toggle";
+                toggleEl.innerHTML = "더보기";
+                // 요소 삽입
+                item.appendChild(codeEl);
+                item.appendChild(toggleEl);
             });
         },
         // 도구 삽입
         insertTools() {
             const html = `
-                <button class="ico-wrap pd-4 ml-auto" data-act="copy" data-tip="복사">
+                <button class="ico-wrap wh-20 ml-auto" data-act="copy" data-tip="복사">
                     <svg><use href="#act-copy"></use></svg>
                 </button>`;
             return html;
