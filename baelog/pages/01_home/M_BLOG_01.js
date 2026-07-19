@@ -7,8 +7,8 @@ const clock = {
         this.dayEls = this.wrap.querySelectorAll(".day span");
         this.timeEl = this.wrap.querySelector(".time");
 
-        this.update();
-        setInterval(() => this.update(), 1000);
+        if (this.timer) clearInterval(this.timer);
+        this.timer = setInterval(() => this.update(), 1000);
     },
     update() {
         this.now = new Date();
@@ -52,7 +52,7 @@ const weather = {
         const sky = v.sky.value;
         const pty = v.pty.value;
         this.detailEl.innerHTML = `
-            <svg class="wh-80 txt-point"><use href="#${pty !== "none" ? "ui-" + pty : "ui-" + sky}"></use></svg>
+            <svg class="wh-80 pd-8 txt-point"><use href="#${pty !== "none" ? "ui-" + pty : "ui-" + sky}"></use></svg>
             <p class="fs-36 fw-600 w-100">${v.tmp.value}<sup class="fs-20">${v.tmp.unit}</sup></p>
             <ul class="ml-12 fs-14 txt-700">
                 <li>강수확률 : ${v.pop.value}${v.pop.unit}</li>
@@ -105,6 +105,7 @@ const weather = {
 
                     values.style.clipPath = this.chartDraw(tmpValues);
                     yaxis.innerHTML = `<li>40</li><li>30</li><li>20</li><li>10</li><li>0</li><li>-10</li><li>-20</li>`;
+                    tab.innerHTML = "";
                     tab.appendChild(values);
                     tab.appendChild(yaxis);
                 },
@@ -155,7 +156,7 @@ const weather = {
             const pty = d.values.pty.value;
             const li = document.createElement("li");
             li.innerHTML = `
-                <svg class="wh-48"><use href="#${pty !== "none" ? "ui-" + pty : "ui-" + sky}"></use></svg>
+                <svg class="wh-48 pd-4"><use href="#${pty !== "none" ? "ui-" + pty : "ui-" + sky}"></use></svg>
                 <p class="fs-14 txt-700">${d.time.slice(0, -2) + "시"}</p>`;
             li.addEventListener("click", () => {
                 this.renderDetail(i);
@@ -191,7 +192,7 @@ const news = {
         filteredData.forEach((d) => {
             const li = document.createElement("li");
             li.innerHTML = `
-                        <img src="${d.img || ""}" onerror="this.onerror=null;this.src='/baelog/images/common/fallback_1x1.png'" loading="lazy" class="wh-48 r-4">
+                        <img src="${d.img || ""}" onerror="this.onerror=null;this.src='${window.BASE}/images/common/fallback_1x1.png'" loading="lazy" class="wh-48 r-4">
                         <div class="of-h">
                             <strong class="ell-1">${d.title}</strong>
                             <p class="flx ai-c gap-8 txt-500 flx-nowrap">
@@ -202,7 +203,7 @@ const news = {
                         </div>`;
             li.onclick = () => {
                 window.dialog.open({
-                    url: "/baelog/pages/00_common/P_BLOG_00_newsDetail.html",
+                    url: "/pages/00_common/P_BLOG_00_newsDetail.html",
                     data: d,
                 });
             };
@@ -212,6 +213,7 @@ const news = {
     bind() {
         this.tabs.forEach((tab, i) => {
             tab.addEventListener("click", () => {
+                this.list.scrollTo({ top: 0, behavior: "auto" });
                 this.tabs.forEach((el) => el.classList.remove("is-active"));
                 tab.classList.add("is-active");
                 this.render(tab.dataset.category);
@@ -222,246 +224,392 @@ const news = {
 // 음악
 const music = {
     curIdx: 0,
-    async init(root) {
+    player: null,
+    data: [
+        { id: "jfKfPfyJRdk", title: "Lofi Girl" },
+        { id: "5yx6BWlEVcY", title: "Chillhop Radio" },
+        { id: "Dx5qFachd3A", title: "Jazz Cafe Radio" },
+    ],
+    init(root) {
         this.wrap = root.querySelector("[data-bind='music']");
-
-        this.detailEl = this.wrap.querySelector(".detail");
         this.playerEl = this.wrap.querySelector(".player");
         this.playlistEl = this.wrap.querySelector(".playlist");
+        this.form = this.wrap.querySelector(".inp");
+        this.input = this.wrap.querySelector("input");
 
-        this.audio = this.wrap.querySelector("audio");
-        this.now = this.wrap.querySelector(".now");
-        this.total = this.wrap.querySelector(".total");
-        this.pg = this.wrap.querySelector("progress");
-        this.seek = this.wrap.querySelector(".seek");
-        this.vol = this.wrap.querySelector(".vol");
-        this.volPg = this.wrap.querySelector(".volPg");
-        this.control = this.wrap.querySelector(".control");
-
-        window.ui.loading(this.wrap, true);
-        try {
-            const res = await fetch("https://qoalstjdapis.vercel.app/api/getMusic");
-            this.data = await res.json();
-        } catch {
-            this.data = [];
-        }
+        this.loadCache();
+        this.loadYT();
         this.renderPlaylist();
-        this.load(this.curIdx);
-        this.bindControls();
-        const v = Math.round(this.audio.volume * 100);
-        this.vol.value = v;
-        this.volPg.value = v;
+        this.bind();
+    },
 
-        window.ui.loading(this.wrap, false);
+    /* ---------------- YT ---------------- */
+
+    loadYT() {
+        if (this.player) return;
+        if (window.YT) return this.createPlayer();
+
+        const tag = document.createElement("script");
+        tag.src = "https://www.youtube.com/iframe_api";
+        document.body.appendChild(tag);
+
+        window.onYouTubeIframeAPIReady = () => this.createPlayer();
+    },
+
+    createPlayer() {
+        this.player = new YT.Player(this.playerEl, {
+            height: "0",
+            width: "0",
+            videoId: this.data[0]?.id,
+            playerVars: { autoplay: 1, controls: 0 },
+            events: {
+                onReady: () => {
+                    this.load(0);
+                },
+            },
+        });
     },
     load(i) {
+        if (!this.player || !this.player.loadVideoById) return;
+        const prev = this.playlistEl.children[this.curIdx];
+        prev?.classList.remove("is-active");
         this.curIdx = i;
-        const d = this.data[i];
-        this.detailEl.innerHTML = `
-            <img src="${d.cover}" onerror="this.onerror=null;this.src='/baelog/images/common/fallback_1x1.png'" class="wh-128 r-12">
-            <div class="mt-12 ta-c">
-                <strong>${d.title}</strong>
-                <p>${d.genre} · ${d.mood}</p>
-            </div>`;
-        this.audio.src = d.streaming;
-        this.audio.onloadedmetadata = () => {
-            const dur = Math.floor(this.audio.duration || 0);
-            this.pg.max = this.seek.max = dur;
-            this.total.textContent = this.fm(dur);
-            // this.audio.play();
-        };
-        this.audio.ontimeupdate = () => {
-            const cur = Math.floor(this.audio.currentTime || 0);
-            this.pg.value = this.seek.value = cur;
-            this.now.textContent = this.fm(cur);
-        };
-        // this.audio.onplay = () => ();
-        // this.audio.onpause = () => ();
-        this.audio.onended = () => this.next();
+        const next = this.playlistEl.children[i];
+        next?.classList.add("is-active");
+        this.player?.loadVideoById(this.data[i].id);
     },
-    bindControls() {
-        this.wrap.querySelector('.control [data-act="prev"]').onclick = () => this.prev();
-        this.wrap.querySelector('.control [data-act="next"]').onclick = () => this.next();
-        this.wrap.querySelector('.control [data-act="toggle"]').onclick = () => (this.audio.paused ? this.audio.play() : this.audio.pause());
-        this.seek.oninput = (e) => (this.audio.currentTime = Number(e.target.value));
-        this.vol.oninput = (e) => {
-            const v = Number(e.target.value);
-            this.audio.volume = v / 100;
-            this.volPg.value = v;
-        };
-        this.audio.onvolumechange = () => {
-            const v = Math.round(this.audio.volume * 100);
-            this.vol.value = v;
-            this.volPg.value = v;
+    bind() {
+        this.form.onsubmit = (e) => {
+            e.preventDefault();
+            const url = this.input.value.trim();
+            if (!url) return;
+            const id = this.parseId(url);
+            if (!id)
+                return window.dialog.open({
+                    type: "alert",
+                    size: "sm",
+                    html: "올바른 YouTube URL을 입력해 주세요",
+                });
+
+            this.add(id);
+            this.input.value = "";
         };
     },
-    prev() {
-        this.load((this.curIdx - 1 + this.data.length) % this.data.length);
+    async getTitle(id) {
+        const res = await fetch(`https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${id}&format=json`);
+        const data = await res.json();
+        return data.title;
     },
-    next() {
-        this.load((this.curIdx + 1) % this.data.length);
+    parseId(url) {
+        return url.match(/(?:v=|\/)([0-9A-Za-z_-]{11})/)?.[1];
+    },
+    async add(id) {
+        if (this.data.some((d) => d.id === id)) return;
+        this.data.push({
+            id,
+            title: (await this.getTitle(id)) || "Unknown",
+        });
+        this.saveCache();
+        this.renderPlaylist();
+    },
+    remove(i) {
+        this.data.splice(i, 1);
+        if (this.curIdx >= this.data.length) {
+            this.curIdx = 0;
+        }
+        this.saveCache();
+        this.renderPlaylist();
+        this.load(this.curIdx);
     },
     renderPlaylist() {
         this.playlistEl.innerHTML = "";
-
         this.data.forEach((d, i) => {
             const li = document.createElement("li");
             li.innerHTML = `
-                <img src="${d.cover}" onerror="this.onerror=null;this.src='/baelog/images/common/fallback_1x1.png'" class="wh-48 r-4">
-                <div class="of-h">
-                    <strong class="ell-1">${d.title}</strong>
-                    <p class="flx ai-c gap-8 txt-500 flx-nowrap">
-                        <span>${d.genre}</span>
-                        <i class="vr"></i>
-                        <span class="ell-1">${d.mood}</span>
-                    </p>
-                </div>`;
-            li.onclick = () => {
-                this.playlistEl.querySelectorAll("li").forEach((l) => l.classList.remove("is-active"));
-                li.classList.add("is-active");
-                this.load(i);
+                <img src="https://img.youtube.com/vi/${d.id}/hqdefault.jpg">
+                <p class="ell-1">${d.title}</p>
+                <button class="ico-wrap pd-4" data-act="delete" data-id="1">
+                    <svg class="wh-16"><use href="#act-delete"></use></svg>
+                </button>
+            `;
+            li.onclick = () => this.load(i);
+            li.querySelector("[data-act='delete']").onclick = (e) => {
+                e.stopPropagation();
+                this.remove(i);
             };
             this.playlistEl.appendChild(li);
         });
-        this.playlistEl.children[0]?.classList.add("is-active");
     },
-    fm(s) {
-        const m = Math.floor(s / 60);
-        const ss = String(s % 60).padStart(2, "0");
-        return `${m}:${ss}`;
+    saveCache() {
+        cacheManager.set("youtubePlayList", this.data, { persist: true });
+    },
+    loadCache() {
+        const cached = cacheManager.get("youtubePlayList");
+        if (cached?.length) this.data = cached;
     },
 };
 // 달력
 const calendar = {
-    date: new Date(),
-    init(root) {
+    state: {
+        today: new Date(), // 오늘
+        todayStr: window.formatDate(new Date(), "YYYY-MM-DD"),
+        view: new Date(), // 보고있는 달
+        selected: window.formatDate(new Date(), "YYYY-MM-DD"), // 선택일자
+        data: {},
+        map: {},
+    },
+    async init(root) {
         this.wrap = root.querySelector("[data-bind='calendar']");
         this.titleEl = this.wrap.querySelector(".title");
         this.datesEl = this.wrap.querySelector(".dates");
-        this.wrap.addEventListener("click", (e) => {
-            const btn = e.target.closest("[data-act]");
-            if (!btn) return;
-            if (btn.dataset.act === "prev") this.prev();
-            if (btn.dataset.act === "next") this.next();
-            if (btn.dataset.act === "today") this.today();
-        });
-        this.render();
+        this.scheduleWrap = root.querySelector("[data-bind='schedule']");
+        this.scheduleDateEl = this.scheduleWrap.querySelector(".date");
+        this.scheduleListEl = this.scheduleWrap.querySelector(".list");
+        const res = await fetch("https://qoalstjdapis.vercel.app/api/getCalendar?id=msvmflaldja@gmail.com");
+        this.state.data = await res.json();
+        this.render(this.state.view);
+        this.renderSchedule(this.state.selected);
+        this.bindEvents();
     },
-    render() {
-        const y = this.date.getFullYear();
-        const m = this.date.getMonth();
-        const firstDay = new Date(y, m, 1).getDay();
-        const totalDays = new Date(y, m + 1, 0).getDate();
-        const today = new Date().toDateString();
-
-        this.titleEl.textContent = window.formatDate(this.date, "YYYY년 MM월");
+    bindEvents() {
+        this.wrap.addEventListener("click", (e) => {
+            const act = e.target.closest("[data-act]")?.dataset.act;
+            if (act) {
+                if (act === "prev") return this.render(this.getPrevMonth());
+                if (act === "next") return this.render(this.getNextMonth());
+                if (act === "today") return this.render(this.state.today);
+            }
+            const cell = e.target.closest("[data-date]");
+            if (cell) {
+                this.datesEl.querySelector(".is-active")?.classList.remove("is-active");
+                cell.classList.add("is-active");
+                this.state.selected = cell.dataset.date;
+                this.renderSchedule(this.state.selected);
+            }
+        });
+    },
+    /* ---------- 날짜 ---------- */
+    getPrevMonth() {
+        const { view } = this.state;
+        return new Date(view.getFullYear(), view.getMonth() - 1);
+    },
+    getNextMonth() {
+        const { view } = this.state;
+        return new Date(view.getFullYear(), view.getMonth() + 1);
+    },
+    getMonthInfo(date) {
+        const year = date.getFullYear();
+        const month = date.getMonth();
+        return {
+            year,
+            month,
+            firstDay: new Date(year, month, 1).getDay(),
+            totalDays: new Date(year, month + 1, 0).getDate(),
+        };
+    },
+    /* ---------- 렌더 ---------- */
+    render(date) {
+        this.state.view = date;
+        const { year, month, firstDay, totalDays } = this.getMonthInfo(date);
+        this.renderTitle(date);
+        this.renderDates(year, month, firstDay, totalDays);
+    },
+    renderTitle(date) {
+        this.titleEl.textContent = window.formatDate(date, "YYYY년 MM월");
+    },
+    renderDates(year, month, firstDay, totalDays) {
+        const frag = document.createDocumentFragment();
+        frag.append(...this.renderPrevDays(year, month, firstDay));
+        frag.append(...this.renderCurrentDays(year, month, totalDays));
+        frag.append(...this.renderNextDays(firstDay, totalDays));
         this.datesEl.innerHTML = "";
-        // prev
+        this.datesEl.append(frag);
+    },
+    /* ---------- days ---------- */
+    renderPrevDays(year, month, firstDay) {
+        const list = [];
         for (let i = firstDay - 1; i >= 0; i--) {
-            this.datesEl.append(this.day(new Date(y, m, -i).getDate(), "txt-500"));
+            list.push(this.createDay({ text: new Date(year, month, -i).getDate(), muted: true }));
         }
-        // current
+        return list;
+    },
+    renderCurrentDays(year, month, totalDays) {
+        const list = [];
         for (let i = 1; i <= totalDays; i++) {
-            const d = new Date(y, m, i);
-            let cls = "";
-            if (d.toDateString() === today) cls = "today";
-            if (d.getDay() === 0) cls += " txt-red";
-            if (d.getDay() === 6) cls += " txt-blue";
-            this.datesEl.append(this.day(i, cls));
+            const d = new Date(year, month, i);
+            const day = d.getDay();
+            const ymd = window.formatDate(d, "YYYY-MM-DD");
+            list.push(
+                this.createDay({
+                    ymd,
+                    text: i,
+                    today: ymd === this.state.todayStr,
+                    sunday: day === 0,
+                    saturday: day === 6,
+                    active: ymd === this.state.selected,
+                    events: this.state.data[ymd] || [],
+                })
+            );
         }
-        // next
+        return list;
+    },
+    renderNextDays(firstDay, totalDays) {
+        const list = [];
         const remain = 42 - (firstDay + totalDays);
         for (let i = 1; i <= remain; i++) {
-            this.datesEl.append(this.day(i, "txt-500"));
+            list.push(this.createDay({ text: i, muted: true }));
         }
+        return list;
     },
-    day(text, cls) {
-        const div = document.createElement("div");
-        if (cls) div.className = cls;
-        div.textContent = text;
-        return div;
+    /* ---------- day ---------- */
+    createDay({ ymd, text, today, sunday, saturday, muted, active, events = [] }) {
+        const el = document.createElement("div");
+        if (ymd) el.dataset.date = ymd;
+
+        const hasHoliday = events.some((e) => e.type === "holiday");
+        const eventList = events.filter((e) => e.type !== "holiday");
+
+        el.className = [muted && "txt-500", today && "today", (sunday || hasHoliday) && "txt-red", saturday && "txt-blue", active && "is-active"].filter(Boolean).join(" ");
+        el.innerHTML = `
+            <span class="date">${text}</span>
+            <div class="events">
+                ${eventList.map((e) => `<i style="background:${e.color};" title="${e.title}"></i>`).join("")}
+            </div>
+        `;
+        return el;
     },
-    prev() {
-        this.date = new Date(this.date.getFullYear(), this.date.getMonth() - 1);
-        this.render();
-    },
-    next() {
-        this.date = new Date(this.date.getFullYear(), this.date.getMonth() + 1);
-        this.render();
-    },
-    today() {
-        this.date = new Date();
-        this.render();
+    renderSchedule(date) {
+        const data = this.state.data[date] || [];
+
+        const d = new Date(date);
+        const day = d.getDay();
+
+        const isSunday = day === 0;
+        const isSaturday = day === 6;
+        const hasHoliday = data.some((e) => e.type === "holiday");
+        let typeClassName = "";
+        if (isSunday || hasHoliday) {
+            typeClassName = "is-holiday";
+        } else if (isSaturday) {
+            typeClassName = "is-saturday";
+        }
+        this.scheduleDateEl.className = `date ${typeClassName}`;
+        this.scheduleDateEl.innerHTML = window.formatDate(date, "YYYY년 MM월 DD일 E요일");
+        if (!data.length) {
+            return window.ui.empty(this.scheduleListEl, true, "calendar", "등록된 일정이 없어요");
+        }
+        window.ui.empty(this.scheduleListEl, false);
+        const groups = {};
+        for (const v of data) {
+            (groups[v.type] ??= []).push(v);
+        }
+        const order = ["holiday", "division", "event"];
+        this.scheduleListEl.innerHTML = order
+            .flatMap((type) =>
+                (groups[type] || []).map(
+                    (item) => `
+                        <li class="${item.type}">
+                            <i style="background-color:${item.color};"></i>
+                            <p class="ell-1">${item.title}${item.desc ? ` <span class='txt-700'>|${item.desc}</span>` : ""}</p>
+                        </li>
+                    `
+                )
+            )
+            .join("");
     },
 };
-// 할일
-const todo = {
-    data: [
-        { id: 1, content: "할 일 1" },
-        { id: 2, content: "할 일 2" },
-        { id: 3, content: "할 일 3" },
-    ],
-    init(root) {
-        this.wrap = root.querySelector("[data-bind='todo']");
-        this.list = this.wrap.querySelector(".list");
-        this.form = this.wrap.querySelector(".inp");
-        this.input = this.form.querySelector("input");
-        this.bind();
+// 지수
+const index = {
+    data: [],
+    updatedAt: "",
+    async init(root) {
+        this.wrap = root.querySelector("[data-bind='index']");
+        this.listEl = this.wrap.querySelector(".index-list");
+        window.ui.loading(this.wrap, true);
+        try {
+            const res = await fetch("https://qoalstjdapis.vercel.app/api/getMarketIndex");
+            const d = await res.json();
+            this.data = d.data;
+            this.updatedAt = d.updatedAt;
+        } catch (e) {
+            console.error("지수 데이터 로딩 실패", e);
+            this.data = [];
+        }
         this.render();
-    },
-    bind() {
-        this.form.addEventListener("submit", (e) => {
-            e.preventDefault();
-            if (!this.input.value.trim()) return;
-
-            this.data.push({
-                id: Date.now(),
-                content: this.input.value,
-            });
-            this.input.value = "";
-            this.render();
-        });
-        this.list.addEventListener("click", (e) => {
-            const del = e.target.closest('[data-act="delete"]');
-            if (!del) return;
-
-            const id = +del.dataset.id;
-            if (!confirm("삭제하시겠습니까?")) return;
-
-            this.data = this.data.filter((v) => v.id !== id);
-            this.render();
-        });
+        window.ui.loading(this.wrap, false);
     },
     render() {
-        this.list.innerHTML = "";
-        this.data.forEach((v) => {
-            this.list.insertAdjacentHTML(
-                "beforeend",
-                `
-                                <li>
-                                    <p class="b2">${v.content}</p>
-                                <div>
-                                    <button class="ico-wrap pd-4">
-                                        <svg class="wh-16"><use href="#act-check"></use></svg>
-                                    </button>
-                                    <button class="ico-wrap pd-4">
-                                        <svg class="wh-16"><use href="#act-edit"></use></svg>
-                                    </button>
-                                    <button class="ico-wrap pd-4" data-act="delete" data-id="${v.id}">
-                                        <svg class="wh-16"><use href="#act-delete"></use></svg>
-                                    </button>
-                                </div>
-                                </li>`
-            );
+        this.listEl.style.removeProperty("--w");
+        this.listEl.innerHTML = "";
+        const html = this.data
+            .map((d) => {
+                const isUp = d.change >= 0 ? "is-up" : "is-down";
+                const formatNumber = (num) => Math.abs(Number(num).toFixed(2));
+                return `
+                    <li class="ticker ${isUp}">
+                        <strong>${d.label}</strong>
+                        <em>${Number(d.price).toLocaleString()}</em>
+                        <svg class="wh-16">
+                            <use href="#dir-caret-up-fill"></use>
+                            <use href="#dir-caret-down-fill"></use>
+                        </svg>
+                        <span>
+                            ${formatNumber(d.change)}
+                            (${formatNumber(d.percent)}%)
+                        </span>
+                    </li>
+                `;
+            })
+            .join("");
+        this.listEl.innerHTML = "";
+        this.listEl.innerHTML = html + html;
+        requestAnimationFrame(() => {
+            const width = this.listEl.scrollWidth / 2;
+            this.listEl.style.setProperty("--w", `${width}px`);
         });
     },
 };
 
-export function init({ root }) {
+window.initModule = ({ root }) => {
+    const cleaners = [];
+    /* ---------- timer utils ---------- */
+    const addTimeout = (fn, delay) => {
+        const t = setTimeout(fn, delay);
+        cleaners.push(() => clearTimeout(t));
+        return t;
+    };
+    const addInterval = (fn, sec) => {
+        const t = setInterval(fn, sec * 1000);
+        cleaners.push(() => clearInterval(t));
+        return t;
+    };
+    const scheduleRefresh = (fn, sec = 3600) => {
+        const now = new Date();
+        const delay = (60 - now.getMinutes()) * 60 * 1000 - now.getSeconds() * 1000;
+        addTimeout(() => {
+            fn();
+            addInterval(fn, sec);
+        }, delay);
+    };
+    /* ---------- init ---------- */
     clock.init(root);
     weather.init(root);
     news.init(root);
     calendar.init(root);
-    todo.init(root);
     music.init(root);
-}
+    index.init(root);
+    /* ---------- refresh ---------- */
+    scheduleRefresh(() => {
+        weather.init(root);
+        news.init(root);
+        calendar.init(root);
+    });
+    /* ---------- clock interval cleanup 등록 ---------- */
+    if (clock.timer) {
+        cleaners.push(() => clearInterval(clock.timer));
+    }
+    /* ---------- destroy ---------- */
+    return () => {
+        cleaners.forEach((fn) => fn());
+    };
+};

@@ -9,14 +9,14 @@
         <p data-bind="txt">{{creator}}</p>
     </div>
     <i class="hr my-12"></i>
-    <img data-bind="src" src="{{img}}" onerror="this.onerror=null;this.src='/baelog/images/common/fallback_16x9.png'" alt="뉴스 상세이미지" />
+    <img data-bind="src" data-src="{{img}}" onerror="this.onerror=null;this.src='./images/common/fallback_16x9.png'" alt="뉴스 상세이미지" />
     <div class="mt-16">
         <span data-bind="txt" class="wb-all">{{desc}}</span>
         <span class="txt-500">이하생략</span>
     </div>
     <div class="flx flx-nowrap mt-16 gap-8 of-h">
         <span class="txt-500">출처 : </span>
-        <img data-bind="src" src="{{publisherIcon}}" onerror="this.onerror=null;this.src='/baelog/images/common/fallback_1x1.png'" alt="언론사 아이콘" class="wh-24 r-4">
+        <img data-bind="src" data-src="{{publisherIcon}}" onerror="this.onerror=null;this.src='./images/common/fallback_1x1.png'" alt="언론사 아이콘" class="wh-24 r-4">
         <a data-bind="txt href" href="{{link}}" target="_blank" class="link ell-1">{{link}}</a>
     </div>
 </div>

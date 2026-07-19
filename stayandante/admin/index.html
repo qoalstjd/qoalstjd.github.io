@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>스테이안단테펜션 | 관리자</title>
+        <link rel="icon" type="image/x-icon" href="/images/common/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/common/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/common/favicon-16x16.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/common/apple-touch-icon.png" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.512/css/global.css" />
+        <link rel="stylesheet" href="/css/common.css" />
+        <script>
+            (async () => {
+                const cache = JSON.parse(localStorage.getItem("app_cache_theme") || "{}");
+                const theme = cache.data ?? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+                document.documentElement.dataset.theme = theme;
+
+                const svg = await fetch("https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.512/images/icon.svg?v=" + Date.now()).then((r) => r.text());
+                document.body.insertAdjacentHTML("afterbegin", svg);
+            })();
+        </script>
+    </head>
+    <body class="pd-24">
+        <h1 class="flx col jc-c ai-c fs-20 gap-12 mt-0 pt-8">
+            <a href="/index.html?linkcd=m0100">
+                <svg style="width: 7.2rem; height: 4.4rem"><use href="#brand-stay"></use></svg>
+            </a>
+            관리자 페이지
+        </h1>
+        <!-- ================== 로그인 ================== -->
+        <form id="loginDiv" class="flx col jc-c w-full gap-12 ai-c">
+            <input class="w-240" type="text" id="loginId" placeholder="ID" />
+            <input class="w-240" type="password" id="loginPw" placeholder="PW" />
+            <button id="loginBtn" class="w-240 btn sm bg-point">로그인</button>
+        </form>
+        <div id="adminDiv" class="mw-1024" style="display: none">
+            <div class="tab-wrap lg">
+                <button data-tab="tab01" style="display: none;">새소식</button>
+                <button data-tab="tab02" class="is-active">FAQ</button>
+            </div>
+            <!-- ================== 새소식 ================== -->
+            <div id="tab01">
+                <div class="flx jc-e">
+                    <button id="addNewsBtn" class="btn sm bg-point">게시글추가</button>
+                </div>
+                <div class="tb-wrap">
+                    <table id="newsTable">
+                        <colgroup>
+                            <col style="width: 4rem" />
+                            <col style="width: 6rem" />
+                            <col style="width: auto" />
+                            <col style="width: 10rem" />
+                            <col style="width: 8rem" />
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>태그</th>
+                                <th>제목</th>
+                                <th>날짜</th>
+                                <th>동작</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+
+                <h2 class="fs-18 ta-c">이미지 업로드</h2>
+                <div class="flx gap-12">
+                    <input type="file" id="imgFile" multiple />
+                    <button id="uploadBtn" class="btn sm bg-point">업로드</button>
+                </div>
+                <ul id="imgList" class="flx ty-masonry mt-24"></ul>
+            </div>
+            <!-- ================== FAQ ================== -->
+            <div id="tab02">
+                <div class="flx jc-e">
+                    <button id="addFaqBtn" class="btn sm bg-point">FAQ추가</button>
+                </div>
+                <div class="tb-wrap">
+                    <table id="faqTable">
+                        <colgroup>
+                            <col style="width: 4rem" />
+                            <col style="width: 6rem" />
+                            <col style="width: auto" />
+                            <col style="width: 11rem" />
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>유형</th>
+                                <th>질문 / 답변</th>
+                                <th>동작</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.497/library/marked.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.511/library/turndown.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/qoalstjd/common@latest/js/util.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.514/js/ui.js"></script>
+        <script>
+            ui.init();
+            // ================== 로그인 ==================
+            document.getElementById("loginBtn").onclick = async (e) => {
+                e.preventDefault();
+                const res = await fetch("login.php", {
+                    method: "POST",
+                    body: JSON.stringify({ id: loginId.value, pw: loginPw.value }),
+                    headers: { "Content-Type": "application/json" },
+                    credentials: "same-origin",
+                });
+                const data = await res.json();
+                if (data.success) {
+                    document.getElementById("loginDiv").classList.add("d-none");
+                    document.getElementById("adminDiv").classList.add("d-block");
+                    news.init();
+                    images.init();
+                    faq.init();
+                } else {
+                    alert("로그인 실패");
+                }
+            };
+            // ================== 새소식 ==================
+            const news = {
+                wrap: document.querySelector("#newsTable tbody"),
+                data: [],
+                init: async function () {
+                    const res = await fetch("/api/news.php?action=list", { credentials: "same-origin" });
+                    this.data = await res.json();
+                    this.render();
+                    if (!this._eventsBound) {
+                        this.bindEvents();
+                        this._eventsBound = true;
+                    }
+                },
+                render: function () {
+                    this.wrap.innerHTML = "";
+                    this.data.forEach((n) => {
+                        const tr = document.createElement("tr");
+                        tr.dataset.id = n.id;
+                        tr.innerHTML = `
+                            <td class="ta-c">${n.id}</td>
+                            <td class="ta-c">${n.tag}</td>
+                            <td data-field="title">${n.title}</td>
+                            <td data-field="date" class="ta-c">${n.created_at.split(" ")[0].split("-").join(".")}</td>
+                            <td>
+                                <button class="btn pd-4 bg-point" data-tip="게시글수정">
+                                    <svg class="wh-20"><use href="#act-edit"></use></svg>
+                                </button>
+                                <button class="btn pd-4 bg-red" data-tip="삭제">
+                                    <svg class="wh-20"><use href="#act-delete"></use></svg>
+                                </button>
+                            </td>
+                        `;
+                        this.wrap.appendChild(tr);
+                    });
+                },
+                bindEvents: function () {
+                    this.wrap.addEventListener("click", (e) => {
+                        const tr = e.target.closest("tr");
+                        if (!tr) return;
+                        const id = tr.dataset.id;
+                        const item = this.data.find((n) => n.id == id);
+                        const newsData = {
+                            ...item,
+                            content: marked.parse(item.content, { baseUrl: "" }),
+                        };
+                        if (e.target.closest('[data-tip="게시글수정"]')) {
+                            window.dialog.open({
+                                url: "/admin/news_editor.html",
+                                data: newsData,
+                                size: "lg",
+                                onApply: async (dialogData) => {
+                                    const form = new FormData();
+                                    form.append("id", newsData.id);
+                                    form.append("tag", dialogData.tag);
+                                    form.append("title", dialogData.title);
+                                    form.append("content", dialogData.content);
+                                    await fetch("/api/news.php?action=edit", {
+                                        method: "POST",
+                                        body: form,
+                                        credentials: "same-origin",
+                                    });
+                                    await this.init();
+                                },
+                            });
+                        }
+                        if (e.target.closest('[data-tip="삭제"]')) {
+                            this.delete(id);
+                        }
+                    });
+                    document.getElementById("addNewsBtn").onclick = () => {
+                        const newsDefault = {
+                            tag: "공지",
+                            title: "제목을 입력해주세요",
+                            content: "<p contenteditable='true'>내용을 입력해주세요</p>",
+                        };
+                        window.dialog.open({
+                            url: "/admin/news_editor.html",
+                            data: newsDefault,
+                            size: "lg",
+                            onApply: async (dialogData) => {
+                                const form = new FormData();
+                                form.append("tag", dialogData.tag);
+                                form.append("title", dialogData.title);
+                                form.append("content", dialogData.content);
+                                await fetch("/api/news.php?action=add", {
+                                    method: "POST",
+                                    body: form,
+                                    credentials: "same-origin",
+                                });
+                                await this.init();
+                            },
+                        });
+                    };
+                },
+                delete: async function (id) {
+                    if (!confirm("삭제하시겠습니까?")) return;
+                    await fetch(`/api/news.php?action=delete&id=${id}`, { credentials: "same-origin" });
+                    this.init();
+                },
+            };
+            // ================== 이미지 ==================
+            const images = {
+                wrap: document.getElementById("imgList"),
+                input: document.getElementById("imgFile"),
+                uploadBtn: document.getElementById("uploadBtn"),
+                data: [],
+                init: async function () {
+                    const res = await fetch("/api/upload.php?action=list", { credentials: "same-origin" });
+                    this.data = await res.json();
+                    this.render();
+                    if (!this._eventsBound) {
+                        this.bindEvents();
+                        this._eventsBound = true;
+                    }
+                },
+                render: function () {
+                    this.wrap.innerHTML = "";
+                    this.data.forEach((i) => {
+                        const div = document.createElement("div");
+                        div.dataset.id = i.id;
+                        div.className = "box pc25";
+                        div.innerHTML = `
+                            <img src="${i.url}">
+                            <span class="mt-auto bg-100 ta-c pd-4" style="z-index:1;">${i.url}</span>
+                            <div class="btn-wrap mt-8">
+                                <button class="btn sm bg-point">
+                                    <svg class="wh-20"><use href="#act-copy"></use></svg>
+                                    URL복사
+                                </button>
+                                <button class="btn sm bg-red">
+                                    <svg class="wh-20"><use href="#act-delete"></use></svg>
+                                    삭제
+                                </button>
+                            </div>
+                        `;
+                        this.wrap.appendChild(div);
+                    });
+                },
+                bindEvents: function () {
+                    // 이미지 복사 / 삭제 이벤트 위임
+                    this.wrap.addEventListener("click", (e) => {
+                        const div = e.target.closest(".box.pc25");
+                        if (!div) return;
+                        const id = div.dataset.id;
+                        const imgUrl = div.querySelector("span").textContent;
+                        if (e.target.closest(".bg-point")) {
+                            ui.copyClipBoard(imgUrl);
+                        }
+                        if (e.target.closest(".bg-red")) {
+                            this.delete(id);
+                        }
+                    });
+                    // 업로드 버튼
+                    this.uploadBtn.addEventListener("click", async () => {
+                        const files = this.input.files;
+                        if (!files.length) return;
+                        for (let f of files) {
+                            const form = new FormData();
+                            form.append("file", f);
+                            await fetch("/api/upload.php?action=upload", {
+                                method: "POST",
+                                body: form,
+                                credentials: "same-origin",
+                            });
+                        }
+                        this.input.value = "";
+                        this.init();
+                    });
+                },
+                delete: async function (id) {
+                    const imgItem = this.data.find((i) => i.id == id);
+                    if (!imgItem) return;
+                    // 이미지 사용 중인 뉴스 찾기
+                    const usedInNews = news.data.filter((n) => n.content.includes(imgItem.url));
+                    let msg;
+                    if (usedInNews.length) {
+                        msg = `이 이미지는 뉴스에서 사용 중입니다:\n` + usedInNews.map((n) => `- [${n.id}] ${n.title}`).join("\n") + `\n그래도 삭제하시겠습니까?`;
+                    } else {
+                        msg = "삭제하시겠습니까?";
+                    }
+                    if (!confirm(msg)) return;
+                    await fetch(`/api/upload.php?action=delete&id=${id}`, { credentials: "same-origin" });
+                    this.init();
+                },
+            };
+            // ================== FAQ ==================
+            const faq = {
+                data: [],
+                wrap: null,
+                init: async function () {
+                    const res = await fetch("/api/faq.php?action=list", { credentials: "same-origin" });
+                    this.data = await res.json();
+                    this.wrap = document.querySelector("#faqTable tbody");
+                    this.wrap.innerHTML = "";
+                    this.render();
+                    if (!this._eventsBound) {
+                        this.bindEvents();
+                        this._eventsBound = true;
+                    }
+                },
+                render: function () {
+                    this.data.forEach((f) => {
+                        const tr = document.createElement("tr");
+                        tr.dataset.id = f.id;
+                        let answerList = [];
+                        try {
+                            answerList = JSON.parse(f.answer);
+                        } catch {}
+                        tr.innerHTML = `
+                            <td class="ta-c">${f.id}</td>
+                            <td class="ta-c">
+                                <select data-field="type">
+                                    ${["예약", "편의", "기타"].map((t) => `<option value="${t}" ${t === f.type ? "selected" : ""}>${t}</option>`).join("")}
+                                </select>
+                            </td>
+                            <td>
+                                <p contenteditable spellcheck="false" data-field="question" class="bg-900 txt-100 fw-600">${f.question}</p>
+                                <ul class="txt-list dot mt-16" data-field="answer">
+                                    ${answerList.map((answer) => `<li contenteditable spellcheck="false">${answer}</li>`).join("")}
+                                </ul>
+                            </td>
+                            <td>
+                                <button class="btn pd-4 bg-green" data-tip="답변추가">
+                                    <svg class="wh-20"><use href="#act-edit"></use></svg>
+                                </button>
+                                <button class="btn pd-4 bg-point" data-tip="저장">
+                                    <svg class="wh-20"><use href="#act-check"></use></svg>
+                                </button>
+                                <button class="btn pd-4 bg-red" data-tip="삭제">
+                                    <svg class="wh-20"><use href="#act-delete"></use></svg>
+                                </button>
+                            </td>`;
+                        this.wrap.appendChild(tr);
+                    });
+                },
+                bindEvents: function () {
+                    this.wrap.addEventListener("click", async (e) => {
+                        const tr = e.target.closest("tr");
+                        if (!tr) return;
+                        const id = tr.dataset.id;
+                        if (e.target.closest('[data-tip="답변추가"]')) {
+                            const li = document.createElement("li");
+                            li.contentEditable = true;
+                            li.spellcheck = false;
+                            tr.querySelector(".txt-list").append(li);
+                        }
+                        if (e.target.closest('[data-tip="저장"]')) {
+                            const form = new FormData();
+                            form.append("id", id);
+                            form.append("type", tr.querySelector('[data-field="type"]').value);
+                            form.append("question", tr.querySelector('[data-field="question"]').textContent.trim());
+                            form.append(
+                                "answer",
+                                JSON.stringify(
+                                    Array.from(tr.querySelectorAll('[data-field="answer"] li'))
+                                        .map((li) => li.textContent.trim())
+                                        .filter(Boolean)
+                                )
+                            );
+                            await fetch("/api/faq.php?action=edit", {
+                                method: "POST",
+                                body: form,
+                                credentials: "same-origin",
+                            });
+                            this.init();
+                        }
+                        if (e.target.closest('[data-tip="삭제"]')) {
+                            if (!confirm("삭제하시겠습니까?")) return;
+                            await fetch(`/api/faq.php?action=delete&id=${id}`, { credentials: "same-origin" });
+                            this.init();
+                        }
+                        if (e.target.closest('[data-tip="질문등록"]')) {
+                            if (!confirm("해당 질문을 추가하시겠습니까?")) return;
+                            const form = new FormData();
+                            form.append("type", tr.querySelector('[data-field="type"]').value);
+                            form.append("question", tr.querySelector('[data-field="question"]').textContent.trim());
+                            form.append(
+                                "answer",
+                                JSON.stringify(
+                                    Array.from(tr.querySelectorAll('[data-field="answer"] li'))
+                                        .map((li) => li.textContent.trim())
+                                        .filter(Boolean)
+                                )
+                            );
+                            const res = await fetch("/api/faq.php?action=add", { method: "POST", body: form, credentials: "same-origin" });
+                            const data = await res.json();
+                            if (data.success) {
+                                this.init();
+                            }
+                        }
+                        if (e.target.closest('[data-tip="취소"]')) {
+                            if (!confirm("질문 추가를 취소하시겠습니까?")) return;
+                            tr.remove();
+                        }
+                    });
+                    document.getElementById("addFaqBtn").onclick = () => {
+                        const tr = document.createElement("tr");
+                        tr.innerHTML = `
+                            <td class="ta-c">##</td>
+                            <td class="ta-c">
+                                <select data-field="type">
+                                    <option value="예약" selected="">예약</option><option value="편의">편의</option><option value="기타">기타</option>
+                                </select>
+                            </td>
+                            <td>
+                                <p contenteditable="" spellcheck="false" data-field="question" class="bg-900 txt-100 fw-600">질문을 입력해주세요</p>
+                                <ul class="txt-list dot mt-16" data-field="answer">
+                                    <li contenteditable="" spellcheck="false">내용을 입력해주세요</li>
+                                </ul>
+                            </td>
+                            <td>
+                                <button class="btn pd-4 bg-green" data-tip="답변추가">
+                                    <svg class="wh-20"><use href="#act-edit"></use></svg>
+                                </button>
+                                <button class="btn pd-4 bg-point" data-tip="질문등록">
+                                    <svg class="wh-20"><use href="#act-check"></use></svg>
+                                </button>
+                                <button class="btn pd-4 bg-red" data-tip="취소">
+                                    <svg class="wh-20"><use href="#act-delete"></use></svg>
+                                </button>
+                            </td>
+                        `
+                        this.wrap.prepend(tr);
+                    };
+                },
+            };
+        </script>
+    </body>
+</html>

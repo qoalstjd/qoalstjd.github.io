@@ -1,5 +1,11 @@
+<!--
+📁 Path      : /pages/03_study/M_BLOG_03.html
+📚 Menu      : Study > PostList
+📝 Desc      : Study 포스트 목록
+-->
+
 <div class="tit-wrap">
-    <h1 data-bind="title">$Title$</h1>
+    <h1 data-bind="title"></h1>
     <button class="btn xs ml-auto" data-act="sort" data-sort="desc">
         날짜
         <svg class="wh-16">
@@ -8,16 +14,16 @@
         </svg>
     </button>
     <div class="flx ml-8" data-view>
+        <button data-act="table" class="ico-wrap pd-4 is-active">
+            <svg><use href="#content-table"></use></svg>
+        </button>
         <button data-act="grid" class="ico-wrap pd-4">
             <svg><use href="#content-grid"></use></svg>
         </button>
         <button data-act="block" class="ico-wrap pd-4">
             <svg><use href="#content-block"></use></svg>
         </button>
-        <button data-act="table" class="ico-wrap pd-4">
-            <svg><use href="#content-table"></use></svg>
-        </button>
     </div>
 </div>
 
-<ul data-bind="posts" data-postviewtype="grid"></ul>
+<ul data-bind="posts" data-postviewtype="table"></ul>

@@ -1,18 +1,28 @@
 <!DOCTYPE html>
 <html lang="ko" data-theme="light">
     <head>
+        <base href="/stayandante/">
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="referrer" content="always" />
         <meta property="og:type" content="article" />
         <meta property="og:site_name" content="StayAndante" />
-        <meta property="og:url" content="https://stayandante.com" />
+        <meta property="og:url" content="https://www.stayandante.com" />
         <meta property="og:title" content="[StayAndante] 석모도 스테이안단테펜션" />
-        <meta property="og:image" content="https://stayandante.com/images/home/hero_main_01.jpg" />
-        <meta name="twitter:image" content="https://stayandante.com/images/home/hero_main_01.jpg" />
-        <meta property="og:description" content="석모도 스테이안단테펜션입니다." />
-        <meta name="keywords" content="석모도,석모도 펜션" />
-        <meta name="description" content="석모도 스테이안단테펜션입니다." />
+        <meta property="og:image" content="https://www.stayandante.com/images/home/spring_hero_main_01.jpg" />
+        <meta name="twitter:image" content="https://www.stayandante.com/images/home/spring_hero_main_01.jpg" />
+        <meta property="og:description" content="자연의 흐름과 조화를 이루는, 여행의 설렘과 휴식이 만나는 펜션입니다." />
+        <meta
+            name="keywords"
+            content="
+            석모도, 석모도펜션, 석모도 펜션, 석모도 숙소, 석모도 숙박,
+            강화도, 강화도펜션, 강화도 펜션, 강화도 숙소, 강화도 숙박,
+            강화도 여행, 강화도 여행숙소, 강화도 커플펜션, 강화도 가족펜션,
+            석모도 여행, 석모도 여행숙소, 석모도 커플펜션, 석모도 가족펜션,
+            강화도 바다펜션, 석모도 바다펜션, 강화도 오션뷰 펜션, 석모도 오션뷰 펜션,
+            강화도 감성숙소, 석모도 감성숙소, 강화도 감성펜션, 석모도 감성펜션"
+        />
+        <meta name="description" content="자연의 흐름과 조화를 이루는, 여행의 설렘과 휴식이 만나는 펜션입니다." />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="theme-color" content="#1f1d24" />
         <link rel="icon" type="image/x-icon" href="./images/common/favicon.ico" />
@@ -22,16 +32,17 @@
         <title>스테이안단테펜션</title>
         <script>
             (async () => {
-                const theme = localStorage.getItem("theme") || "light";
+                const cache = JSON.parse(localStorage.getItem("app_cache_theme") || "{}");
+                const theme = cache.data ?? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
                 document.documentElement.dataset.theme = theme;
 
-                const svg = await fetch("https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.491/images/icon.svg?v=" + Date.now()).then((r) => r.text());
+                const svg = await fetch("https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.549/images/icon.svg?v=" + Date.now()).then((r) => r.text());
                 document.body.insertAdjacentHTML("afterbegin", svg);
             })();
         </script>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.49/css/global.css?v=123" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.531/css/global.css" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.0/library/swiper-bundle.min.css" />
-        <link rel="stylesheet" href="./css/common.css" />
+        <link rel="stylesheet" href="./css/common.css?v=1" />
     </head>
     <body>
         <header>
@@ -47,7 +58,7 @@
                         <svg><use href="#act-call"></use></svg>
                         전화예약
                     </a>
-                    <a href="https://m.place.naver.com/accommodation/2040729575/room?businessCategory=pension" target="_blank" class="btn line sm ico-wrap">
+                    <a href="https://booking.ddnayo.com/booking-calendar-status?accommodationId=106090" target="_blank" class="btn line sm ico-wrap" title="새창으로 열기">
                         <svg><use href="#act-calendar"></use></svg>
                         실시간예약
                     </a>
@@ -59,7 +70,7 @@
                         테마
                     </button>
                 </div>
-                <button class="menu-toggle" data-act="toggle">
+                <button class="menu-toggle ico-wrap" data-act="toggle">
                     <i></i>
                     <i></i>
                     <i></i>
@@ -92,19 +103,32 @@
                         <a href="/index.html?linkcd=m0400">예약하기</a>
                         <ul>
                             <li><a href="/index.html?linkcd=m0400">예약안내</a></li>
-                            <li><a href="https://m.place.naver.com/accommodation/2040729575/room?businessCategory=pension" target="_blank">실시간예약 </a></li>
+                            <li>
+                                <a href="https://booking.ddnayo.com/booking-calendar-status?accommodationId=106090" target="_blank" class="flx ai-c gap-4" title="새창으로 열기">
+                                    실시간예약
+                                    <svg class="wh-20"><use href="#act-external-link"></use></svg>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     <li>
                         <a href="/index.html?linkcd=m0500">고객서비스</a>
                         <ul>
-                            <li><a href="/index.html?linkcd=m0501">새소식</a></li>
-                            <li><a href="/index.html?linkcd=m0502">자주하는 질문</a></li>
+                            <li><a href="/index.html?linkcd=m0501">소식</a></li>
+                            <li><a href="/index.html?linkcd=m0502">FAQ</a></li>
+                            <li><a href="/index.html?linkcd=m0503">주변소개</a></li>
                         </ul>
                     </li>
                 </ul>
+                <button class="btn line sm ico-wrap" data-act="theme">
+                    <svg>
+                        <use href="#ui-sun"></use>
+                        <use href="#ui-moon"></use>
+                    </svg>
+                    테마
+                </button>
                 <div class="visual">
-                    <img src="./images/home/hero_main_01.jpg" alt="" />
+                    <img src="./images/home/spring_hero_main_01.jpg" alt="" />
                     <p class="flx col">
                         <span class="font-brand fs-24">Stay Andante</span>
                         <span class="mt-12">여행과 휴식의 리듬이 이어지는 곳<br />하루를 온전히 누릴 수 있는 시간</span>
@@ -118,38 +142,59 @@
         <footer>
             <svg><use href="#brand-stay"></use></svg>
             <div class="footer-inner">
-                <div class="btn-wrap jc-c txt-white gap-12 mt-0">
-                    <a href="https://m.place.naver.com/accommodation/2040729575/room?businessCategory=pension" target="_blank" class="btn sm ws-nowrap naver">
-                        <svg class="wh-20">
+                <div class="btn-wrap jc-c gap-12 mt-0">
+                    <a href="https://m.place.naver.com/accommodation/2040729575/room?businessCategory=pension" target="_blank" class="btn sm line ws-nowrap">
+                        <svg class="wh-20 r-4">
                             <use href="#platform-naver"></use>
                         </svg>
                         네이버 예약
                     </a>
-                    <a href="" class="btn sm ws-nowrap ddnayo" style="display: none">
-                        <svg class="wh-20">
+                    <a href="https://booking.ddnayo.com/booking-calendar-status?accommodationId=106090" target="_blank" class="btn sm line ws-nowrap">
+                        <svg class="wh-20 r-4">
                             <use href="#platform-ddnayo"></use>
                         </svg>
                         떠나요 예약
                     </a>
                 </div>
+                <dl class="def-list">
+                    <div>
+                        <dt>업체명</dt>
+                        <dd>스테이안단테</dd>
+                    </div>
+                    <div>
+                        <dt>전화번호</dt>
+                        <dd><a href="tel: 010-8746-1409" class="link">010-8746-1409</a></dd>
+                    </div>
+                    <div>
+                        <dt>주소</dt>
+                        <dd>인천광역시 강화군 삼산면 삼산남로 442-15</dd>
+                    </div>
+                </dl>
+                <dl class="def-list">
+                    <div>
+                        <dt>대표/예금주</dt>
+                        <dd>이은영</dd>
+                    </div>
+                    <div>
+                        <dt>계좌번호</dt>
+                        <dd>국민은행 606002-01-113598</dd>
+                    </div>
+                    <div>
+                        <dt>사업자등록번호</dt>
+                        <dd>703-11-03306</dd>
+                    </div>
+                </dl>
                 <div>
-                    <p><a href="tel: 010-8746-1409">010-8746-1409</a></p>
-                    <p>인천광역시 강화군 삼산면 삼산남로 442-15</p>
-                </div>
-                <div>
-                    <p>업체명 : 스테이안단테 | 대표 : 이은영</p>
-                    <p>계좌번호 : 국민은행 606002-01-113598 | 예금주 : 이은영</p>
-                </div>
-                <div>
-                    <p class="txt-700">Copyright&copy;2026 StayAndante. All Rights Reserved</p>
+                    <p class="txt-700">&copy;2026 스테이안단테펜션. All Rights Reserved</p>
                 </div>
             </div>
         </footer>
         <script src="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.0/library/lottie.min.js"></script>
         <script src="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.0/library/swiper-bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.497/library/marked.min.js"></script>
         <script src="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.0/js/util.js"></script>
-        <script src="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.490/js/ui.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.547/js/ui.js"></script>
         <script src="./js/common.js"></script>
-        <script src="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.1/js/include.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.522/js/include.js"></script>
     </body>
 </html>

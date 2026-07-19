@@ -9,101 +9,154 @@ window.initModule = ({ root, params }) => {
         pagination: { el: swiperEl.querySelector(".swiper-pagination"), clickable: true },
         speed: 1500,
     });
-    // 새소식
-    const news = {
-        wrap: root.querySelector(".home-news .cont"),
+    // 주변소개
+    const around = {
+        wrap: root.querySelector(".home-arround .cont"),
+        list: [
+            "127801", // 석모도
+            "128818", // 민머루 해수욕장
+            "125533", // 보문사
+            "2490906", // 자연휴양림
+            "2490886", // 석모도 미네랄온천
+            "2758257", // 외포항
+            "3340348", // 강화함상공원
+        ],
         data: [],
         async init() {
-            const res = (await window.fetchManager.get("https://stayandante.com/api/news_list.php")) || [];
-            this.data = res.slice(0, 4);
-            this.wrap.innerHTML = "";
+            try {
+                this.data = (await window.fetchManager.get(`https://qoalstjdapis.vercel.app/api/getTour?contentids=${this.list.join(",")}`)) || [];
+            } catch (e) {
+                console.error("관광정보목록 조회 실패", e);
+                this.data = [];
+            }
             this.render();
         },
+        infoFilter(value) {
+            return value || "-";
+        },
         render() {
-            this.data.forEach((item, i) => {
+            if (!this.data.length) {
+                this.wrap.closest(".home-arround").style.display = "none";
+                return;
+            }
+            this.data.slice(0, 4).forEach((item, i) => {
                 const el = document.createElement("div");
                 if (i === 0) {
-                    el.classList.add("box", "pc66", "pd-0", "bg-point", "txt-white");
+                    el.classList.add("box", "pc66", "pd-0");
                     el.innerHTML = `
-                        <div>
-                            <img src="${item.thumb || "/images/home/hero_main_03.jpg"}" alt="">
-                            <div class="title pd-20">
-                                <p class="category">
-                                    <svg class="wh-20">
-                                        <use href="#ui-${item.tag === "새소식" ? "bell" : "document"}"></use>
-                                    </svg>
-                                    ${item.tag || "새소식"}
-                                </p>
-                                <h3 class="mt-4 mb-0 ell-1">${item.title}</h3>
-                            </div>
-                        </div>
-                        <div class="flx col pd-20">
-                            <p class="ell-2">${item.content}</p>
-                            <p class="fs-14 mt-12">${item.created_at.split(" ")[0].split("-").join(".")}</p>
+                        <img src="${item.info.thumbnail || item.images[0]}" alt="${item.title}">
+                        <div class="pd-24 bg-700 txt-100 mt-auto" style="position:relative;">
+                            <h3 class="mb-8">${item.title}</h3>
+                            <p class="ell-3 fs-14">${item.summary}</p>
                         </div>
                     `;
                 } else {
                     if (i === 1) {
-                        el.classList.add("box", "pc33", "bg-100");
+                        el.classList.add("box", "pc33");
                     } else {
-                        el.classList.add("box", "pc25", "bg-100");
+                        el.classList.add("box", "pc25");
                     }
                     el.innerHTML = `
-                        <div>
-                            <p class="category">
-                                <svg class="wh-20">
-                                    <use href="#ui-${item.tag === "새소식" ? "bell" : "document"}"></use>
-                                </svg>
-                                ${item.tag || "새소식"}
-                            </p>
-                            <h3 class="mt-8 ell-1">${item.title}</h3>
-                        </div>
-                        <div class="mt-auto">
-                            <p class="ell-2">${item.content}</p>
-                            <p class="fs-14 txt-700 mt-12">${item.created_at.split(" ")[0].split("-").join(".")}</p>
+                        <img src="${item.info.thumbnail || item.images[0]}" alt="${item.title}">
+                        <div class="box" style="height:100%;">
+                            <h3 class="mt-0 mb-8">${item.title}</h3>
+                            <p class="ell-3 mb-12 fs-14">${item.summary}</p>
+                            <ul class="txt-list dot mt-auto fs-14 txt-700">
+                                <li>주소 : ${this.infoFilter(item.info.address)}</li>
+                                <li>전화번호 : ${this.infoFilter(item.info.infocenter)}</li>
+                                <li>휴일 : ${this.infoFilter(item.info.restdate)}</li>
+                                <li>이용시간 : ${this.infoFilter(item.info.usetime)}</li>
+                                <li>주차 : ${this.infoFilter(item.info.parking)}</li>
+                            </ul>
                         </div>
                     `;
                 }
-                el.addEventListener("click", async () => {
-                    window.dialog.open({
-                        url: "/pages/00_common/P_STAY_00_news.html",
-                        data: item,
-                    });
-                    this.increaseView(item.id);
-                });
                 this.wrap.append(el);
             });
             this.wrap.insertAdjacentHTML(
                 "beforeend",
-                `<div class="box line pc50 jc-e ai-e">
-                    <div class="tit-wrap dep-3 ta-r ai-e">
-                        <h4 class="ta-r">머무는 시간의 이야기를 전해요<br></h4>
-                        <p>스테이안단테펜션의 하루, 소식으로 만나보세요</p>
-                    </div>
-                    <div class="btn-wrap jc-e mt-0">
-                        <a href="/index.html?linkcd=m0501" class="btn md line">
-                            안단테 소식
-                            <svg class="wh-20">
-                                <use href="#dir-chevron-right"></use>
-                            </svg>
-                        </a>
-                        <a href="/index.html?linkcd=m0502" class="btn md line">
-                            FAQ
-                            <svg class="wh-20">
-                                <use href="#dir-chevron-right"></use>
-                            </svg>
-                        </a>
+                `<div class="box pc50">
+                    <img src="${this.data[0].images[0] || "/images/home/hero_main_01.jpg"}" alt="" />
+                    <div class="box jc-e ai-e">
+                        <div class="tit-wrap dep-3 ta-r ai-e">
+                            <h3 class="ta-r">주변 관광 안내</h3>
+                            <p>스테이안단테펜션에서 만나는 여행 이야기</p>
+                        </div>
+                        <div class="btn-wrap jc-e mt-0">
+                            <a href="/index.html?linkcd=m0503" class="btn md line">
+                                주변 여행 더 알아보기
+                                <svg class="wh-20">
+                                    <use href="#dir-chevron-right"></use>
+                                </svg>
+                            </a>
+                        </div>
                     </div>
                 </div>`
             );
         },
-        increaseView: async (id) => {
+    };
+    // 소식
+    function format(dateStr) {
+        const d = new Date(dateStr);
+        const yy = String(d.getFullYear()).slice(2);
+        const mm = String(d.getMonth() + 1).padStart(2, "0");
+        const dd = String(d.getDate()).padStart(2, "0");
+        return `${yy}.${mm}.${dd}`;
+    }
+    const news = {
+        wrap: root.querySelector(".home-news .meta-list"),
+        data: [],
+        async init() {
             try {
-                await fetch(`https://stayandante.com/api/news_view_up.php?id=${id}`);
+                this.data = (await window.fetchManager.get(`https://qoalstjdapis.vercel.app/api/getBlog?id=stayandante`)).slice(0, 5) || [];
             } catch (e) {
-                console.error(e);
+                console.error("소식목록 조회 실패", e);
+                this.data = [];
             }
-        }
+            this.wrap.innerHTML = "";
+            this.render();
+        },
+        render() {
+            if (!this.data.length) {
+                this.wrap.closest(".home-news").style.display = "none";
+                return;
+            }
+            this.data.forEach((item, i) => {
+                const postItem = {
+                    ...item,
+                    created_at: format(item.created_at),
+                };
+                const el = document.createElement("li");
+                el.innerHTML = `
+                    <span class="id">${String(Math.abs(i - this.data.length)).padStart(2, "0")}</span>
+                    <span class="category">
+                        <svg class="wh-20">
+                            <use href="#ui-${postItem.category === "소식" ? "bell" : "document"}"></use>
+                        </svg>
+                        ${postItem.category || "소식"}
+                    </span>
+                    <span class="title">${postItem.title}</span>
+                    <span class="date">${postItem.created_at}</span>`;
+                el.addEventListener("click", async () => {
+                    const dialogRef = await window.dialog.open({
+                        url: "/pages/00_common/P_STAY_00_news.html",
+                        data: { ...postItem, content: "<div style='height:200rem'><p class='loading' style='position: fixed;left: 50%;top: 50%;'></p></div>" },
+                    });
+                    const dialogBody = dialogRef.pop.querySelector(".md-content"); // 내부 컨테이너 선택
+                    if (!dialogBody) return;
+                    dialogBody.style.overflow = "hidden";
+                    const detailHtml = await window.fetchManager.get(`https://qoalstjdapis.vercel.app/api/getBlogPost?id=stayandante&no=${postItem.logNo}`, { parse: "text", caching: false });
+                    if (detailHtml) {
+                        dialogBody.removeAttribute("style");
+                        dialogBody.innerHTML = detailHtml;
+                    }
+                });
+                this.wrap.append(el);
+            });
+        },
     };
     news.init();
+
+    around.init();
+    // news.init();
 };

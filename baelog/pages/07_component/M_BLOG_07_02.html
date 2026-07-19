@@ -1,0 +1,193 @@
+<!--
+📁 Path      : /pages/07_component/M_BLOG_07_02.html
+📚 Menu      : Component > Table
+📝 Desc      : 
+-->
+
+<h1>Table</h1>
+
+<section>
+    <h2>개요</h2>
+    <p class="txt-700">Table 컴포넌트는 데이터를 구조화하여 시각적으로 정리하고 비교할 수 있도록 도와주는 UI 요소입니다. 정보를 표 형식으로 명확하게 전달하며, 사용자가 데이터를 빠르게 파악할 수 있도록 설계됩니다.</p>
+    <div class="box">
+        <h3>핵심 특징</h3>
+        <ul>
+            <li>데이터와 정보를 정리하여 가독성을 높임</li>
+            <li>열과 행을 활용해 계층/관계 표현 가능</li>
+            <li>반복되는 데이터, 비교 항목 등 구조화에 최적화</li>
+            <li>스타일보다 정보 구조 중심</li>
+        </ul>
+    </div>
+    <div class="box">
+        <h3>구조 유형</h3>
+        <ul>
+            <li>기본 표 - 단순 데이터 나열</li>
+            <li>헤더 포함 표 - 카테고리/속성 구분</li>
+            <li>행 강조 표 - 특정 행 강조 표시</li>
+        </ul>
+    </div>
+</section>
+
+<section class="guide-variants">
+    <div class="cont">
+        <h2>유형</h2>
+        <p class="txt-700">Table 컴포넌트는 목적과 데이터 형태에 따라 다양한 구조로 사용될 수 있습니다. 아래 예시는 일반적인 사용 사례를 기준으로 정리한 것입니다.</p>
+
+        <h3>기본 표</h3>
+        <h4>Dot (기본)</h4>
+        <p class="txt-700">단순 데이터 나열용 표입니다. 기본적인 열과 행으로 정보를 정리하며, 설명 문단과 함께 데이터 항목을 비교할 때 유용합니다.</p>
+        <div class="guide-item">
+            <div class="guide-preview">
+                <div class="tb-wrap">
+                    <table>
+                        <caption>기본 데이터 표</caption>
+                        <colgroup>
+                            <col width="25%" />
+                            <col width="37%" />
+                            <col width="38%" />
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>항목</th>
+                                <th>설명</th>
+                                <th>예시</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>제품명</th>
+                                <td>상품 이름</td>
+                                <td>사과</td>
+                            </tr>
+                            <tr>
+                                <th>수량</th>
+                                <td>구매 수량</td>
+                                <td>10</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <h4>Dash (하위 구조)</h4>
+        <p class="txt-700">하위 항목이나 세부 데이터가 포함된 표입니다. 상위 카테고리와 관련된 세부 정보를 나열할 때 사용하며, 계층 구조를 명확히 표현할 수 있습니다.</p>
+        <div class="guide-item">
+            <div class="guide-preview">
+                <div class="tb-wrap ty-row">
+                    <table>
+                        <caption>하위 구조 데이터 표</caption>
+                        <colgroup>
+                            <col width="30%" />
+                            <col width="35%" />
+                            <col width="35%" />
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>카테고리</th>
+                                <th>항목</th>
+                                <th>상세</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>과일</th>
+                                <td>사과</td>
+                                <td>빨간색, 신선함</td>
+                            </tr>
+                            <tr>
+                                <th>과일</th>
+                                <td>배</td>
+                                <td>노란색, 달콤함</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <h2>가이드라인</h2>
+    <p class="txt-700">Table 컴포넌트는 단순한 시각 요소가 아니라 데이터 구조를 명확하게 전달하는 UI입니다. 따라서 스타일보다 정보 구조를 기준으로 선택해야 합니다.</p>
+    <p class="txt-700">같은 데이터라도 목적과 컨텍스트에 따라 적합한 표 형태가 달라질 수 있으므로, 사용 시 항상 “무엇을 전달하고자 하는가”를 먼저 판단해야 합니다.</p>
+
+    <div>
+        <div class="card do">
+            <h3>권장 (Do)</h3>
+            <p class="txt-700">데이터 구조를 명확하게 전달할 수 있는 표 형태로 작성합니다.</p>
+            <ul>
+                <li>헤더와 행을 활용해 카테고리/속성을 구분</li>
+                <li>한 페이지 내 표 역할 일관성 유지</li>
+                <li>중복 데이터와 항목을 최소화하여 가독성 확보</li>
+                <li>행/열 내부 항목은 동일 레벨 유지</li>
+                <li>스타일보다 정보 전달 중심</li>
+            </ul>
+        </div>
+
+        <div class="card dont">
+            <h3>금지 (Don't)</h3>
+            <p class="txt-700">표를 레이아웃 용도로 사용하는 것은 지양합니다.</p>
+            <ul>
+                <li>디자인 목적의 임의적 표 사용</li>
+                <li>버튼/카드 UI를 표로 강제 구성</li>
+                <li>스타일 혼용으로 의미 전달 혼란</li>
+                <li>그리드 레이아웃 대용으로 표 사용</li>
+                <li>불필요한 중첩 구조 생성</li>
+            </ul>
+        </div>
+
+        <div>
+            <h3>디자인 원칙</h3>
+            <ul>
+                <li><strong>의미 우선</strong> - 스타일보다 정보 구조</li>
+                <li><strong>일관성</strong> - 동일 정보는 동일 구조</li>
+                <li><strong>명확성</strong> - 구조는 단순하게 유지</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section>
+    <h2>접근성</h2>
+    <p class="txt-700">Table 컴포넌트는 HTML 시맨틱 구조를 기반으로 동작해야 하며, 스크린 리더에서도 동일한 데이터 구조로 인식되어야 합니다.</p>
+    <p class="txt-700">시각적 스타일은 변경 가능하지만, 정보 구조 자체는 유지되어야 합니다.</p>
+
+    <div>
+        <h3>시맨틱 규칙</h3>
+        <ul>
+            <li><code>&lt;table&gt;</code> - 데이터 그룹</li>
+            <li><code>&lt;thead&gt;</code> - 열 제목</li>
+            <li><code>&lt;tbody&gt;</code> - 데이터 행</li>
+        </ul>
+        <p class="txt-700">표 구조는 반드시 HTML 기본 요소를 사용해야 하며, div 기반 구현은 금지됩니다.</p>
+    </div>
+
+    <div>
+        <h3>스크린 리더 동작</h3>
+        <ul>
+            <li>헤더와 행을 기반으로 데이터 구조를 안내</li>
+            <li>열/행 순서를 정확히 인식</li>
+            <li>합계나 요약 데이터는 별도 설명 포함</li>
+        </ul>
+    </div>
+
+    <div>
+        <h3>인터랙션 기준</h3>
+        <ul>
+            <li>링크/버튼 포함 시 키보드 접근 가능</li>
+            <li>셀 클릭 이벤트 사용 최소화</li>
+            <li>포커스 순서는 DOM 구조를 따라야 함</li>
+        </ul>
+    </div>
+
+    <div>
+        <h3>주의 사항</h3>
+        <ul>
+            <li>div로 표 구조를 흉내 내지 않기</li>
+            <li>그리드 레이아웃 대신 ul/ol/table 사용 금지</li>
+            <li>시각적 표현만으로 데이터 구조 전달하지 않기</li>
+        </ul>
+    </div>
+</section>

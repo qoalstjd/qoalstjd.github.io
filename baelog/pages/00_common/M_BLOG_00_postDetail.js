@@ -1,3 +1,4 @@
-export function init() {
-    common?.postDetail.init();
-}
+window.initModule = ({ root, params }) => {
+    common?.postDetail.init(root);
+    return () => common?.postDetail.unbindScroll();
+};

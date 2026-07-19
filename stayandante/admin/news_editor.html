@@ -1,0 +1,42 @@
+<div class="dialog-title">
+    <p data-bind="txt">수정</p>
+</div>
+<div class="dialog-content no-scroll">
+    <strong data-field="title" data-bind="txt" class="fs-18 fw-b ell-2" contenteditable spellcheck="false">{{title}}</strong>
+    <div class="flx jc-bt mt-12">
+        <div class="element flx gap-4">
+            <button class="ico-wrap btn line pd-4" data-act="h2" data-tip="제목">
+                <svg><use href="#content-heading"></use></svg>
+            </button>
+            <button class="ico-wrap btn line pd-4" data-act="p" data-tip="문단">
+                <svg><use href="#content-typography"></use></svg>
+            </button>
+            <button class="ico-wrap btn line pd-4" data-act="ul" data-tip="불릿 목록">
+                <svg><use href="#content-ul"></use></svg>
+            </button>
+            <button class="ico-wrap btn line pd-4" data-act="ol" data-tip="숫자 목록">
+                <svg><use href="#content-ol"></use></svg>
+            </button>
+            <button class="ico-wrap btn line pd-4" data-act="img" data-tip="이미지">
+                <svg><use href="#content-img"></use></svg>
+            </button>
+        </div>
+        <div class="util flx gap-4">
+            <button class="ico-wrap btn line pd-4" data-act="up" data-tip="위로">
+                <svg><use href="#dir-caret-up"></use></svg>
+            </button>
+            <button class="ico-wrap btn line pd-4" data-act="down" data-tip="아래로">
+                <svg><use href="#dir-caret-down"></use></svg>
+            </button>
+            <button class="ico-wrap btn line pd-4" data-act="del" data-tip="삭제">
+                <svg><use href="#act-delete"></use></svg>
+            </button>
+        </div>
+    </div>
+    <i class="hr my-12"></i>
+    <div class="mt-16 wb-all scrollable md-content" data-bind="html" data-field="content">{{content}}</div>
+</div>
+<div class="btn-wrap jc-c">
+    <button class="btn md" data-act="close">취소</button>
+    <button class="btn md bg-point" data-act="apply">적용</button>
+</div>

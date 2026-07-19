@@ -1,5 +1,6 @@
 <html lang="ko">
     <head>
+        <base href="/baelog/">
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>BaeLog</title>
@@ -9,60 +10,77 @@
                 const theme = localStorage.getItem("theme") || "dark";
                 document.documentElement.dataset.theme = theme;
 
-                const svg = await fetch("/common/images/icon.svg" + "?v=" + Date.now()).then((r) => r.text());
+                const svg = await fetch("https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.549/images/icon.svg" + "?v=" + Date.now()).then((r) => r.text());
                 document.body.insertAdjacentHTML("afterbegin", svg);
             })();
         </script>
-        <link rel="stylesheet" href="/common/css/global.css" />
-        <link rel="stylesheet" href="/baelog/css/common.css" />
-        <link rel="icon" type="image/x-icon" href="/baelog/images/common/favicon.ico" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/baelog/images/common/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/baelog/images/common/favicon-16x16.png" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/baelog/images/common/apple-touch-icon.png" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.549/css/global.css" />
+        <link rel="stylesheet" href="./css/common.css" />
+        <link rel="icon" type="image/x-icon" href="./images/common/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="./images/common/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="./images/common/favicon-16x16.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="./images/common/apple-touch-icon.png" />
     </head>
     <body>
         <header>
-            <a href="#none" class="ico-wrap pd-4 ml-auto" data-tip="공유">
+            <button class="ico-wrap pd-4 ml-auto" data-act="share" data-tip="공유">
                 <svg><use href="#act-share"></use></svg>
-            </a>
+            </button>
+            <button class="ico-wrap pd-4" data-act="fullscreen" data-tip="전체화면">
+                <svg>
+                    <use href="#act-maximize"></use>
+                    <use href="#act-minimize"></use>
+                </svg>
+            </button>
             <div class="scrollGauge"></div>
         </header>
         <nav class="gnb">
             <h1>
-                <a href="/baelog/index.html">
+                <a href="/index.html">
                     <svg><use href="#brand-baelog"></use></svg>
                     <span class="hidden">Baelog</span>
                 </a>
             </h1>
             <ul>
                 <li>
-                    <a class="ico-wrap pd-12" href="/baelog/index.html?linkcd=m0100" data-tip="홈">
+                    <a class="ico-wrap pd-12" href="/index.html?linkcd=m0100" data-tip="홈">
                         <svg><use href="#nav-home"></use></svg>
                     </a>
                 </li>
                 <li>
-                    <a class="ico-wrap pd-12" href="/baelog/index.html?linkcd=m0200" data-tip="어바웃">
+                    <a class="ico-wrap pd-12" href="/index.html?linkcd=m0200" data-tip="어바웃">
                         <svg><use href="#nav-user"></use></svg>
                     </a>
                 </li>
                 <li>
-                    <a class="ico-wrap pd-12" href="/baelog/index.html?linkcd=m0300" data-tip="공부">
+                    <a class="ico-wrap pd-12" href="/index.html?linkcd=m0300" data-tip="공부">
                         <svg><use href="#nav-code"></use></svg>
                     </a>
                 </li>
                 <li>
-                    <a class="ico-wrap pd-12" href="/baelog/index.html?linkcd=m0400" data-tip="프로젝트">
-                        <svg><use href="#nav-puzzle"></use></svg>
+                    <a class="ico-wrap pd-12" href="/index.html?linkcd=m0400" data-tip="프로젝트">
+                        <svg><use href="#nav-folder"></use></svg>
+                    </a>
+                </li>
+                <li class="txt-700 fs-12"><i class="hr" style="width: 2.4rem;"></i></li>
+                <li>
+                    <a class="ico-wrap pd-12" href="/index.html?linkcd=m0500" data-tip="기초">
+                        <svg><use href="#nav-wall"></use></svg>
                     </a>
                 </li>
                 <li>
-                    <a class="ico-wrap pd-12" href="/baelog/index.html?linkcd=m0500" data-tip="UI문서">
-                        <svg><use href="#nav-note"></use></svg>
+                    <a class="ico-wrap pd-12" href="/index.html?linkcd=m0600" data-tip="스타일">
+                        <svg><use href="#nav-palette"></use></svg>
+                    </a>
+                </li>
+                <li>
+                    <a class="ico-wrap pd-12" href="/index.html?linkcd=m0700" data-tip="컴포넌트">
+                        <svg><use href="#nav-cube"></use></svg>
                     </a>
                 </li>
             </ul>
             <div class="util">
-                <button class="ico-wrap pd-12" data-act="theme" data-tip="테마모드 변경">
+                <button class="ico-wrap pd-12" data-act="theme" data-tip="테마모드 변경" data-tip-pos="top">
                     <svg>
                         <use href="#ui-sun"></use>
                         <use href="#ui-moon"></use>
@@ -72,12 +90,12 @@
         </nav>
         <div class="wrap">
             <main></main>
-            <footer>©2025 BaeMinseong. All Right Reserved.</footer>
+            <footer>© 2026 BaeMinseong. All Rights Reserved.</footer>
         </div>
-        <script src="/common/library/lottie.min.js"></script>
-        <script src="/common/js/util.js"></script>
-        <script src="/common/js/ui.js"></script>
-        <script src="/baelog/js/common.js"></script>
-        <script src="/common/js/include.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/qoalstjd/common@latest/library/lottie.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.546/js/util.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/qoalstjd/common@v1.0.540/js/ui.js"></script>
+        <script src="./js/common.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/qoalstjd/common@1.0.549/js/include.js"></script>
     </body>
 </html>
