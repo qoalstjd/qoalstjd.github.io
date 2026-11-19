@@ -1,7 +1,7 @@
 {
-    "m0100": { "name": "Home", "depth": 1, "path": "/pages/01_home/M_BLOG_01.html" },
+    "m0100": { "name": "Home", "depth": 1, "path": "/pages/01_home/M_BLOG_01.html", "lnb": false },
 
-    "m0200": { "name": "About", "depth": 1, "path": "/pages/02_about/M_BLOG_02.html" },
+    "m0200": { "name": "About", "depth": 1, "path": "/pages/02_about/M_BLOG_02.html", "lnb": false },
 
     "m0300": { "name": "Study", "depth": 1, "path": "/pages/03_study/M_BLOG_03.html" },
     "m0301": { "name": "All Posts", "depth": 2, "path": "/pages/03_study/M_BLOG_03.html", "parent": ["m0300"], "tab": "00" },
@@ -17,7 +17,7 @@
     "m0501": { "name": "Color", "depth": 2, "path": "/pages/05_foundation/M_BLOG_05_01.html", "parent": ["m0500"] },
     "m0502": { "name": "Typography", "depth": 2, "path": "/pages/05_foundation/M_BLOG_05_02.html", "parent": ["m0500"] },
     "m0503": { "name": "Spacing", "depth": 2, "path": "/pages/05_foundation/M_BLOG_05_03.html", "parent": ["m0500"] },
-    
+
     "m0600": { "name": "Style", "depth": 1, "path": "/pages/06_style/M_BLOG_06_01.html" },
     "m0601": { "name": "Icon", "depth": 2, "path": "/pages/06_style/M_BLOG_06_01.html", "parent": ["m0600"] },
     "m0602": { "name": "Accessibility", "depth": 2, "path": "/pages/06_style/M_BLOG_06_02.html", "parent": ["m0600"] },
@@ -29,6 +29,6 @@
     "m0704": { "name": "Card", "depth": 2, "path": "/pages/07_component/M_BLOG_07_04.html", "parent": ["m0700"] },
     "m0705": { "name": "Navigation", "depth": 2, "path": "/pages/07_component/M_BLOG_07_05.html", "parent": ["m0700"] },
 
-    "m0000": { "name": "Common", "depth": 1, "path": null },
+    "m0000": { "name": "Common", "depth": 1, "path": null, "lnb": false },
     "m0001": { "name": "Post", "depth": 2, "path": "/pages/00_common/M_BLOG_00_postDetail.html", "parent": ["m0000"], "lnb": false }
 }

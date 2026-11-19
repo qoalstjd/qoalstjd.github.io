@@ -9,6 +9,9 @@ const common = {
             this.setGuideClass(dep1Key);
         });
     },
+    escapeHTML(str) {
+        return String(str ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+    },
     setGuideClass(dep1Key) {
         const main = document.querySelector(".wrap main");
         if (!main) return;
@@ -29,6 +32,8 @@ const common = {
         wrap.classList.toggle("has-lnb", !!hasLnb);
     },
     postList: {
+        _loadToken: 0,
+        _sortBound: false,
         init() {
             // if (!window.SPA) return;
             this.h2 = document.querySelector("[data-bind='title']");
@@ -40,17 +45,24 @@ const common = {
             this.section = SPA.routes[parentKey]?.name?.toLowerCase();
             this.category = SPA.routes[curLinkcd]?.name || "All Posts";
             this.curLinkcd = curLinkcd;
-            this.h2.textContent = this.category;
+            if (this.h2) this.h2.textContent = this.category;
             this.load();
             this.bindView();
             this.bindSort();
         },
         async load() {
+            const token = ++this._loadToken;
             let data = await window.fetchManager?.get(window.BASE + "/js/posts.json");
+            if (token !== this._loadToken) return;
+            if (!Array.isArray(data)) {
+                this.empty();
+                return;
+            }
+
             data = data.filter((p) => p.section === this.section);
             this.rawList = (this.category === "All Posts" ? data : data.filter((p) => p.category === this.category.toLowerCase())).map((p) => ({
                 ...p,
-                _ts: +new Date(p.date.replace(/\./g, "-")),
+                _ts: +new Date((p.date || "").replace(/\./g, "-")),
             }));
             if (!this.rawList.length) {
                 this.empty();
@@ -66,32 +78,37 @@ const common = {
         item(p) {
             const key = p.slug || p.category;
             const li = document.createElement("li");
+            const esc = common.escapeHTML;
             li.innerHTML = `
-                <a href="${window.BASE}/index.html?linkcd=m0001&parentLinkcd=${this.curLinkcd}&fileName=${key}_${p.id}" class="box pd-0">
-                    <img src="${window.BASE}/images/post/thum_${key}.png">
+                <a href="${window.BASE}/index.html?linkcd=m0001&parentLinkcd=${encodeURIComponent(this.curLinkcd)}&fileName=${encodeURIComponent(`${key}_${p.id}`)}" class="box pd-0">
+                    <img src="${window.BASE}/images/post/thum_${encodeURIComponent(key)}.png">
                     <div class="pd-16">
-                    <p class="fs-12 txt-500">${p.category}</p>
-                    <strong class="ell-1 mt-4">${p.id}. ${p.title}</strong>
-                    <p class="fs-14 txt-700 ell-1">${p.summary}</p>
-                    <p class="fs-12 txt-500 ta-r">${p.date}</p>
+                    <p class="fs-12 txt-500">${esc(p.category)}</p>
+                    <strong class="ell-1 mt-4">${p.id}. ${esc(p.title)}</strong>
+                    <p class="fs-14 txt-700 ell-1">${esc(p.summary)}</p>
+                    <p class="fs-12 txt-500 ta-r">${esc(p.date)}</p>
                     </div>
                 </a>
             `;
             return li;
         },
         bindSort() {
+            if (this._sortBound) return;
+            this._sortBound = true;
             document.addEventListener("sortChange", (e) => {
                 const { key, order } = e.detail;
+                if (!this.rawList) return;
                 const sorted = [...this.rawList].sort((a, b) => (order === "asc" ? a._ts - b._ts : b._ts - a._ts));
                 this.render(sorted);
             });
         },
         bindView() {
+            if (!this.viewWrap) return;
             const curViewType = window.cacheManager?.get("postviewtype") || "table";
             this.posts.dataset.postviewtype = curViewType;
             this.viewWrap.querySelector(".is-active")?.classList.remove("is-active");
-            this.viewWrap.querySelector(`[data-act='${curViewType}']`).classList.add("is-active");
-            this.viewWrap?.addEventListener("click", (e) => {
+            this.viewWrap.querySelector(`[data-act='${curViewType}']`)?.classList.add("is-active");
+            this.viewWrap.addEventListener("click", (e) => {
                 const type = e.target.closest("[data-act]") ? e.target.dataset.act : null;
                 if (!type) return;
                 this.viewWrap.querySelector(".is-active")?.classList.remove("is-active");
@@ -107,6 +124,7 @@ const common = {
         },
     },
     postDetail: {
+        _loadToken: 0,
         init({ root }) {
             this.root = root || document;
             const { fileName, parentLinkcd } = history.state || {};
@@ -115,14 +133,18 @@ const common = {
             this.aside = this.root.querySelector('[data-bind="toc"]');
             if (!this.post || !this.aside) return;
             SPA.setActive(parentLinkcd);
-            this.load(fileName, parentLinkcd);
+            const token = ++this._loadToken;
+            this.load(fileName, parentLinkcd, token);
         },
-        async load(fileName, parentLinkcd) {
+        async load(fileName, parentLinkcd, token) {
             const list = await fetchManager.get(window.BASE + "/js/posts.json");
+            if (token !== this._loadToken) return; // 이미 다른 포스트로 이동함
+            if (!Array.isArray(list)) return;
             const meta = list.find((p) => `${p.slug || p.category}_${p.id}` === fileName);
             if (!meta) return;
             this.bindMeta(meta, parentLinkcd);
             await this.loadContent(fileName);
+            if (token !== this._loadToken) return;
             this.buildTOC();
             this.bindScroll();
             this.buildRelated(list, meta, fileName, parentLinkcd);
@@ -137,7 +159,7 @@ const common = {
         },
         async loadContent(fileName) {
             const html = await fetchManager.get(`${window.BASE}/uploads/posts/${fileName}.html`, { parse: "text", caching: false });
-            this.post.innerHTML = html;
+            this.post.innerHTML = html ?? "";
         },
         buildTOC() {
             const ul = this.aside.querySelector("ul");
@@ -147,7 +169,7 @@ const common = {
             this.headings.forEach((h, i) => {
                 h.id = `title${String(i + 1).padStart(2, "0")}`;
                 const pad = h.tagName === "H3" ? "pl-12" : h.tagName === "H4" ? "pl-24" : "pl-0";
-                ul.insertAdjacentHTML("beforeend", `<li class="${pad}"><a href="#${h.id}">${h.innerText}</a></li>`);
+                ul.insertAdjacentHTML("beforeend", `<li class="${pad}"><a href="#${h.id}">${common.escapeHTML(h.innerText)}</a></li>`);
             });
         },
         bindScroll() {
@@ -192,6 +214,7 @@ const common = {
                 tbody.innerHTML = "<tr><td>같은 카테고리의 포스트가 없습니다.</td></tr>";
                 return;
             }
+            const esc = common.escapeHTML;
             related
                 .sort((a, b) => a.id - b.id)
                 .forEach((p) => {
@@ -201,8 +224,8 @@ const common = {
                     tr.role = "button";
                     tr.innerHTML = `
                         <td class="txt-700 ta-c">${p.id}</td>
-                        <td class="ell-1">${p.title} <span class="txt-500">- ${p.summary}</span></td>
-                        <td class="txt-700 ta-c">${p.date}</td>
+                        <td class="ell-1">${esc(p.title)} <span class="txt-500">- ${esc(p.summary)}</span></td>
+                        <td class="txt-700 ta-c">${esc(p.date)}</td>
                     `;
                     if (key === fileName) {
                         tr.querySelectorAll("td").forEach((td) => td.classList.add("txt-point"));
@@ -219,7 +242,6 @@ const common = {
                     };
                     tbody.appendChild(tr);
                 });
-            console.log(meta);
             bindData(wrap, {
                 ...meta,
                 postLength: related.length,
@@ -230,11 +252,15 @@ const common = {
         init() {
             document.querySelectorAll(".guide-item").forEach((item) => {
                 // preview 내부 HTML 가져오기
-                const previewEl = item.querySelector('.guide-preview');
+                const previewEl = item.querySelector(".guide-preview");
+                const toolsEl = item.querySelector(".guide-tools");
+                if (!previewEl || !toolsEl) {
+                    console.warn("guide-item에 .guide-preview 또는 .guide-tools가 없습니다.", item);
+                    return;
+                }
                 const source = previewEl.innerHTML.trim();
                 const formatted = this.formatHTML(source);
                 // tools 삽입
-                const toolsEl = item.querySelector(".guide-tools");
                 toolsEl.innerHTML += this.insertTools();
                 // code block
                 const codeEl = document.createElement("code");
